@@ -16,20 +16,24 @@ public class FileUtil {
     private String realFolderPath;
     /**
      * 파일을 업로드하고 업로드한 파일 정보를 DB 에 저장합니다.
+     * @param uploadFolder: upload 할 폴더 위치
      * @param files: upload 할 파일 list
      * @param converter: multipart file 을 db 에 저장할 때 필요한 converter
      * @return int: db에 저장된 row 개수
      * @throws IOException: 파일 저장에 오류가 발생할 때
      */
-    public static int uploadFiles(List<MultipartFile> files, MultipartFileToSqlConverter converter) throws IOException {
+    public static int uploadFiles(UploadFolder uploadFolder, List<MultipartFile> files, MultipartFileToSqlConverter converter) throws IOException {
         int result = 0;
         for (MultipartFile file : files) {
             if(file.getOriginalFilename() != null && !file.getOriginalFilename().isBlank()) {
                 String fileName = file.getOriginalFilename();
                 String fileRename = fileRename(fileName);
-                log.info(FileConfig.realFolderPath);
+                File folder = new File(FileConfig.realFolderPath + uploadFolder.toString());
+                if(!folder.exists()) {
+                    folder.mkdir();
+                }
                 String filePath = FileConfig.realFolderPath + fileRename;
-                file.transferTo(new File(filePath));
+                file.transferTo(new File(folder, fileName));
                 result += converter.fromMultipartFile(fileName, fileRename, filePath);
             }
         }
