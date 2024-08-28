@@ -4,3 +4,14 @@ server:
 spring:
   application:
     name: gangneung-yeojido
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@mindoroaws.shop:4521/xe
+    username: GNTOUR
+    password: GNTOUR
+mybatis:
+  configuration:
+    jdbc-type-for-null: null
+    map-underscore-to-camel-case: true
+  type-aliases-package: com.gntour.gangneungyeojido
+  mapper-locations: classpath:mapper/*.xml
