@@ -33,7 +33,7 @@ public class FileUtil {
                     folder.mkdir();
                 }
                 String filePath = FileConfig.realFolderPath + fileRename;
-                file.transferTo(new File(folder, fileName));
+                file.transferTo(new File(folder, fileRename));
                 result += converter.fromMultipartFile(fileName, fileRename, filePath);
             }
         }
