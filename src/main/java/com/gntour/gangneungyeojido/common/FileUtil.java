@@ -1,5 +1,7 @@
 package com.gntour.gangneungyeojido.common;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -7,9 +9,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
-import static com.gntour.gangneungyeojido.common.FileConfig.REAL_PATH;
 
+@Slf4j
 public class FileUtil {
+    @Value("${GANGNEUNG_UPLOAD_FOLDER_PATH}")
+    private String realFolderPath;
     /**
      * 파일을 업로드하고 업로드한 파일 정보를 DB 에 저장합니다.
      * @param files: upload 할 파일 list
@@ -23,7 +27,8 @@ public class FileUtil {
             if(file.getOriginalFilename() != null && !file.getOriginalFilename().isBlank()) {
                 String fileName = file.getOriginalFilename();
                 String fileRename = fileRename(fileName);
-                String filePath = REAL_PATH + fileRename;
+                log.info(FileConfig.realFolderPath);
+                String filePath = FileConfig.realFolderPath + fileRename;
                 file.transferTo(new File(filePath));
                 result += converter.fromMultipartFile(fileName, fileRename, filePath);
             }
