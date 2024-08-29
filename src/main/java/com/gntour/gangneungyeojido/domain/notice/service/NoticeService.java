@@ -6,5 +6,5 @@ public interface NoticeService {
     public void getDetailNotice();
     public void addNotice();
     public void removeNotice();
-    public void updateNotice();
+    public void modifyNotice();
 }

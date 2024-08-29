@@ -7,5 +7,6 @@ public interface QnAService {
     public void addQnA();
     public void addQnAAnswer();
     public void removeQnA();
+    public void removeQnAAnswer();
 
 }

@@ -8,5 +8,6 @@ public interface QnAMapper {
     public void insertQnA();
     public void insertQnAAnswer();
     public void deleteQnA();
+    public void deleteQnAAnswer();
 
 }
