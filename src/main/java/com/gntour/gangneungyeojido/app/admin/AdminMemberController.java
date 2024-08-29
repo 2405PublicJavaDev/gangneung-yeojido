@@ -25,7 +25,7 @@ public class AdminMemberController {
 
     /**
      *  담당자 : 이경학님
-     *  관련기능 : [관리자 기능] 회원 상태 변경, [관리자 기능] 회원 상태 조회
+     *  관련기능 : [관리자 기능(페이지 폼)] 회원 상태 변경, [관리자 기능] 회원 상태 조회
      *  url :
      */
     public void showMemberStatusPage() {}
@@ -33,7 +33,7 @@ public class AdminMemberController {
     /**
      *  담당자 : 이경학님
      *  관련기능 : [관리자 기능] 관리자 로그인
-     *  rul :
+     *  url :
      */
     public void loginAdmin() {}
 

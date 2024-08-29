@@ -9,7 +9,7 @@ public class AdminQnAController {
     public void showQnAListPage(){}
     /**
      * 담당자 : 김윤경님
-     * 관련 기능 : [관리자 기능] QnA 관리자로서 답변 달기
+     * 관련 기능 : [관리자 기능(페이지 폼)] QnA 관리자로서 답변 달기
      * url :
      */
     public void showRegisterQnAAnswerPage(){}

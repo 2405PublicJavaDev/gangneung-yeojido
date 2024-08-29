@@ -12,7 +12,7 @@ public class MainController {
 
     /**
      * 담당자: 조승효님
-     * 관련기능: [메인 기능] 마커 승인 요청
+     * 관련기능: [메인 기능(페이지 폼)] 마커 승인 요청
      * url:
      */
     public void showAddReqMarkerPage() {

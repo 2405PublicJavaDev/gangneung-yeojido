@@ -16,7 +16,7 @@ public class MyQnAController {
     public void showMyDetailQnAPage(){};
     /**
      * 담당자 : 김윤경님
-     * 관련 기능 : [마이페이지 기능] 문의 내역(QnA) 등록
+     * 관련 기능 : [마이페이지 기능(페이지 폼)] 문의 내역(QnA) 등록
      * url :
      */
     public void showAddQnAPage(){}

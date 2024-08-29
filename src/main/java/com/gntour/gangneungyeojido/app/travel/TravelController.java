@@ -13,7 +13,7 @@ public class TravelController {
 
     /**
      * 담당자 : 엄태운님
-     * 관련기능 : [여행지 기능] 여행지 상세 정보 조회
+     * 관련기능 : [여행지 기능] 여행지 상세 정보 조회, [여행지 기능] 여행지 리뷰 리스트 조회
      * url :
      */
     public void showTravelDetailPage() {

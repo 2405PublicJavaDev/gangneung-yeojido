@@ -6,7 +6,7 @@ public class MyDiaryController {
     private TravelDiaryService travelDiaryService;
     /**
      * 담당자 : 백인호님
-     * 관련 기능 :[마이페이지 기능] 나의 리뷰 리스트 조회
+     * 관련 기능 :[마이페이지 기능] 나의 여행 기록 리스트 조회
      * url :
      *
      */
@@ -21,14 +21,14 @@ public class MyDiaryController {
 
     /**
      * 담당자 : 백인호님
-     * 관련 기능 : [마이페이지 기능] 나의 여행 기록 등록
+     * 관련 기능 : [마이페이지 기능(페이지 폼)] 나의 여행 기록 등록
      * url :
      */
     public void showAddMyDiaryPage(){};
 
     /**
      * 담당자 : 백인호님
-     * 관련 기능 : [마이페이지 기능] 나의 여행 기록 수정
+     * 관련 기능 : [마이페이지 기능(페이지 폼)] 나의 여행 기록 수정
      * url :
      */
     public void showUpdateMyDiaryPage(){};
