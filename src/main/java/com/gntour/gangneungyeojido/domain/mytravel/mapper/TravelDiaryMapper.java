@@ -2,9 +2,11 @@ package com.gntour.gangneungyeojido.domain.mytravel.mapper;
 
 public interface TravelDiaryMapper {
 
-    void selectAllDiaryByMember();
+    void selectAllDiariesByMember();
 
-    void selectAllDiaryCountByMember();
+    void selectAllDiariesCountByMember();
+
+    void selectOneDiaryByMember();
 
     void insertDiary();
 
