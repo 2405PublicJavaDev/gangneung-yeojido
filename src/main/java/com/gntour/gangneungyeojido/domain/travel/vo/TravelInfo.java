@@ -20,4 +20,6 @@ public class TravelInfo {
     private Long zoomLevel;
     private String siteUrl;
     private String imageUrl;
+    private Timestamp regDate;
+    private Timestamp updateDate;
 }

@@ -9,7 +9,7 @@ public interface TravelService {
     void getRequestMarkList();
     void getRequestMarkDetail();
     void addRequestMark();
-    void updateTravel();
-    void updateRequestMark();
+    void modifyTravel();
+    void modifyRequestMark();
     void removeTravel();
 }

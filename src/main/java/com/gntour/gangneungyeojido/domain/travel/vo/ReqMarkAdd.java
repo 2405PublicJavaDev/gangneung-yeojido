@@ -16,4 +16,7 @@ public class ReqMarkAdd {
     private String acceptableStatus;
     private String siteUrl;
     private String imageUrl;
+    private String memberId;
+    private Timestamp regDate;
+    private Timestamp updateDate;
 }
