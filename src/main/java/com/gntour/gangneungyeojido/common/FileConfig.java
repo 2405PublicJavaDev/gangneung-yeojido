@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @Getter
 public class FileConfig implements WebMvcConfigurer {
-    public static final String FOLDER_PATH = "/sample/";
+    public static final String FOLDER_PATH = "/gntour/";
     public static String realFolderPath;
 
     @Value("${GANGNEUNG_UPLOAD_FOLDER_PATH}")
