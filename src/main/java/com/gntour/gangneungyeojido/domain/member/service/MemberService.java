@@ -5,8 +5,8 @@ public interface MemberService {
     void joinMember();
     void findMemberId();
     void findPassword();
-    void updateMemberInfo();
-    void deleteMember();
+    void modifyMemberInfo();
+    void removeMember();
     void getAllBlackListMember();
     void getProfileMember();
 }

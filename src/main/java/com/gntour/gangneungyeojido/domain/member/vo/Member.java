@@ -7,8 +7,11 @@ public class Member {
     private String password;
     private String name;
     private Timestamp birthDate;
-    private String mail;
+    private String email;
+    private String phone;
     private String status;
     private String deleteYn;
     private String role;
+    private Timestamp regDate;
+    private Timestamp updateDate;
 }
