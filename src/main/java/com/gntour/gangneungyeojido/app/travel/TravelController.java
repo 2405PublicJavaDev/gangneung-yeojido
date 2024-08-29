@@ -7,8 +7,8 @@ public class TravelController {
      * 관련기능 : [여행지 기능] 여행지 리스트 조회
      * url :
      */
-    public void showTravelListPage() {
-
+    public String showTravelListPage() {
+        return "";
     }
 
     /**
