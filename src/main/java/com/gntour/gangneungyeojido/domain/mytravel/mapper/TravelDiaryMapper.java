@@ -10,7 +10,11 @@ public interface TravelDiaryMapper {
 
     void insertDiary();
 
+    void insertDiaryFile();
+
     void updateDiary();
 
     void deleteDiary();
+
+    void deleteDiaryFile();
 }

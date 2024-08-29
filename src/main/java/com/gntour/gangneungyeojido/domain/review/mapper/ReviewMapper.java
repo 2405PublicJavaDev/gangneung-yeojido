@@ -1,12 +1,15 @@
 package com.gntour.gangneungyeojido.domain.review.mapper;
 
 public interface ReviewMapper {
-
-    public void selectAllReviews();
-    public void selectAllReviewsCountByMember();
-    public void selectAllComplainReviews();
-    public void insertReview();
-    public void insertReviewComplain();
-    public void updateReview();
-    public void deleteReview();
+    void selectAllReviews();
+    void selectAllReviewsCount();
+    void selectAllReviewsCountByMember();
+    void selectAllComplainReviews();
+    void selectAllComplainReviewsCount();
+    void insertReview();
+    void insertReviewFile();
+    void insertReviewComplain();
+    void updateReview();
+    void deleteReview();
+    void deleteReviewFile();
 }
