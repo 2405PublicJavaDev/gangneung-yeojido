@@ -6,10 +6,10 @@ public interface ReviewService {
     public void getAllReviewsByMember();
     public void getAllComplainReviews();
     public void addReview();
-    public void updateReview();
+    public void modifyReview();
     public void removeReview();
     public void complainReview();
     public void addReviewReply();
-    public void updateReviewReply();
+    public void modifyReviewReply();
     public void removeReviewReply();
 }
