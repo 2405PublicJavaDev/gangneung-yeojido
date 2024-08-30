@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>강릉여지도 - member-status</title>
+    <link rel="stylesheet" href="/css/admin/member-status.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h3>블랙 리스트</h3>
+            <hr>
+            <ul>
+                <li><a href="/admin/report-list">신고 리스트</a></li>
+                <li><a href="/admin/member-status">회원 상태 변경</a></li>
+                <li><a href="/admin/black-list">블랙 리스트</a></li>
+            </ul>
+        </div>
+        <main>
+            <div class="member-status-container">
+                <h1>회원 상태 변경</h1>
+                <section class="search-status-section">
+                    <div class="member-container">
+                        <h3>아아디 검색</h3>
+                        <input type="search" class="search-member">
+                        <button type="submit" class="search-btn">검색</button>
+                    </div>
+                    <div class="status-container">
+                        <h3>상태 변경</h3>
+                        <input type="radio" name="status" class="change-status" value="정상" checked>정상
+                        <input type="radio" name="status" class="change-status" value="경고">경고
+                        <input type="radio" name="status" class="change-status" value="정지">정지
+                    </div>
+<!--                </section>-->
+<!--                <section class="member-info-section">-->
+                    <div class="member-info-section">
+                        <h3>회원 정보</h3>
+                        <span>아이디 : </span><br>
+                        <span>계정 상태 : </span><br>
+                        <span>신고 횟수 : </span><br>
+                    </div>
+                </section>
+                <button type="submit" class="change-status-btn">확인</button>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
