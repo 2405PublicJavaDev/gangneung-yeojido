@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>(관리자)공지사항 수정</title>
+  <style>
+    /* 타이틀 폰트 */
+    @font-face {
+      font-family: 'BMDOHYEON';
+      src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+    /* 바디 기본 설정 */
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 20px;
+    }
+    .main-container {
+      padding: 20px;
+      border-radius: 5px;
+      max-width: 800px;
+      margin: 0 auto;
+      }
+    /* 화면 타이틀 */
+    h1 {
+      font-family: 'BMDOHYEON', sans-serif;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 10px;
+      text-align: center;
+    }
+    form div {
+      margin-bottom: 20px;
+    }
+    label {
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    input[type="text"],textarea,select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    textarea {
+      height: 150px;
+    }
+    button {
+      font-size: 1em;
+      width: 100px;
+      height: 30px;
+      background-color: #007FFF;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      margin: 0 5px; /* 버튼 간격 */
+    }
+    button:hover {
+      background: #3399FF;
+    }
+    /* 취소버튼 색상 변경*/
+    .cancel {
+      background-color: #c7c7c7;
+    }
+    /*버튼 가운데 정렬*/
+    .button-container {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+<main>
+  <div class="main-container">
+  <h1>공지사항 수정</h1>
+  <form action="/admin/noticeUpdate" method="post">
+    <div>
+      <label for="noticeTitle">제목</label>
+      <input type="text" id="noticeTitle" name="noticeSubject" required>
+    </div>
+    <div>
+      <label for="noticeContent">내용</label>
+      <textarea id="noticeContent" name="noticeContent" required></textarea>
+    </div>
+    <div>
+      <label for="importantYn">상단고정여부</label>
+      <input type="radio" name="importantYn" value="Y">YES
+      <input type="radio" name="importantYn" value="N">NO
+    </div>
+    <div class="button-container">
+      <button type="submit" class="update">수정</button>
+      <button type="button" class="cancel">취소</button>
+    </div>
+  </form>
+  </div>
+</main>
+</body>
+
+</html>
