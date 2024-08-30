@@ -8,7 +8,7 @@ public class MemberUtils {
     public static String getMemberIdFromSession(HttpSession session) {
         return session.getAttribute(MEMBER_ID).toString();
     }
-    public static String getMemberRoleFromSession(HttpSession session) {
-        return session.getAttribute(MEMBER_ROLE).toString();
+    public static MemberRole getMemberRoleFromSession(HttpSession session) {
+        return MemberRole.valueOf(session.getAttribute(MEMBER_ROLE).toString());
     }
 }
