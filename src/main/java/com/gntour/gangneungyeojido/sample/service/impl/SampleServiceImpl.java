@@ -2,7 +2,7 @@ package com.gntour.gangneungyeojido.sample.service.impl;
 
 import com.gntour.gangneungyeojido.common.FileUtil;
 import com.gntour.gangneungyeojido.common.Page;
-import com.gntour.gangneungyeojido.common.UploadFolder;
+import com.gntour.gangneungyeojido.common.UploadCategory;
 import com.gntour.gangneungyeojido.sample.domain.Sample;
 import com.gntour.gangneungyeojido.sample.domain.SampleFile;
 import com.gntour.gangneungyeojido.sample.dto.SampleSearchCondition;
@@ -22,6 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SampleServiceImpl implements SampleService {
     private final SampleMapper sampleMapper;
+    private final FileUtil fileUtil;
     @Override
     public List<Sample> selectAll() {
         return sampleMapper.selectAll();
@@ -39,14 +40,7 @@ public class SampleServiceImpl implements SampleService {
 
     @Override
     public int insertSample(SampleWriteDTO dto, List<MultipartFile> uploadFiles) throws IOException {
-        FileUtil.uploadFiles(UploadFolder.SAMPLE, uploadFiles, ((fileName, fileRename, filePath) -> {
-            SampleFile sampleFile = new SampleFile();
-            sampleFile.setFileName(fileName);
-            sampleFile.setFileRename(fileRename);
-            sampleFile.setFilePath(filePath);
-            sampleFile.setSampleNo(1L);
-            return sampleMapper.insertSampleFile(sampleFile);
-        }));
+        fileUtil.uploadFiles(UploadCategory.SAMPLE, uploadFiles, 1L);
         return 0;
     }
 }

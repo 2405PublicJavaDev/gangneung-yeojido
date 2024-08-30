@@ -1,7 +1,12 @@
 package com.gntour.gangneungyeojido.common;
 
+import com.gntour.gangneungyeojido.sample.domain.SampleFile;
+import com.gntour.gangneungyeojido.sample.repository.SampleMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -10,32 +15,53 @@ import java.util.List;
 import java.util.UUID;
 
 
+@Component
 @Slf4j
+@RequiredArgsConstructor
 public class FileUtil {
     @Value("${GANGNEUNG_UPLOAD_FOLDER_PATH}")
     private String realFolderPath;
+    private final SampleMapper sampleMapper;
     /**
      * 파일을 업로드하고 업로드한 파일 정보를 DB 에 저장합니다.
-     * @param uploadFolder: upload 할 폴더 위치
+     * @param uploadCategory: upload 할 파일 종류
      * @param files: upload 할 파일 list
-     * @param converter: multipart file 을 db 에 저장할 때 필요한 converter
+     * @param fkNo: foreign key id
      * @return int: db에 저장된 row 개수
      * @throws IOException: 파일 저장에 오류가 발생할 때
      */
-    public static int uploadFiles(UploadFolder uploadFolder, List<MultipartFile> files, MultipartFileToSqlConverter converter) throws IOException {
+    public int uploadFiles(UploadCategory uploadCategory, List<MultipartFile> files, Long fkNo) throws IOException {
         int result = 0;
         for (MultipartFile file : files) {
             if(file.getOriginalFilename() != null && !file.getOriginalFilename().isBlank()) {
                 String fileName = file.getOriginalFilename();
                 String fileRename = fileRename(fileName);
-                File folder = new File(FileConfig.realFolderPath + uploadFolder.toString());
+                File folder = new File(FileConfig.realFolderPath + uploadCategory.toString());
                 if(!folder.exists()) {
                     folder.mkdir();
                 }
                 String filePath = FileConfig.realFolderPath + fileRename;
                 file.transferTo(new File(folder, fileRename));
-                result += converter.fromMultipartFile(fileName, fileRename, filePath);
+                result += executeQuery(uploadCategory, fkNo,fileName, fileRename, filePath);
             }
+        }
+        return result;
+    }
+    
+    private int executeQuery(UploadCategory uploadCategory, Long fkNo,String fileName, String fileRename, String filePath) {
+        int result = 0;
+        switch(uploadCategory) {
+            case SAMPLE -> {
+                SampleFile sampleFile = new SampleFile();
+                sampleFile.setFileName(fileName);
+                sampleFile.setFileRename(fileRename);
+                sampleFile.setFilePath(filePath);
+                sampleFile.setSampleNo(fkNo);
+                result += sampleMapper.insertSampleFile(sampleFile);
+            }
+            case QNA -> {}
+            case DIARY -> {}
+            case REVIEW -> {}
         }
         return result;
     }
