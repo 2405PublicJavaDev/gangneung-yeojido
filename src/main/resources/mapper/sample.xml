@@ -33,4 +33,10 @@
         insert into SAMPLE_FILE
         values (SEQ_SAMPLE_FILE.NEXTVAL, #{filePath}, #{fileName}, #{fileRename}, #{sampleNo})
     </insert>
+    <select id="selectAllSampleFiles" resultType="SampleFile">
+        select * from SAMPLE_FILE WHERE SAMPLE_NO = #{sampleNo}
+    </select>
+    <delete id="deleteSampleFile">
+        delete from SAMPLE_FILE WHERE SAMPLE_NO = #{sampleNo}
+    </delete>
 </mapper>

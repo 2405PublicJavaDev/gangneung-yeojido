@@ -21,4 +21,8 @@ public interface SampleMapper {
     int selectPageConditionCount(SampleSearchCondition searchCondition);
 
     int insertSampleFile(SampleFile sampleFile);
+
+    List<SampleFile> selectAllSampleFiles(Long sampleNo);
+
+    int deleteSampleFile(Long sampleNo);
 }

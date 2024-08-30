@@ -1,5 +1,7 @@
 package com.gntour.gangneungyeojido.sample.controller;
 
+import com.gntour.gangneungyeojido.common.FileUtil;
+import com.gntour.gangneungyeojido.common.UploadCategory;
 import com.gntour.gangneungyeojido.common.exception.BusinessException;
 import com.gntour.gangneungyeojido.common.exception.ErrorCode;
 import com.gntour.gangneungyeojido.sample.dto.SampleSearchCondition;
@@ -21,6 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class SampleController {
+    private final FileUtil fileUtil;
     private final SampleService sampleService;
     @GetMapping("/")
     public String sampleAll(Model model) {
@@ -61,6 +64,12 @@ public class SampleController {
             log.info("file: {}", file.getOriginalFilename());
         }
         sampleService.insertSample(dto, uploadFiles);
+        return "sample/home";
+    }
+
+    @GetMapping("/deleteSampleFile")
+    public String deleteSampleFile() throws IOException {
+        fileUtil.deleteFiles(UploadCategory.SAMPLE, 1L);
         return "sample/home";
     }
 }
