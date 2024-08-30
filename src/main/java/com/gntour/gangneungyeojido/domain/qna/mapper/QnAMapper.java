@@ -2,6 +2,7 @@ package com.gntour.gangneungyeojido.domain.qna.mapper;
 
 public interface QnAMapper {
     void selectAllQnA();
+    void selectAllQnAFileByQnANo();
     void selectAllQnACount();
     void selectAllQnACountByMember();
     void selectAllQnAAnswer();

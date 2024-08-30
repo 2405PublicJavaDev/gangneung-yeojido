@@ -6,6 +6,8 @@ public interface TravelDiaryMapper {
 
     void selectAllDiariesCountByMember();
 
+    void selectAllDiariesFileByDiaryNo();
+
     void selectOneDiaryByMember();
 
     void insertDiary();

@@ -4,6 +4,7 @@ public interface ReviewMapper {
     void selectAllReviews();
     void selectAllReviewsCount();
     void selectAllReviewsCountByMember();
+    void selectAllReviewsFileByReviewNo();
     void selectAllComplainReviews();
     void selectAllComplainReviewsCount();
     void insertReview();
