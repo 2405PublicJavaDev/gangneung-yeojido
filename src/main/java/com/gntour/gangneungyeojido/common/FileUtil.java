@@ -20,8 +20,6 @@ import java.util.UUID;
 @Slf4j
 @RequiredArgsConstructor
 public class FileUtil {
-    @Value("${GANGNEUNG_UPLOAD_FOLDER_PATH}")
-    private String realFolderPath;
     private final SampleMapper sampleMapper;
     /**
      * 파일을 업로드하고 업로드한 파일 정보를 DB 에 저장합니다.
