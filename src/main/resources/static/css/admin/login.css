@@ -1,0 +1,101 @@
+@font-face {
+    font-family: 'BMDOHYEON';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.login-container {
+    padding: 40px;
+    width: 300px;
+}
+
+.login-container h1 {
+    font-family: 'BMDOHYEON';
+    font-size: 24px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.login-container hr {
+    background-color: black;
+    height: 2px;
+    margin-bottom: 20px;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: "Noto Sans KR";
+}
+
+.login-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #007FFF;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-family: "Noto Sans KR";
+    margin-bottom: 10px;
+}
+
+/*.login-container p {*/
+/*    text-align: center;*/
+/*    margin-bottom: 10px;*/
+/*    font-family: "Noto Sans KR";*/
+/*}*/
+
+.signup-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #454545;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: "Noto Sans KR";
+    margin-bottom: 20px;
+}
+
+.find-links {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.find-links a {
+    color: #454545;
+    text-decoration: none;
+    font-size: 14px;
+    font-family: "Noto Sans KR";
+}
+
+.login-btn:hover{
+    background-color: #3399FF;
+}
+.signup-btn:hover{
+    background-color: #808080;
+}
+
+.find-links a:hover {
+    font-weight: bold;
+    color: #3399FF;
+}
+
+input:focus{
+    outline: none;
+    border-color: #3399FF;
+}

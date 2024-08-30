@@ -1,0 +1,120 @@
+@font-face {
+    font-family: 'BMDOHYEON';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.container {
+    display: flex;
+    min-height: 550px
+}
+
+.sidebar {
+    width: 200px;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h3 {
+    font-family: "BMDOHYEON";
+    /*font-size: 20px;*/
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.sidebar hr {
+    background-color: black;
+    height: 1px;
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar li {
+    margin-bottom: 10px;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #333;
+    font-size: 15px;
+    font-family: 'Noto Sans KR';
+}
+
+.sidebar a:hover {
+    color: #007FFF;
+}
+
+main {
+    display: flex;
+    flex: 1;
+    padding: 5px 5px 5px 5px;
+}
+
+.report-list-container {
+    background-color: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.report-list-container h1 {
+    font-family: 'BMDOHYEON';
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.report-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.report-list-table th,
+.report-list-table td {
+    padding: 12px;
+    text-align: center;
+    font-family: 'Noto Sans KR';
+    border: none;
+}
+
+.report-list-table th {
+    background-color: #ffffff;
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+    border-bottom: 2px solid #007FFF;
+}
+
+.report-list-table td {
+    font-size: 14px;
+}
+
+.report-list-table .report-list-number{
+    width: 10%;
+}
+
+.report-list-table .report-list-report-id{
+    width: 20%;
+}
+
+.report-list-table .report-list-subject{
+    width: 50%;
+}
+
+.report-list-table tbody tr {
+    border-bottom: 1px solid #ddd;
+}
+
+.report-list-table tr:hover {
+    background-color: #e2e2e26c;
+}
+
