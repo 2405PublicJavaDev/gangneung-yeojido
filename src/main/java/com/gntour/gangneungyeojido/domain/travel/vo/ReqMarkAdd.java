@@ -8,9 +8,9 @@ public class ReqMarkAdd {
     private String address;
     private String phone;
     private String useTime;
-    private Long parkFee;
-    private Long entryFee;
-    private Long useFee;
+    private String parkFee;
+    private String entryFee;
+    private String useFee;
     private String introduce;
     private String acceptableStatus;
     private String siteUrl;
