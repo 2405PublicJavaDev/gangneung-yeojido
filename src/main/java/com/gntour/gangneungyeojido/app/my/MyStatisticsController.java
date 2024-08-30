@@ -8,7 +8,6 @@ public class MyStatisticsController {
     /**
      * 담당자 : 백인호님
      * 관련 기능 :[마이페이지 기능] 즐겨찾기, 여행 기록, 문의 내역, 답변 내역(문의 내역에 관리자가 답변한 것) 등록 건수 조회
-     * url :
      */
     public void getMyStatistics() {};
 }

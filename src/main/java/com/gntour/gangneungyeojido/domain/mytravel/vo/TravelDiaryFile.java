@@ -1,7 +1,11 @@
 package com.gntour.gangneungyeojido.domain.mytravel.vo;
 
-import java.sql.Timestamp;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.sql.Timestamp;
+@Getter
+@Setter
 public class TravelDiaryFile {
     private Long diaryFileNo;
     private String filePath;
