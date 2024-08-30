@@ -9,11 +9,10 @@ public class TravelInfo {
     private Double longitude;
     private String address;
     private String phone;
-    private Timestamp startTime;
-    private Timestamp endTime;
-    private Long parkFee;
-    private Long entryFee;
-    private Long useFee;
+    private String useTime;
+    private String parkFee;
+    private String entryFee;
+    private String useFee;
     private String introduce;
     private String region;
     private String category;

@@ -7,8 +7,7 @@ public class ReqMarkAdd {
     private String travelName;
     private String address;
     private String phone;
-    private Timestamp startTime;
-    private Timestamp endTime;
+    private String useTime;
     private Long parkFee;
     private Long entryFee;
     private Long useFee;
