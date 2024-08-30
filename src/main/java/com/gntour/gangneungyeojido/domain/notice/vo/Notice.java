@@ -1,8 +1,12 @@
 package com.gntour.gangneungyeojido.domain.notice.vo;
 
-import java.sql.Time;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.sql.Timestamp;
 
+@Getter
+@Setter
 public class Notice {
     private Long noticeNo;
     private String noticeSubject;
