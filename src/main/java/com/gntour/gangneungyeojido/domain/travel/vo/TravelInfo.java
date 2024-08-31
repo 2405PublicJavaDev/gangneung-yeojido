@@ -1,7 +1,14 @@
 package com.gntour.gangneungyeojido.domain.travel.vo;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.sql.Timestamp;
 
+@Getter
+@Setter
+@ToString
 public class TravelInfo {
     private Long travelNo;
     private String travelName;

@@ -1,0 +1,50 @@
+header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.1);
+}
+
+#header-logo {
+    margin-left: 100px;
+    height: 100px;
+}
+
+.header-text-button {
+    background: transparent;
+    border: transparent;
+
+}
+
+#header-tour{
+    margin-left: auto;
+    margin-right: 24px;
+}
+
+.header-login-area {
+    margin-right: 100px;
+}
+
+#header-my {
+    width: 48px;
+    height: 48px;
+}
+
+.header-my-expand {
+    position: absolute;
+    top: 100%;
+    z-index: 999;
+    left: 100%;
+    transform: translateX(calc(-100% - 100px));
+    width: 200px;
+    background: white;
+    display: none;
+}
+
+.header-my-expand>p {
+    border-bottom: 1px solid black;
+    padding: 10px;
+    text-align: center;
+}
