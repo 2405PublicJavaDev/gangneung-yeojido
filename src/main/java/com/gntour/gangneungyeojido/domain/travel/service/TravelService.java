@@ -16,13 +16,13 @@ public interface TravelService {
      * 여행지 정보 Page Service
      */
     void getAllTravelsPage();
-    void getDetailTravel();
+    TravelInfo getDetailTravel(Long travelNo);
     void getOutlineTravel();
     void getThisMonthTravel();
     void getRequestMarkList();
     void getRequestMarkDetail();
     void addRequestMark();
-    void modifyTravel();
+    int modifyTravel();
     void modifyRequestMark();
     void removeTravel();
 }

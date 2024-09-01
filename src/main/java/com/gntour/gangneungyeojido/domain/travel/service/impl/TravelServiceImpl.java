@@ -26,8 +26,9 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public void getDetailTravel() {
-
+    public TravelInfo getDetailTravel(Long travelNo) {
+        TravelInfo travelInfo = travelMapper.selectOneTravel(travelNo);
+        return travelInfo;
     }
 
     @Override
@@ -56,8 +57,9 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public void modifyTravel() {
-
+    public int modifyTravel() {
+        int result = travelMapper.updateTravel();
+        return result;
     }
 
     @Override

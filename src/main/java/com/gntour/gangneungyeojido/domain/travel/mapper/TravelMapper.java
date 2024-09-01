@@ -13,12 +13,12 @@ public interface TravelMapper {
     List<TravelInfo> selectAllTravels();
     void selectAllTravelsCount();
     void selectAllTravelsPage();
-    void selectOneTravel();
+    TravelInfo selectOneTravel(Long travelNo);
     void selectAllRequestMark();
     void selectAllRequestMarkCount();
     void selectOneRequestMark();
     void insertRequestMark();
-    void updateTravel();
+    int updateTravel();
     void updateRequestMark();
     void deleteTravel();
 }

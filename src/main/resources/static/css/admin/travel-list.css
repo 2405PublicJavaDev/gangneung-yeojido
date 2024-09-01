@@ -1,10 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
 @font-face {
     font-family: 'BMDOHYEON';
     src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
 a {
     text-decoration: none;
     color: black;

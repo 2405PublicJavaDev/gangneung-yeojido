@@ -8,44 +8,29 @@
     </head>
     <body>
     <main>
-        <h3>전체 관광지 목록</h3>
+        <h3>전체 여행지 목록</h3>
         <hr><br>
         <div id="travel-list-area">
             <table>
                 <thead>
-                <tr>
-                    <th>번호</th>
-                    <th>여행지명</th>
-                    <th>권역</th>
-                    <th>카테고리</th>
-                </tr>
+                    <tr>
+                        <th>번호</th>
+                        <th>여행지명</th>
+                        <th>권역</th>
+                        <th>카테고리</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>4</td>
-                    <td><a href="#">강포해변</a></td>
-                    <td>경포권</td>
-                    <td>바다·해안</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td><a href="#">강릉대도호부 관아</a></td>
-                    <td>시내권</td>
-                    <td>역사·유적</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td><a href="#">강포해변</a></td>
-                    <td>정동진 옥계권</td>
-                    <td>바다·해안</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td><a href="#">강릉대도호부 관아</a></td>
-                    <td>시내권</td>
-                    <td>역사·유적</td>
-                </tr>
+                    <tr th:each="travel : ${tList}" >
+                        <td>${travel.travelNo}</td>
+                        <td><b><a href="#">${travel.travelName}</a></b></td>
+                        <td>${travel.region}</td>
+                        <td>${travel.category}</td>
+                    </tr>
                 </tbody>
+                <tfoot>
+
+                </tfoot>
             </table>
         </div>
     </main>
