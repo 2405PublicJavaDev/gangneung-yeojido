@@ -1,5 +1,8 @@
 package com.gntour.gangneungyeojido.domain.review.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
 public interface ReviewMapper {
     void selectAllReviews();
     void selectAllReviewsCount();
