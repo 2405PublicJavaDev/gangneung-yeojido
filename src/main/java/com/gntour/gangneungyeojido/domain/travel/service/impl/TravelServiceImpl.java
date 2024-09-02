@@ -49,8 +49,8 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public void getRequestMarkDetail() {
-
+    public ReqMarkAdd getRequestMarkDetail(Long reqMarkAddNo) {
+        return travelMapper.selectOneRequestMark(reqMarkAddNo);
     }
 
     @Override

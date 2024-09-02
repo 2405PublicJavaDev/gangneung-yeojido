@@ -20,6 +20,10 @@
     border-color: #3399FF;
 }
 
+.common-input-error {
+    border: 1px solid red;
+}
+
 .common-primary-btn {
     background-color: #007FFF;
     width: 100%;

@@ -18,7 +18,7 @@ public interface TravelMapper {
     TravelInfo selectOneTravel(Long travelNo);
     List<ReqMarkAdd> selectAllRequestMark(int currentPage, RowBounds rowBounds);
     int selectAllRequestMarkCount();
-    void selectOneRequestMark();
+    ReqMarkAdd selectOneRequestMark(Long reqMarkAddNo);
     void insertRequestMark();
     int updateTravel();
     void updateRequestMark();
