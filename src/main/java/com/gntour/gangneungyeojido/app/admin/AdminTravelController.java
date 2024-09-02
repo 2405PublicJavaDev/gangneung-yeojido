@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-
 @Controller
 @Slf4j
 @RequiredArgsConstructor
@@ -36,7 +34,7 @@ public class AdminTravelController {
     @GetMapping("/admin/travel/{travelNo}")
     public String showTravelDetailPage(@PathVariable Long travelNo
             , Model model) {
-//        TravelInfo travelInfo = tService.getDetailTravel(travelNo);
+        model.addAttribute("detail", travelService.getDetailTravel(travelNo));
         return "admin/travel-detail";
     }
 
