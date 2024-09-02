@@ -18,7 +18,7 @@ public interface TravelService {
     /**
      * 여행지 정보 Page Service
      */
-    void getAllTravelsPage();
+    Page<TravelInfo, Void> getAllTravelsPage(int currentPage);
     TravelInfo getDetailTravel(Long travelNo);
     void getThisMonthTravel();
 

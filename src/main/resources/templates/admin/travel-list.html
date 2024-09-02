@@ -13,6 +13,12 @@
     <hr><br>
     <div id="travel-list-area">
         <table class="common-table">
+            <colgroup>
+                <col style="width: 15%;" />
+                <col style="width: 55%;" />
+                <col style="width: 15%;" />
+                <col style="width: 15%;" />
+            </colgroup>
             <thead>
             <tr>
                 <th>번호</th>
@@ -22,17 +28,25 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="travel : ${tList}" >
-                <td th:text="${travel.travelNo}">${travel.travelNo}</td>
+            <tr th:each="travel : ${page.data}" >
+                <td th:text="${travel.travelNo}"></td>
                 <td><b><a th:href="@{/admin/travel/{no}(no = ${travel.travelNo})}" th:text="${travel.travelName}"></a></b></td>
                 <td th:text="${travel.region}"></td>
                 <td th:text="${travel.category}"></td>
             </tr>
             </tbody>
-            <tfoot>
-
-            </tfoot>
         </table>
+        <ul class="common-pagination">
+            <li class="common-pagination-li-end">
+                <a th:href="@{/admin/travel(currentPage=${page.prevPage})}" th:if="${page.hasPrev}">이전</a>
+            </li>
+            <li th:classappend="${i == page.currentPage} ? 'common-pagination-li common-pagination-li-active' : 'common-pagination-li'" th:each="i : ${#numbers.sequence(page.startNavi, page.endNavi)}">
+                <a th:href="@{/admin/travel(currentPage=${i})}" th:text="${i}"></a>
+            </li>
+            <li class="common-pagination-li-end">
+                <a th:href="@{/admin/travel(currentPage=${page.nextPage})}" th:if="${page.hasNext}">다음</a>
+            </li>
+        </ul>
     </div>
 </main>
 </html>
