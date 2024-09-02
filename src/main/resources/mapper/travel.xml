@@ -13,10 +13,13 @@
         ORDER BY TRAVEL_NO DESC
     </select>
     <select id="selectAllTravelsCount" resultType="_int">
-        SELECT COUNT(*) FROM TRAVEL_INFO
+        SELECT COUNT(*)
+        FROM TRAVEL_INFO
     </select>
     <select id="selectOneTravel" resultType="TravelInfo">
-        SELECT * FROM TRAVEL_INFO WHERE TRAVEL_NO = #{travelNo}
+        SELECT *
+        FROM TRAVEL_INFO
+        WHERE TRAVEL_NO = #{travelNo}
     </select>
     <update id="updateTravel">
 
