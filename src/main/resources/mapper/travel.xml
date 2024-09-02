@@ -7,4 +7,10 @@
         SELECT *
         FROM TRAVEL_INFO
     </select>
+    <select id="selectOneTravel" resultType="TravelInfo">
+        SELECT * FROM TRAVEL_INFO WHERE TRAVEL_NO = #{travelNo};
+    </select>
+    <update id="updateTravel">
+
+    </update>
 </mapper>
