@@ -3,10 +3,14 @@ package com.gntour.gangneungyeojido.domain.member.service.impl;
 import com.gntour.gangneungyeojido.domain.member.mapper.MemberMapper;
 import com.gntour.gangneungyeojido.domain.member.service.MemberService;
 import com.gntour.gangneungyeojido.domain.member.vo.Member;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
+@Slf4j
 public class MemberServiceImpl implements MemberService {
     @Autowired
     private MemberMapper mMapper;
@@ -38,8 +42,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public int modifyMemberInfo(Member member) {
-        int result = mMapper.updateMember(member);
-        return result;
+        return mMapper.updateMember(member);
     }
 
     @Override
@@ -54,7 +57,6 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Member getProfileMember(String memberId) {
-        Member result = mMapper.selectOneById(memberId);
-        return result;
+        return mMapper.selectOneById(memberId);
     }
 }

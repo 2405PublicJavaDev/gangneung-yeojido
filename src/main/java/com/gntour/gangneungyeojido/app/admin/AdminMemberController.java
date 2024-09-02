@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -68,7 +69,6 @@ public class AdminMemberController {
         member = mService.loginMember(member);
         session.setAttribute(MemberUtils.MEMBER_ID, member.getMemberId());
         session.setAttribute(MemberUtils.MEMBER_ROLE, member.getRole());
-//        return "redirect:/";
         return "admin/black-list";
     }
 
@@ -78,14 +78,9 @@ public class AdminMemberController {
      */
     @GetMapping("/admin/search-member")
     public String searchMemberById(@RequestParam String memberId, Model model) {
-//        Member member= new Member();
-//        member.setMemberId(memberId);
-//        member = mService.getProfileMember(member);
         Member member = mService.getProfileMember(memberId);
         model.addAttribute("member", member);
-        System.out.print(member.toString());
-//        return "/admin/member-status";
-        return "redirect:/admin/search-member";
+        return "admin/member-status";
     }
 
     /**
@@ -93,11 +88,9 @@ public class AdminMemberController {
      *  관련기능 : [관리자 기능] 회원 상태 변경
      */
     @PostMapping("/admin/modify-status")
-    public String modifyMemberStatus(Member member) {
-        // int result = mService.modifyMemberInfo(member);
-//        Member modifyMemberStatus = mService.getProfileMember(member.getMemberId());
-//        model.addAttribute("member", modifyMemberStatus);
-//        return "admin/member-status";
-        return "redirect:/admin/search-member";
+    public String modifyMemberStatus(@ModelAttribute Member member) {
+        mService.modifyMemberInfo(member);
+        return "redirect:/admin/search-member?memberId=" + member.getMemberId();
     }
+
 }

@@ -31,10 +31,10 @@
                                 <button type="submit" class="search-btn">검색</button>
                             </form>
                         </div>
-                        <div class="status-container">
+                        <div class="status-container" th:if="${member != null}">
                             <h3>상태 변경</h3>
                             <form action="/admin/modify-status" method="post">
-                                <input type="text" name="memberId" th:value="${member.memberId}">
+                                <input type="hidden" name="memberId" th:value="${member.memberId}">
                                 <input type="radio" name="status" class="change-status" th:checked="${member.status == 'NORMAL'}" value="NORMAL">정상
                                 <input type="radio" name="status" class="change-status" th:checked="${member.status == 'WARN'}" value="WARN">경고
                                 <input type="radio" name="status" class="change-status" th:checked="${member.status == 'BLACK'}" value="BLACK">정지
@@ -44,9 +44,9 @@
                     </section>
                 </div>
                 <div class="right-section">
-                    <div class="member-info-section">
+                    <div class="member-info-section" >
                         <h3>회원 정보</h3>
-                        <dl>
+                        <dl th:if="${member != null}">
                             <dt>아이디</dt>
                             <dd th:text="${member.memberId}"></dd>
                             <dt>계정 상태</dt>
@@ -54,11 +54,10 @@
                             <dt>신고 횟수</dt>
                             <dd>1</dd>
                         </dl>
-<!--                         <a th:if="${member == null}">검색한 회원의 정보가 없습니다.</a>-->
+                         <p th:if="${member == null}">검색한 회원의 정보가 없습니다.</p>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </main>

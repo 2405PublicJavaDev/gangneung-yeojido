@@ -89,16 +89,14 @@ main {
     margin-bottom: 15px;
 }
 
-/* .change-status-btn {
-    display: block;
-    margin: 20px auto 0;
-    background-color: #007FFF;
-    color: white;
-    border: none;
-    padding: 5px 10px;
+.search-member {
+    width: 150px;
+    padding: 5px;
+    border: 1px solid #ddd;
     border-radius: 4px;
-    cursor: pointer;
-} */
+    font-family: "Noto Sans KR";
+}
+
 .change-status-btn {
     display: block;
     margin: 20px auto 0;
