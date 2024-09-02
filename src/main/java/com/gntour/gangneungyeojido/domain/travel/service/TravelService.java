@@ -24,7 +24,7 @@ public interface TravelService {
 
     Page<ReqMarkAdd, Void> getRequestMarkList(int currentPage);
 
-    void getRequestMarkDetail();
+    ReqMarkAdd getRequestMarkDetail(Long reqMarkAddNo);
     void addRequestMark();
     int modifyTravel();
     void modifyRequestMark();

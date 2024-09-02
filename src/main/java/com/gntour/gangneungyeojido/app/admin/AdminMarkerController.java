@@ -1,12 +1,15 @@
 package com.gntour.gangneungyeojido.app.admin;
 
+import com.gntour.gangneungyeojido.common.exception.EmptyResponse;
 import com.gntour.gangneungyeojido.domain.travel.service.TravelService;
+import com.gntour.gangneungyeojido.domain.travel.vo.ReqMarkAdd;
+import com.gntour.gangneungyeojido.domain.travel.vo.TravelInfo;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,15 +30,20 @@ public class AdminMarkerController {
      * 담당자: 조승효님
      * 관련기능: [관리자 기능] 마커 승인 요청 상세 조회
      */
-    public void showReqMarkerDetailPage() {
-
+    @GetMapping("/admin/marker/{reqAddMarkerNo}")
+    public String showReqMarkerDetailPage(@PathVariable Long reqAddMarkerNo, Model model) {
+        model.addAttribute("detail", travelService.getRequestMarkDetail(reqAddMarkerNo));
+        return "admin/marker-detail";
     }
 
     /**
      * 담당자: 조승효님
      * 관련기능: [관리자 기능] 마커 승인 요청 승인, 거부 정하기
      */
-    public void determineReqMarkerAccept() {
-
+    @PostMapping("/admin/marker")
+    @ResponseBody
+    public EmptyResponse determineReqMarkerAccept(@RequestBody @Valid TravelInfo reqMarkAdd) {
+        log.info(reqMarkAdd.toString());
+        return new EmptyResponse();
     }
 }

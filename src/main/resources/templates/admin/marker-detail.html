@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin}"
+      layout:decorator="layout">
+<th:block layout:fragment="script">
+    <script type="text/javascript" src="/js/admin/marker-detail.js"></script>
+</th:block>
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/admin/marker-detail.css">
+</th:block>
+<main layout:fragment="content">
+    <h3>마커 승인 요청</h3>
+    <h4 th:text="'- ' + ${detail.travelName} + ' -'"></h4>
+    <hr><br>
+    <div id="detail-area">
+        <div id="detail-left">
+            <div id="map"></div>
+        </div>
+        <div id="detail-right">
+            <form id="detail-form">
+                <div id="position-info">
+                    <input id="latitude-box" type="text" name="latitude" placeholder="위도" class="common-input">
+                    <input id="longitude-box" type="text" name="longitude" placeholder="경도" class="common-input">
+                </div>
+                <input type="text" name="travelName" placeholder="여행지명" class="common-input" th:value="${detail.travelName}">
+                <input type="text" name="address" placeholder="주소" class="common-input" th:value="${detail.address}">
+                <input type="text" name="phone" placeholder="전화번호" class="common-input" th:value="${detail.phone}">
+                <input type="text" name="useTime" placeholder="이용시간" class="common-input" th:value="${detail.useTime}">
+                <input type="text" name="parkFee" placeholder="주차요금" class="common-input" th:value="${detail.parkFee}">
+                <input type="text" name="entryFee" placeholder="입장료" class="common-input" th:value="${detail.entryFee}">
+                <input type="text" name="useFee" placeholder="시설 이용료" class="common-input" th:value="${detail.useFee}">
+                <input type="text" name="siteUrl" placeholder="사이트 URL" class="common-input" th:value="${detail.siteUrl}">
+                <input type="text" name="imageUrl" placeholder="이미지 URL" class="common-input" th:value="${detail.imageUrl}">
+                <input type="text" name="zoomLevel" placeholder="줌레벨(1~14)" class="common-input">
+                <div id="category-info">
+                    <select name="" id="region">
+                        <option value="" disabled selected>권역</option>
+                        <option value="JUMUNJIN">주문진권</option>
+                        <option value="CITY">시내권</option>
+                        <option value="GYEONGPO">경포권</option>
+                        <option value="DAEGWALLYEONG">대관령권</option>
+                        <option value="JEONGDONGJIN">정동진 옥계권</option>
+                    </select>
+                    <select name="" id="category">
+                        <option value="" disabled selected>카테고리</option>
+                        <option value="MOUNTAIN">산·트래킹</option>
+                        <option value="SEA">바다·해안</option>
+                        <option value="PARK">호수·공원</option>
+                        <option value="HISTORY">역사·유적</option>
+                        <option value="DISPLAY">전시</option>
+                        <option value="LEISURE">레저 체험</option>
+                    </select>
+                </div>
+                <textarea cols="30" rows="10" style="resize:none;" name="introduce" placeholder="공간소개" class="common-input" th:text="${detail.introduce}"></textarea>
+                <button type="button" onclick="markerModify();">수정</button>
+                <button type="button">삭제</button>
+                <button id="cancel" type="button">취소</button>
+            </form>
+        </div>
+    </div>
+</main>
+</html>

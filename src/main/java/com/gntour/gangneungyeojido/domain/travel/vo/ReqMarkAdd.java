@@ -1,9 +1,6 @@
 package com.gntour.gangneungyeojido.domain.travel.vo;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Timestamp;
 
@@ -11,6 +8,7 @@ import java.sql.Timestamp;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class ReqMarkAdd {
     private Long reqMarkAddNo;
     private String travelName;

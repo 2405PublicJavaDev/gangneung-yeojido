@@ -21,4 +21,9 @@
     <select id="selectAllRequestMarkCount" resultType="_int">
         SELECT COUNT(*) FROM REQ_MARK_ADD
     </select>
+    <select id="selectOneRequestMark" resultType="ReqMarkAdd">
+        SELECT *
+        FROM REQ_MARK_ADD
+        WHERE REQ_MARK_ADD_NO = #{reqMarkAddNo}
+    </select>
 </mapper>
