@@ -19,6 +19,7 @@
         </div>
         <div id="detail-right">
             <form id="detail-form">
+                <input type="hidden" name="reqMarkAddNo" th:value="${detail.reqMarkAddNo}" />
                 <div id="position-info">
                     <input id="latitude-box" type="text" name="latitude" placeholder="위도" class="common-input">
                     <input id="longitude-box" type="text" name="longitude" placeholder="경도" class="common-input">
@@ -53,8 +54,8 @@
                     </select>
                 </div>
                 <textarea cols="30" rows="10" style="resize:none;" name="introduce" placeholder="공간소개" class="common-input" th:text="${detail.introduce}"></textarea>
-                <button type="button" onclick="markerModify();">수정</button>
-                <button type="button">삭제</button>
+                <button type="button" onclick="markerModify(true);">승인</button>
+                <button type="button" onclick="markerModify(false);">거부</button>
                 <button id="cancel" type="button">취소</button>
             </form>
         </div>
