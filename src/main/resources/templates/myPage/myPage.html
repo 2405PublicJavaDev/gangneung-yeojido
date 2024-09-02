@@ -14,16 +14,16 @@
     <script type="text/javascript" src="/js/main/index.js"></script>
 </th:block>
 <th:block layout:fragment="css">
-    <link rel="stylesheet" href="/css/myPage.css">
+    <link rel="stylesheet" href="/css/main/myPage/myPage.css">
 </th:block>
 <main layout:fragment="content">
     <div class="my-sidebar">
         <div class="my-sideList">
             <h2>마이 페이지</h2>
             <ul>
-                <li><h3>즐겨찾기 목록</h3></li>
+                <li><a href="/myPage.html"><b>즐결찾기 목록</b></a></li>
                 <li><a href="#">회원 정보 수정</a></li>
-                <li><a href="#">나의 리뷰 목록</a></li>
+                <li><a href="/myReview.html">나의 리뷰 목록</a></li>
                 <li><a href="#">나의 여행 일기 목록</a></li>
             </ul>
             <div class="withdrawal"><a><b>회원탈퇴</b></a></div>
@@ -51,11 +51,11 @@
                     </table>
                 </div>
             </div>
-            <div class="my-info">
-                <div class="my-inquiry">내 활동 내역</div>
-                <div class="my-activity">내 문의 내역</div>
-            </div>
         </div>
+            <div class="my-info">
+                <div class="my-inquiry">내 문의 내역</div>
+                <div class="my-activity">내 활동 내역</div>
+            </div>
     </div>
 </main>
 </html>
