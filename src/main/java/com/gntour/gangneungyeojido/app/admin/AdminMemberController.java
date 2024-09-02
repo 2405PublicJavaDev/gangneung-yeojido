@@ -1,17 +1,23 @@
 package com.gntour.gangneungyeojido.app.admin;
 
+import com.gntour.gangneungyeojido.common.MemberUtils;
 import com.gntour.gangneungyeojido.domain.member.service.MemberService;
+import com.gntour.gangneungyeojido.domain.member.vo.Member;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @Slf4j
 public class AdminMemberController {
-//    @Autowired
-//    private MemberService mService;
+
+    @Autowired
+    private MemberService mService;
 
     /**
      *  담당자 : 이경학님
@@ -55,17 +61,43 @@ public class AdminMemberController {
      *  관련기능 : [관리자 기능] 관리자 로그인
      */
     @PostMapping("/admin/login")
-    public void loginAdmin() {}
+    public String loginAdmin(@RequestParam String memberId, @RequestParam String password, HttpSession session) {
+        Member member = new Member();
+        member.setMemberId(memberId);
+        member.setPassword(password);
+        member = mService.loginMember(member);
+        session.setAttribute(MemberUtils.MEMBER_ID, member.getMemberId());
+        session.setAttribute(MemberUtils.MEMBER_ROLE, member.getRole());
+//        return "redirect:/";
+        return "admin/black-list";
+    }
 
     /**
      *  담당자 : 이경학님
      *  관련기능 : [관리자 기능] 회원 상태 조회
      */
-    public void searchMemberById() {}
+    @GetMapping("/admin/search-member")
+    public String searchMemberById(@RequestParam String memberId, Model model) {
+//        Member member= new Member();
+//        member.setMemberId(memberId);
+//        member = mService.getProfileMember(member);
+        Member member = mService.getProfileMember(memberId);
+        model.addAttribute("member", member);
+        System.out.print(member.toString());
+//        return "/admin/member-status";
+        return "redirect:/admin/search-member";
+    }
 
     /**
      *  담당자 : 이경학님
      *  관련기능 : [관리자 기능] 회원 상태 변경
      */
-    public void modifyMemberStatus() {}
+    @PostMapping("/admin/modify-status")
+    public String modifyMemberStatus(Member member) {
+        // int result = mService.modifyMemberInfo(member);
+//        Member modifyMemberStatus = mService.getProfileMember(member.getMemberId());
+//        model.addAttribute("member", modifyMemberStatus);
+//        return "admin/member-status";
+        return "redirect:/admin/search-member";
+    }
 }

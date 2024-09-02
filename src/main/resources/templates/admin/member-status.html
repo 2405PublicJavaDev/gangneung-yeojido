@@ -26,17 +26,19 @@
                     <section class="search-status-section">
                         <div class="member-container">
                             <h3>아이디 검색</h3>
-                            <form>
-                                <input type="search" class="search-member">
+                            <form action="/admin/search-member" method="get">
+                                <input type="search" class="search-member" name="memberId">
                                 <button type="submit" class="search-btn">검색</button>
                             </form>
                         </div>
                         <div class="status-container">
                             <h3>상태 변경</h3>
-                            <form>
-                                <input type="radio" name="status" class="change-status" value="정상" checked>정상
-                                <input type="radio" name="status" class="change-status" value="경고">경고
-                                <input type="radio" name="status" class="change-status" value="정지">정지
+                            <form action="/admin/modify-status" method="post">
+                                <input type="text" name="memberId" th:value="${member.memberId}">
+                                <input type="radio" name="status" class="change-status" th:checked="${member.status == 'NORMAL'}" value="NORMAL">정상
+                                <input type="radio" name="status" class="change-status" th:checked="${member.status == 'WARN'}" value="WARN">경고
+                                <input type="radio" name="status" class="change-status" th:checked="${member.status == 'BLACK'}" value="BLACK">정지
+                                <button type="submit" class="change-status-btn">확인</button>
                             </form>
                         </div>
                     </section>
@@ -46,16 +48,17 @@
                         <h3>회원 정보</h3>
                         <dl>
                             <dt>아이디</dt>
-                            <dd></dd>
+                            <dd th:text="${member.memberId}"></dd>
                             <dt>계정 상태</dt>
-                            <dd></dd>
+                            <dd th:text="${member.status}"></dd>
                             <dt>신고 횟수</dt>
-                            <dd></dd>
+                            <dd>1</dd>
                         </dl>
+<!--                         <a th:if="${member == null}">검색한 회원의 정보가 없습니다.</a>-->
                     </div>
                 </div>
             </div>
-            <button type="submit" class="change-status-btn">확인</button>
+
         </div>
     </div>
 </main>

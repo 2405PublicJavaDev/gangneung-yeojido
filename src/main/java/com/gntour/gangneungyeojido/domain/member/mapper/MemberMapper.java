@@ -1,13 +1,14 @@
 package com.gntour.gangneungyeojido.domain.member.mapper;
 
+import com.gntour.gangneungyeojido.domain.member.vo.Member;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface MemberMapper {
-    void selectOneById();
+    Member selectOneById(String memberId);
     void selectAllBlackListMember();
     void selectAllBlackListMemberCount();
     void insertMember();
-    void updateMember();
+    int updateMember(Member member);
     void deleteMember();
 }
