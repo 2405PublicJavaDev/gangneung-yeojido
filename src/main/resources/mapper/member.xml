@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gntour.gangneungyeojido.domain.member.mapper.MemberMapper">
+    <select id="selectOneById" resultType="Member">
+        SELECT * FROM MEMBER WHERE MEMBER_ID = #{memberId}
+    </select>
+    <update id="updateMember">
+        UPDATE MEMBER
+        <set>
+            <if test="member.password != null"> PASSWORD = #{member.password}, </if>
+            <if test="member.name != null"> NAME = #{member.name}, </if>
+            <if test="member.birthDate != null"> BIRTH_DATE = #{member.birthDate}, </if>
+            <if test="member.email != null"> EMAIL = #{member.email}, </if>
+            <if test="member.phone != null"> PHONE = #{member.phone}, </if>
+            <if test="member.status != null"> STATUS = #{member.status}, </if>
+            <if test="member.deleteYn != null"> DELETE_YN = #{member.deleteYn}, </if>
+            <if test="member.role != null"> ROLE = #{member.role}, </if>
+            <if test="member.regDate != null"> REG_DATE = #{member.regDate}, </if>
+            <if test="member.updateDate != null"> UPDATE_DATE = #{member.updateDate}, </if>
+        </set>
+        WHERE MEMBER_ID = #{member.memberId}
+    </update>
+</mapper>

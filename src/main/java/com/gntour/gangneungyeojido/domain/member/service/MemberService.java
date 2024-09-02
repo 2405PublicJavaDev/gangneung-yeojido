@@ -1,12 +1,15 @@
 package com.gntour.gangneungyeojido.domain.member.service;
 
+import com.gntour.gangneungyeojido.domain.member.vo.Member;
+import org.apache.ibatis.session.SqlSession;
+
 public interface MemberService {
-    void loginMember();
+    Member loginMember(Member member);
     void joinMember();
     void findMemberId();
     void findPassword();
-    void modifyMemberInfo();
+    int modifyMemberInfo(Member member);
     void removeMember();
     void getAllBlackListMember();
-    void getProfileMember();
+    Member getProfileMember(String memberId);
 }
