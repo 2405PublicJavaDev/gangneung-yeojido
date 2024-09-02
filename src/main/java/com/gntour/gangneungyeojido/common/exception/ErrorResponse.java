@@ -18,18 +18,25 @@ public class ErrorResponse {
     private String message;
     private List<FieldError> errors;
     private String code;
+    private String additionalMessage;
 
 
     private ErrorResponse(final ErrorCode code, final List<FieldError> errors) {
         this.message = code.getMessage();
         this.errors = errors;
         this.code = code.getCode();
+        this.additionalMessage = "";
     }
 
     private ErrorResponse(final ErrorCode code) {
+        this(code, "");
+    }
+
+    private ErrorResponse(final ErrorCode code, String additionalMessage) {
         this.message = code.getMessage();
         this.code = code.getCode();
         this.errors = new ArrayList<>();
+        this.additionalMessage = additionalMessage;
     }
 
 
@@ -45,10 +52,8 @@ public class ErrorResponse {
         return new ErrorResponse(code, errors);
     }
 
-    public static ErrorResponse of(MethodArgumentTypeMismatchException e) {
-        final String value = e.getValue() == null ? "" : e.getValue().toString();
-        final List<FieldError> errors = FieldError.of(e.getName(), value, e.getErrorCode());
-        return new ErrorResponse(ErrorCode.INVALID_TYPE_VALUE, errors);
+    public static ErrorResponse of(final ErrorCode code, String additionalMessage) {
+        return new ErrorResponse(code, additionalMessage);
     }
 
 

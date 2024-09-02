@@ -29,7 +29,7 @@
             <tbody>
             <tr th:each="marker : ${page.data}" >
                 <td th:text="${marker.reqMarkAddNo}"></td>
-                <td><b><a th:href="@{/admin/marker/{no}(no = ${marker.reqMarkAddNo})}" th:text="${marker.travelName}"></a></b></td>
+                <td><b><a th:href="@{/admin/marker/{no}(no = ${marker.reqMarkAddNo}, currentPage=${page.currentPage})}" th:text="${marker.travelName}"></a></b></td>
                 <td th:text="${marker.memberId}"></td>
                 <td th:text="${marker.acceptableStatus}"></td>
             </tr>

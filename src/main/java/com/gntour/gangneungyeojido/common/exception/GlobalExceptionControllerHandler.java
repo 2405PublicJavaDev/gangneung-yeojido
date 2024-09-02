@@ -2,6 +2,7 @@ package com.gntour.gangneungyeojido.common.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -9,11 +10,16 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.rmi.server.UID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionControllerHandler {
     private static final String ERROR_PAGE_MSG = "msg";
     private static final String ERROR_PAGE = "common/error";
+    private static final Pattern UNIQUE_PATTERN = Pattern.compile("ORA-00001: unique constraint \\(([^)]+)\\) violated");
     /**
      * javax.validation.Valid or @Validated 으로 binding error 발생시 발생한다.
      * HttpMessageConverter 에서 등록한 HttpMessageConverter binding 못할경우 발생
@@ -43,6 +49,23 @@ public class GlobalExceptionControllerHandler {
         if (isAjax(request)) {
             final ErrorResponse response = ErrorResponse.of(e.getErrorCode());
             return new ResponseEntity<>(response, e.getErrorCode().getStatus());
+        }
+        model.addAttribute(ERROR_PAGE_MSG, e.getMessage());
+        return ERROR_PAGE;
+    }
+
+    @ExceptionHandler(DuplicateKeyException.class)
+    public Object handleDuplicateKeyException(DuplicateKeyException e, Model model, HttpServletRequest request) {
+        log.error("handleDuplicateKeyException", e);
+        Matcher matcher = UNIQUE_PATTERN.matcher(e.getMessage());
+        String additionalMessage = "";
+        // 매칭이 되는지 확인하고 제약 조건 이름 추출
+        if (matcher.find()) {
+            additionalMessage = matcher.group(1);
+        }
+        if (isAjax(request)) {
+            final ErrorResponse response = ErrorResponse.of(ErrorCode.DUPLICATE_VALUE, additionalMessage);
+            return new ResponseEntity<>(response, ErrorCode.DUPLICATE_VALUE.getStatus());
         }
         model.addAttribute(ERROR_PAGE_MSG, e.getMessage());
         return ERROR_PAGE;

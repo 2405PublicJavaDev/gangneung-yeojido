@@ -1,7 +1,9 @@
 package com.gntour.gangneungyeojido.app.admin;
 
 import com.gntour.gangneungyeojido.app.admin.dto.ReqMarkAddRequest;
+import com.gntour.gangneungyeojido.common.exception.BusinessException;
 import com.gntour.gangneungyeojido.common.exception.EmptyResponse;
+import com.gntour.gangneungyeojido.common.exception.ErrorCode;
 import com.gntour.gangneungyeojido.domain.travel.service.TravelService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -42,8 +44,10 @@ public class AdminMarkerController {
     @PostMapping("/admin/marker")
     @ResponseBody
     public EmptyResponse determineReqMarkerAccept(@RequestBody @Valid ReqMarkAddRequest reqMarkAdd) {
-        log.info(reqMarkAdd.toString());
-        travelService.determineRequestMark(reqMarkAdd);
+        int result = travelService.determineRequestMark(reqMarkAdd);
+        if(result == 0) {
+            throw new BusinessException(ErrorCode.NO_UPDATE);
+        }
         return new EmptyResponse();
     }
 }

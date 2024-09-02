@@ -9,12 +9,14 @@ import com.gntour.gangneungyeojido.domain.travel.vo.TravelInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional
 public class TravelServiceImpl implements TravelService {
     private final TravelMapper travelMapper;
 
@@ -77,17 +79,27 @@ public class TravelServiceImpl implements TravelService {
         if(reqMarkAddRequest.getIsAccepted()) {
             reqMarkAdd.setAcceptableStatus("Y");
             result += travelMapper.updateRequestMark(reqMarkAdd);
-//            TravelInfo travelInfo = new TravelInfo();
-//            travelInfo.setTravelName(reqMarkAddRequest.getTravelName());
-//            travelInfo.setAddress(reqMarkAddRequest.getAddress());
-//            travelInfo.setPhone(reqMarkAddRequest.getPhone());
-//            travelInfo.setUseTime(reqMarkAddRequest.getUseTime());
-//            travelInfo.setParkFee(reqMarkAddRequest.getParkFee());
-//            travelInfo.setEntryFee(reqMarkAddRequest.getEntryFee());
-//            travelInfo.setUseFee(reqMarkAddRequest.getUseFee());
-//            travelInfo.setSiteUrl(reqMarkAddRequest.getSiteUrl());
-//            travelInfo.setImageUrl(reqMarkAddRequest.getImageUrl());
-//            result += travelMapper.insertTravel(travelInfo);
+            TravelInfo travelInfo = new TravelInfo();
+            travelInfo.setLatitude(reqMarkAddRequest.getLatitude());
+            travelInfo.setLongitude(reqMarkAddRequest.getLongitude());
+            travelInfo.setTravelName(reqMarkAddRequest.getTravelName());
+            travelInfo.setAddress(reqMarkAddRequest.getAddress());
+            travelInfo.setPhone(reqMarkAddRequest.getPhone());
+            travelInfo.setUseTime(reqMarkAddRequest.getUseTime());
+            travelInfo.setParkFee(reqMarkAddRequest.getParkFee());
+            travelInfo.setEntryFee(reqMarkAddRequest.getEntryFee());
+            travelInfo.setUseFee(reqMarkAddRequest.getUseFee());
+            travelInfo.setSiteUrl(reqMarkAddRequest.getSiteUrl());
+            travelInfo.setImageUrl(reqMarkAddRequest.getImageUrl());
+            travelInfo.setRegion(reqMarkAddRequest.getRegion());
+            travelInfo.setCategory(reqMarkAddRequest.getCategory());
+            travelInfo.setIntroduce(reqMarkAddRequest.getIntroduce());
+            if(reqMarkAddRequest.getZoomLevel() == null) {
+                travelInfo.setZoomLevel(1L);
+            } else {
+                travelInfo.setZoomLevel(reqMarkAddRequest.getZoomLevel());
+            }
+            result += travelMapper.insertTravel(travelInfo);
         } else {
             reqMarkAdd.setAcceptableStatus("N");
             result += travelMapper.updateRequestMark(reqMarkAdd);
