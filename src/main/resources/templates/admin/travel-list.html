@@ -23,10 +23,10 @@
             </thead>
             <tbody>
             <tr th:each="travel : ${tList}" >
-                <td>${travel.travelNo}</td>
-                <td><b><a href="#">${travel.travelName}</a></b></td>
-                <td>${travel.region}</td>
-                <td>${travel.category}</td>
+                <td th:text="${travel.travelNo}">${travel.travelNo}</td>
+                <td><b><a th:href="@{/admin/travel/{no}(no = ${travel.travelNo})}" th:text="${travel.travelName}"></a></b></td>
+                <td th:text="${travel.region}"></td>
+                <td th:text="${travel.category}"></td>
             </tr>
             </tbody>
             <tfoot>
