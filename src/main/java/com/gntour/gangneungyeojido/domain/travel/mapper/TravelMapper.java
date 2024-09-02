@@ -19,8 +19,9 @@ public interface TravelMapper {
     List<ReqMarkAdd> selectAllRequestMark(int currentPage, RowBounds rowBounds);
     int selectAllRequestMarkCount();
     ReqMarkAdd selectOneRequestMark(Long reqMarkAddNo);
+    int insertTravel(TravelInfo travelInfo);
     void insertRequestMark();
     int updateTravel();
-    void updateRequestMark();
+    int updateRequestMark(ReqMarkAdd reqMarkAdd);
     void deleteTravel();
 }

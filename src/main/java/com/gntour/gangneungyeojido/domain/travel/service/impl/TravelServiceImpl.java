@@ -1,5 +1,6 @@
 package com.gntour.gangneungyeojido.domain.travel.service.impl;
 
+import com.gntour.gangneungyeojido.app.admin.dto.ReqMarkAddRequest;
 import com.gntour.gangneungyeojido.common.Page;
 import com.gntour.gangneungyeojido.domain.travel.mapper.TravelMapper;
 import com.gntour.gangneungyeojido.domain.travel.service.TravelService;
@@ -59,14 +60,45 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public int modifyTravel() {
-        int result = travelMapper.updateTravel();
+    public int determineRequestMark(ReqMarkAddRequest reqMarkAddRequest) {
+        int result = 0;
+        ReqMarkAdd reqMarkAdd = new ReqMarkAdd();
+        reqMarkAdd.setReqMarkAddNo(reqMarkAddRequest.getReqMarkAddNo());
+        reqMarkAdd.setTravelName(reqMarkAddRequest.getTravelName());
+        reqMarkAdd.setAddress(reqMarkAddRequest.getAddress());
+        reqMarkAdd.setPhone(reqMarkAddRequest.getPhone());
+        reqMarkAdd.setUseTime(reqMarkAddRequest.getUseTime());
+        reqMarkAdd.setParkFee(reqMarkAddRequest.getParkFee());
+        reqMarkAdd.setEntryFee(reqMarkAddRequest.getEntryFee());
+        reqMarkAdd.setUseFee(reqMarkAddRequest.getUseFee());
+        reqMarkAdd.setIntroduce(reqMarkAddRequest.getIntroduce());
+        reqMarkAdd.setSiteUrl(reqMarkAddRequest.getSiteUrl());
+        reqMarkAdd.setImageUrl(reqMarkAddRequest.getImageUrl());
+        if(reqMarkAddRequest.getIsAccepted()) {
+            reqMarkAdd.setAcceptableStatus("Y");
+            result += travelMapper.updateRequestMark(reqMarkAdd);
+//            TravelInfo travelInfo = new TravelInfo();
+//            travelInfo.setTravelName(reqMarkAddRequest.getTravelName());
+//            travelInfo.setAddress(reqMarkAddRequest.getAddress());
+//            travelInfo.setPhone(reqMarkAddRequest.getPhone());
+//            travelInfo.setUseTime(reqMarkAddRequest.getUseTime());
+//            travelInfo.setParkFee(reqMarkAddRequest.getParkFee());
+//            travelInfo.setEntryFee(reqMarkAddRequest.getEntryFee());
+//            travelInfo.setUseFee(reqMarkAddRequest.getUseFee());
+//            travelInfo.setSiteUrl(reqMarkAddRequest.getSiteUrl());
+//            travelInfo.setImageUrl(reqMarkAddRequest.getImageUrl());
+//            result += travelMapper.insertTravel(travelInfo);
+        } else {
+            reqMarkAdd.setAcceptableStatus("N");
+            result += travelMapper.updateRequestMark(reqMarkAdd);
+        }
         return result;
     }
 
     @Override
-    public void modifyRequestMark() {
-
+    public int modifyTravel() {
+        int result = travelMapper.updateTravel();
+        return result;
     }
 
     @Override

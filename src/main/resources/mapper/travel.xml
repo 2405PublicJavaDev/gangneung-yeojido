@@ -26,4 +26,43 @@
         FROM REQ_MARK_ADD
         WHERE REQ_MARK_ADD_NO = #{reqMarkAddNo}
     </select>
+    <update id="updateRequestMark" parameterType="ReqMarkAdd" >
+        UPDATE REQ_MARK_ADD
+        <set>
+            <if test="travelName != null" >
+                TRAVEL_NAME = #{travelName},
+            </if>
+            <if test="address != null" >
+                ADDRESS = #{address},
+            </if>
+            <if test="phone != null" >
+                PHONE = #{phone},
+            </if>
+            <if test="useTime != null" >
+                USE_TIME = #{useTime},
+            </if>
+            <if test="parkFee != null" >
+                PARK_FEE = #{parkFee},
+            </if>
+            <if test="entryFee != null" >
+                ENTRY_FEE = #{entryFee},
+            </if>
+            <if test="useFee != null" >
+                USE_FEE = #{useFee},
+            </if>
+            <if test="introduce != null" >
+                INTRODUCE = #{introduce},
+            </if>
+            <if test="siteUrl != null" >
+                SITE_URL = #{siteUrl},
+            </if>
+            <if test="imageUrl != null" >
+                IMAGE_URL = #{imageUrl},
+            </if>
+            <if test="acceptableStatus != null" >
+                ACCEPTABLE_STATUS = #{acceptableStatus},
+            </if>
+        </set>
+        WHERE REQ_MARK_ADD_NO = #{reqMarkAddNo}
+    </update>
 </mapper>

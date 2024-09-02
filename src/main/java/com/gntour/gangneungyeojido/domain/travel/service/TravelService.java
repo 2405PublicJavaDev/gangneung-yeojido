@@ -1,5 +1,6 @@
 package com.gntour.gangneungyeojido.domain.travel.service;
 
+import com.gntour.gangneungyeojido.app.admin.dto.ReqMarkAddRequest;
 import com.gntour.gangneungyeojido.common.Page;
 import com.gntour.gangneungyeojido.domain.travel.vo.ReqMarkAdd;
 import com.gntour.gangneungyeojido.domain.travel.vo.TravelInfo;
@@ -26,7 +27,7 @@ public interface TravelService {
 
     ReqMarkAdd getRequestMarkDetail(Long reqMarkAddNo);
     void addRequestMark();
+    int determineRequestMark(ReqMarkAddRequest reqMarkAdd);
     int modifyTravel();
-    void modifyRequestMark();
     void removeTravel();
 }
