@@ -37,11 +37,6 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public void getOutlineTravel() {
-
-    }
-
-    @Override
     public void getThisMonthTravel() {
 
     }
