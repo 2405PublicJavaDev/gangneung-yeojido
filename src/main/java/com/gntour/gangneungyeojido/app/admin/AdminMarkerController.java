@@ -4,7 +4,6 @@ public class AdminMarkerController {
     /**
      * 담당자: 조승효님
      * 관련기능: [관리자 기능] 마커 승인 요청 리스트 조회
-     * url:
      */
     public void showReqMarkerListPage() {
 
@@ -13,7 +12,6 @@ public class AdminMarkerController {
     /**
      * 담당자: 조승효님
      * 관련기능: [관리자 기능] 마커 승인 요청 상세 조회
-     * url:
      */
     public void showReqMarkerDetailPage() {
 

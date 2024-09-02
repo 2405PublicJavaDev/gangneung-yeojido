@@ -1,38 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>강릉여지도-관리자-여행지-리스트조회</title>
-        <link rel="stylesheet" href="/css/admin/travel-list.css">
-        <link rel="stylesheet" href="/css/admin/reset.css">
-    </head>
-    <body>
-    <main>
-        <h3>전체 여행지 목록</h3>
-        <hr><br>
-        <div id="travel-list-area">
-            <table>
-                <thead>
-                    <tr>
-                        <th>번호</th>
-                        <th>여행지명</th>
-                        <th>권역</th>
-                        <th>카테고리</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="travel : ${tList}" >
-                        <td>${travel.travelNo}</td>
-                        <td><b><a href="#">${travel.travelName}</a></b></td>
-                        <td>${travel.region}</td>
-                        <td>${travel.category}</td>
-                    </tr>
-                </tbody>
-                <tfoot>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin}"
+      layout:decorator="layout">
+<th:block layout:fragment="script">
+</th:block>
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/admin/travel-list.css">
+</th:block>
+<main layout:fragment="content">
+    <h3>전체 여행지 목록</h3>
+    <hr><br>
+    <div id="travel-list-area">
+        <table class="common-table">
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>여행지명</th>
+                <th>권역</th>
+                <th>카테고리</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="travel : ${tList}" >
+                <td>${travel.travelNo}</td>
+                <td><b><a href="#">${travel.travelName}</a></b></td>
+                <td>${travel.region}</td>
+                <td>${travel.category}</td>
+            </tr>
+            </tbody>
+            <tfoot>
 
-                </tfoot>
-            </table>
-        </div>
-    </main>
-    </body>
+            </tfoot>
+        </table>
+    </div>
+</main>
 </html>

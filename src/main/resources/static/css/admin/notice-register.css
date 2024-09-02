@@ -1,0 +1,48 @@
+main {
+    padding: 20px;
+}
+.main-container {
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+/* 화면 타이틀 */
+h1 {
+    font-family: 'BMDOHYEON', sans-serif;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    text-align: center;
+}
+form div {
+    margin-bottom: 20px;
+}
+label {
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+.content-input {
+    height: 150px;
+}
+button {
+    font-size: 1em;
+    width: 100px;
+    height: 30px;
+    background-color: #007FFF;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    margin: 0 5px; /* 버튼 간격 */
+}
+button:hover {
+    background: #3399FF;
+}
+/* 취소버튼 색상 변경*/
+.cancel {
+    background-color: #c7c7c7;
+}
+/*버튼 가운데 정렬*/
+.button-container {
+    text-align: center;
+}

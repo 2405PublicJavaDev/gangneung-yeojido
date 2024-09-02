@@ -1,50 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-      <meta charset="UTF-8">
-      <title>나의 여행 일기 목록</title>
-      <link rel="stylesheet" href="/css/myPage.css">
-  </head>
-  <body>
-  <div class="my-sidebar">
-      <div class="my-sideList">
-          <h2>마이 페이지</h2>
-          <ul>
-              <li><h3>즐겨찾기 목록</h3></li>
-              <li><a href="#">회원 정보 수정</a></li>
-              <li><a href="#">나의 리뷰 목록</a></li>
-              <li><a href="#">나의 여행 일기 목록</a></li>
-          </ul>
-          <div class="withdrawal"><a><b>회원탈퇴</b></a></div>
-      </div>
-  </div>
-  <main>
-      <div class="my-subject"><h1>마이페이지</h1></div>
-      <div class="main-content">
-          <div class="sort">sort</div>
-          <div class="favorite1">
-              <div class="star">북마크</div>
-              <div class="favorite-img">여행지 이미지</div>
-              <div class="favorite-info">
-                  <table>
-                      <thead>
-                      <tr>
-                          <th>여행지 정보</th>
-                      </tr>
-                      </thead>
-                      <tbody>
-                      <tr>
-                          <td>정보</td>
-                      </tr>
-                      </tbody>
-                  </table>
-              </div>
-          </div>
-          <div class="my-info">
-              <div class="my-inquiry">내 활동 내역</div>
-              <div class="my-activity">내 문의 내역</div>
-          </div>
-      </div>
-  </main>
-  </body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}"
+      layout:decorator="layout">
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        let travelInfos = /*[[${travelInfos}]]*/
+            console.log(travelInfos);
+    </script>
+    <script type="text/javascript" src="/js/main/mapdata.js"></script>
+    <script type="text/javascript" src="/js/main/mapconfig.js"></script>
+    <script type="text/javascript" src="/js/main/mapmanipulate.js"></script>
+    <script type="text/javascript" src="/js/main/index.js"></script>
+</th:block>
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/myPage.css">
+</th:block>
+<main layout:fragment="content">
+    <div class="my-sidebar">
+        <div class="my-sideList">
+            <h2>마이 페이지</h2>
+            <ul>
+                <li><h3>즐겨찾기 목록</h3></li>
+                <li><a href="#">회원 정보 수정</a></li>
+                <li><a href="#">나의 리뷰 목록</a></li>
+                <li><a href="#">나의 여행 일기 목록</a></li>
+            </ul>
+            <div class="withdrawal"><a><b>회원탈퇴</b></a></div>
+        </div>
+    </div>
+    <div>
+        <div class="my-subject"><h1>마이페이지</h1></div>
+        <div class="main-content">
+            <div class="sort">sort</div>
+            <div class="favorite1">
+                <div class="star">북마크</div>
+                <div class="favorite-img">여행지 이미지</div>
+                <div class="favorite-info">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>여행지 정보</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>정보</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="my-info">
+                <div class="my-inquiry">내 활동 내역</div>
+                <div class="my-activity">내 문의 내역</div>
+            </div>
+        </div>
+    </div>
+</main>
 </html>

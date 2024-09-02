@@ -28,7 +28,7 @@ public class AdminTravelController {
      * 담당자 : 엄태운님
      * 관련기능 : [관리자 기능] 등록된 여행지 리스트 확인
      */
-    @GetMapping("/admin/travel-list")
+    @GetMapping("/admin/travel")
     public String showAllTravelPage(Model model) {
         log.info("showAllTravelPage");
         List<TravelInfo> tList = tService.getAllTravels();
@@ -40,11 +40,11 @@ public class AdminTravelController {
      * 담당자 : 엄태운님
      * 관련기능 : [관리자 기능] 등록된 여행지 상세 정보 조회, [관리자 기능(페이지 폼)] 등록된 여행지 수정
      */
-    @GetMapping("/admin/travel-detail/{travelNo}")
+    @GetMapping("/admin/travel/{travelNo}")
     public String showTravelDetailPage(@PathVariable Long travelNo
             , Model model) {
         log.info("showTravelDetailPage");
-        TravelInfo travelInfo = tService.getDetailTravel(travelNo);
+//        TravelInfo travelInfo = tService.getDetailTravel(travelNo);
         return "admin/travel-detail";
     }
 

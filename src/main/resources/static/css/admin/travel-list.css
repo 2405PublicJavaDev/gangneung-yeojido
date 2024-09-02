@@ -32,39 +32,3 @@ hr {
     height: 500px;
     margin: 0 auto;
 }
-table {
-    border-collapse: collapse;
-    text-align: center;
-    margin: 0 auto;
-}
-th {
-    font-size: 20px;
-    color: white;
-    height: 45px;
-    width: 200px;
-    background-color: #007FFF;
-}
-th:first-child {
-    width: 80px;
-}
-th:nth-child(2) {
-    width: 350px;
-}
-th:nth-child(3), th:nth-child(4) {
-    width: 150px;
-}
-th {
-    font-family: "Noto Sans KR", sans-serif;
-    font-style: normal;
-    font-weight: 550;
-    font-size: 20px;
-}
-td {
-    font-family: "Noto Sans KR", sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    color: black;
-    height: 40px;
-    border: 1px solid #DEDEDE;
-}

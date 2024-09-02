@@ -21,7 +21,7 @@ public class AdminNoticeController {
      * 담당자 : 김윤경님
      * 관련 기능 : [관리자 기능(페이지 폼)] 공지사항 등록
      */
-    @GetMapping("/admin/noticeRegister")
+    @GetMapping("/admin/notice/register")
     public String showRegisterNoticePage(){
         return "admin/noticeRegister";
     }
@@ -29,7 +29,7 @@ public class AdminNoticeController {
      * 담당자 : 김윤경님
      * 관련 기능 : [관리자 기능(페이지 폼)] 공지사항 수정
      */
-    @GetMapping("/admin/noticeUpdate")
+    @GetMapping("/admin/notice/update")
     public String showUpdateNoticePage(){
         return "admin/noticeUpdate";
     }
@@ -38,18 +38,12 @@ public class AdminNoticeController {
      * 담당자 : 김윤경님
      * 관련 기능 : [관리자 기능] 공지사항 등록
      */
-    @PostMapping("/admin/noticeRegister")
+    @PostMapping("/admin/notice/register")
     public String addNotice(HttpSession session, Notice notice){
-        MemberRole role = MemberUtils.getMemberRoleFromSession(session);
-        if(role == MemberRole.ADMIN){
-            notice.setAdminId(MemberUtils.getMemberIdFromSession(session));
-            notice.setImportantYn("N"); // TODO 적절하게 변경하기
-            int result = noticeService.addNotice(notice);
-            return "redirect:/notice/noticeList"; // TODO redirect 정하기
-        } else {
-            throw new RuntimeException(); // TODO 적절한 예외 처리로 바꾸기
-        }
-
+        notice.setAdminId(MemberUtils.getMemberIdFromSession(session));
+        notice.setImportantYn("N"); // TODO 적절하게 변경하기
+        int result = noticeService.addNotice(notice);
+        return "redirect:/notice/noticeList"; // TODO redirect 정하기
     }
     /**
      * 담당자 : 김윤경님

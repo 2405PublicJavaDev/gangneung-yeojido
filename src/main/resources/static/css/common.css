@@ -1,8 +1,85 @@
-body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+@font-face {
+    font-family: 'BMDOHYEON';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
-body > main {
-    flex: 1 1 auto;
+
+.common-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: "Noto Sans KR";
+}
+
+.common-input:focus{
+    outline: none;
+    border-color: #3399FF;
+}
+
+.common-primary-btn {
+    background-color: #007FFF;
+    width: 100%;
+    padding: 10px;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-family: "Noto Sans KR";
+}
+
+.common-primary-btn:hover{
+    background-color: #3399FF;
+}
+
+.common-secondary-btn {
+    background-color: #454545;
+    width: 100%;
+    padding: 10px;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-family: "Noto Sans KR";
+}
+
+.common-secondary-btn:hover{
+    background-color: #808080;
+}
+
+.common-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.common-table th,
+.common-table td {
+    padding: 12px;
+    text-align: center;
+    font-family: 'Noto Sans KR';
+    border: none;
+}
+
+.common-table th {
+    background-color: #ffffff;
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+    border-bottom: 2px solid #007FFF;
+}
+
+.common-table td {
+    font-size: 14px;
+}
+
+.common-table tbody tr {
+    border-bottom: 1px solid #ddd;
+}
+
+.common-table tr:hover {
+    background-color: #e2e2e26c;
 }

@@ -1,11 +1,4 @@
-@font-face {
-    font-family: 'BMDOHYEON';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-.container {
+main {
     display: flex;
     min-height: 550px
 }
@@ -51,7 +44,7 @@
     color: #007FFF;
 }
 
-main {
+.report-list-container-root {
     display: flex;
     flex: 1;
     padding: 5px 5px 5px 5px;
@@ -71,50 +64,3 @@ main {
     margin-bottom: 20px;
     text-align: center;
 }
-
-.report-list-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-.report-list-table th,
-.report-list-table td {
-    padding: 12px;
-    text-align: center;
-    font-family: 'Noto Sans KR';
-    border: none;
-}
-
-.report-list-table th {
-    background-color: #ffffff;
-    color: black;
-    font-size: 16px;
-    font-weight: bold;
-    border-bottom: 2px solid #007FFF;
-}
-
-.report-list-table td {
-    font-size: 14px;
-}
-
-.report-list-table .report-list-number{
-    width: 10%;
-}
-
-.report-list-table .report-list-report-id{
-    width: 20%;
-}
-
-.report-list-table .report-list-subject{
-    width: 50%;
-}
-
-.report-list-table tbody tr {
-    border-bottom: 1px solid #ddd;
-}
-
-.report-list-table tr:hover {
-    background-color: #e2e2e26c;
-}
-

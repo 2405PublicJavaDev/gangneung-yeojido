@@ -1,44 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>강릉여지도 - black-list</title>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin}"
+      layout:decorator="layout">
+<th:block layout:fragment="script">
+</th:block>
+<th:block layout:fragment="css">
     <link rel="stylesheet" href="/css/admin/black-list.css">
-</head>
-<body>
-    <div class="container">
-        <div class="sidebar">
-            <h3>블랙 리스트</h3>
-            <hr>
-            <ul>
-                <li><a href="/admin/report-list">신고 리스트</a></li>
-                <li><a href="/admin/member-status">회원 상태 변경</a></li>
-                <li><a href="/admin/black-list">블랙 리스트</a></li>
-            </ul>
-        </div>
-        <main>
-            <div class="black-list-container">
-                <h1>블랙 리스트</h1>
-                <table class="black-list-table">
-                    <thead>
-                        <tr>
-                            <th>번호</th>
-                            <th>아이디</th>
-                            <th>신고 내용</th>
-                            <th>상태</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="black-list-number">1</td>
-                            <td class="black-list-report-id">khuser1</td>
-                            <td class="black-list-subject">악성 댓글</td>
-                            <td class="black-list-atatus">정지</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </main>
+</th:block>
+<main layout:fragment="content">
+    <div class="sidebar">
+        <h3>블랙 리스트</h3>
+        <hr>
+        <ul>
+            <li><a href="/admin/report-list">신고 리스트</a></li>
+            <li><a href="/admin/member-status">회원 상태 변경</a></li>
+            <li><a href="/admin/black-list">블랙 리스트</a></li>
+        </ul>
     </div>
-</body>
+    <div class="black-list-container-root">
+        <div class="black-list-container">
+            <h1>블랙 리스트</h1>
+            <table class="common-table">
+                <colgroup>
+                    <col style="width: 10%;" />
+                    <col style="width: 20%;" />
+                    <col style="width: 50%;" />
+                    <col style="width: 20%;" />
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>아이디</th>
+                    <th>신고 내용</th>
+                    <th>상태</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="black-list-number">1</td>
+                    <td class="black-list-report-id">khuser1</td>
+                    <td class="black-list-subject">악성 댓글</td>
+                    <td class="black-list-atatus">정지</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
 </html>

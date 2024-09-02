@@ -1,11 +1,4 @@
-@font-face {
-    font-family: 'BMDOHYEON';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-.container {
+main {
     display: flex;
     min-height: 550px;
 }
@@ -50,7 +43,7 @@
     color: #007FFF;
 }
 
-main {
+.member-status-container-root {
     flex: 1;
     padding: 5px 5px 5px 5px;
 }

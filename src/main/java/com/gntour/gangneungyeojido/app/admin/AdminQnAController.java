@@ -10,7 +10,7 @@ public class AdminQnAController {
      * 담당자 : 김윤경님
      * 관련 기능 : [관리자 기능] QnA 질의 리스트 조회
      */
-    @GetMapping("/admin/qnaList")
+    @GetMapping("/admin/qna")
     public String showQnAListPage(){
         return "admin/qnaList";
     }
@@ -18,7 +18,7 @@ public class AdminQnAController {
      * 담당자 : 김윤경님
      * 관련 기능 : [관리자 기능(페이지 폼)] QnA 관리자로서 답변 달기
      */
-    @GetMapping("/admin/qnaAnswer")
+    @GetMapping("/admin/qna/answer")
     public String showRegisterQnAAnswerPage(){
         return "admin/qnaAnswer";
     }

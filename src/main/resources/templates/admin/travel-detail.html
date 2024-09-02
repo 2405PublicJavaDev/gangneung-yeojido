@@ -1,60 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>강릉여지도-관리자-여행지-리스트조회</title>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin}"
+      layout:decorator="layout">
+<th:block layout:fragment="script">
+</th:block>
+<th:block layout:fragment="css">
   <link rel="stylesheet" href="/css/admin/travel-detail.css">
-  <link rel="stylesheet" href="/css/admin/reset.css">
-</head>
-<body>
-  <main>
-    <h3>여행지 상세정보</h3>
-    <h4>- 강릉대도호부 관아 -</h4>
-    <hr><br>
-    <div id="detail-area">
-      <div id="detail-left">
-        <div id="map"></div>
-      </div>
-      <div id="detail-right">
-        <form action="/admin/travel-detail" method="post">
-          <div id="position-info">
-            <input id="latitude-box" type="text" name="latitude" placeholder="위도">
-            <input id="longitude-box" type="text" name="longitude" placeholder="경도">
-          </div>
-          <input type="text" name="travelName" placeholder="여행지명">
-          <input type="text" name="address" placeholder="주소">
-          <input type="text" name="phone" placeholder="전화번호">
-          <input type="text" name="useTime" placeholder="이용시간">
-          <input type="text" name="parkFee" placeholder="주차요금">
-          <input type="text" name="entryFee" placeholder="입장료">
-          <input type="text" name="useFee" placeholder="시설 이용료">
-          <input type="text" name="siteUrl" placeholder="사이트 URL">
-          <input type="text" name="imageUrl" placeholder="이미지 URL">
-          <div id="category-info">
-            <select name="" id="region">
-              <option value="" disabled selected>권역</option>
-              <option value="Jumunjin">주문진권</option>
-              <option value="City">시내권</option>
-              <option value="Gyeongpo">경포권</option>
-              <option value="Daegwallyeong">대관령권</option>
-              <option value="Jeongdongjin">정동진 옥계권</option>
-            </select>
-            <select name="" id="category">
-              <option value="" disabled selected>카테고리</option>
-              <option value="">산·트래킹</option>
-              <option value="">바다·해안</option>
-              <option value="">호수·공원</option>
-              <option value="">전시</option>
-              <option value="">역사·유적</option>
-            </select>
-          </div>
-          <textarea cols="30" rows="10" style="resize:none;" name="introduce" placeholder="공간소개"></textarea>
-          <button type="button">수정</button>
-          <button type="button">삭제</button>
-          <button id="cancel" type="button">취소</button>
-        </form>
-      </div>
+</th:block>
+<main layout:fragment="content">
+  <h3>여행지 상세정보</h3>
+  <h4>- 강릉대도호부 관아 -</h4>
+  <hr><br>
+  <div id="detail-area">
+    <div id="detail-left">
+      <div id="map"></div>
     </div>
-  </main>
-</body>
+    <div id="detail-right">
+      <form action="/admin/travel-detail" method="post">
+        <div id="position-info">
+          <input id="latitude-box" type="text" name="latitude" placeholder="위도">
+          <input id="longitude-box" type="text" name="longitude" placeholder="경도">
+        </div>
+        <input type="text" name="travelName" placeholder="여행지명">
+        <input type="text" name="address" placeholder="주소">
+        <input type="text" name="phone" placeholder="전화번호">
+        <input type="text" name="useTime" placeholder="이용시간">
+        <input type="text" name="parkFee" placeholder="주차요금">
+        <input type="text" name="entryFee" placeholder="입장료">
+        <input type="text" name="useFee" placeholder="시설 이용료">
+        <input type="text" name="siteUrl" placeholder="사이트 URL">
+        <input type="text" name="imageUrl" placeholder="이미지 URL">
+        <div id="category-info">
+          <select name="" id="region">
+            <option value="" disabled selected>권역</option>
+            <option value="Jumunjin">주문진권</option>
+            <option value="City">시내권</option>
+            <option value="Gyeongpo">경포권</option>
+            <option value="Daegwallyeong">대관령권</option>
+            <option value="Jeongdongjin">정동진 옥계권</option>
+          </select>
+          <select name="" id="category">
+            <option value="" disabled selected>카테고리</option>
+            <option value="">산·트래킹</option>
+            <option value="">바다·해안</option>
+            <option value="">호수·공원</option>
+            <option value="">전시</option>
+            <option value="">역사·유적</option>
+          </select>
+        </div>
+        <textarea cols="30" rows="10" style="resize:none;" name="introduce" placeholder="공간소개"></textarea>
+        <button type="button">수정</button>
+        <button type="button">삭제</button>
+        <button id="cancel" type="button">취소</button>
+      </form>
+    </div>
+  </div>
+</main>
 </html>

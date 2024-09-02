@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>강릉여지도 - member-status</title>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin}"
+      layout:decorator="layout">
+<th:block layout:fragment="script">
+</th:block>
+<th:block layout:fragment="css">
     <link rel="stylesheet" href="/css/admin/member-status.css">
-</head>
-<body>
-<div class="container">
+</th:block>
+<main layout:fragment="content">
     <div class="sidebar">
         <h3>블랙 리스트</h3>
         <hr>
@@ -16,7 +18,7 @@
             <li><a href="/admin/black-list">블랙 리스트</a></li>
         </ul>
     </div>
-    <main>
+    <div class="member-status-container-root">
         <div class="member-status-container">
             <h1>회원 상태 변경</h1>
             <div class="content-wrapper">
@@ -55,7 +57,6 @@
             </div>
             <button type="submit" class="change-status-btn">확인</button>
         </div>
-    </main>
-</div>
-</body>
+    </div>
+</main>
 </html>
