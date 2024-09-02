@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}"
+      layout:decorator="layout">
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        let travelInfos = /*[[${travelInfos}]]*/
+        console.log(travelInfos);
+    </script>
+    <script type="text/javascript" src="/js/main/mapdata.js"></script>
+    <script type="text/javascript" src="/js/main/mapconfig.js"></script>
+    <script type="text/javascript" src="/js/main/mapmanipulate.js"></script>
+    <script type="text/javascript" src="/js/main/index.js"></script>
+</th:block>
+<th:block layout:fragment="css">
+    <link href="/css/main/index.css" rel="stylesheet">
+</th:block>
+<main layout:fragment="content">
+    <div>
+        <canvas id="myCanvas" width="450" height="600"></canvas>
+    </div>
+</main>
+</html>

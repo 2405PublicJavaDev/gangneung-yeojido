@@ -9,6 +9,13 @@ spring:
     url: jdbc:oracle:thin:@mindoroaws.shop:4521/xe
     username: GNTOUR
     password: GNTOUR
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+  thymeleaf:
+    cache: false
 mybatis:
   configuration:
     jdbc-type-for-null: null

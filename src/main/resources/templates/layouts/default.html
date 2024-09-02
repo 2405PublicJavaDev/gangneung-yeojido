@@ -1,0 +1,30 @@
+<!--resources/templates/layouts/default.html-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>강릉여지도</title>
+    <link href="/css/common.css" rel="stylesheet">
+    <link href="/css/reset.css" rel="stylesheet">
+    <link href="/css/fragments/header.css" rel="stylesheet">
+    <link href="/css/fragments/footer.css" rel="stylesheet">
+    <!-- 각 페이지의 css가 작성될 위치 -->
+    <th:block layout:fragment="css"></th:block>
+</head>
+<body>
+
+    <header th:replace="fragments/header::header"></header>
+
+    <main layout:fragment="content" class="content"></main>
+
+    <footer th:replace="fragments/footer::footer"></footer>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <script type="text/javascript" src="/js/fragments/header.js"></script>
+    <script type="text/javascript" src="/js/fragments/footer.js"></script>
+    <!-- 각 페이지의 script가 작성될 위치 -->
+    <th:block layout:fragment="script"></th:block>
+
+</body>
+</html>

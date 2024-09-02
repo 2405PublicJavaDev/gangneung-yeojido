@@ -20,6 +20,7 @@ repositories {
 dependencies {
     // thyemeleaf
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.2.1'
     // web
     implementation 'org.springframework.boot:spring-boot-starter-web'
     // lombok
@@ -31,6 +32,8 @@ dependencies {
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
     // validation
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    // devtools
+    implementation 'org.springframework.boot:spring-boot-devtools'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
