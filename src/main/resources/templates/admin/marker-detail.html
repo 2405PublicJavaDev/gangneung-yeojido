@@ -11,7 +11,7 @@
 </th:block>
 <main layout:fragment="content">
     <h3>마커 승인 요청</h3>
-    <h4 th:text="'- ' + ${detail.travelName} + ' -'"></h4>
+    <h4 th:text="'- ' + ${detail.memberId} + ' - 님의 요청'"></h4>
     <hr><br>
     <div id="detail-area">
         <div id="detail-left">
@@ -35,7 +35,7 @@
                 <input type="text" name="imageUrl" placeholder="이미지 URL" class="common-input" th:value="${detail.imageUrl}">
                 <input type="text" name="zoomLevel" placeholder="줌레벨(1~14)" class="common-input">
                 <div id="category-info">
-                    <select name="" id="region">
+                    <select name="region" id="region">
                         <option value="" disabled selected>권역</option>
                         <option value="JUMUNJIN">주문진권</option>
                         <option value="CITY">시내권</option>
@@ -43,7 +43,7 @@
                         <option value="DAEGWALLYEONG">대관령권</option>
                         <option value="JEONGDONGJIN">정동진 옥계권</option>
                     </select>
-                    <select name="" id="category">
+                    <select name="category" id="category">
                         <option value="" disabled selected>카테고리</option>
                         <option value="MOUNTAIN">산·트래킹</option>
                         <option value="SEA">바다·해안</option>
@@ -54,9 +54,9 @@
                     </select>
                 </div>
                 <textarea cols="30" rows="10" style="resize:none;" name="introduce" placeholder="공간소개" class="common-input" th:text="${detail.introduce}"></textarea>
-                <button type="button" onclick="markerModify(true);">승인</button>
-                <button type="button" onclick="markerModify(false);">거부</button>
-                <button id="cancel" type="button">취소</button>
+                <button type="button" onclick="markerModify(true);" th:if="${detail.acceptableStatus == 'W'}">승인</button>
+                <button type="button" onclick="markerModify(false);" th:if="${detail.acceptableStatus == 'W'}">거부</button>
+                <button id="cancel" type="button" onclick="goBack();">뒤로가기</button>
             </form>
         </div>
     </div>

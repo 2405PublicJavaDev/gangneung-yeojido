@@ -6,10 +6,16 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum ErrorCode {
     // Common
-    INVALID_INPUT_VALUE("C001", "Invalid Input Value", HttpStatus.BAD_REQUEST),
-    INTERNAL_SERVER_ERROR("C002", "Server Error", HttpStatus.INTERNAL_SERVER_ERROR),
-    SAMPLE("C003", " Sample Error", HttpStatus.BAD_REQUEST),
-    INVALID_TYPE_VALUE( "C004", " Invalid Type Value", HttpStatus.BAD_REQUEST);
+    INVALID_INPUT_VALUE("C001", "입력 폼이 올바르지 않습니다.", HttpStatus.BAD_REQUEST),
+    INTERNAL_SERVER_ERROR("C002", "서버 에러가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
+    DUPLICATE_VALUE("C003", "중복값을 입력했습니다", HttpStatus.BAD_REQUEST),
+    NO_UPDATE("C004", "DML 이 이루어진 row 가 한개도 없습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
+    // Member
+    LOGIN_FAIL("M001", "로그인에 실패했습니다", HttpStatus.BAD_REQUEST),
+    EMAIL_VALID_FAIL("M002", "이메일 인증에 실패했습니다", HttpStatus.BAD_REQUEST),
+    ID_FIND_FAIL("M003", "아이디 찾기에 실패했습니다", HttpStatus.BAD_REQUEST),
+    PW_FIND_FAIL("M004", "비밀번호 찾기에 실패했습니다", HttpStatus.BAD_REQUEST)
+    ;
 
     private final String code;
     private final String message;

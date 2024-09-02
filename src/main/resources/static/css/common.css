@@ -26,11 +26,9 @@ main {
 
 .common-input-error {
     border: 1px solid red;
-}
-.common-input-error::-webkit-input-placeholder{
     background-image: url('/img/common_alert.png') ;
-    background-size: contain;
-    background-position:  1px center;
+    background-size: 20px;
+    background-position:  5px center;
     background-repeat: no-repeat;
     text-indent: 0;
     padding-left: 30px;

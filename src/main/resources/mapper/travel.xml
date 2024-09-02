@@ -62,7 +62,12 @@
             <if test="acceptableStatus != null" >
                 ACCEPTABLE_STATUS = #{acceptableStatus},
             </if>
+            UPDATE_DATE = SYSTIMESTAMP
         </set>
         WHERE REQ_MARK_ADD_NO = #{reqMarkAddNo}
     </update>
+    <insert id="insertTravel">
+        INSERT INTO TRAVEL_INFO(TRAVEL_NO,LATITUDE,LONGITUDE, TRAVEL_NAME, ADDRESS, PHONE, USE_TIME, PARK_FEE, ENTRY_FEE, USE_FEE, SITE_URL, IMAGE_URL, REGION, CATEGORY, INTRODUCE, ZOOM_LEVEL)
+        VALUES(SEQ_TRAVEL_INFO_NO.NEXTVAL, #{latitude}, #{longitude},#{travelName}, #{address}, #{phone}, #{useTime}, #{parkFee}, #{entryFee}, #{useFee}, #{siteUrl}, #{imageUrl}, #{region}, #{category}, #{introduce}, #{zoomLevel})
+    </insert>
 </mapper>
