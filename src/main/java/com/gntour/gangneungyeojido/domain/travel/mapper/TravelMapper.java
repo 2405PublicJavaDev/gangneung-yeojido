@@ -13,8 +13,8 @@ public interface TravelMapper {
      * 모든 여행지를 얻어오는 Mapper
      */
     List<TravelInfo> selectAllTravels();
-    void selectAllTravelsCount();
-    void selectAllTravelsPage();
+    int selectAllTravelsCount();
+    List<TravelInfo> selectAllTravelsPage(int currentPage, RowBounds rowBounds);
     TravelInfo selectOneTravel(Long travelNo);
     List<ReqMarkAdd> selectAllRequestMark(int currentPage, RowBounds rowBounds);
     int selectAllRequestMarkCount();

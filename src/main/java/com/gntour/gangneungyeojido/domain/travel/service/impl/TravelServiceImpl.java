@@ -20,20 +20,19 @@ import java.util.List;
 public class TravelServiceImpl implements TravelService {
     private final TravelMapper travelMapper;
 
-    @Override
     public List<TravelInfo> getAllTravels() {
-        return travelMapper.selectAllTravels();
+        List<TravelInfo> tList = travelMapper.selectAllTravels();
+        return tList;
     }
 
     @Override
-    public void getAllTravelsPage() {
-
+    public Page<TravelInfo, Void> getAllTravelsPage(int currentPage) {
+        return Page.of(currentPage, travelMapper.selectAllTravelsCount(), travelMapper::selectAllTravelsPage);
     }
 
     @Override
     public TravelInfo getDetailTravel(Long travelNo) {
-        TravelInfo travelInfo = travelMapper.selectOneTravel(travelNo);
-        return travelInfo;
+        return travelMapper.selectOneTravel(travelNo);
     }
 
     @Override
