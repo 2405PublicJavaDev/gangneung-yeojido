@@ -23,6 +23,9 @@ public class Page<T, S> {
     private int prevPage;
     private int nextPage;
 
+    private boolean hasPrev;
+    private boolean hasNext;
+
     private Page(int currentPage, int totalCount, List<T> data, int boardLimit, int naviLimit) {
         this.currentPage = currentPage;
         this.totalCount = totalCount;
@@ -47,10 +50,11 @@ public class Page<T, S> {
         startNavi = ((currentPage - 1) / naviLimit) * naviLimit + 1;
         endNavi = (startNavi - 1) + naviLimit;
         endNavi = Math.min(endNavi, maxPage);
-        if(currentPage <= 10) prevPage = 1;
-        else prevPage = startNavi - 1;
-        if(endNavi == maxPage) nextPage = maxPage;
-        else nextPage = endNavi + 1;
+
+        prevPage = currentPage - 1;
+        nextPage = currentPage + 1;
+        hasPrev = currentPage > 1;
+        hasNext = currentPage < maxPage;
     }
 
     public static <T> Page<T, Void> of(int currentPage, int totalCount,BiFunction<Integer, RowBounds,List<T>> function) {

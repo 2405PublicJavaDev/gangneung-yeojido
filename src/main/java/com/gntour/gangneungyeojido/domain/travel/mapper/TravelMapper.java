@@ -1,7 +1,9 @@
 package com.gntour.gangneungyeojido.domain.travel.mapper;
 
+import com.gntour.gangneungyeojido.domain.travel.vo.ReqMarkAdd;
 import com.gntour.gangneungyeojido.domain.travel.vo.TravelInfo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;
 
@@ -14,8 +16,8 @@ public interface TravelMapper {
     void selectAllTravelsCount();
     void selectAllTravelsPage();
     TravelInfo selectOneTravel(Long travelNo);
-    void selectAllRequestMark();
-    void selectAllRequestMarkCount();
+    List<ReqMarkAdd> selectAllRequestMark(int currentPage, RowBounds rowBounds);
+    int selectAllRequestMarkCount();
     void selectOneRequestMark();
     void insertRequestMark();
     int updateTravel();
