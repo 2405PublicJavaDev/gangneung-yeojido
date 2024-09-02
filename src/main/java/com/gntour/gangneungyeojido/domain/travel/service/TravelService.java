@@ -1,5 +1,7 @@
 package com.gntour.gangneungyeojido.domain.travel.service;
 
+import com.gntour.gangneungyeojido.common.Page;
+import com.gntour.gangneungyeojido.domain.travel.vo.ReqMarkAdd;
 import com.gntour.gangneungyeojido.domain.travel.vo.TravelInfo;
 
 import java.util.List;
@@ -19,7 +21,9 @@ public interface TravelService {
     TravelInfo getDetailTravel(Long travelNo);
     void getOutlineTravel();
     void getThisMonthTravel();
-    void getRequestMarkList();
+
+    Page<ReqMarkAdd, Void> getRequestMarkList(int currentPage);
+
     void getRequestMarkDetail();
     void addRequestMark();
     int modifyTravel();

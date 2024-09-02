@@ -1,7 +1,9 @@
 package com.gntour.gangneungyeojido.domain.travel.service.impl;
 
+import com.gntour.gangneungyeojido.common.Page;
 import com.gntour.gangneungyeojido.domain.travel.mapper.TravelMapper;
 import com.gntour.gangneungyeojido.domain.travel.service.TravelService;
+import com.gntour.gangneungyeojido.domain.travel.vo.ReqMarkAdd;
 import com.gntour.gangneungyeojido.domain.travel.vo.TravelInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,8 +44,8 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public void getRequestMarkList() {
-
+    public Page<ReqMarkAdd, Void> getRequestMarkList(int currentPage) {
+        return Page.of(currentPage, travelMapper.selectAllRequestMarkCount(), travelMapper::selectAllRequestMark);
     }
 
     @Override
