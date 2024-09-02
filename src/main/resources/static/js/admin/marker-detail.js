@@ -7,6 +7,8 @@ function markerModify(e) {
         method: 'post',
         payload: formProps
     },
-        (response) => {console.log('response',response);},
+        (response) => {
+        console.log('response',response);
+        },
         (error) => {console.log('error',error)});
 }

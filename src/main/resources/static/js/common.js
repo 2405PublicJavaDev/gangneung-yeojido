@@ -26,31 +26,32 @@ const ajax = (config, onSuccess, onError) => {
         .then((data) => onSuccess(data))
         .catch((error) => {
             if(error.code === 'C001') {
-                validateForm(error.errors.map(e => e.field));
+                validateForm(error.errors);
             }
             onError(error);
         });
 }
 
-const validateForm = (fields) => {
-    console.log(fields);
+const validateForm = (errors) => {
     // 모든 요소를 선택합니다.
     const allElements = document.querySelectorAll('*');
 
     // 선택된 각 요소에 대해 `common-input-error` 클래스를 제거합니다.
     allElements.forEach(element => {
+        element.title = "";
         element.classList.remove('common-input-error');
     });
     let minTop = 987654321;
     let firstErrorInput = null;
-    fields.forEach((field) => {
-        const input = document.querySelector(`input[name=${field}]`);
+    errors.forEach((error) => {
+        const input = document.querySelector(`input[name=${error.field}]`);
         input.classList.add('common-input-error');
-        const offsetTop = getOffset(input).top;
-        if(offsetTop < minTop)  {
-            minTop = offsetTop;
+        const offset = getOffset(input);
+        if(offset.top < minTop)  {
+            minTop = offset.top;
             firstErrorInput = input;
         }
+        input.title = error.reason;
     });
     if (firstErrorInput) {
         firstErrorInput.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -64,3 +65,9 @@ function getOffset(el) {
         top: rect.top + window.scrollY
     };
 }
+
+document.querySelectorAll('input').forEach(input => {
+    input.addEventListener('input', (e) => {
+        input.classList.remove('common-input-error');
+    }, true);
+})
