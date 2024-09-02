@@ -20,9 +20,9 @@ public class TravelInfo {
     private Long travelNo;
     @Pattern(regexp = TRAVEL_NAME_VALIDATION)
     private String travelName;
-    @NotNull
+    @NotNull(message = "위도는 빈칸이면 안됩니다")
     private Double latitude;
-    @NotNull
+    @NotNull(message = "경도는 빈칸이면 안됩니다")
     private Double longitude;
     private String address;
     private String phone;
