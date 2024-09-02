@@ -18,7 +18,7 @@ public class MyFavoriteController {
      */
     @GetMapping("/favorites")
     public String showMyFavoritesPage() {
-         return "myPage/myPage";
+         return "/myPage/myPage";
     }
 
     /**

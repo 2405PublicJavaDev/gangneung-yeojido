@@ -1,7 +1,14 @@
 package com.gntour.gangneungyeojido.app.my;
 
 import com.gntour.gangneungyeojido.domain.mytravel.service.TravelDiaryService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
+@Controller
+@RequiredArgsConstructor
+@Slf4j
 public class MyDiaryController {
     private TravelDiaryService travelDiaryService;
     /**
@@ -9,7 +16,10 @@ public class MyDiaryController {
      * 관련 기능 :[마이페이지 기능] 나의 여행 기록 리스트 조회
      *
      */
-    public void showMyDiariesPage(){};
+    @GetMapping("/diary")
+    public String showMyDiariesPage(){
+        return "/myPage/myDiary";
+    };
 
     /**
      * 담당지 : 백인호님
@@ -21,13 +31,19 @@ public class MyDiaryController {
      * 담당자 : 백인호님
      * 관련 기능 : [마이페이지 기능(페이지 폼)] 나의 여행 기록 등록
      */
-    public void showAddMyDiaryPage(){};
+    @GetMapping("/register-diary")
+    public String showAddMyDiaryPage(){
+        return "/myPage/register-myDiary";
+    };
 
     /**
      * 담당자 : 백인호님
      * 관련 기능 : [마이페이지 기능(페이지 폼)] 나의 여행 기록 수정
      */
-    public void showUpdateMyDiaryPage(){};
+    @GetMapping("/modify-diary")
+    public String showUpdateMyDiaryPage(){
+        return "/myPage/modify-myDiary";
+    };
 
     /**
      * 담당자 : 백인호님

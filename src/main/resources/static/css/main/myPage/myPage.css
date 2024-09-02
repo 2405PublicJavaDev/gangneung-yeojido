@@ -5,11 +5,12 @@
 .my-sidebar {
     width: 250px;
     height: 800px;
-    background-color: #f0f0f0;
+    background-color: #fff;
     display: flex;
     flex-direction: column;
     padding: 20px;
     box-sizing: border-box;
+    text-align: center;
 }
 
 .my-sidebar a {
@@ -95,6 +96,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #e0e0e0;
+    background-color: #fff;
     font-family: 'BMDOHYEON'
 }
