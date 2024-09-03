@@ -21,8 +21,8 @@
             <form id="detail-form">
                 <input type="hidden" name="reqMarkAddNo" th:value="${detail.reqMarkAddNo}" />
                 <div id="position-info">
-                    <input id="latitude-box" type="text" name="latitude" placeholder="위도" class="common-input">
-                    <input id="longitude-box" type="text" name="longitude" placeholder="경도" class="common-input">
+                    <input id="latitude-box" type="text" name="latitude" placeholder="위도" class="common-input" th:value="${detail.latitude}">
+                    <input id="longitude-box" type="text" name="longitude" placeholder="경도" class="common-input" th:value="${detail.longitude}">
                 </div>
                 <input type="text" name="travelName" placeholder="여행지명" class="common-input" th:value="${detail.travelName}">
                 <input type="text" name="address" placeholder="주소" class="common-input" th:value="${detail.address}">

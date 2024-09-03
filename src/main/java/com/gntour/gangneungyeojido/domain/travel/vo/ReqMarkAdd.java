@@ -12,6 +12,8 @@ import java.sql.Timestamp;
 public class ReqMarkAdd {
     private Long reqMarkAddNo;
     private String travelName;
+    private Double latitude;
+    private Double longitude;
     private String address;
     private String phone;
     private String useTime;

@@ -238,10 +238,10 @@ function drawMarkAndImages() {
     // Create a promise for each marker image loading
     if(!imageLoaded) {
         const promises = [
-            ...travelInfos.map((marker) => {
+            ...markerImages.map((marker) => {
                 return new Promise((resolve, reject) => {
                     marker.image = new Image();
-                    marker.image.src = "/img/MOUNTAIN_marker.png";
+                    marker.image.src = marker.imgSrc;
                     marker.image.onload = () => {
                         resolve(true);
                     };
@@ -278,9 +278,11 @@ function drawMarkAndImagesInternal() {
     travelInfos.forEach((marker) => {
         ctx.save();
         preSetupCtx();
+        const markerImage = markerImages
+            .find(marker => marker.category === 'DISPLAY');
         marker.x = lonToX(marker.longitude);
         marker.y = latToY(marker.latitude);
-        ctx.drawImage(marker.image, marker.x, marker.y, MARKER_SIZE / scale, MARKER_SIZE / scale);
+        ctx.drawImage(markerImage.image, marker.x, marker.y, MARKER_SIZE / scale, MARKER_SIZE / scale);
         ctx.restore();
     });
     staticImages.forEach((staticImage) => {
@@ -401,5 +403,25 @@ canvas.addEventListener("click", function(e) {
     console.log("lon", xToLon(transformedPoint.x));
     console.log("lat", yToLat(transformedPoint.y));
     const foundMarks = getMark(transformedPoint);
+    const mainMarkerTooltip = document.querySelector("#main-marker-tooltip");
+    mainMarkerTooltip.replaceChildren();
+    if(foundMarks.length == 1) {
+        // main 상세 정보에 보여주기
+    } else if(foundMarks.length > 1) {
+        foundMarks.slice(0, 5).forEach((foundMark) => {
+            const liElement = document.createElement("li");
+            const pElement = document.createElement("p");
+            pElement.textContent = foundMark.travelName;
+            liElement.appendChild(pElement);
+            liElement.addEventListener("click", (e) => {
+                e.preventDefault();
+                console.log(foundMark);
+                mainMarkerTooltip.replaceChildren();
+            })
+            mainMarkerTooltip.appendChild(liElement);
+        });
+        mainMarkerTooltip.style.top = point.y + 'px';
+        mainMarkerTooltip.style.left = point.x + 'px';
+    }
     console.log(foundMarks.length, foundMarks);
 })

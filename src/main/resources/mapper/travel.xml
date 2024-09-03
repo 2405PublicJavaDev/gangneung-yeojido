@@ -32,6 +32,12 @@
             <if test="travelName != null" >
                 TRAVEL_NAME = #{travelName},
             </if>
+            <if test="latitude != null" >
+                LATITUDE = #{latitude},
+            </if>
+            <if test="longitude != null" >
+                LONGITUDE = #{longitude},
+            </if>
             <if test="address != null" >
                 ADDRESS = #{address},
             </if>
