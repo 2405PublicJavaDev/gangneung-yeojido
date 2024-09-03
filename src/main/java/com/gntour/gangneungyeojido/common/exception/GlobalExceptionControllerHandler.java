@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.rmi.server.UID;
 import java.util.regex.Matcher;
@@ -69,6 +70,11 @@ public class GlobalExceptionControllerHandler {
         }
         model.addAttribute(ERROR_PAGE_MSG, e.getMessage());
         return ERROR_PAGE;
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public Object handleNoResourceFoundException(NoResourceFoundException e, Model model, HttpServletRequest request) {
+        return "common/error404";
     }
 
     /**
