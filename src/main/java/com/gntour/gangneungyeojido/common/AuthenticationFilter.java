@@ -24,9 +24,26 @@ public class AuthenticationFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         HttpSession session = request.getSession();
+        String uri = request.getRequestURI();
+        session.setAttribute(MemberUtils.MEMBER_ROLE, MemberRole.ADMIN); // TODO 삭제하기
 
-        session.setAttribute(MemberUtils.MEMBER_ID, "12345");// TODO 적절하게 다시 편집
-        session.setAttribute(MemberUtils.MEMBER_ROLE, MemberRole.ADMIN);
+        // /admin/login URL을 무시
+        if (uri.startsWith("/admin/login")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        // /admin/* 경로를 처리
+        if (uri.startsWith("/admin/")) {
+            MemberRole role = MemberUtils.getMemberRoleFromSession(session);
+
+            // MEMBER_ROLE이 admin이 아닌 경우
+            if (role == null || !role.equals(MemberRole.ADMIN)) {
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/common/unauthorized");
+                dispatcher.forward(request, response);
+                return;
+            }
+        }
 
         filterChain.doFilter(request, response);
     }
