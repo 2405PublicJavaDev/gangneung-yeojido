@@ -1,5 +1,8 @@
 package com.gntour.gangneungyeojido.domain.member.service.impl;
 
+import com.gntour.gangneungyeojido.common.Page;
+import com.gntour.gangneungyeojido.common.exception.BusinessException;
+import com.gntour.gangneungyeojido.common.exception.ErrorCode;
 import com.gntour.gangneungyeojido.domain.member.mapper.MemberMapper;
 import com.gntour.gangneungyeojido.domain.member.service.MemberService;
 import com.gntour.gangneungyeojido.domain.member.vo.Member;
@@ -7,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -18,10 +23,10 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Member loginMember(Member member) {
         Member result = mMapper.selectOneById(member.getMemberId());
-        if(result.getPassword().equals(member.getPassword())) {
+        if (result != null && result.getPassword() != null && result.getPassword().equals(member.getPassword())) {
             return result;
         } else {
-            throw new RuntimeException(); // TODO 에러 핸들링 방식 정하기
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
         }
     }
 
@@ -51,8 +56,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void getAllBlackListMember() {
-
+    public Page<Member, Void> getAllBlackListMember(int currentPage) {
+        return Page.of(currentPage, mMapper.selectAllBlackListMemberCount(), mMapper::selectAllBlackListMember);
     }
 
     @Override

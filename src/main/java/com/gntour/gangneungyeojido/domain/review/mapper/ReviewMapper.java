@@ -1,6 +1,10 @@
 package com.gntour.gangneungyeojido.domain.review.mapper;
 
+import com.gntour.gangneungyeojido.domain.review.vo.ReviewComplain;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.session.RowBounds;
+
+import java.util.List;
 
 @Mapper
 public interface ReviewMapper {
@@ -8,8 +12,8 @@ public interface ReviewMapper {
     void selectAllReviewsCount();
     void selectAllReviewsCountByMember();
     void selectAllReviewsFileByReviewNo();
-    void selectAllComplainReviews();
-    void selectAllComplainReviewsCount();
+    List<ReviewComplain> selectAllComplainReviews(Integer currentPage, RowBounds rowBounds);
+    int selectAllComplainReviewsCount();
     void insertReview();
     void insertReviewFile();
     void insertReviewComplain();

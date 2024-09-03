@@ -1,11 +1,17 @@
 package com.gntour.gangneungyeojido.domain.review.service.impl;
 
+import com.gntour.gangneungyeojido.common.Page;
 import com.gntour.gangneungyeojido.domain.review.mapper.ReviewMapper;
 import com.gntour.gangneungyeojido.domain.review.service.ReviewService;
+import com.gntour.gangneungyeojido.domain.review.vo.ReviewComplain;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class ReviewServiceImpl implements ReviewService {
+    @Autowired
     private ReviewMapper rMapper;
 
     @Override
@@ -19,7 +25,8 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void getAllComplainReviews() {
+    public Page<ReviewComplain, Void> getAllComplainReviews(int currentPage) {
+        return Page.of(currentPage, rMapper.selectAllComplainReviewsCount(), rMapper::selectAllComplainReviews);
 
     }
 

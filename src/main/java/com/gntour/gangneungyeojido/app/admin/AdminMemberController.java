@@ -1,17 +1,23 @@
 package com.gntour.gangneungyeojido.app.admin;
 
+import com.gntour.gangneungyeojido.app.admin.dto.LoginRequest;
+import com.gntour.gangneungyeojido.common.MemberRole;
 import com.gntour.gangneungyeojido.common.MemberUtils;
+import com.gntour.gangneungyeojido.common.exception.BusinessException;
+import com.gntour.gangneungyeojido.common.exception.EmptyResponse;
+import com.gntour.gangneungyeojido.common.exception.ErrorCode;
 import com.gntour.gangneungyeojido.domain.member.service.MemberService;
 import com.gntour.gangneungyeojido.domain.member.vo.Member;
+import com.gntour.gangneungyeojido.domain.review.service.ReviewService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -20,6 +26,8 @@ public class AdminMemberController {
     @Autowired
     private MemberService mService;
 
+    @Autowired
+    private ReviewService rService;
     /**
      *  담당자 : 이경학님
      *  관련기능 : [관리자 기능] 관리자 로그인
@@ -35,7 +43,8 @@ public class AdminMemberController {
      *  관련기능 : [관리자 기능] 신고리스트 조회
      */
     @GetMapping("/admin/report-list")
-    public String showReportListPage() {
+    public String showReportListPage(Model model, @RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage) {
+        model.addAttribute("page", rService.getAllComplainReviews(currentPage));
         return "admin/report-list";
     }
 
@@ -44,7 +53,9 @@ public class AdminMemberController {
      *  관련기능 : [관리자 기능] 블랙리스트 조회
      */
     @GetMapping("/admin/black-list")
-    public String showBlackListPage() {
+    public String showBlackListPage(Model model, @RequestParam(value="currentPage", defaultValue = "1") Integer currentPage) {
+//        List<Member> blackList = mService.getAllBlackListMember(currentPage);
+        model.addAttribute("page", mService.getAllBlackListMember(currentPage));
         return "admin/black-list";
     }
 
@@ -62,14 +73,18 @@ public class AdminMemberController {
      *  관련기능 : [관리자 기능] 관리자 로그인
      */
     @PostMapping("/admin/login")
-    public String loginAdmin(@RequestParam String memberId, @RequestParam String password, HttpSession session) {
+    @ResponseBody
+    public EmptyResponse loginAdmin(@RequestBody @Valid LoginRequest loginRequest, HttpSession session) {
         Member member = new Member();
-        member.setMemberId(memberId);
-        member.setPassword(password);
+        member.setMemberId(loginRequest.getMemberId());
+        member.setPassword(loginRequest.getPassword());
         member = mService.loginMember(member);
+        if(MemberRole.valueOf(member.getRole()) != MemberRole.ADMIN) {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
         session.setAttribute(MemberUtils.MEMBER_ID, member.getMemberId());
         session.setAttribute(MemberUtils.MEMBER_ROLE, member.getRole());
-        return "admin/black-list";
+        return new EmptyResponse();
     }
 
     /**

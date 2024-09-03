@@ -22,4 +22,14 @@
         </set>
         WHERE MEMBER_ID = #{memberId}
     </update>
+    <select id="selectAllBlackListMember" resultType="Member">
+        SELECT MEMBER_ID, STATUS
+        FROM MEMBER
+        WHERE STATUS IN ('WARN', 'BLACK')
+    </select>
+    <select id="selectAllBlackListMemberCount" resultType="_int">
+        SELECT COUNT(*)
+        FROM MEMBER
+        WHERE STATUS IN ('WARN', 'BLACK')
+    </select>
 </mapper>

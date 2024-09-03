@@ -7,32 +7,26 @@ main {
 }
 
 .login-container {
-    padding: 40px;
-    width: 300px;
+    padding: 20px;
+    width: 350px;
 }
 
 .login-container h1 {
     font-family: 'BMDOHYEON';
-    font-size: 24px;
     margin-bottom: 10px;
     text-align: center;
 }
 
 .login-container hr {
     background-color: black;
-    height: 2px;
+    height: 4px;
     margin-bottom: 20px;
 }
 
 .login-btn {
     margin-bottom: 10px;
+    margin-top: 10px;
 }
-
-/*.login-container p {*/
-/*    text-align: center;*/
-/*    margin-bottom: 10px;*/
-/*    font-family: "Noto Sans KR";*/
-/*}*/
 
 .signup-btn {
     margin-bottom: 20px;
