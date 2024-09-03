@@ -25,7 +25,6 @@ public class AuthenticationFilter implements Filter {
 
         HttpSession session = request.getSession();
         String uri = request.getRequestURI();
-        session.setAttribute(MemberUtils.MEMBER_ROLE, MemberRole.ADMIN); // TODO 삭제하기
 
         // /admin/login URL을 무시
         if (uri.startsWith("/admin/login")) {
