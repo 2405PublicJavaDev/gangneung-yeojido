@@ -3,6 +3,7 @@ package com.gntour.gangneungyeojido.sample.controller;
 import com.gntour.gangneungyeojido.common.FileUtil;
 import com.gntour.gangneungyeojido.common.UploadCategory;
 import com.gntour.gangneungyeojido.common.exception.BusinessException;
+import com.gntour.gangneungyeojido.common.exception.EmptyResponse;
 import com.gntour.gangneungyeojido.common.exception.ErrorCode;
 import com.gntour.gangneungyeojido.sample.dto.SampleSearchCondition;
 import com.gntour.gangneungyeojido.sample.dto.SampleWriteDTO;
@@ -58,13 +59,14 @@ public class SampleController {
     }
 
     @PostMapping("/writePage")
-    public String writePage(@ModelAttribute @Valid SampleWriteDTO dto, @RequestParam("uploadFile") List<MultipartFile> uploadFiles) throws IOException {
+    @ResponseBody
+    public EmptyResponse writePage(@ModelAttribute @Valid SampleWriteDTO dto, @RequestParam("uploadFile") List<MultipartFile> uploadFiles) throws IOException {
         log.info("size: {}", uploadFiles.size());
         for(MultipartFile file : uploadFiles){
             log.info("file: {}", file.getOriginalFilename());
         }
         sampleService.insertSample(dto, uploadFiles);
-        return "sample/home";
+        return new EmptyResponse();
     }
 
     @GetMapping("/deleteSampleFile")
