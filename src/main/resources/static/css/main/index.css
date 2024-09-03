@@ -2,12 +2,15 @@ main {
     font-size: 30px;
 }
 
-.main-map {
+#main-map {
     position: relative;
+    margin-left: 100px;
 }
 
 #main-map-root {
     background-color: #FFF8F0;
+    display: flex;
+    flex-direction: row;
 }
 
 #main-marker-tooltip {
@@ -16,14 +19,158 @@ main {
     left: 0;
     background-color: white;
     border: 1px solid black;
+    /* 너비는 콘텐츠에 맞춰 자동 조정되도록 설정 */
+    width: fit-content;
+    /* 자식 요소가 넘치면 보이도록 설정 */
+    overflow: visible;
 }
 
 #main-marker-tooltip p {
     font-size: 13px;
     padding: 10px;
     border-bottom: 1px solid black;
+    width: 100%;
+    /* 줄 바꿈 방지 및 너비 조정 */
+    white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
+    overflow: visible; /* 넘치는 텍스트 숨기기 */
+    /* 자식 요소의 콘텐츠에 맞게 너비 조정 */
 }
 
 #main-marker-tooltip li:last-of-type p:last-of-type {
     border-bottom: transparent;
+}
+#main-detail {
+    margin-left: auto;
+    margin-right: 100px;
+}
+#main-detail-top {
+    width: 468px;
+}
+#main-detail-top-1 {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+#main-detail-top-divider{
+    flex: 1 1 auto;
+    height: 1px;
+    background-color: #E6E1DB;
+}
+.main-detail-title {
+    display: inline-block;
+    font-size: 18px;
+    color: #282828;
+}
+.main-detail-region {
+    color: #282828;
+    font-size: 42px;
+    font-weight: bold;
+    font-family: "BMDOHYEON";
+}
+.main-detail-travel {
+    color: #EE450C;
+    font-size: 42px;
+    font-weight: bold;
+    font-family: "BMDOHYEON";
+}
+.main-detail-region-travel {
+    margin-top: 10px;
+}
+.main-detail-margin {
+    margin-top: 10px;
+}
+#main-detail-category-row1 {
+    margin-top: 35px;
+}
+#main-detail-category-row2 {
+    margin-top: 10px;
+}
+.main-detail-category-btn {
+    height: 50px;
+    width: 153px;
+    border-radius: 25px;
+    border: transparent;
+    background-color: white;
+    color: black;
+    font-size: 17px;
+    font-weight: bold;
+    box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.05);
+}
+
+#main-detail-content {
+    background-color: white;
+    box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.05);
+    padding: 40px;
+    margin-top: 40px;
+    width: 468px;
+    display: flex;
+    flex-direction: column;
+}
+
+#main-detail-content-not-load {
+    background-color: white;
+    box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.05);
+    padding: 40px;
+    margin-top: 40px;
+    width: 468px;
+}
+
+#main-detail-content-photo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#main-detail-content-photo img {
+    width: 90px; /* 표시할 이미지의 너비 */
+    height: 90px; /* 표시할 이미지의 높이 */
+    object-fit: cover; /* 이미지 크기에 맞게 자르기 */
+    object-position: center; /* 이미지 중심을 표시 */
+    overflow: hidden; /* 이미지를 자르고 넘치는 부분 숨기기 */
+    border-radius: 50%;
+    border: 6px solid #F5F0E5;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+#main-detail-content-photo-right{
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#main-detail-content-photo-name {
+    font-size: 21px;
+    font-weight: bold;
+    color: #282828;
+
+    width: 100%;
+    margin-left: 15px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+#main-detail-content-photo-star {
+    margin-left: 15px;
+}
+.checked {
+    color: orange;
+}
+
+#main-detail-content-photo-star > span:last-of-type {
+    font-size: 16px;
+}
+
+#main-detail-content-text {
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+#main-detail-more {
+    background-color: white;
+    border: 1px solid #D4D1CC;
+    padding: 12px 24px;
+    margin-top: 12px;
 }

@@ -1,3 +1,4 @@
+let selectedCategory = [];
 let scale = 1; // 기본 스케일
 let offsetX = 0; // X축 오프셋
 let offsetY = 0; // Y축 오프셋
@@ -407,6 +408,7 @@ canvas.addEventListener("click", function(e) {
     mainMarkerTooltip.replaceChildren();
     if(foundMarks.length == 1) {
         // main 상세 정보에 보여주기
+        getOutline(foundMarks[0].travelNo);
     } else if(foundMarks.length > 1) {
         foundMarks.slice(0, 5).forEach((foundMark) => {
             const liElement = document.createElement("li");
@@ -415,7 +417,7 @@ canvas.addEventListener("click", function(e) {
             liElement.appendChild(pElement);
             liElement.addEventListener("click", (e) => {
                 e.preventDefault();
-                console.log(foundMark);
+                getOutline(foundMark.travelNo);
                 mainMarkerTooltip.replaceChildren();
             })
             mainMarkerTooltip.appendChild(liElement);
