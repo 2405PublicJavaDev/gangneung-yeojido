@@ -22,6 +22,7 @@ function markerModify(isAccepted) {
             location.href = '/admin/marker?currentPage=' + currentPage;
         },
         (error) => {
+        alert("입력값 입력 중에 예외가 발생했습니다.");
         console.log('error',error)}
     );
 }
