@@ -33,18 +33,18 @@ public class MainController {
      * 담당자: 조승효님
      * 관련기능: [메인 기능(페이지 폼)] 마커 승인 요청
      */
-    @GetMapping("/travel/{travelNo}")
-    @ResponseBody
-    public TravelInfo showAddReqMarkerPage(@PathVariable Long travelNo) {
-        return travelService.getDetailTravel(travelNo);
+    public void showAddReqMarkerPage() {
+
     }
 
     /**
      * 담당자: 조승효님
      * 관련기능: [메인 기능] 여행지 마커에 대한 개요 확인
      */
-    public void getMarkerOutline() {
-
+    @GetMapping("/travel/{travelNo}")
+    @ResponseBody
+    public TravelInfo getMarkerOutline(@PathVariable Long travelNo) {
+        return travelService.getDetailTravel(travelNo);
     }
 
     /**
