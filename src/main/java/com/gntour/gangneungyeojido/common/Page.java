@@ -60,6 +60,16 @@ public class Page<T, S> {
     public static <T> Page<T, Void> of(int currentPage, int totalCount,BiFunction<Integer, RowBounds,List<T>> function) {
         int boardLimit = 10;
         int naviLimit = 10;
+        return of(currentPage, totalCount, function, boardLimit, naviLimit);
+    }
+
+    public static <T, S> Page<T, S> of(int currentPage, int totalCount,S searchCondition, TriFunction<Integer,S,RowBounds, List<T>> function) {
+        int boardLimit = 10;
+        int naviLimit = 10;
+        return of(currentPage, totalCount, searchCondition, function, boardLimit, naviLimit);
+    }
+
+    public static <T> Page<T, Void> of(int currentPage, int totalCount,BiFunction<Integer, RowBounds,List<T>> function, int boardLimit, int naviLimit) {
         int offset = (currentPage - 1) * boardLimit;
         RowBounds rowBounds = new RowBounds(offset, boardLimit);
         return new Page<>(currentPage, totalCount,function.apply(
@@ -67,9 +77,7 @@ public class Page<T, S> {
         ), boardLimit, naviLimit);
     }
 
-    public static <T, S> Page<T, S> of(int currentPage, int totalCount,S searchCondition, TriFunction<Integer,S,RowBounds, List<T>> function) {
-        int boardLimit = 10;
-        int naviLimit = 10;
+    public static <T, S> Page<T, S> of(int currentPage, int totalCount,S searchCondition, TriFunction<Integer,S,RowBounds, List<T>> function, int boardLimit, int naviLimit) {
         int offset = (currentPage - 1) * boardLimit;
         RowBounds rowBounds = new RowBounds(offset, boardLimit);
         List<T> data = function.apply(
