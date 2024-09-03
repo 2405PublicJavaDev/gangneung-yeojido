@@ -74,6 +74,10 @@ public class GlobalExceptionControllerHandler {
 
     @ExceptionHandler(NoResourceFoundException.class)
     public Object handleNoResourceFoundException(NoResourceFoundException e, Model model, HttpServletRequest request) {
+        if(isAjax(request)) {
+            final ErrorResponse response = ErrorResponse.of(ErrorCode.NOT_FOUND);
+            return new ResponseEntity<>(response, ErrorCode.NOT_FOUND.getStatus());
+        }
         return "common/error404";
     }
 
