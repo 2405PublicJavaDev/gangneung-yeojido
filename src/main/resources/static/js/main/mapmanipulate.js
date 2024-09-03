@@ -278,9 +278,9 @@ function drawMarkAndImagesInternal() {
     travelInfos.forEach((marker) => {
         ctx.save();
         preSetupCtx();
-        const x = lonToX(marker.longitude);
-        const y = latToY(marker.latitude);
-        ctx.drawImage(marker.image, x, y, MARKER_SIZE / scale, MARKER_SIZE / scale);
+        marker.x = lonToX(marker.longitude);
+        marker.y = latToY(marker.latitude);
+        ctx.drawImage(marker.image, marker.x, marker.y, MARKER_SIZE / scale, MARKER_SIZE / scale);
         ctx.restore();
     });
     staticImages.forEach((staticImage) => {
@@ -377,12 +377,9 @@ canvas.addEventListener("wheel", function (e) {
 
 function getMark(transformedPoint) {
     const foundMarks = [];
-    console.log(transformedPoint);
     travelInfos.forEach((mark) => {
-        const markX = lonToX(mark.longitude);
-        const markY = latToY(mark.latitude);
-        if(transformedPoint.x >= markX && transformedPoint.x <= markX + MARKER_SIZE / scale &&
-        transformedPoint.y >= markY && transformedPoint.y <= markY + MARKER_SIZE / scale) {
+        if(transformedPoint.x >= mark.x && transformedPoint.x <= mark.x + MARKER_SIZE / scale &&
+        transformedPoint.y >= mark.y && transformedPoint.y <= mark.y + MARKER_SIZE / scale) {
             foundMarks.push(mark);
         }
     });
@@ -391,9 +388,10 @@ function getMark(transformedPoint) {
 
 canvas.addEventListener("click", function(e) {
     e.preventDefault();
+    const rect = canvas.getBoundingClientRect();
     const point = {
-        x: e.clientX - canvas.offsetLeft,
-        y: e.clientY - canvas.offsetTop,
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
     };
     // 스케일과 오프셋을 고려한 마우스 좌표 변환
     const transformedPoint = {
