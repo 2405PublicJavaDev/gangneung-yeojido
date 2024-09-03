@@ -30,7 +30,7 @@
             <tbody>
             <tr th:each="travel : ${page.data}" >
                 <td th:text="${travel.travelNo}"></td>
-                <td><b><a th:href="@{/admin/travel/{no}(no = ${travel.travelNo})}" th:text="${travel.travelName}"></a></b></td>
+                <td><b><a th:href="@{/admin/travel/{no}(no = ${travel.travelNo}, currentPage=${page.currentPage})}" th:text="${travel.travelName}"></a></b></td>
                 <td th:text="${travel.region}"></td>
                 <td th:text="${travel.category}"></td>
             </tr>

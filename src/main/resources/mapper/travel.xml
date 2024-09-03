@@ -21,9 +21,6 @@
         FROM TRAVEL_INFO
         WHERE TRAVEL_NO = #{travelNo}
     </select>
-    <update id="updateTravel">
-
-    </update>
     <select id="selectAllRequestMark" resultType="ReqMarkAdd">
         SELECT *
         FROM REQ_MARK_ADD
@@ -87,4 +84,45 @@
         INSERT INTO TRAVEL_INFO(TRAVEL_NO,LATITUDE,LONGITUDE, TRAVEL_NAME, ADDRESS, PHONE, USE_TIME, PARK_FEE, ENTRY_FEE, USE_FEE, SITE_URL, IMAGE_URL, REGION, CATEGORY, INTRODUCE, ZOOM_LEVEL)
         VALUES(SEQ_TRAVEL_INFO_NO.NEXTVAL, #{latitude}, #{longitude},#{travelName}, #{address}, #{phone}, #{useTime}, #{parkFee}, #{entryFee}, #{useFee}, #{siteUrl}, #{imageUrl}, #{region}, #{category}, #{introduce}, #{zoomLevel})
     </insert>
+    <update id="updateTravel" parameterType="TravelInfo">
+        UPDATE TRAVEL_INFO
+        <set>
+            <if test="travelName != null" >
+                TRAVEL_NAME = #{travelName},
+            </if>
+            <if test="address != null" >
+                ADDRESS = #{address},
+            </if>
+            <if test="phone != null" >
+                PHONE = #{phone},
+            </if>
+            <if test="useTime != null" >
+                USE_TIME = #{useTime},
+            </if>
+            <if test="parkFee != null" >
+                PARK_FEE = #{parkFee},
+            </if>
+            <if test="entryFee != null" >
+                ENTRY_FEE = #{entryFee},
+            </if>
+            <if test="useFee != null" >
+                USE_FEE = #{useFee},
+            </if>
+            <if test="introduce != null" >
+                INTRODUCE = #{introduce},
+            </if>
+            <if test="siteUrl != null" >
+                SITE_URL = #{siteUrl},
+            </if>
+            <if test="imageUrl != null" >
+                IMAGE_URL = #{imageUrl},
+            </if>
+            UPDATE_DATE = SYSTIMESTAMP
+        </set>
+        WHERE TRAVEL_NO = #{travelNo}
+    </update>
+    <delete id="deleteTravel">
+        DELETE FROM TRAVEL_INFO
+        WHERE TRAVEL_NO = #{travelNo}
+    </delete>
 </mapper>

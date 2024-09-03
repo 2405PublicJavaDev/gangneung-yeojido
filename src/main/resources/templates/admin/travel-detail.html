@@ -4,20 +4,22 @@
       layout:decorate="~{layouts/admin}"
       layout:decorator="layout">
 <th:block layout:fragment="script">
+  <script type="text/javascript" src="/js/admin/travel-detail.js"></script>
 </th:block>
 <th:block layout:fragment="css">
   <link rel="stylesheet" href="/css/admin/travel-detail.css">
 </th:block>
 <main layout:fragment="content">
   <h3>여행지 상세정보</h3>
-  <h4>- 강릉대도호부 관아 -</h4>
+  <h4 th:text="'- ' + ${detail.travelName} + ' -'"></h4>
   <hr><br>
   <div id="detail-area">
     <div id="detail-left">
       <div id="map"></div>
     </div>
     <div id="detail-right">
-      <form action="/admin/travel-detail" method="post">
+      <form id="detail-form">
+        <input type="hidden" name="travelNo" th:value="${detail.travelNo}">
         <div id="position-info">
           <input id="latitude-box" type="text" name="latitude" placeholder="위도" class="common-input">
           <input id="longitude-box" type="text" name="longitude" placeholder="경도" class="common-input">
@@ -31,7 +33,7 @@
         <input type="text" name="useFee" placeholder="시설 이용료" th:value="${detail.useFee}">
         <input type="text" name="siteUrl" placeholder="사이트 URL" th:value="${detail.siteUrl}">
         <input type="text" name="imageUrl" placeholder="이미지 URL" th:value="${detail.imageUrl}">
-        <input type="text" name="zoomLevel" placeholder="줌레벨(1~14)" th:value="${detail.imageUrl}">
+        <input type="text" name="zoomLevel" placeholder="줌레벨(1~14)">
         <div id="category-info">
           <select name="" id="region">
             <option value="" disabled selected>권역</option>
@@ -52,9 +54,9 @@
           </select>
         </div>
         <textarea cols="30" rows="10" style="resize:none;" name="introduce" placeholder="공간소개" th:text="${detail.introduce}"></textarea>
-        <button type="button">수정</button>
-        <button type="button">삭제</button>
-        <button id="cancel" type="button">취소</button>
+        <button type="button" onclick="travelModify();">수정</button>
+        <button type="button" th:onclick="|travelRemove(${detail.travelNo});|">삭제</button>
+        <button id="cancel" type="button" onclick="goBack();">취소</button>
       </form>
     </div>
   </div>
