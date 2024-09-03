@@ -31,20 +31,31 @@
                 <thead>
                 <tr>
                     <th>번호</th>
-                    <th>아이디</th>
+                    <th>신고자 아이디</th>
                     <th>신고 내용</th>
-                    <th>신고자</th>
+                    <th>신고 날짜</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td class="report-list-number">1</td>
-                    <td class="report-list-report-id">khuser1</td>
-                    <td class="report-list-subject">악성 댓글</td>
-                    <td class="report-list-reporter">khuser11</td>
+                <tr th:each="report : ${page.data}" >
+                    <td th:text="${report.complainNo}"></td>
+                    <td th:text="${report.memberId}"></td>
+                    <td th:text="${report.category}"></td>
+                    <td th:text="${report.regDate}"></td>
                 </tr>
                 </tbody>
             </table>
+            <ul class="common-pagination">
+                <li class="common-pagination-li-end">
+                    <a th:href="@{/admin/report-list(currentPage=${page.prevPage})}" th:if="${page.hasPrev}">이전</a>
+                </li>
+                <li th:classappend="${i == page.currentPage} ? 'common-pagination-li common-pagination-li-active' : 'common-pagination-li'" th:each="i : ${#numbers.sequence(page.startNavi, page.endNavi)}">
+                    <a th:href="@{/admin/report-list(currentPage=${i})}" th:text="${i}"></a>
+                </li>
+                <li class="common-pagination-li-end">
+                    <a th:href="@{/admin/report-list(currentPage=${page.nextPage})}" th:if="${page.hasNext}">다음</a>
+                </li>
+            </ul>
         </div>
     </div>
 </main>
