@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}"
+      layout:decorator="layout">
+<th:block layout:fragment="script">
+    <script type="text/javascript" src="/js/travel/travel-detail.js"></script>
+</th:block>
+<th:block layout:fragment="css">
+    <link href="/css/travel/travel-detail.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/c04d10f9dd.js" crossorigin="anonymous"></script>
+</th:block>
+<main layout:fragment="content">
+    <div id="main-top">
+        <h1>강릉대도호부 관아</h1>
+        <div id="category-box">
+            <span id="category-txt">역사·유적</span>
+        </div>
+    </div>
+    <div id="score-box">
+    </div>
+    <div id="items">
+        <button id="find-road" type="button">길찾기</button>
+        <i class="fa-regular fa-bookmark"></i>
+    </div>
+    <div id="main-bottom">
+
+    </div>
+</main>
+</html>

@@ -21,7 +21,7 @@ public interface TravelMapper {
     ReqMarkAdd selectOneRequestMark(Long reqMarkAddNo);
     int insertTravel(TravelInfo travelInfo);
     void insertRequestMark();
-    int updateTravel();
+    int updateTravel(TravelInfo travelInfo);
     int updateRequestMark(ReqMarkAdd reqMarkAdd);
-    void deleteTravel();
+    int deleteTravel(Long travelNo);
 }

@@ -104,13 +104,12 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public int modifyTravel() {
-        int result = travelMapper.updateTravel();
-        return result;
+    public int modifyTravel(TravelInfo travelInfo) {
+        return travelMapper.updateTravel(travelInfo);
     }
 
     @Override
-    public void removeTravel() {
-
+    public int removeTravel(Long travelNo) {
+        return travelMapper.deleteTravel(travelNo);
     }
 }
