@@ -17,8 +17,13 @@
     <link href="/css/main/index.css" rel="stylesheet">
 </th:block>
 <main layout:fragment="content">
-    <div>
-        <canvas id="myCanvas" width="450" height="600"></canvas>
+    <div id="main-map-root">
+        <div id="main-map">
+            <canvas id="myCanvas" width="450" height="600"></canvas>
+            <ul id="main-marker-tooltip">
+
+            </ul>
+        </div>
     </div>
 </main>
 </html>

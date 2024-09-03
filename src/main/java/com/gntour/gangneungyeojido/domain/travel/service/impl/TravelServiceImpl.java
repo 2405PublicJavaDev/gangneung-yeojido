@@ -61,6 +61,8 @@ public class TravelServiceImpl implements TravelService {
         int result = 0;
         ReqMarkAdd reqMarkAdd = new ReqMarkAdd();
         reqMarkAdd.setReqMarkAddNo(reqMarkAddRequest.getReqMarkAddNo());
+        reqMarkAdd.setLatitude(reqMarkAddRequest.getLatitude());
+        reqMarkAdd.setLongitude(reqMarkAddRequest.getLongitude());
         reqMarkAdd.setTravelName(reqMarkAddRequest.getTravelName());
         reqMarkAdd.setAddress(reqMarkAddRequest.getAddress());
         reqMarkAdd.setPhone(reqMarkAddRequest.getPhone());
