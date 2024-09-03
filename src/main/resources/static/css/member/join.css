@@ -1,0 +1,98 @@
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.signup-container {
+    padding: 20px;
+    width: 350px;
+}
+
+.signup-container h1 {
+    font-family: 'BMDOHYEON';
+    margin-bottom: 10px;
+    text-align: center;
+}
+.signup-container hr {
+    background-color: black;
+    height: 4px;
+    margin-bottom: 20px;
+}
+
+.signup-form .input-group {
+    position: relative;
+    /*margin-bottom: 15px;*/
+}
+
+/*.signup-form input {*/
+/*    width: 100%;*/
+/*    padding: 10px;*/
+/*    border: 1px solid #ddd;*/
+/*    border-radius: 4px;*/
+/*    box-sizing: border-box;*/
+/*    font-family: 'GmarketSansMedium';*/
+/*}*/
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 42%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+    font-size: 16px;
+}
+
+.telecom-phone {
+    display: flex;
+    gap: 10px;
+}
+
+.telecom-phone select {
+    width: 30%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR';
+    appearance: none;
+    color: #888;
+}
+
+.telecom-phone input {
+    width: 70%;
+}
+
+input:focus,
+select:focus {
+    outline: currentColor;
+    border-color: #3399FF;
+}
+
+.common-primary-btn:hover{
+    background-color: #3399FF;
+}
+
+.find-links a:hover {
+    color: #3399FF;
+}
+
+.signup-button {
+    margin-top: 10px;
+}
+
+.find-links {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
+
+.find-links a {
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+    font-family: 'Noto Sans KR';
+}

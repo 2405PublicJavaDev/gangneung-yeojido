@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}"
+      layout:decorator="layout">
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        function goToJoin() {
+            location.href = "/join";
+        }
+    </script>
+</th:block>
+<th:block layout:fragment="css">
+  <link href="/css/member/login.css" rel="stylesheet">
+</th:block>
+<main layout:fragment="content">
+  <div class="login-container">
+    <h1>로그인</h1>
+    <hr>
+    <form action="/login" method="post" class="login-form" >
+      <input type="text" name="memberId" placeholder="아이디" class="common-input">
+      <input type="password" name="password" placeholder="비밀번호" class="common-input">
+      <button type="submit" class="common-primary-btn login-btn">로그인</button>
+    </form>
+        <button class="common-secondary-btn signup-btn" onclick="goToJoin()">회원가입</button>
+        <div class="find-links">
+          <a href="./find-id">아이디 찾기</a>
+          <a href="./find-pw">비밀번호 찾기</a>
+        </div>
+  </div>
+</main>
+</html>
