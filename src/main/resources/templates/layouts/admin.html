@@ -8,6 +8,7 @@
     <title>강릉여지도</title>
     <link href="/css/common.css" rel="stylesheet">
     <link href="/css/common-admin.css" rel="stylesheet">
+    <link href="/css/fragments/admin-header.css" rel="stylesheet">
     <link href="/css/reset.css" rel="stylesheet">
     <!-- 각 페이지의 css가 작성될 위치 -->
     <th:block layout:fragment="css"></th:block>
@@ -17,6 +18,7 @@
 <header th:replace="fragments/admin-header::header"></header>
 <main layout:fragment="content"></main>
 <script src="/js/common.js"></script>
+<script src="/js/fragments/admin-header.js"></script>
 <!-- 각 페이지의 script가 작성될 위치 -->
 <th:block layout:fragment="script"></th:block>
 
