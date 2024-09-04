@@ -1,15 +1,18 @@
 package com.gntour.gangneungyeojido.app.admin;
 
-import com.gntour.gangneungyeojido.common.MemberRole;
+import com.gntour.gangneungyeojido.app.notice.dto.NoticeSearchCondition;
 import com.gntour.gangneungyeojido.common.MemberUtils;
 import com.gntour.gangneungyeojido.domain.notice.service.NoticeService;
 import com.gntour.gangneungyeojido.domain.notice.vo.Notice;
+import com.gntour.gangneungyeojido.sample.dto.SampleSearchCondition;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -23,15 +26,39 @@ public class AdminNoticeController {
      */
     @GetMapping("/admin/notice/register")
     public String showRegisterNoticePage(){
-        return "admin/noticeRegister";
+        return "admin/notice-register";
     }
+
+    /**
+     * 담당자 : 김윤경님
+     * 관련 기능 : [관리자 기능(페이지 폼)] 공지사항 수정용 리스트*/
+    @GetMapping("/admin/notice")
+    public String showNoticeListPage(
+            Model model
+            , @RequestParam(value="currentPage", defaultValue = "1") Integer currentPage
+            , @RequestParam(value = "searchType", required = false) String searchType
+            , @RequestParam(value = "searchKeyword", required = false) String searchKeyword){
+//        NoticeSearchCondition condition = new NoticeSearchCondition();
+//        if ("title".equals(searchType)) {
+//            condition.setTitle(searchKeyword);
+//        } else if ("content".equals(searchType)) {
+//            condition.setContent(searchKeyword);
+//        }
+
+//        model.addAttribute("noticeList", noticeService.getAllNotices(currentPage, new NoticeSearchCondition(title, content)));
+        return "admin/notice-update-list";
+    }
+
     /**
      * 담당자 : 김윤경님
      * 관련 기능 : [관리자 기능(페이지 폼)] 공지사항 수정
      */
-    @GetMapping("/admin/notice/update")
-    public String showUpdateNoticePage(){
-        return "admin/noticeUpdate";
+    @GetMapping("/admin/notice/modify/{noticeNo}")
+    public String showUpdateNoticePage(Model model
+            , @PathVariable("noticeNo") Long noticeNo){
+        Notice notice = noticeService.getDetailNotice(noticeNo);
+        model.addAttribute("notice", notice);
+        return "admin/notice-update";
     }
 
     /**
@@ -41,14 +68,19 @@ public class AdminNoticeController {
     @PostMapping("/admin/notice/register")
     public String addNotice(HttpSession session, Notice notice){
         notice.setAdminId(MemberUtils.getMemberIdFromSession(session));
-        notice.setImportantYn("N"); // TODO 적절하게 변경하기
+        notice.setImportantYn(notice.getImportantYn() != null ? notice.getImportantYn() : "N");
         int result = noticeService.addNotice(notice);
-        return "redirect:/notice/noticeList"; // TODO redirect 정하기
+        return "redirect:/notice/" + notice.getNoticeNo();
     }
+
     /**
      * 담당자 : 김윤경님
      * 관련 기능 : [관리자 기능] 공지사항 수정
      */
-    public void modifyNotice(){}
+    @PostMapping("/admin/notice/modify")
+    public String modifyNotice(HttpSession session, Notice notice){
+        notice.setAdminId(MemberUtils.getMemberIdFromSession(session));
+        return "redirect:/notice/" + notice.getNoticeNo();
+    }
 
 }

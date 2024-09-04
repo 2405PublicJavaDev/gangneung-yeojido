@@ -3,8 +3,45 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gntour.gangneungyeojido.domain.notice.mapper.NoticeMapper">
-    <insert id="insertNotice">
-        insert into NOTICE(NOTICE_NO, NOTICE_SUBJECT, NOTICE_CONTENT, IMPORTANT_YN, ADMIN_ID)
-        values (SEQ_NOTICE_NO.NEXTVAL, #{noticeSubject}, #{noticeContent}, #{importantYn}, #{adminId})
+    <select id="selectAllNotices" resultType="Notice">
+        SELECT * FROM NOTICE
+        <where>
+            <if test="condition.title != null">
+                AND NOTICE_SUBJECT LIKE '%' || #{condition.title} || '%'
+            </if>
+            <if test="condition.content != null">
+                AND NOTICE_CONTENT LIKE '%' || #{condition.content} || '%'
+            </if>
+        </where>
+        ORDER BY NOTICE_NO DESC
+    </select>
+
+    <select id="selectAllNoticesCount" resultType="_int">
+        SELECT COUNT(*) FROM NOTICE
+        <where>
+            <if test="title != null">
+                AND NOTICE_SUBJECT LIKE '%' || #{title} || '%'
+            </if>
+            <if test="content != null">
+                AND NOTICE_CONTENT LIKE '%' || #{content} || '%'
+            </if>
+        </where>
+    </select>
+
+    <select id="selectOneNotice" parameterType="long" resultType="Notice">
+        SELECT * FROM NOTICE WHERE NOTICE_NO = #{noticeNo}
+    </select>
+
+    <select id="selectImportantNotices" resultType="Notice">
+        SELECT * FROM NOTICE WHERE IMPORTANT_YN = 'Y' ORDER BY NOTICE_NO DESC
+    </select>
+
+
+    <insert id="insertNotice" useGeneratedKeys="true" keyProperty="noticeNo">
+        <selectKey resultType="long" keyProperty="noticeNo" order="BEFORE">
+            SELECT SEQ_NOTICE_NO.NEXTVAL FROM DUAL
+        </selectKey>
+        insert into NOTICE(NOTICE_NO, NOTICE_SUBJECT, NOTICE_CONTENT, IMPORTANT_YN, ADMIN_ID, REG_DATE, UPDATE_DATE)
+        values (#{noticeNo}, #{noticeSubject}, #{noticeContent}, #{importantYn}, #{adminId}, default, default)
     </insert>
 </mapper>

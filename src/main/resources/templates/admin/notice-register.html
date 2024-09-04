@@ -14,16 +14,16 @@
         <form action="/admin/notice/register" method="post">
             <div>
                 <label for="noticeTitle">제목</label>
-                <input type="text" id="noticeTitle" name="noticeSubject" required class="common-input">
+                <input type="text" id="noticeTitle" name="noticeSubject" required class="common-input subject-input">
             </div>
             <div>
                 <label for="noticeContent">내용</label>
                 <textarea id="noticeContent" name="noticeContent" required class="common-input content-input"></textarea>
             </div>
             <div>
-                <label for="importantYn">상단고정여부</label>
-                <input type="radio" name="importantYn" value="Y">YES
-                <input type="radio" name="importantYn" value="N">NO
+                <label for="importantYn">상단고정여부&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <input type="radio" name="importantYn" value="Y">&nbsp;YES&nbsp;&nbsp;
+                <input type="radio" name="importantYn" value="N">&nbsp;NO
             </div>
             <div class="button-container">
                 <button type="submit" class="register">등록</button>

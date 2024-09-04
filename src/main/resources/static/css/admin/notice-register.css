@@ -10,19 +10,24 @@ main {
 /* 화면 타이틀 */
 h1 {
     font-family: 'BMDOHYEON', sans-serif;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
+    padding-bottom: 50px;
+    padding-top : 20px;
     text-align: center;
 }
 form div {
     margin-bottom: 20px;
 }
 label {
+    padding-top: 10px;
     margin-bottom: 20px;
     font-weight: bold;
 }
-.content-input {
-    height: 150px;
+.subject-input{
+    margin-top: 15px;
+}
+.content-input{
+    margin-top: 15px;
+    height: 250px;
 }
 button {
     font-size: 1em;

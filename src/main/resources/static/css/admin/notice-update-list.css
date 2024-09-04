@@ -1,0 +1,90 @@
+@font-face {
+    font-family: 'BMDOHYEON';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+main {
+    padding: 20px;
+}
+.main-container {
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+/* 화면 타이틀 */
+h1 {
+    font-family: 'BMDOHYEON', sans-serif;
+    padding-bottom: 50px;
+    padding-top : 20px;
+    text-align: center;
+}
+form div {
+    margin-bottom: 20px;
+}
+.search-container select,
+.search-container input[type="text"],
+.search-container button {
+    padding: 8px;
+    margin-left: 5px;
+}
+.search-container select {
+    width: 120px;
+}
+.search-container input[type="text"] {
+    width: 350px;
+}
+.search-container button {
+    background-color: #007FFF;
+    border-radius: 5px;
+    height: 38px;
+    width: 60px;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.common-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.common-table th,
+.common-table td {
+    padding: 12px;
+    text-align: center;
+    font-family: 'Noto Sans KR';
+    border: none;
+}
+
+.common-table th {
+    background-color: #ffffff;
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+    border-bottom: 2px solid #007FFF;
+}
+
+.common-table td {
+    font-size: 14px;
+}
+
+.common-table tbody tr {
+    border-bottom: 1px solid #ddd;
+}
+
+.common-table tr:hover {
+    background-color: #e2e2e26c;
+}
+
+.common-table a {
+    text-decoration-line : none;
+    color: black;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
