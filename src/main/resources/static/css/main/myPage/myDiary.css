@@ -1,3 +1,10 @@
+
+main {
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
 .my-subject {
     font-family: 'BMDOHYEON'
 }
@@ -53,6 +60,11 @@
     text-align: center;
 }
 
+.main-content a {
+    text-decoration: none;
+    color: white;
+}
+
 .main-content .sort {
     display: flex;
     justify-content: flex-end;
@@ -87,11 +99,29 @@
 
 .diary-list button {
     background-color: #007FFF;
-    width: 50px;
+    width: 70px;
     height: 50px;
     padding: 10px;
     color: white;
     border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-family: "Noto Sans KR";
+    margin-left: 5px;
+}
+
+.register-btn button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 500px;
+    left: 55%;
+    background-color: #007FFF;
+    border: none;
+    width: 100px;
+    height: 50px;
+    color: white;
     border-radius: 30px;
     cursor: pointer;
     font-family: "Noto Sans KR";
@@ -105,12 +135,44 @@
     margin-top: 20px;
 }
 
-.my-inquiry, .my-activity {
+.my-inquiry {
     width: 50%;
     height: 100%;
+    padding: 50px;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fff;
+    flex-direction: column;
+    justify-content: start;
     font-family: 'BMDOHYEON'
+}
+
+.inquiry-list {
+    width: 100%;
+    height: 100%;
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    align-content: space-around;
+}
+
+.my-activity {
+    width: 50%;
+    height: 100%;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    font-family: 'BMDOHYEON'
+}
+
+.activity-list {
+    width: 100%;
+    height: 100%;
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    align-content: space-around;
 }

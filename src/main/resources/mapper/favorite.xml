@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gntour.gangneungyeojido.domain.mytravel.mapper.FavoritesMapper">
+    <select id="selectAllFavoritesByMember" resultType="Favorites">
+        select * from FAVORITES WHERE MEMBER_ID=#{memberId}
+        <trim prefix="ORDER BY">
+            <if test="isNew.equals('Y')"> FAVORITES_NO DESC </if>
+            <if test="isNew.equals('N')"> FAVORITES_NO ASC </if>
+        </trim>
+
+    </select>
+    <insert id="insertFavorite">
+
+    </insert>
+</mapper>

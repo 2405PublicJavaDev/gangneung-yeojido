@@ -21,10 +21,10 @@
         <div class="my-sideList">
             <h2>마이 페이지</h2>
             <ul>
-                <li><a href="/myPage.html"><b>즐결찾기 목록</b></a></li>
+                <li><a href="/favorites"><b>즐결찾기 목록</b></a></li>
                 <li><a href="#">회원 정보 수정</a></li>
-                <li><a href="/myReview.html">나의 리뷰 목록</a></li>
-                <li><a href="#">나의 여행 일기 목록</a></li>
+                <li><a href="/review">나의 리뷰 목록</a></li>
+                <li><a href="/diary">나의 여행 일기 목록</a></li>
             </ul>
             <div class="withdrawal"><a><b>회원탈퇴</b></a></div>
         </div>
@@ -39,22 +39,41 @@
                 <div class="favorite-info">
                     <table>
                         <thead>
-                        <tr>
-                            <th>여행지 정보</th>
-                        </tr>
+                            <tr>
+                                <th>여행지 번호</th>
+                                <th>회원 ID</th>
+                                <th>등록 날짜</th>
+                                <th>업데이트 날짜</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>정보</td>
-                        </tr>
+                            <tr th:each="favorite : ${favoritesList}">
+                                <td th:text="${favorite.travelNo}"></td>
+                                <td th:text="${favorite.memberId}"></td>
+                                <td th:text="${favorite.regDate}"></td>
+                                <td th:text="${favorite.updateDate}"></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
             <div class="my-info">
-                <div class="my-inquiry">내 문의 내역</div>
-                <div class="my-activity">내 활동 내역</div>
+                <div class="my-inquiry">
+                    <h3>내 문의 내역</h3>
+                    <div class="inquiry-list">
+                        <div class="contact-history">문의 내역</div>
+                        <div class="answer-history">답변 내역</div>
+                    </div>
+                </div>
+                <div class="my-activity">
+                    <h3>내 활동 내역</h3>
+                    <div class="activity-list">
+                        <div class="favorites">즐겨찾기</div>
+                        <div class="review">리뷰</div>
+                        <div class="diary">여행 일기</div>
+                    </div>
+                </div>
             </div>
     </div>
 </main>

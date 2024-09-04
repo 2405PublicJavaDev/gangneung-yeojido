@@ -1,6 +1,7 @@
 main {
+    padding: 20px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .my-subject {
@@ -48,16 +49,34 @@ main {
 
 .main-content {
     flex-grow: 1;
+    width: 1500px;
     height: 800px;
     border: 1px solid black;
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    margin-left: 30px;
     box-sizing: border-box;
     flex-wrap: nowrap;
+    justify-content: center;
+}
+
+.my-subject {
+    display: flex;
+    justify-content: center;
+}
+
+.input-content {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .input-sub {
+    display: flex;
+    justify-content: center;
     width: 100%;
 }
 
@@ -75,11 +94,28 @@ main {
     height: 600px;
 }
 
+.file-div {
+    width: 80%;
+    display: flex;
+    justify-content: end;
+}
+.file-div button {
+    background-color: #007FFF;
+    width: 20%;
+    padding: 10px;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-family: "Noto Sans KR";
+}
+
 .register-btn {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    margin-bottom: 20px;
 }
 
 .register-btn button {
@@ -91,6 +127,7 @@ main {
     border-radius: 30px;
     cursor: pointer;
     font-family: "Noto Sans KR";
+    margin-left: 10px;
 }
 
 .my-info {

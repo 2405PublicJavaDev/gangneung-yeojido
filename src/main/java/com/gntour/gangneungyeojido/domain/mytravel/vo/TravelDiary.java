@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 @Getter
 @Setter
