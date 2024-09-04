@@ -1,10 +1,6 @@
 main {
     font-size: 30px;
-}
-
-#main-map {
-    position: relative;
-    margin-left: 180px;
+    padding-bottom: 96px;
 }
 
 #main-map-root {
@@ -13,287 +9,243 @@ main {
     flex-direction: row;
     padding-top: 120px;
     padding-bottom: 120px;
-}
-
-#main-marker-tooltip {
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: white;
-    border: 1px solid black;
-    /* 너비는 콘텐츠에 맞춰 자동 조정되도록 설정 */
-    width: fit-content;
-    /* 자식 요소가 넘치면 보이도록 설정 */
-    overflow: visible;
-}
-
-#main-marker-tooltip p {
-    font-size: 13px;
-    padding: 10px;
-    border-bottom: 1px solid black;
-    width: 100%;
-    /* 줄 바꿈 방지 및 너비 조정 */
-    white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
-    overflow: visible; /* 넘치는 텍스트 숨기기 */
-    /* 자식 요소의 콘텐츠에 맞게 너비 조정 */
-}
-
-#main-marker-tooltip li:last-of-type p:last-of-type {
-    border-bottom: transparent;
-}
-#main-detail {
-    margin-left: auto;
-    margin-right: 180px;
-}
-#main-detail-top {
-    width: 468px;
-}
-#main-detail-top-1 {
-    width: 100%;
-    display: flex;
-    align-items: center;
-}
-#main-detail-top-divider{
-    flex: 1 1 auto;
-    height: 1px;
-    background-color: #E6E1DB;
-}
-.main-detail-title {
-    display: inline-block;
-    font-size: 18px;
-    color: #282828;
-}
-.main-detail-region {
-    color: #282828;
-    font-size: 42px;
-    font-weight: bold;
-    font-family: "BMDOHYEON";
-}
-.main-detail-travel {
-    color: #EE450C;
-    font-size: 42px;
-    font-weight: bold;
-    font-family: "BMDOHYEON";
-}
-.main-detail-region-travel {
-    margin-top: 10px;
-}
-.main-detail-margin {
-    margin-top: 10px;
-}
-#main-detail-category-row1 {
-    margin-top: 35px;
-}
-#main-detail-category-row2 {
-    margin-top: 10px;
-}
-.main-detail-category-btn {
-    height: 50px;
-    width: 153px;
-    border-radius: 25px;
-    border: transparent;
-    background-color: white;
-    color: black;
-    font-size: 17px;
-    font-weight: bold;
-    box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.05);
-}
-
-#main-detail-content {
-    background-color: white;
-    box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.05);
-    padding: 40px;
-    margin-top: 40px;
-    width: 468px;
-    display: flex;
-    flex-direction: column;
-    height: 341px;
-}
-
-#main-detail-content-not-load {
-    background-color: white;
-    box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.05);
-    padding: 40px;
-    margin-top: 40px;
-    width: 468px;
-    height: 341px;
-}
-
-#main-detail-content-photo {
-    display: flex;
-    flex-direction: row;
     align-items: center;
 }
 
-#main-detail-content-photo img {
-    width: 90px; /* 표시할 이미지의 너비 */
-    height: 90px; /* 표시할 이미지의 높이 */
-    object-fit: cover; /* 이미지 크기에 맞게 자르기 */
-    object-position: center; /* 이미지 중심을 표시 */
-    overflow: hidden; /* 이미지를 자르고 넘치는 부분 숨기기 */
-    border-radius: 50%;
-    border: 6px solid #F5F0E5;
-    flex-grow: 0;
-    flex-shrink: 0;
-}
+    #main-map {
+        position: relative;
+        margin-left: 180px;
+    }
 
-#main-detail-content-photo-right{
-    display: flex;
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-direction: column;
-    overflow: hidden;
-}
+        #main-marker-tooltip {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: white;
+            border: 1px solid black;
+            /* 너비는 콘텐츠에 맞춰 자동 조정되도록 설정 */
+            width: fit-content;
+            /* 자식 요소가 넘치면 보이도록 설정 */
+            overflow: visible;
+        }
 
-#main-detail-content-photo-name {
-    font-size: 21px;
-    font-weight: bold;
-    color: #282828;
+        #main-marker-tooltip p {
+            font-size: 13px;
+            padding: 10px;
+            border-bottom: 1px solid black;
+            width: 100%;
+            /* 줄 바꿈 방지 및 너비 조정 */
+            white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
+            overflow: visible; /* 넘치는 텍스트 숨기기 */
+            /* 자식 요소의 콘텐츠에 맞게 너비 조정 */
+        }
 
-    width: 100%;
-    margin-left: 15px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-}
-#main-detail-content-photo-star {
-    margin-left: 15px;
-}
-.checked {
-    color: orange;
-}
+        #main-marker-tooltip li:last-of-type p:last-of-type {
+            border-bottom: transparent;
+        }
+        .main-map-button-group {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+        .main-map-button-group>button {
+            width: 150px;
+        }
+    #main-detail {
+        margin-left: auto;
+        margin-right: 180px;
+    }
+        #main-detail-top {
+            width: 468px;
+            margin-bottom: 25px;
+        }
+            .main-detail-title {
+                display: inline-block;
+                font-size: 18px;
+                color: #282828;
+            }
+            .main-detail-margin {
+                margin-top: 10px;
+            }
+            #main-detail-top>div:first-of-type {
+                width: 100%;
+                display: flex;
+                align-items: center;
+            }
+            #main-detail-top>div:first-of-type>div {
+                flex: 1 1 auto;
+                height: 1px;
+                background-color: #E6E1DB;
+            }
+            .main-detail-region-travel {
+                margin-top: 10px;
+            }
+            .main-detail-region-travel>span:first-of-type {
+                color: #282828;
+                font-size: 42px;
+                font-weight: bold;
+                font-family: "BMDOHYEON";
+            }
+            .main-detail-region-travel>span:last-of-type {
+                color: #EE450C;
+                font-size: 42px;
+                font-weight: bold;
+                font-family: "BMDOHYEON";
+            }
+        .main-detail-category-row {
+            margin-top: 10px;
+        }
+            .main-detail-category-btn {
+                height: 50px;
+                width: 153px;
+                border-radius: 25px;
+                border: transparent;
+                background-color: white;
+                color: black;
+                font-size: 17px;
+                font-weight: bold;
+                box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.05);
+            }
+        #main-detail-content-not-load {
+            background-color: white;
+            box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.05);
+            padding: 40px;
+            margin-top: 40px;
+            width: 468px;
+            height: 341px;
+        }
+        #main-detail-content {
+            background-color: white;
+            box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.05);
+            padding: 40px;
+            margin-top: 40px;
+            width: 468px;
+            display: flex;
+            flex-direction: column;
+            height: 341px;
+        }
 
-#main-detail-content-photo-star > span:last-of-type {
-    font-size: 16px;
-}
+            #main-detail-content-title {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
 
-#main-detail-content-text {
-    font-size: 16px;
-    margin-top: 10px;
-}
+                #main-detail-content-photo-img {
+                    width: 90px; /* 표시할 이미지의 너비 */
+                    height: 90px; /* 표시할 이미지의 높이 */
+                    object-fit: cover; /* 이미지 크기에 맞게 자르기 */
+                    object-position: center; /* 이미지 중심을 표시 */
+                    overflow: hidden; /* 이미지를 자르고 넘치는 부분 숨기기 */
+                    border-radius: 50%;
+                    border: 6px solid #F5F0E5;
+                    flex-grow: 0;
+                    flex-shrink: 0;
+                }
+                #main-detail-content-photo-right{
+                    display: flex;
+                    flex-grow: 1;
+                    flex-shrink: 1;
+                    flex-direction: column;
+                    overflow: hidden;
+                }
+                #main-detail-content-photo-name {
+                    font-size: 21px;
+                    font-weight: bold;
+                    color: #282828;
 
-#main-detail-more {
-    background-color: white;
-    border: 1px solid #D4D1CC;
-    padding: 12px 24px;
-    margin-top: 12px;
-}
+                    width: 100%;
+                    margin-left: 15px;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                }
+                #main-detail-content-photo-star {
+                    margin-left: 15px;
+                }
+                #main-detail-content-photo-star > span:last-of-type {
+                    font-size: 16px;
+                }
+                .star-checked {
+                    color: orange;
+                }
+            #main-detail-content-text {
+                font-size: 16px;
+                margin-top: 10px;
+            }
+            #main-detail-more {
+                background-color: white;
+                border: 1px solid #D4D1CC;
+                padding: 12px 24px;
+                margin-top: 12px;
+            }
 
-h3 {
+
+.this-month-title {
     font-family: "BMDOHYEON", serif;
     font-size: 40px;
     font-weight: 400;
     padding: 30px 0;
     padding-left: 180px;
+    margin-top: 72px;
 }
-.highlight {
+.this-month-title>span:first-of-type {
     color: #EE450C;
 }
-#detail-text {
-    font-family: "Noto Sans KR", sans-serif;
-    font-size: 18px;
-    font-weight: 400;
-    letter-spacing: -0.8px;
-}
-
-/* 리스트 */
-#main-bottom {
-    width: 100%;
-    height: 100%;
-}
-/* keyframes for scrolling animation */
-/*@keyframes scroll {*/
-/*    0% {*/
-/*        transform: translateX(0);*/
-/*    }*/
-/*    100% {*/
-/*        transform: translateX(-100%);*/
-/*    }*/
-/*}*/
-.travels {
-    margin: 15px 0;
-    display: flex;
-    flex-wrap: nowrap;
-    /*animation: scroll 16s linear infinite; !* 무한 스크롤 애니메이션 *!*/
-}
-.travels li {
+    #detail-text {
+        font-family: "Noto Sans KR", sans-serif;
+        font-size: 18px;
+        font-weight: 400;
+        letter-spacing: -0.8px;
+    }
+.swiper-slide {
+    display: inline-block;
     width: 350px;
     height: 100%;
     margin: 10px 60px;
     flex-shrink: 0;
 }
-/* 썸네일 */
-.travel-image {
-    height: 330px;
-}
-.thumbnail {
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    border-radius: 20px;
-    object-fit: cover;
-}
-.travel-detail {
-    margin-top: 15px;
-    padding-left: 5px;
-    height: 30px;
-}
-/* 여행지명 */
-.travel-title {
-    margin-bottom: 15px;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-}
-.travel-title a, .travel-title a:visited
-, .travel-title a:link {
-    text-decoration: none;
-    color: black;
-    font-size: 19px;
-    letter-spacing: -2px;
-    font-weight: bold;
-    font-family: "Noto Sans KR", sans-serif;
+    .travel-image {
+        height: 330px;
+    }
+        .thumbnail {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            border-radius: 20px;
+            object-fit: cover;
+        }
+    .travel-detail {
+        margin-top: 15px;
+        padding-left: 5px;
+        height: 30px;
+    }
+        .travel-title {
+            margin-bottom: 15px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+        .travel-title a, .travel-title a:visited
+        , .travel-title a:link {
+            text-decoration: none;
+            color: black;
+            font-size: 19px;
+            letter-spacing: -2px;
+            font-weight: bold;
+            font-family: "Noto Sans KR", sans-serif;
+        }
+
+.swiper-slide-active img{
+    border: 5px solid #3399FF;
 }
 
-/* 즐겨찾기 버튼 */
-.fa-bookmark {
-    cursor: pointer;
-    color: black;
-    background-color: white;
-    font-size: 22px;
-    padding-right: 10px;
-    padding-top: 3px;
+.swiper-slide-active .travel-title a {
+    color: #3399FF;
 }
-.fa-bookmark.active {
-    color: #FFD43B;
-    font-weight: bolder;
-}
-/* 주소 */
-.travel-address {
-    margin: 0 5px;
-    width: 98%;
-    height: 100%;
-}
-/* 주소 아이콘 */
-.address-left {
-    width: 8%;
-    float: left;
-}
-.fa-location-dot {
-    color: #00A155;
-    font-size: 22px;
-    padding-right: 3px;
-    padding-top: 3px;
-}
-.address-right {
-    width: 92%;
-    float: right;
-    padding-bottom: 5px;
-}
-.address-text {
-    font-size: 17px;
-    letter-spacing: -1.4px;
-    font-weight: normal;
-    font-family: "Noto Sans KR", sans-serif;
+
+.swiper-slide-active .travel-title i {
+    color: #3399FF;
 }

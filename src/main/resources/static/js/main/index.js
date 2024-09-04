@@ -89,3 +89,29 @@ icons.forEach(function(icon) {
         this.classList.toggle('active');
     });
 });
+
+// Initialize Swiper
+const swiper = new Swiper('.swiper', {
+    // Optional parameters
+    direction: 'horizontal',
+    loop: true,
+
+    // Pagination
+    pagination: {
+        el: '.swiper-pagination',
+    },
+
+    // Navigation
+    navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+    },
+
+    // Autoplay
+    autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+    },
+    slidesPerView: 'auto',
+    centeredSlides: true,
+});

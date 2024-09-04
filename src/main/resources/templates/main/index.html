@@ -11,6 +11,7 @@
         const randomNumber = numbers[randomIndex];
         console.log(randomNumber);
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@latest/swiper-bundle.min.js"></script>
     <script type="text/javascript" src="/js/main/mapdata.js"></script>
     <script type="text/javascript" src="/js/main/mapconfig.js"></script>
     <script type="text/javascript" src="/js/main/mapmanipulate.js"></script>
@@ -18,6 +19,8 @@
     <script src="https://kit.fontawesome.com/c04d10f9dd.js" crossorigin="anonymous"></script>
 </th:block>
 <th:block layout:fragment="css">
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@latest/swiper-bundle.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="/css/main/index.css" rel="stylesheet">
 </th:block>
@@ -28,22 +31,25 @@
             <ul id="main-marker-tooltip">
 
             </ul>
+            <div class="main-map-button-group">
+                <button class="common-primary-btn">마커 추가 요청하기</button>
+            </div>
         </div>
         <div id="main-detail">
             <div id="main-detail-top">
-                <div id="main-detail-top-1">
+                <div>
                     <p class="main-detail-title">지도별로 살펴보는</p>
                     <div id="main-detail-top-divider"></div>
                 </div>
                 <p class="main-detail-region-travel"><span class="main-detail-region">권역별</span> <span class="main-detail-travel">여행지</span></p>
                 <p class="main-detail-title main-detail-margin">다양한 강릉의 모습을 지도로 확인하실 수 있습니다. 마커를 선택하시면 해당 여행지에 대한 개요가 나타납니다.</p>
             </div>
-            <div id="main-detail-category-row1">
+            <div class="main-detail-category-row">
                 <button type="button" class="main-detail-category-btn" id="categoryMOUNTAIN">산·트래킹</button>
                 <button type="button" class="main-detail-category-btn" id="categorySEA">바다·해안</button>
                 <button type="button" class="main-detail-category-btn" id="categoryPARK">호수·공원</button>
             </div>
-            <div id="main-detail-category-row2">
+            <div class="main-detail-category-row">
                 <button type="button" class="main-detail-category-btn" id="categoryHISTORY">역사·유적</button>
                 <button type="button" class="main-detail-category-btn" id="categoryDISPLAY">전시</button>
                 <button type="button" class="main-detail-category-btn" id="categoryLEISURE">레저·체험</button>
@@ -52,16 +58,16 @@
                 <p>로딩중입니다 잠시만 기다려주세요</p>
             </div>
             <div id="main-detail-content">
-                <div id="main-detail-content-photo">
+                <div id="main-detail-content-title">
                     <img id="main-detail-content-photo-img" alt="content" src="/img/no-image.png"/>
                     <div id="main-detail-content-photo-right">
                         <p id="main-detail-content-photo-name"></p>
                         <p id="main-detail-content-photo-star">
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star-half-o checked"></span>
+                            <span class="fa fa-star star-checked"></span>
+                            <span class="fa fa-star star-checked"></span>
+                            <span class="fa fa-star star-checked"></span>
+                            <span class="fa fa-star star-checked"></span>
+                            <span class="fa fa-star-half-o star-checked"></span>
                             <span>4.5</span>
                         </p>
                     </div>
@@ -71,26 +77,28 @@
             </div>
         </div>
     </div>
-    <h3>
+    <h3 class="this-month-title">
         이달의 <span class="highlight">신규 여행지</span>
         <p id="detail-text">매달 새로 등록된 여행지들을 소개해 드려요</p>
     </h3>
     <!--리스트 출력-->
-    <ul class="travels">
-        <li th:each="travel : ${thisMonth}">
-            <div class="travel-image">
-                <a th:href="@{/travel/detail/{no}(no = ${travel.travelNo})}">
-                    <img class="thumbnail" alt="thumbnail"
-                         th:src="${travel.imageUrl != null ? travel.imageUrl : '/img/sample_img.png'}">
-                </a>
-            </div>
-            <div class="travel-detail">
-                <div class="travel-title">
-                    <a th:href="@{/travel/detail/{no}(no = ${travel.travelNo})}" th:text="${travel.travelName}"></a>
-                    <i class="fa-regular fa-bookmark"></i>
+    <div class="swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" th:each="travel : ${thisMonth}">
+                <div class="travel-image">
+                    <a th:href="@{/travel/detail/{no}(no = ${travel.travelNo})}">
+                        <img class="thumbnail" alt="thumbnail"
+                             th:src="${travel.imageUrl != null ? travel.imageUrl : '/img/sample_img.png'}">
+                    </a>
+                </div>
+                <div class="travel-detail">
+                    <div class="travel-title">
+                        <a th:href="@{/travel/detail/{no}(no = ${travel.travelNo})}" th:text="${travel.travelName}"></a>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
                 </div>
             </div>
-        </li>
-    </ul>
+        </div>
+    </div>
 </main>
 </html>
