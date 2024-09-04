@@ -30,15 +30,15 @@
         </div>
     </div>
     <div>
-        <div class="my-subject"><h1>나의 여행일기 등록</h1></div>
 
         <form action="/register-diary" method="post" enctype="multipart/form-data">
+        <div class="my-subject"><h1>나의 여행일기 등록</h1></div>
             <div class="main-content">
                 <div class="input-content">
                     <div class="input-sub">
-                        <input type="text" name="diary-sub" placeholder="제목을 입력해주세요">
+                        <input type="text" name="diary-sub" id="diary-subject" placeholder="제목을 입력해주세요">
                     </div>
-                    <textarea name="diary-content" placeholder="내용을 입력해주세요"></textarea>
+                    <textarea name="diary-content" id="diary-content" placeholder="내용을 입력해주세요"></textarea>
                     <div class="file-div">
                         <button type="button" class="register-file">첨부파일</button>
                     </div>
@@ -50,8 +50,21 @@
             </div>
         </form>
         <div class="my-info">
-            <div class="my-inquiry">내 문의 내역</div>
-            <div class="my-activity">내 활동 내역</div>
+            <div class="my-inquiry">
+                <h3>내 문의 내역</h3>
+                <div class="inquiry-list">
+                    <div class="contact-history">문의 내역</div>
+                    <div class="answer-history">답변 내역</div>
+                </div>
+            </div>
+            <div class="my-activity">
+                <h3>내 활동 내역</h3>
+                <div class="activity-list">
+                    <div class="favorites">즐겨찾기</div>
+                    <div class="review">리뷰</div>
+                    <div class="diary">여행 일기</div>
+                </div>
+            </div>
         </div>
     </div>
 </main>

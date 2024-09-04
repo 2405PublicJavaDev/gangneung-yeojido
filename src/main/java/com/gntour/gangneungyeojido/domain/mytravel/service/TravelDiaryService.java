@@ -1,6 +1,7 @@
 package com.gntour.gangneungyeojido.domain.mytravel.service;
 
 import com.gntour.gangneungyeojido.domain.mytravel.vo.TravelDiary;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -10,11 +11,10 @@ public interface TravelDiaryService {
 
     TravelDiary getDetailDiaryByMember(String memberId);
 
-    void addDiary();
+    int addDiary(TravelDiary travelDiary, MultipartFile uploadFile, String memberIdFromSession);
 
     void modifyDiary();
 
-    void removeDiary();
-
+    int removeDiary(String memberId);
 
 }

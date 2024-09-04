@@ -17,13 +17,13 @@ public interface TravelDiaryMapper {
 
     TravelDiary selectOneDiaryByMember(String memberId);
 
-    void insertDiary();
+    int insertDiary(TravelDiary travelDiary, String memberId);
 
     int insertDiaryFile(TravelDiaryFile diaryFile);
 
     void updateDiary();
 
-    void deleteDiary();
+    int deleteDiary(String memberId);
 
     int deleteDiaryFile(Long diaryNo);
 }
