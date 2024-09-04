@@ -1,15 +1,19 @@
+@import url("https://fonts.googleapis.com/css2?family=Poor+Story&display=swap");
+
 header {
     width: 100%;
+    margin: 0 auto;
     display: flex;
     flex-direction: row;
     align-items: center;
     position: relative;
     box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.1);
+    padding: 0 140px;
 }
 
 #header-logo {
     margin-left: 100px;
-    height: 100px;
+    height: 110px;
     padding: 8px;
 }
 
@@ -21,7 +25,11 @@ header {
 
 #header-tour{
     margin-left: auto;
-    margin-right: 24px;
+    margin-right: 36px;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: "Poor Story", system-ui;
+    letter-spacing: -2px;
 }
 
 .header-login-area {

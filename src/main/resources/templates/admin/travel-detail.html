@@ -4,61 +4,64 @@
       layout:decorate="~{layouts/admin}"
       layout:decorator="layout">
 <th:block layout:fragment="script">
-  <script type="text/javascript" src="/js/admin/travel-detail.js"></script>
+    <script type="text/javascript" src="/js/admin/travel-detail.js"></script>
 </th:block>
 <th:block layout:fragment="css">
-  <link rel="stylesheet" href="/css/admin/travel-detail.css">
+    <link rel="stylesheet" href="/css/admin/travel-detail.css">
 </th:block>
 <main layout:fragment="content">
-  <h3>여행지 상세정보</h3>
-  <h4 th:text="'- ' + ${detail.travelName} + ' -'"></h4>
-  <hr><br>
-  <div id="detail-area">
-    <div id="detail-left">
-      <div id="map"></div>
-    </div>
-    <div id="detail-right">
-      <form id="detail-form">
-        <input type="hidden" name="travelNo" th:value="${detail.travelNo}">
-        <div id="position-info">
-          <input id="latitude-box" type="text" name="latitude" placeholder="위도" class="common-input">
-          <input id="longitude-box" type="text" name="longitude" placeholder="경도" class="common-input">
+    <h3>여행지 상세정보</h3>
+    <h4 th:text="'- ' + ${detail.travelName} + ' -'"></h4>
+    <hr>
+    <br>
+    <div id="detail-area">
+        <div id="detail-left">
+            <div id="map"></div>
         </div>
-        <input type="text" name="travelName" placeholder="여행지명" th:value="${detail.travelName}">
-        <input type="text" name="address" placeholder="주소" th:value="${detail.address}">
-        <input type="text" name="phone" placeholder="전화번호" th:value="${detail.phone}">
-        <input type="text" name="useTime" placeholder="이용시간" th:value="${detail.useTime}">
-        <input type="text" name="parkFee" placeholder="주차요금" th:value="${detail.parkFee}">
-        <input type="text" name="entryFee" placeholder="입장료" th:value="${detail.entryFee}">
-        <input type="text" name="useFee" placeholder="시설 이용료" th:value="${detail.useFee}">
-        <input type="text" name="siteUrl" placeholder="사이트 URL" th:value="${detail.siteUrl}">
-        <input type="text" name="imageUrl" placeholder="이미지 URL" th:value="${detail.imageUrl}">
-        <input type="text" name="zoomLevel" placeholder="줌레벨(1~14)">
-        <div id="category-info">
-          <select name="" id="region">
-            <option value="" disabled selected>권역</option>
-            <option value="JUMUNJIN">주문진권</option>
-            <option value="CITY">시내권</option>
-            <option value="GYEONGPO">경포권</option>
-            <option value="DAEGWALLYEONG">대관령권</option>
-            <option value="JEONGDONGJIN">정동진 옥계권</option>
-          </select>
-          <select name="" id="category">
-            <option value="" disabled selected>카테고리</option>
-            <option value="MOUNTAIN">산·트래킹</option>
-            <option value="SEA">바다·해안</option>
-            <option value="HISTORY">역사·유적</option>
-            <option value="PARK">호수·공원</option>
-            <option value="DISPLAY">전시</option>
-            <option value="LEISURE">레저·체험</option>
-          </select>
+        <div id="detail-right">
+            <form id="detail-form">
+                <input type="hidden" name="travelNo" th:value="${detail.travelNo}">
+                <div id="position-info">
+                    <input id="latitude-box" type="text" name="latitude" placeholder="위도" class="common-input">
+                    <input id="longitude-box" type="text" name="longitude" placeholder="경도" class="common-input">
+                </div>
+                <input type="text" name="travelName" placeholder="여행지명" th:value="${detail.travelName}">
+                <input type="text" name="address" placeholder="주소" th:value="${detail.address}">
+                <input type="text" name="phone" placeholder="전화번호" th:value="${detail.phone}">
+                <input type="text" name="useTime" placeholder="이용시간" th:value="${detail.useTime}">
+                <input type="text" name="parkFee" placeholder="주차요금" th:value="${detail.parkFee}">
+                <input type="text" name="entryFee" placeholder="입장료" th:value="${detail.entryFee}">
+                <input type="text" name="useFee" placeholder="시설 이용료" th:value="${detail.useFee}">
+                <input type="text" name="siteUrl" placeholder="사이트 URL" th:value="${detail.siteUrl}">
+                <input type="text" name="imageUrl" placeholder="이미지 URL" th:value="${detail.imageUrl}">
+                <input type="text" name="zoomLevel" placeholder="줌레벨(1~14)">
+                <div id="category-info">
+                    <select name="" id="region">
+                        <option value="" disabled selected>권역</option>
+                        <option value="JUMUNJIN">주문진권</option>
+                        <option value="CITY">시내권</option>
+                        <option value="GYEONGPO">경포권</option>
+                        <option value="DAEGWALLYEONG">대관령권</option>
+                        <option value="JEONGDONGJIN">정동진 옥계권</option>
+                    </select>
+                    <select name="" id="category">
+                        <option value="" disabled selected>카테고리</option>
+                        <option value="MOUNTAIN">산·트래킹</option>
+                        <option value="SEA">바다·해안</option>
+                        <option value="HISTORY">역사·유적</option>
+                        <option value="PARK">호수·공원</option>
+                        <option value="DISPLAY">전시</option>
+                        <option value="LEISURE">레저·체험</option>
+                    </select>
+                </div>
+                <textarea cols="30" rows="10" style="resize:none;" name="introduce" placeholder="공간소개"
+                          th:text="${detail.introduce}"></textarea>
+                <button class="buttons" id="modify" type="button" onclick="travelModify();">수정</button>
+                <button class="buttons" id="remove" type="button" th:onclick="|travelRemove(${detail.travelNo});|">삭제
+                </button>
+                <button class="buttons" id="cancel" type="button" onclick="goBack();">취소</button>
+            </form>
         </div>
-        <textarea cols="30" rows="10" style="resize:none;" name="introduce" placeholder="공간소개" th:text="${detail.introduce}"></textarea>
-        <button type="button" onclick="travelModify();">수정</button>
-        <button type="button" th:onclick="|travelRemove(${detail.travelNo});|">삭제</button>
-        <button id="cancel" type="button" onclick="goBack();">취소</button>
-      </form>
     </div>
-  </div>
 </main>
 </html>

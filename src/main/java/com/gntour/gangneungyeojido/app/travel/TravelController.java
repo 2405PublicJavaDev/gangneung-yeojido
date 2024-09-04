@@ -21,7 +21,7 @@ public class TravelController {
      */
     @GetMapping("/travel/list")
     public String showTravelListPage(Model model, @RequestParam(value="currentPage", defaultValue = "1") Integer currentPage) {
-        model.addAttribute("page", travelService.getAllTravelsPage(currentPage));
+        model.addAttribute("page", travelService.getAllTravelsPage(currentPage, 12));
         return "travel/travel-list";
     }
 
