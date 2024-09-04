@@ -19,7 +19,7 @@ public interface TravelService {
     /**
      * 여행지 정보 Page Service
      */
-    Page<TravelInfo, Void> getAllTravelsPage(int currentPage);
+    Page<TravelInfo, Void> getAllTravelsPage(int currentPage, int boardLimit);
     TravelInfo getDetailTravel(Long travelNo);
     List<TravelInfo> getThisMonthTravel();
 

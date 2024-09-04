@@ -27,8 +27,8 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public Page<TravelInfo, Void> getAllTravelsPage(int currentPage) {
-        return Page.of(currentPage, travelMapper.selectAllTravelsCount(), travelMapper::selectAllTravelsPage);
+    public Page<TravelInfo, Void> getAllTravelsPage(int currentPage, int boardLimit) {
+        return Page.of(currentPage, travelMapper.selectAllTravelsCount(), travelMapper::selectAllTravelsPage, boardLimit,10);
     }
 
     @Override
