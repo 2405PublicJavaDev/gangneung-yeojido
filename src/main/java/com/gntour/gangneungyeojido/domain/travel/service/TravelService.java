@@ -20,7 +20,7 @@ public interface TravelService {
      */
     Page<TravelInfo, Void> getAllTravelsPage(int currentPage);
     TravelInfo getDetailTravel(Long travelNo);
-    void getThisMonthTravel();
+    List<TravelInfo> getThisMonthTravel();
 
     Page<ReqMarkAdd, Void> getRequestMarkList(int currentPage);
 

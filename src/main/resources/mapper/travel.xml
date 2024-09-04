@@ -7,6 +7,17 @@
         SELECT *
         FROM TRAVEL_INFO
     </select>
+    <select id="selectAllThisMonthTravels" resultType="TravelInfo">
+        SELECT *
+        FROM (
+        SELECT *
+        FROM TRAVEL_INFO
+        WHERE EXTRACT(YEAR FROM REG_DATE) = EXTRACT(YEAR FROM SYSDATE)
+        AND EXTRACT(MONTH FROM REG_DATE) = EXTRACT(MONTH FROM ADD_MONTHS(SYSDATE, -1))
+        ORDER BY REG_DATE DESC
+        )
+        WHERE ROWNUM <![CDATA[<]]>= 10
+    </select>
     <select id="selectAllTravelsPage" resultType="TravelInfo">
         SELECT *
         FROM TRAVEL_INFO

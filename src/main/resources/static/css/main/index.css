@@ -178,3 +178,122 @@ main {
     padding: 12px 24px;
     margin-top: 12px;
 }
+
+h3 {
+    font-family: "BMDOHYEON", serif;
+    font-size: 40px;
+    font-weight: 400;
+    padding: 30px 0;
+    padding-left: 180px;
+}
+.highlight {
+    color: #EE450C;
+}
+#detail-text {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: -0.8px;
+}
+
+/* 리스트 */
+#main-bottom {
+    width: 100%;
+    height: 100%;
+}
+/* keyframes for scrolling animation */
+/*@keyframes scroll {*/
+/*    0% {*/
+/*        transform: translateX(0);*/
+/*    }*/
+/*    100% {*/
+/*        transform: translateX(-100%);*/
+/*    }*/
+/*}*/
+.travels {
+    margin: 15px 0;
+    display: flex;
+    flex-wrap: nowrap;
+    /*animation: scroll 16s linear infinite; !* 무한 스크롤 애니메이션 *!*/
+}
+.travels li {
+    width: 350px;
+    height: 100%;
+    margin: 10px 60px;
+    flex-shrink: 0;
+}
+/* 썸네일 */
+.travel-image {
+    height: 330px;
+}
+.thumbnail {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    border-radius: 20px;
+    object-fit: cover;
+}
+.travel-detail {
+    margin-top: 15px;
+    padding-left: 5px;
+    height: 30px;
+}
+/* 여행지명 */
+.travel-title {
+    margin-bottom: 15px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.travel-title a, .travel-title a:visited
+, .travel-title a:link {
+    text-decoration: none;
+    color: black;
+    font-size: 19px;
+    letter-spacing: -2px;
+    font-weight: bold;
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+/* 즐겨찾기 버튼 */
+.fa-bookmark {
+    cursor: pointer;
+    color: black;
+    background-color: white;
+    font-size: 22px;
+    padding-right: 10px;
+    padding-top: 3px;
+}
+.fa-bookmark.active {
+    color: #FFD43B;
+    font-weight: bolder;
+}
+/* 주소 */
+.travel-address {
+    margin: 0 5px;
+    width: 98%;
+    height: 100%;
+}
+/* 주소 아이콘 */
+.address-left {
+    width: 8%;
+    float: left;
+}
+.fa-location-dot {
+    color: #00A155;
+    font-size: 22px;
+    padding-right: 3px;
+    padding-top: 3px;
+}
+.address-right {
+    width: 92%;
+    float: right;
+    padding-bottom: 5px;
+}
+.address-text {
+    font-size: 17px;
+    letter-spacing: -1.4px;
+    font-weight: normal;
+    font-family: "Noto Sans KR", sans-serif;
+}
