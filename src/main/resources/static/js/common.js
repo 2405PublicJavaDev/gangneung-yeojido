@@ -43,7 +43,6 @@ const ajax = (config, onSuccess, onError) => {
         // Handle regular JSON payloads
         requestPayload = JSON.stringify(config.payload);
     }
-
     fetch(config.url, {
         method: config.method,
         headers: config.isMultipart ? {
