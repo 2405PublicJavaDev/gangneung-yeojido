@@ -97,6 +97,7 @@ main {
             margin-top: 10px;
         }
             .main-detail-category-btn {
+                cursor: pointer;
                 height: 50px;
                 width: 153px;
                 border-radius: 25px;
@@ -175,6 +176,7 @@ main {
                 margin-top: 10px;
             }
             #main-detail-more {
+                cursor: pointer;
                 background-color: white;
                 border: 1px solid #D4D1CC;
                 padding: 12px 24px;
