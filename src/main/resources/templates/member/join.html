@@ -4,6 +4,7 @@
       layout:decorate="~{layouts/default}"
       layout:decorator="layout">
 <th:block layout:fragment="script">
+  <script type="text/javascript" src="/js/member/join.js"></script>
 </th:block>
 <th:block layout:fragment="css">
   <link href="/css/member/join.css" rel="stylesheet">
@@ -16,42 +17,40 @@
   <div class="signup-container">
     <h1>회원가입</h1>
     <hr>
-    <form class="signup-form">
+    <form action="/join" method="post" id="join-form" class="signup-form">
       <div class="input-group">
-        <input type="text" id="username" placeholder="아이디" class="common-input">
+        <input type="text" id="memberId" placeholder="아이디" class="common-input" name="memberId">
       </div>
       <div class="input-group">
-        <input type="password" id="password" placeholder="비밀번호" class="common-input">
+        <input type="password" id="password" placeholder="비밀번호" class="common-input" name="password">
 <!--         <i class="fi fi-rs-eye toggle-password"></i>-->
         <i class="fi fi-rr-eye-crossed toggle-password"></i>
       </div>
       <div class="input-group">
-        <input type="password" id="confirm-password" placeholder="비밀번호 확인" class="common-input">
+        <input type="password" id="confirmPassword" placeholder="비밀번호 확인" class="common-input" name="confirmPassword">
         <!-- <i class="fi fi-rs-eye toggle-password"></i> -->
         <i class="fi fi-rr-eye-crossed toggle-password"></i>
       </div>
       <div class="input-group">
-        <input type="email" id="email" placeholder="이메일주소" class="common-input">
+        <input type="email" id="email" placeholder="이메일주소" class="common-input" name="email">
       </div>
       <div class="input-group">
-        <input type="text" id="birth-date" placeholder="생년월일 8자리" class="common-input">
+        <input type="text" id="birthDate" placeholder="생년월일 8자리" class="common-input" name="birthDate">
       </div>
       <div class="input-group">
-        <input type="text" id="name" placeholder="이름" class="common-input">
+        <input type="text" id="name" placeholder="이름" class="common-input" name="name">
       </div>
-      <!-- <div class="input-group">
-            <input type="date" id="birthdate">
-          </div> -->
-      <div class="input-group telecom-phone">
-        <select id="telecom" class="common-input">
-          <option disabled selected>통신사 선택</option>
-          <option>SKT</option>
-          <option>KT</option>
-          <option>LG</option>
-        </select>
-        <input type="tel" id="phone" placeholder="전화번호" class="common-input">
+      <div class="input-group">
+<!--      <div class="input-group telecom-phone">-->
+<!--        <select id="telecom" class="common-input">-->
+<!--          <option disabled selected>통신사 선택</option>-->
+<!--          <option>SKT</option>-->
+<!--          <option>KT</option>-->
+<!--          <option>LG</option>-->
+<!--        </select>-->
+        <input type="tel" id="phone" placeholder="전화번호" class="common-input" name="phone">
       </div>
-      <button type="submit" class="common-primary-btn signup-button">회원가입하기</button>
+      <button type="button" class="common-primary-btn signup-button" onclick="joinBtnClick()">회원가입하기</button>
     </form>
     <div class="find-links">
       <a href="./find-id.html">아이디 찾기</a>

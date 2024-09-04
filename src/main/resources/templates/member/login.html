@@ -9,6 +9,7 @@
             location.href = "/join";
         }
     </script>
+    <script type="text/javascript" src="/js/member/login.js"></script>
 </th:block>
 <th:block layout:fragment="css">
   <link href="/css/member/login.css" rel="stylesheet">
@@ -17,10 +18,10 @@
   <div class="login-container">
     <h1>로그인</h1>
     <hr>
-    <form action="/login" method="post" class="login-form" >
+    <form action="/login" method="post" class="login-form" id="login-form">
       <input type="text" name="memberId" placeholder="아이디" class="common-input">
       <input type="password" name="password" placeholder="비밀번호" class="common-input">
-      <button type="submit" class="common-primary-btn login-btn">로그인</button>
+      <button type="button" class="common-primary-btn login-btn" onclick="loginBtnClick()">로그인</button>
     </form>
         <button class="common-secondary-btn signup-btn" onclick="goToJoin()">회원가입</button>
         <div class="find-links">

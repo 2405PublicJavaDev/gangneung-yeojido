@@ -11,6 +11,7 @@ import com.gntour.gangneungyeojido.domain.member.vo.Member;
 import com.gntour.gangneungyeojido.domain.review.service.ReviewService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,13 +22,12 @@ import java.util.List;
 
 @Controller
 @Slf4j
+@RequiredArgsConstructor
 public class AdminMemberController {
 
-    @Autowired
-    private MemberService mService;
+    private final MemberService mService;
 
-    @Autowired
-    private ReviewService rService;
+    private final ReviewService rService;
     /**
      *  담당자 : 이경학님
      *  관련기능 : [관리자 기능] 관리자 로그인
