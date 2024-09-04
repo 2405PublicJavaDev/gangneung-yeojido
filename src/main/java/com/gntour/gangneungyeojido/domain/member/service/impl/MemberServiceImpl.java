@@ -6,6 +6,7 @@ import com.gntour.gangneungyeojido.common.exception.ErrorCode;
 import com.gntour.gangneungyeojido.domain.member.mapper.MemberMapper;
 import com.gntour.gangneungyeojido.domain.member.service.MemberService;
 import com.gntour.gangneungyeojido.domain.member.vo.Member;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,9 +17,9 @@ import java.util.List;
 @Service
 @Transactional
 @Slf4j
+@RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
-    @Autowired
-    private MemberMapper mMapper;
+    private final MemberMapper mMapper;
 
     @Override
     public Member loginMember(Member member) {
@@ -31,8 +32,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void joinMember() {
-
+    public int joinMember(Member member) {
+        return mMapper.insertMember(member);
     }
 
     @Override

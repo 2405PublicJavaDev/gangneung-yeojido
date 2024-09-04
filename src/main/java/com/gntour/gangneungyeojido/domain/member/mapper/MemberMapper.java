@@ -11,7 +11,7 @@ public interface MemberMapper {
     Member selectOneById(String memberId);
     List<Member> selectAllBlackListMember(Integer currentPage, RowBounds rowBounds);
     int selectAllBlackListMemberCount();
-    void insertMember();
+    int insertMember(Member member);
     int updateMember(Member member);
     void deleteMember();
 }

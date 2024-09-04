@@ -1,20 +1,31 @@
 package com.gntour.gangneungyeojido.app.member;
 
+
+import com.gntour.gangneungyeojido.app.admin.dto.LoginRequest;
+import com.gntour.gangneungyeojido.app.member.dto.JoinRequest;
+import com.gntour.gangneungyeojido.common.MemberRole;
 import com.gntour.gangneungyeojido.common.MemberUtils;
+import com.gntour.gangneungyeojido.common.exception.BusinessException;
+import com.gntour.gangneungyeojido.common.exception.EmptyResponse;
+import com.gntour.gangneungyeojido.common.exception.ErrorCode;
 import com.gntour.gangneungyeojido.domain.member.service.MemberService;
 import com.gntour.gangneungyeojido.domain.member.vo.Member;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @Slf4j
+@RequiredArgsConstructor
 public class MemberController {
-    @Autowired
-    private MemberService mService;
+    private final MemberService mService;
 
     /**
      *  담당자 : 이경학님
@@ -69,26 +80,47 @@ public class MemberController {
      *  관련기능 : [회원관리 기능] 로그인, 로그아웃
      */
     @PostMapping("/login")
-    public String loginMember(String memberId, String password, HttpSession session){
+    @ResponseBody
+    public EmptyResponse loginMember(@RequestBody @Valid LoginRequest loginRequest, HttpSession session){
         Member member = new Member();
-        member.setMemberId(memberId);
-        member.setPassword(password);
+        member.setMemberId(loginRequest.getMemberId());
+        member.setPassword(loginRequest.getPassword());
         member = mService.loginMember(member);
         session.setAttribute(MemberUtils.MEMBER_ID, member.getMemberId());
-        return "redirect:/";
+        session.setAttribute(MemberUtils.MEMBER_ROLE, member.getRole());
+        return new EmptyResponse();
     }
 
     /**
      *  담당자 : 이경학님
      *  관련기능 : [회원관리 기능] 로그인, 로그아웃
      */
-    public void logoutMember(){}
+
+    public void logoutMember(){
+    }
 
     /**
      *  담당자 : 이경학님
      *  관련기능 : [회원관리 기능] 회원가입
      */
-    public void joinMember(){}
+    @PostMapping("/join")
+    @ResponseBody
+    public EmptyResponse joinMember(@RequestBody @Valid JoinRequest joinRequest){
+        Member member = new Member();
+        member.setMemberId(joinRequest.getMemberId());
+        member.setPassword(joinRequest.getPassword());
+        member.setName(joinRequest.getName());
+        member.setBirthDate(joinRequest.getBirthDate());
+        member.setEmail(joinRequest.getEmail());
+        member.setPhone(joinRequest.getPhone());
+        member.setRole("MEMBER");
+        if(!joinRequest.getPassword().equals(joinRequest.getConfirmPassword())) {
+            throw new BusinessException(ErrorCode.PW_PW_CHECK_NOT_MATCH);
+        }
+        int result = mService.joinMember(member);
+
+        return new EmptyResponse();
+    }
 
     /**
      *  담당자 : 이경학님

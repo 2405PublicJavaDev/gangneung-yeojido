@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface MemberService {
     Member loginMember(Member member);
-    void joinMember();
+    int joinMember(Member member);
     void findMemberId();
     void findPassword();
     int modifyMemberInfo(Member member);

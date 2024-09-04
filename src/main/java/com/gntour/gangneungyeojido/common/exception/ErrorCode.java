@@ -15,7 +15,8 @@ public enum ErrorCode {
     LOGIN_FAIL("M001", "로그인에 실패했습니다", HttpStatus.UNAUTHORIZED),
     EMAIL_VALID_FAIL("M002", "이메일 인증에 실패했습니다", HttpStatus.BAD_REQUEST),
     ID_FIND_FAIL("M003", "아이디 찾기에 실패했습니다", HttpStatus.BAD_REQUEST),
-    PW_FIND_FAIL("M004", "비밀번호 찾기에 실패했습니다", HttpStatus.BAD_REQUEST)
+    PW_FIND_FAIL("M004", "비밀번호 찾기에 실패했습니다", HttpStatus.BAD_REQUEST),
+    PW_PW_CHECK_NOT_MATCH("M005", "비밀번호와 비밀번호 확인이 다릅니다", HttpStatus.BAD_REQUEST)
     ;
 
     private final String code;
