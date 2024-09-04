@@ -43,7 +43,6 @@ public class AuthenticationFilter implements Filter {
                 return;
             }
         }
-
         filterChain.doFilter(request, response);
     }
 

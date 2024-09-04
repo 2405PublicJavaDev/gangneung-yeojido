@@ -21,23 +21,25 @@
         <div class="my-sideList">
             <h2>마이 페이지</h2>
             <ul>
-                <li><a href="./myPage/myPage.html"><b>즐결찾기 목록</b></a></li>
+                <li><a href="/favorites"><b>즐결찾기 목록</b></a></li>
                 <li><a href="#">회원 정보 수정</a></li>
-                <li><a href="./myPage/myReview.html">나의 리뷰 목록</a></li>
-                <li><a href="./myPage/myDiary.html"><b>나의 여행 일기 목록</b></a></li>
+                <li><a href="/review">나의 리뷰 목록</a></li>
+                <li><a href="/diary">나의 여행 일기 목록</a></li>
             </ul>
             <div class="withdrawal"><a><b>회원탈퇴</b></a></div>
         </div>
     </div>
     <div>
-        <div class="my-subject"><h1>나의 여행일기 등록</h1></div>
+        <div class="my-subject"><h1>나의 여행일기 수정</h1></div>
         <div class="main-content">
-            <div class="input-sub">
-                <input type="text" name="diary-sub" placeholder="제목을 입력해주세요">
-            </div>
             <div class="input-content">
-                <textarea name="diary-content" placeholder="내용을 입력해주세요"> </textarea>
-                <button class="file">첨부파일</button>
+                <div class="input-content">
+                    <div class="input-sub">
+                        <input type="text" name="diary-sub" placeholder="제목을 입력해주세요">
+                    </div>
+                    <textarea name="diary-content" placeholder="내용을 입력해주세요"> </textarea>
+                    <div class="file-div"><button class="register-file">첨부파일</button></div>
+                </div>
             </div>
             <div class="register-btn">
                 <button>수정</button>

@@ -3,16 +3,20 @@ package com.gntour.gangneungyeojido.domain.review.service.impl;
 import com.gntour.gangneungyeojido.common.Page;
 import com.gntour.gangneungyeojido.domain.review.mapper.ReviewMapper;
 import com.gntour.gangneungyeojido.domain.review.service.ReviewService;
+import com.gntour.gangneungyeojido.domain.review.vo.Review;
+import lombok.RequiredArgsConstructor;
 import com.gntour.gangneungyeojido.domain.review.vo.ReviewComplain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
+@RequiredArgsConstructor
 @Transactional
 public class ReviewServiceImpl implements ReviewService {
-    @Autowired
-    private ReviewMapper rMapper;
+    private final ReviewMapper rMapper;
 
     @Override
     public void getAllReviewsByTravel() {
@@ -20,8 +24,8 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void getAllReviewsByMember() {
-
+    public List<Review> getAllReviewsByMember(String memberId) {
+        return rMapper.selectAllReviewsByMember(memberId);
     }
 
     @Override

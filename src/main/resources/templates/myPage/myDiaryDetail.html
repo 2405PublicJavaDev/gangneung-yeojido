@@ -14,7 +14,7 @@
     <script type="text/javascript" src="/js/main/index.js"></script>
 </th:block>
 <th:block layout:fragment="css">
-    <link rel="stylesheet" href="/css/main/myPage/myDiary.css">
+    <link rel="stylesheet" href="/css/main/myPage/detail-myDiary.css">
 </th:block>
 <main layout:fragment="content">
     <div class="my-sidebar">
@@ -30,34 +30,19 @@
         </div>
     </div>
     <div>
-        <div class="my-subject"><h1>나의 여행일기 목록</h1></div>
+        <div class="my-subject"><h1>나의 여행일기</h1></div>
         <div class="main-content">
-            <div class="diary-list">
-                <img src="/img/wrtFileImageView.jpg">
-                <span>경포 해수욕장...</span>
-                <button><a href="/modify-diary">수정</a></button>
-                <button>삭제</button>
-            </div>
-            <div class="diary-list">
-                <img src="/img/wrtFileImageView.jpg">
-                <span>경포 해수욕장...</span>
-                <button><a href="/modify-diary">수정</a></button>
-                <button>삭제</button>
-            </div>
-            <div class="diary-list">
-                <img src="/img/wrtFileImageView.jpg">
-                <span>경포 해수욕장...</span>
-                <button><a href="/modify-diary">수정</a></button>
-                <button>삭제</button>
-            </div>
-            <div class="diary-list">
-                <img src="/img/wrtFileImageView.jpg">
-                <span>경포 해수욕장...</span>
-                <button><a href="/modify-diary">수정</a></button>
-                <button><a href="#"></a>삭제</button>
+            <div class="input-content">
+                <div class="input-content">
+                    <div class="input-sub">
+                        <input type="text" name="diary-sub" placeholder="제목을 입력해주세요">
+                    </div>
+                    <textarea name="diary-content" placeholder="내용을 입력해주세요"> </textarea>
+                </div>
             </div>
             <div class="register-btn">
-                <button><a href="/register-diary">일기 작성</a></button>
+                <button><a href="/modify-diary">수정</a></button>
+                <button>삭제</button>
             </div>
         </div>
         <div class="my-info">

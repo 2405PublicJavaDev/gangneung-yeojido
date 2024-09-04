@@ -1,10 +1,14 @@
 package com.gntour.gangneungyeojido.domain.mytravel.service;
 
+import com.gntour.gangneungyeojido.domain.mytravel.vo.TravelDiary;
+
+import java.util.List;
+
 public interface TravelDiaryService {
 
-    void getAllDiariesByMember();
+    List<TravelDiary> getAllDiariesByMember(String memberId);
 
-    void getDetailDiaryByMember();
+    TravelDiary getDetailDiaryByMember(String memberId);
 
     void addDiary();
 
