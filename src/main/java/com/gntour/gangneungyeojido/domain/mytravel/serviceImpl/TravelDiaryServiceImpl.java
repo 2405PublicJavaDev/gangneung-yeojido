@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TravelDiaryServiceImpl implements TravelDiaryService {
-    private TravelDiaryMapper travelDiaryMapper;
+    private final TravelDiaryMapper travelDiaryMapper;
     @Override
     public List<TravelDiary> getAllDiariesByMember(String memberId) {
         return travelDiaryMapper.selectAllDiariesByMember(memberId);
