@@ -4,13 +4,15 @@ main {
 
 #main-map {
     position: relative;
-    margin-left: 100px;
+    margin-left: 180px;
 }
 
 #main-map-root {
     background-color: #FFF8F0;
     display: flex;
     flex-direction: row;
+    padding-top: 120px;
+    padding-bottom: 120px;
 }
 
 #main-marker-tooltip {
@@ -41,7 +43,7 @@ main {
 }
 #main-detail {
     margin-left: auto;
-    margin-right: 100px;
+    margin-right: 180px;
 }
 #main-detail-top {
     width: 468px;
@@ -105,6 +107,7 @@ main {
     width: 468px;
     display: flex;
     flex-direction: column;
+    height: 341px;
 }
 
 #main-detail-content-not-load {
@@ -113,6 +116,7 @@ main {
     padding: 40px;
     margin-top: 40px;
     width: 468px;
+    height: 341px;
 }
 
 #main-detail-content-photo {

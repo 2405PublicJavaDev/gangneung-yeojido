@@ -66,7 +66,12 @@ const getOutline = (travelNo) => {
         const titleTag = document.querySelector("#main-detail-content-photo-name");
         titleTag.innerHTML = response.travelName;
         const textTag = document.querySelector("#main-detail-content-text");
-        textTag.innerHTML = response.introduce;
+        const maxLength = 120; // 최대 길이
+        if (response.introduce.length > maxLength) {
+            textTag.innerHTML = response.introduce.substring(0, maxLength) + "...";
+        } else {
+            textTag.innerHTML = response.introduce;
+        }
         notLoadTag.style.display = 'none';
     }).catch((error) => {
         console.log('error', error);
