@@ -26,6 +26,7 @@ public class MainController {
     @GetMapping("/")
     public String showMainPage(Model model) {
         model.addAttribute("travelInfos", travelService.getAllTravels());
+        model.addAttribute("thisMonth", travelService.getThisMonthTravel());
         return "main/index";
     }
 

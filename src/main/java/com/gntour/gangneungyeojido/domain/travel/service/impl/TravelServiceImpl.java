@@ -36,8 +36,8 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public void getThisMonthTravel() {
-
+    public List<TravelInfo> getThisMonthTravel() {
+        return travelMapper.selectAllThisMonthTravels();
     }
 
     @Override
