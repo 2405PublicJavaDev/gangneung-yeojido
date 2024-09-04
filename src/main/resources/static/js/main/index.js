@@ -115,3 +115,7 @@ const swiper = new Swiper('.swiper', {
     slidesPerView: 'auto',
     centeredSlides: true,
 });
+
+const requestAddMark = () => {
+    location.href = "/mark-request";
+}

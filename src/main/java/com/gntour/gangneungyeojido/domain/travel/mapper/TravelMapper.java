@@ -1,5 +1,7 @@
 package com.gntour.gangneungyeojido.domain.travel.mapper;
 
+import com.gntour.gangneungyeojido.app.admin.dto.ReqMarkAddRequest;
+import com.gntour.gangneungyeojido.app.main.dto.ReqMarkAddInMainRequest;
 import com.gntour.gangneungyeojido.domain.travel.vo.ReqMarkAdd;
 import com.gntour.gangneungyeojido.domain.travel.vo.TravelInfo;
 import org.apache.ibatis.annotations.Mapper;
@@ -21,7 +23,7 @@ public interface TravelMapper {
     int selectAllRequestMarkCount();
     ReqMarkAdd selectOneRequestMark(Long reqMarkAddNo);
     int insertTravel(TravelInfo travelInfo);
-    void insertRequestMark();
+    int insertRequestMark(ReqMarkAddInMainRequest reqMarkAddRequest);
     int updateTravel(TravelInfo travelInfo);
     int updateRequestMark(ReqMarkAdd reqMarkAdd);
     int deleteTravel(Long travelNo);

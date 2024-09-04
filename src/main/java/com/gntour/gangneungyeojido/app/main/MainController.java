@@ -2,17 +2,23 @@ package com.gntour.gangneungyeojido.app.main;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gntour.gangneungyeojido.app.admin.dto.ReqMarkAddRequest;
+import com.gntour.gangneungyeojido.app.main.dto.ReqMarkAddInMainRequest;
+import com.gntour.gangneungyeojido.common.MemberUtils;
+import com.gntour.gangneungyeojido.common.exception.BusinessException;
+import com.gntour.gangneungyeojido.common.exception.EmptyResponse;
+import com.gntour.gangneungyeojido.common.exception.ErrorCode;
 import com.gntour.gangneungyeojido.domain.travel.service.TravelService;
 import com.gntour.gangneungyeojido.domain.travel.vo.TravelInfo;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.GsonJsonParser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @Slf4j
@@ -34,8 +40,9 @@ public class MainController {
      * 담당자: 조승효님
      * 관련기능: [메인 기능(페이지 폼)] 마커 승인 요청
      */
-    public void showAddReqMarkerPage() {
-
+    @GetMapping("/mark-request")
+    public String showAddReqMarkerPage() {
+        return "main/mark-request";
     }
 
     /**
@@ -52,7 +59,14 @@ public class MainController {
      * 담당자: 조승효님
      * 관련기능: [메인 기능] 마커 승인 요청
      */
-    public void addReqMarker() {
-
+    @PostMapping("/mark-request")
+    @ResponseBody
+    public EmptyResponse addReqMarker(HttpSession session, @RequestBody @Valid ReqMarkAddInMainRequest req) {
+        req.setMemberId(MemberUtils.getMemberIdFromSession(session));
+        int result = travelService.addRequestMark(req);
+        if(result == 0) {
+            throw new BusinessException(ErrorCode.NO_UPDATE);
+        }
+        return new EmptyResponse();
     }
 }
