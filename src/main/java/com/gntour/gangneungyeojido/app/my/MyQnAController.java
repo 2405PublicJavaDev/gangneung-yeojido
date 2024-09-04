@@ -1,5 +1,7 @@
 package com.gntour.gangneungyeojido.app.my;
 
+import org.springframework.web.bind.annotation.GetMapping;
+
 public class MyQnAController {
 
     /**
@@ -16,7 +18,10 @@ public class MyQnAController {
      * 담당자 : 김윤경님
      * 관련 기능 : [마이페이지 기능(페이지 폼)] 문의 내역(QnA) 등록
      */
-    public void showAddQnAPage(){}
+    @GetMapping("/myqna/register")
+    public String showAddQnAPage(){
+        return "/myPage/myqna-register";
+    }
     /**
      * 담당자 : 김윤경님
      * 관련 기능 : [마이페이지 기능] 문의 내역(QnA) 등록

@@ -11,22 +11,23 @@
 <main layout:fragment="content">
   <div class="main-container">
     <h1>공지사항 수정</h1>
-    <form action="/admin/notice/register" method="post">
+    <form action="admin/notice/modify/" method="post" th:object="${notice}" >
+      <input type="hidden" name="noticeNo" th:value="*{noticeNo}">
       <div>
         <label for="noticeTitle">제목</label>
-        <input type="text" id="noticeTitle" name="noticeSubject" required class="common-input">
+        <input type="text" id="noticeTitle" name="noticeSubject" required class="common-input subject-input" th:value="*{noticeSubject }">
       </div>
       <div>
         <label for="noticeContent">내용</label>
-        <textarea id="noticeContent" name="noticeContent" required class="common-input content-input"></textarea>
+        <textarea id="noticeContent" name="noticeContent" required class="common-input content-input" th:text="*{noticeContent }"></textarea>
       </div>
       <div>
-        <label for="importantYn">상단고정여부</label>
-        <input type="radio" name="importantYn" value="Y">YES
-        <input type="radio" name="importantYn" value="N">NO
+        <label for="importantYn">상단고정여부&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+        <input type="radio" name="importantYn" value="Y">&nbsp;YES&nbsp;&nbsp;
+        <input type="radio" name="importantYn" value="N">&nbsp;NO
       </div>
       <div class="button-container">
-        <button type="submit" class="register">수정</button>
+        <button type="submit" class="modify">수정</button>
         <button type="button" class="cancel">취소</button>
       </div>
     </form>

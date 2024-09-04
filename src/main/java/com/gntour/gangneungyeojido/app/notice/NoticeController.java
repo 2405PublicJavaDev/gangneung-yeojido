@@ -1,21 +1,55 @@
 package com.gntour.gangneungyeojido.app.notice;
 
+import com.gntour.gangneungyeojido.app.notice.dto.NoticeSearchCondition;
+import com.gntour.gangneungyeojido.domain.notice.service.NoticeService;
+import com.gntour.gangneungyeojido.domain.notice.vo.Notice;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
+
+@Controller
+@RequiredArgsConstructor
+@Slf4j
 public class NoticeController {
+    private final NoticeService noticeService;
+
     /**
      * 담당자 : 김윤경님
      * 관련 기능 : [공지사항 기능] 공지사항 리스트 조회
-     * url :
      */
-    public void showNoticeListPage(){
-
+    @GetMapping("/notice")
+    public String showNoticeListPage(
+            Model model
+            , @RequestParam(value="currentPage", defaultValue = "1") Integer currentPage
+            , @RequestParam(value = "searchType", required = false) String searchType
+            , @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
+        NoticeSearchCondition condition = new NoticeSearchCondition();
+        if ("title".equals(searchType)) {
+            condition.setTitle(searchKeyword);
+        } else if ("content".equals(searchType)) {
+            condition.setContent(searchKeyword);
+        }
+        log.info("Search Condition - Title: {}, Content: {}", condition.getTitle(), condition.getContent());
+        model.addAttribute("page", noticeService.getAllNotices(currentPage, condition));
+        return "notice/notice-list";
     }
     /**
      * 담당자 : 김윤경님
      * 관련 기능 : [공지사항 기능] 공지사항 세부 사항 조회
-     * url :
      */
-    public void showNoticeDetailPage(){
-
+    @GetMapping("/notice/{noticeNo}")
+    public String showNoticeDetailPage(Model model
+            , @PathVariable("noticeNo") Long noticeNo){
+        Notice notice = noticeService.getDetailNotice(noticeNo);
+        model.addAttribute("notice", notice);
+        return "notice/notice-detail";
     }
     /**
      * 담당자 : 김윤경님
