@@ -2,7 +2,7 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gntour.gangneungyeojido.domain.mytravel.mapper.TravelDiaryMapper">
-    <select id="getAllDiariesByMember" resultType="TravelDiary">
+    <select id="selectAllDiariesByMember" resultType="TravelDiary">
         SELECT * FROM TRAVEL_DIARY WHERE MEMBER_ID=#{memberId} ORDER BY DIARY_NO DESC
     </select>
 </mapper>

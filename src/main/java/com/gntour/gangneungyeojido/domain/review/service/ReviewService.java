@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface ReviewService {
     void getAllReviewsByTravel();
-    void getAllReviewsByMember();
     Page<ReviewComplain, Void> getAllComplainReviews(int currentPage);
     List<Review> getAllReviewsByMember(String memberId);
     void addReview();

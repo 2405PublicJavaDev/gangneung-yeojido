@@ -9,6 +9,7 @@
     <select id="selectAllComplainReviewsCount" resultType="_int">
         SELECT COUNT(*)
         FROM REVIEW_COMPLAIN
+    </select>
     <select id="selectAllReviewsByMember" resultType="Review">
         SELECT * FROM REVIEW WHERE MEMBER_ID = #{memberId}
     </select>
