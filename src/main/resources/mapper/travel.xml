@@ -136,4 +136,8 @@
         DELETE FROM TRAVEL_INFO
         WHERE TRAVEL_NO = #{travelNo}
     </delete>
+    <insert id="insertRequestMark">
+        INSERT INTO REQ_MARK_ADD(REQ_MARK_ADD_NO, TRAVEL_NAME, LATITUDE, LONGITUDE, ADDRESS, PHONE, USE_TIME, PARK_FEE, ENTRY_FEE, USE_FEE, INTRODUCE, SITE_URL, IMAGE_URL, MEMBER_ID)
+        VALUES (SEQ_REQ_MARK_ADD_NO.NEXTVAL, #{travelName}, #{latitude}, #{longitude}, #{address}, #{phone}, #{useTime}, #{parkFee}, #{entryFee}, #{useFee}, #{introduce}, #{siteUrl}, #{imageUrl}, #{memberId})
+    </insert>
 </mapper>

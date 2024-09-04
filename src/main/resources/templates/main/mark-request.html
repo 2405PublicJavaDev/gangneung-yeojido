@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}"
+      layout:decorator="layout">
+<th:block layout:fragment="script">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b8e51b6352169b8e43a0055704051c4e&libraries=services"></script>
+    <script type="text/javascript" src="/js/main/mark-request.js"></script>
+</th:block>
+<th:block layout:fragment="css">
+    <link href="/css/main/mark-request.css" rel="stylesheet">
+    <link rel='stylesheet'
+          href='https://cdn-uicons.flaticon.com/2.5.1/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <link rel='stylesheet'
+          href='https://cdn-uicons.flaticon.com/2.5.1/uicons-regular-straight/css/uicons-regular-straight.css'>
+</th:block>
+<main layout:fragment="content">
+    <div class="request-mark-container">
+        <h1>마커 추가 요청</h1>
+        <hr>
+        <form class="request-mark-form" id="request-mark-form">
+            <div class="input-group">
+                <input type="text" id="travelName" name="travelName" placeholder="여행지명" class="common-input">
+            </div>
+            <div class="input-group address-group">
+                <input type="text" id="address" name="address" placeholder="주소" class="common-input">
+                <button type="button" class="common-primary-btn" id="search-address-btn">검색</button>
+            </div>
+            <div class="input-group">
+                <input type="tel" id="phone" placeholder="전화번호" class="common-input" name="phone">
+            </div>
+            <div class="input-group">
+                <input type="text" id="useTime" name="useTime" placeholder="이용시간" class="common-input">
+            </div>
+            <div class="input-group">
+                <input type="text" id="parkFee" name="parkFee" placeholder="주차요금" class="common-input">
+            </div>
+            <div class="input-group">
+                <input type="text" id="entryFee" name="entryFee" placeholder="입장료" class="common-input">
+            </div>
+            <div class="input-group">
+                <input type="text" id="useFee" name="useFee" placeholder="시설 이용료" class="common-input">
+            </div>
+            <div class="input-group">
+                <input type="text" id="siteUrl" name="siteUrl" placeholder="여행지 사이트" class="common-input">
+            </div>
+            <div class="input-group">
+                <input type="text" id="imageUrl" name="imageUrl" placeholder="여행지 이미지 url" class="common-input">
+            </div>
+            <div class="input-group">
+                <textarea cols="30" rows="10" style="resize:none;" name="introduce" placeholder="공간소개" class="common-input"></textarea>
+            </div>
+            <input type="hidden" id="latitude" name="latitude">
+            <input type="hidden" id="longitude" name="longitude">
+            <button type="button" class="common-primary-btn request-mark-button" id="request-mark-btn">승인 요청</button>
+            <button type="button" class="common-secondary-btn request-mark-button" id="cancel-btn">취소</button>
+        </form>
+    </div>
+</main>
+</html>
