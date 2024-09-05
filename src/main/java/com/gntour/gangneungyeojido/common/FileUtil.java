@@ -1,6 +1,12 @@
 package com.gntour.gangneungyeojido.common;
 
+import com.gntour.gangneungyeojido.domain.mytravel.mapper.TravelDiaryMapper;
+import com.gntour.gangneungyeojido.domain.mytravel.vo.TravelDiaryFile;
+import com.gntour.gangneungyeojido.domain.qna.mapper.QnAMapper;
 import com.gntour.gangneungyeojido.domain.qna.vo.QnA;
+import com.gntour.gangneungyeojido.domain.qna.vo.QnAFile;
+import com.gntour.gangneungyeojido.domain.review.mapper.ReviewMapper;
+import com.gntour.gangneungyeojido.domain.review.vo.ReviewFile;
 import com.gntour.gangneungyeojido.sample.domain.SampleFile;
 import com.gntour.gangneungyeojido.sample.repository.SampleMapper;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +27,9 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class FileUtil {
     private final SampleMapper sampleMapper;
+    private final QnAMapper qnaMapper;
+    private final TravelDiaryMapper diaryMapper;
+    private final ReviewMapper reviewMapper;
     /**
      * 파일을 업로드하고 업로드한 파일 정보를 DB 에 저장합니다.
      * @param uploadCategory: upload 할 파일 종류
@@ -73,9 +82,30 @@ public class FileUtil {
                 sampleFile.setSampleNo(fkNo);
                 result += sampleMapper.insertSampleFile(sampleFile);
             }
-            case QNA -> {}
-            case DIARY -> {}
-            case REVIEW -> {}
+            case QNA -> {
+                QnAFile qnaFile = new QnAFile();
+                qnaFile.setFileName(fileName);
+                qnaFile.setFileRename(fileRename);
+                qnaFile.setFilePath(filePath);
+                qnaFile.setQnaNo(fkNo);
+                result += qnaMapper.insertQnAFile(qnaFile);
+            }
+            case DIARY -> {
+                TravelDiaryFile diaryFile = new TravelDiaryFile();
+                diaryFile.setFileName(fileName);
+                diaryFile.setFileRename(fileRename);
+                diaryFile.setFilePath(filePath);
+                diaryFile.setDiaryNo(fkNo);
+                result += diaryMapper.insertDiaryFile(diaryFile);
+            }
+            case REVIEW -> {
+                ReviewFile reviewFile = new ReviewFile();
+                reviewFile.setFileName(fileName);
+                reviewFile.setFileRename(fileRename);
+                reviewFile.setFilePath(filePath);
+                reviewFile.setReviewNo(fkNo);
+                result += reviewMapper.insertReviewFile(reviewFile);
+            }
         }
         return result;
     }
@@ -85,9 +115,15 @@ public class FileUtil {
             case SAMPLE -> {
                 return sampleMapper.selectAllSampleFiles(fkNo);
             }
-            case QNA -> {}
-            case DIARY -> {}
-            case REVIEW -> {}
+            case QNA -> {
+                return qnaMapper.selectAllQnAFileByQnANo(fkNo);
+            }
+            case DIARY -> {
+                return diaryMapper.selectAllDiariesFileByDiaryNo(fkNo);
+            }
+            case REVIEW -> {
+                return reviewMapper.selectAllReviewsFileByReviewNo(fkNo);
+            }
         }
         return Collections.emptyList();
     }
@@ -102,9 +138,30 @@ public class FileUtil {
                 }
                 return success;
             }
-            case QNA -> {}
-            case DIARY -> {}
-            case REVIEW -> {}
+            case QNA -> {
+                boolean success = true;
+                for(Object file : files) {
+                    QnAFile qnaFile = (QnAFile)file;
+                    success &= new File(qnaFile.getFilePath()).delete();
+                }
+                return success;
+            }
+            case DIARY -> {
+                boolean success = true;
+                for(Object file : files) {
+                    TravelDiaryFile diaryFile = (TravelDiaryFile)file;
+                    success &= new File(diaryFile.getFilePath()).delete();
+                }
+                return success;
+            }
+            case REVIEW -> {
+                boolean success = true;
+                for(Object file : files) {
+                    ReviewFile reviewFile = (ReviewFile)file;
+                    success &= new File(reviewFile.getFilePath()).delete();
+                }
+                return success;
+            }
         }
         return false;
     }
@@ -115,9 +172,15 @@ public class FileUtil {
             case SAMPLE ->  {
                 result += sampleMapper.deleteSampleFile(fkNo);
             }
-            case QNA -> {}
-            case DIARY -> {}
-            case REVIEW -> {}
+            case QNA -> {
+                result += qnaMapper.deleteQnAFile(fkNo);
+            }
+            case DIARY -> {
+                result += diaryMapper.deleteDiaryFile(fkNo);
+            }
+            case REVIEW -> {
+                result += reviewMapper.deleteReviewFile(fkNo);
+            }
         }
         return result;
     }

@@ -1,6 +1,7 @@
 package com.gntour.gangneungyeojido.domain.mytravel.mapper;
 
 import com.gntour.gangneungyeojido.domain.mytravel.vo.TravelDiary;
+import com.gntour.gangneungyeojido.domain.mytravel.vo.TravelDiaryFile;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -12,17 +13,17 @@ public interface TravelDiaryMapper {
 
     void selectAllDiariesCountByMember();
 
-    void selectAllDiariesFileByDiaryNo();
+    List<TravelDiaryFile> selectAllDiariesFileByDiaryNo(Long diaryNo);
 
     TravelDiary selectOneDiaryByMember(String memberId);
 
     void insertDiary();
 
-    void insertDiaryFile();
+    int insertDiaryFile(TravelDiaryFile diaryFile);
 
     void updateDiary();
 
     void deleteDiary();
 
-    void deleteDiaryFile();
+    int deleteDiaryFile(Long diaryNo);
 }

@@ -1,18 +1,24 @@
 package com.gntour.gangneungyeojido.domain.qna.mapper;
 
+import com.gntour.gangneungyeojido.domain.qna.vo.QnAFile;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
+
+@Mapper
 public interface QnAMapper {
     void selectAllQnA();
-    void selectAllQnAFileByQnANo();
+    List<QnAFile> selectAllQnAFileByQnANo(Long qnaNo);
     void selectAllQnACount();
     void selectAllQnACountByMember();
     void selectAllQnAAnswer();
     void selectAllQnAAnswerCount();
     void selectAllQnAAnswerCountByMember();
     void insertQnA();
-    void insertQnAFile();
+    int insertQnAFile(QnAFile qnaFile);
     void insertQnAAnswer();
     void deleteQnA();
-    void deleteQnAFile();
+    int deleteQnAFile(Long qnaNo);
     void deleteQnAAnswer();
 
 }

@@ -5,4 +5,15 @@
     <select id="selectAllDiariesByMember" resultType="TravelDiary">
         SELECT * FROM TRAVEL_DIARY WHERE MEMBER_ID=#{memberId} ORDER BY DIARY_NO DESC
     </select>
+    <insert id="insertDiaryFile">
+        insert into TRAVEL_DIARY_FILE(DIARY_FILE_NO, FILE_PATH, FILE_NAME, FILE_RENAME, DIARY_NO)
+        values (SEQ_TRAVEL_DIARY_FILE_NO.NEXTVAL, #{filePath}, #{fileName}, #{fileRename}, #{diaryNo})
+    </insert>
+    <select id="selectAllDiariesFileByDiaryNo" resultType="TravelDiaryFile">
+        SELECT * FROM TRAVEL_DIARY_FILE
+        WHERE DIARY_NO = #{diaryNo}
+    </select>
+    <delete id="deleteDiaryFile">
+        delete from TRAVEL_DIARY_FILE WHERE DIARY_NO = #{diaryNo}
+    </delete>
 </mapper>
