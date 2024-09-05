@@ -10,14 +10,14 @@ import java.util.List;
 
 @Mapper
 public interface ReviewMapper {
-    void selectAllReviews();
-    void selectAllReviewsCount();
+    List<Review> selectAllReviews(Integer currentPage, Long travelNo, RowBounds rowBounds);
+    int selectAllReviewsCount(Long travelNo);
     void selectAllReviewsCountByMember();
     List<ReviewFile> selectAllReviewsFileByReviewNo(Long reviewNo);
     List<ReviewComplain> selectAllComplainReviews(Integer currentPage, RowBounds rowBounds);
     int selectAllComplainReviewsCount();
     List<Review> selectAllReviewsByMember(String memberId);
-    void insertReview();
+    int insertReview(Review review);
     int insertReviewFile(ReviewFile reviewFile);
     void insertReviewComplain();
     void updateReview();

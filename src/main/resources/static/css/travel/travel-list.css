@@ -98,6 +98,10 @@ a {
                     background-size: cover;
                     border-radius: 20px;
                     object-fit: cover;
+                    transition: transform 0.3s ease;
+                }
+                .thumbnail:hover {
+                    transform: scale(1.03);
                 }
             .travel-detail {
                 margin-top: 15px;

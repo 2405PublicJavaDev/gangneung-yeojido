@@ -1,5 +1,6 @@
 package com.gntour.gangneungyeojido.domain.travel.mapper;
 
+import com.gntour.gangneungyeojido.domain.review.vo.Review;
 import com.gntour.gangneungyeojido.app.admin.dto.ReqMarkAddRequest;
 import com.gntour.gangneungyeojido.app.main.dto.ReqMarkAddInMainRequest;
 import com.gntour.gangneungyeojido.domain.travel.vo.ReqMarkAdd;
@@ -27,4 +28,8 @@ public interface TravelMapper {
     int updateTravel(TravelInfo travelInfo);
     int updateRequestMark(ReqMarkAdd reqMarkAdd);
     int deleteTravel(Long travelNo);
+    /**
+     * 여행지 별점 받아오는 Service
+     */
+    Double getScoreByTravelNo(Long travelNo);
 }

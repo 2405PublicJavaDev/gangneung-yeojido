@@ -4,35 +4,91 @@
       layout:decorate="~{layouts/default}"
       layout:decorator="layout">
 <th:block layout:fragment="script">
-    <script type="text/javascript" src="/js/travel/travel-detail.js"></script>
+    <script type="text/javascript" src="/js/travel/travel-detail-info.js"></script>
+    <script type="text/javascript" src="/js/travel/travel-detail-review.js"></script>
+    <script type="text/javascript" src="/js/travel/review-popup.js"></script>
 </th:block>
 <th:block layout:fragment="css">
-    <link href="/css/travel/travel-detail.css" rel="stylesheet">
+    <link href="/css/travel/travel-detail-info.css" rel="stylesheet">
+    <link href="/css/travel/travel-detail-review.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/c04d10f9dd.js" crossorigin="anonymous"></script>
 </th:block>
 <main layout:fragment="content">
     <div id="main-top">
-        <h1>강릉대도호부 관아</h1>
+        <input type="hidden" name="travelNo" th:value="${detail.travelNo}">
+        <h1 th:text="${detail.travelName}"></h1>
         <div id="category-box">
-            <span id="category-txt">역사·유적</span>
+            <span id="category-txt" th:text="${detail.category}"></span>
         </div>
         <div id="score-box">
-            <p id="main-detail-content-photo-star">
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star-half-o checked"></span>
-                <span>4.5</span>
+            <p class="main-detail-content-photo-star" id="star-container">
+                <span id="stars" th:text="${score != null ? score : '0.0'}"></span>
             </p>
         </div>
         <div id="items">
-            <button id="find-road" type="button">길찾기</button>
             <i class="fa-regular fa-bookmark"></i>
+            <button id="find-road" type="button">길찾기</button>
         </div>
     </div>
     <div id="main-bottom">
-
+        <div id="type">
+            <button id="info-btn" class="cng-btn">정보</button>
+            <button id="review-btn" class="cng-btn">리뷰</button>
+        </div>
+        <div id="info-section">
+            <div id="info-section-left">
+                <img class="thumbnail" alt="thumbnail" th:src="${detail.imageUrl} != null ? ${detail.imageUrl} : '/img/no-image.png'">
+            </div>
+            <div id="info-section-right">
+                <ul class="info-list">
+                    <li>
+                        <div class="title">주소</div>
+                        <div class="text" th:text="${detail.address} != null ? ${detail.address} : '업데이트 예정'"></div>
+                    </li>
+                    <li>
+                        <div class="title">전화번호</div>
+                        <div class="text" th:text="${detail.phone} != null ? ${detail.phone} : '업데이트 예정'"></div>
+                    </li>
+                    <li>
+                        <div class="title">이용시간</div>
+                        <div class="text" th:text="${detail.useTime} != null ? ${detail.useTime} : '업데이트 예정'"></div>
+                    </li>
+                    <li>
+                        <div class="title">주차요금</div>
+                        <div class="text" th:text="${detail.parkFee} != null ? ${detail.parkFee} : '업데이트 예정'"></div>
+                    </li>
+                    <li>
+                        <div class="title">입장료</div>
+                        <div class="text" th:text="${detail.entryFee} != null ? ${detail.entryFee} : '업데이트 예정'"></div>
+                    </li>
+                    <li>
+                        <div class="title">시설 이용료</div>
+                        <div class="text" th:text="${detail.useFee} != null ? ${detail.useFee} : '업데이트 예정'"></div>
+                    </li>
+                    <li>
+                        <div class="title">홈페이지</div>
+                        <div class="text">
+                            <a th:href="${detail.siteUrl != null ? detail.siteUrl : '#'}"
+                               th:utext="${detail.siteUrl} != null ? ${detail.siteUrl} : '업데이트 예정'"
+                               th:classappend="${detail.siteUrl == null ? 'disabled' : ''}"></a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div id="about-place">
+                <h2>공간소개</h2>
+                <div id="info-text" th:text="${detail.introduce} != null ? ${detail.introduce} : '업데이트 예정'"></div>
+            </div>
+        </div>
+        <div id="review-section">
+            <button id="register-review" type="button">리뷰 작성</button>
+            <!--리뷰 리스트 출력-->
+            <div id="review-rows"></div>
+            <!--페이지네이션 출력-->
+            <ul class="common-pagination" id="pagination"></ul>
+        </div>
+        <!--리뷰 작성 팝업창 출력-->
+        <div id="popup-container"></div>
     </div>
 </main>
 </html>

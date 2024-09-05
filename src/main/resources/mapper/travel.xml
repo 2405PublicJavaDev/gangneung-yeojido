@@ -32,6 +32,12 @@
         FROM TRAVEL_INFO
         WHERE TRAVEL_NO = #{travelNo}
     </select>
+    <!--여행지에 대한 별점 받아오는 mapper-->
+    <select id="getScoreByTravelNo" resultType="_double">
+        SELECT NVL(ROUND(AVG(SCORE),1), 0.0)
+        FROM REVIEW
+        WHERE TRAVEL_NO = #{travelNo}
+    </select>
     <select id="selectAllRequestMark" resultType="ReqMarkAdd">
         SELECT *
         FROM REQ_MARK_ADD

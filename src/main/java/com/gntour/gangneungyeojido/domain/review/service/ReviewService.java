@@ -8,10 +8,10 @@ import com.gntour.gangneungyeojido.domain.review.vo.Review;
 import java.util.List;
 
 public interface ReviewService {
-    void getAllReviewsByTravel();
+    Page<Review, Long> getAllReviewsByTravel(Integer currentPage, Long travelNo);
     Page<ReviewComplain, Void> getAllComplainReviews(int currentPage);
     List<Review> getAllReviewsByMember(String memberId);
-    void addReview();
+    int addReview(Review review);
     void modifyReview();
     void removeReview();
     void complainReview();

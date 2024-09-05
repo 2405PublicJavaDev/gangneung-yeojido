@@ -3,6 +3,7 @@ package com.gntour.gangneungyeojido.domain.travel.service.impl;
 import com.gntour.gangneungyeojido.app.admin.dto.ReqMarkAddRequest;
 import com.gntour.gangneungyeojido.app.main.dto.ReqMarkAddInMainRequest;
 import com.gntour.gangneungyeojido.common.Page;
+import com.gntour.gangneungyeojido.domain.review.vo.Review;
 import com.gntour.gangneungyeojido.domain.travel.mapper.TravelMapper;
 import com.gntour.gangneungyeojido.domain.travel.service.TravelService;
 import com.gntour.gangneungyeojido.domain.travel.vo.ReqMarkAdd;
@@ -112,5 +113,10 @@ public class TravelServiceImpl implements TravelService {
     @Override
     public int removeTravel(Long travelNo) {
         return travelMapper.deleteTravel(travelNo);
+    }
+
+    @Override
+    public Double getScoreByTravelNo(Long travelNo) {
+        return travelMapper.getScoreByTravelNo(travelNo);
     }
 }
