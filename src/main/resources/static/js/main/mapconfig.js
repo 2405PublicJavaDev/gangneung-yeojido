@@ -26,11 +26,13 @@ const markerImages = [{
     imgSrc:'/img/SEA_marker.png',
     category: 'SEA'
 }]
-const staticImages = [{
-    imgSrc: "/img/cuttypotato.png",
-    width: 100,
-    height: 100,
-    lon: 128.83988367690708,
-    lat: 37.659234104113516
-}];
+const staticImages = [
+    // {
+    //     imgSrc: "/img/cuttypotato.png",
+    //     width: 100,
+    //     height: 100,
+    //     lon: 128.83988367690708,
+    //     lat: 37.659234104113516
+    // }
+];
 const MARKER_SIZE = 30;
