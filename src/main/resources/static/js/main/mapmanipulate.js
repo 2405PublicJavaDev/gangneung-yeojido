@@ -156,7 +156,7 @@ function drawGangneung() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawGangneungFill();
     drawGangneungStroke();
-    // drawMarkAndImages();
+    drawMarkAndImages();
 }
 
 function drawGangneungFill() {
