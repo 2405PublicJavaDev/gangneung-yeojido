@@ -16,6 +16,7 @@
         ORDER BY NOTICE_NO DESC
     </select>
 
+
     <select id="selectAllNoticesCount" resultType="_int">
         SELECT COUNT(*) FROM NOTICE
         <where>
@@ -33,7 +34,11 @@
     </select>
 
     <select id="selectImportantNotices" resultType="Notice">
-        SELECT * FROM NOTICE WHERE IMPORTANT_YN = 'Y' ORDER BY NOTICE_NO DESC
+        SELECT * FROM
+        (SELECT * FROM NOTICE
+        WHERE IMPORTANT_YN = 'Y'
+        ORDER BY NOTICE_NO DESC)
+        WHERE ROWNUM IN (1, 2, 3)
     </select>
 
 

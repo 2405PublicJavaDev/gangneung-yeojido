@@ -23,6 +23,8 @@ h1 {
 form div {
     margin-bottom: 20px;
 }
+
+/*검색바*/
 .search-container {
     display: flex;
     justify-content: center;
@@ -49,7 +51,7 @@ form div {
     border: none;
     cursor: pointer;
 }
-
+/*테이블*/
 .common-table {
     width: 100%;
     border-collapse: collapse;
@@ -82,6 +84,12 @@ form div {
 
 .common-table tr:hover {
     background-color: #e2e2e26c;
+}
+.important-tag {
+    background-color: #ff7e73;
+    color: white;
+    padding: 5px;
+    border-radius: 3px;
 }
 
 .common-table a {
