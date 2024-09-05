@@ -132,9 +132,10 @@ drawnPolygons.forEach(function (polygon) {
 
 // 마우스 움직임에 따라 폴리곤 이름을 출력합니다.
 canvas.addEventListener("mousemove", function (event) {
+    const rect = canvas.getBoundingClientRect();
     const point = {
-        x: event.clientX - canvas.offsetLeft,
-        y: event.clientY - canvas.offsetTop,
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top,
     };
     // 스케일과 오프셋을 고려한 마우스 좌표 변환
     const transformedPoint = {
@@ -155,7 +156,7 @@ function drawGangneung() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawGangneungFill();
     drawGangneungStroke();
-    drawMarkAndImages();
+    // drawMarkAndImages();
 }
 
 function drawGangneungFill() {
@@ -207,6 +208,10 @@ function drawGangneungStroke() {
                             toIdx = idx;
                         }
                     });
+                    if(line.isLast) {
+                        toIdx = path.length - 1;
+                    }
+                    console.log(fromIdx, toIdx);
                     ctx.save();
                     preSetupCtx();
                     ctx.beginPath();
@@ -225,6 +230,7 @@ function drawGangneungStroke() {
                         ctx.strokeStyle = "black";
                     } else {
                         ctx.strokeStyle = "red";
+                        ctx.setLineDash([5,3]);/*dashes are 5px and spaces are 3px*/
                     }
                     ctx.stroke();
                     ctx.closePath();
