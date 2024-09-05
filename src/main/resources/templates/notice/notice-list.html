@@ -35,8 +35,16 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="notice : ${page.data }">
-          <td>[[${notice.noticeNo }]]</td>
+<!--        검색 결과가 없을 때 -->
+        <tr th:if="${#lists.isEmpty(page.data)}">
+          <td colspan="3">검색 결과가 없습니다.</td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(page.data)}">
+          <td colspan="3"><a class="list-btn" th:href="@{/notice}">목록으로</a></td>
+        </tr>
+<!--        검색 결과가 있을 때-->
+        <tr th:each="notice : ${page.data}">
+          <td>[[${notice.noticeNo}]]</td>
           <td>
             <a th:href="@{/notice/{noticeNo}(noticeNo=${notice.noticeNo})}" th:text="${notice.noticeSubject}"></a>
           </td>
