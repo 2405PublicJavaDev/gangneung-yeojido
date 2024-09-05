@@ -11,7 +11,7 @@ public interface TravelDiaryService {
 
     TravelDiary getDetailDiaryByMember(String memberId);
 
-    int addDiary(TravelDiary travelDiary, MultipartFile uploadFile, String memberIdFromSession);
+    int addDiary(TravelDiary travelDiary, List<MultipartFile> multipartFiles);
 
     void modifyDiary();
 

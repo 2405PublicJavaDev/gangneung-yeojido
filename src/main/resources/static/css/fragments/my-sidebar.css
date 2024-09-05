@@ -1,0 +1,29 @@
+.my-sidebar {
+    flex: 0 0 250px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.my-sideList h2 {
+    margin-bottom: 20px;
+}
+
+.my-sideList ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.my-sideList ul li {
+    margin-bottom: 10px;
+}
+
+.my-sideList ul li a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.my-sideList ul li a:hover {
+    text-decoration: underline;
+}

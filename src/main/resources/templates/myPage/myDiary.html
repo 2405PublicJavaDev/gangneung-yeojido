@@ -1,82 +1,68 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/default}"
+      layout:decorate="~{layouts/my-page}"
       layout:decorator="layout">
 <th:block layout:fragment="script">
-    <script th:inline="javascript">
-        let travelInfos = /*[[${travelInfos}]]*/
-            console.log(travelInfos);
-    </script>
     <script type="text/javascript" src="/js/main/mapdata.js"></script>
     <script type="text/javascript" src="/js/main/mapconfig.js"></script>
     <script type="text/javascript" src="/js/main/mapmanipulate.js"></script>
     <script type="text/javascript" src="/js/main/index.js"></script>
 </th:block>
 <th:block layout:fragment="css">
-    <link rel="stylesheet" href="/css/main/myPage/myDiary.css">
+    <link rel="stylesheet" href="/css/myPage/myDiary.css">
 </th:block>
-<main layout:fragment="content">
-    <div class="my-sidebar">
-        <div class="my-sideList">
-            <h2>마이 페이지</h2>
-            <ul>
-                <li><a href="/favorites">즐결찾기 목록</a></li>
-                <li><a href="#">회원 정보 수정</a></li>
-                <li><a href="/review">나의 리뷰 목록</a></li>
-                <li><a href="/diary"><b>나의 여행 일기 목록</b></a></li>
-            </ul>
-            <div class="withdrawal"><a><b>회원탈퇴</b></a></div>
-        </div>
-    </div>
-    <div>
+    <main layout:fragment="content">
         <div class="my-subject"><h1>나의 여행일기 목록</h1></div>
         <div class="main-content">
             <div class="diary-list">
                 <img src="/img/wrtFileImageView.jpg">
-                <span>경포 해수욕장...</span>
+                <div class="diary-info">
+                    <span>경포 해수욕장...</span>
+                    <input type="text" name="content-shorts">
+                </div>
+            </div>
+            <div class="diary-list">
+                <img src="/img/wrtFileImageView.jpg">
+                <div class="diary-info">
+                    <span>경포 해수욕장...</span>
+                    <input type="text" name="content-shorts">
+                </div>
                 <button><a href="/modify-diary">수정</a></button>
                 <button><a href="/remove-diary">삭제</a></button>
             </div>
             <div class="diary-list">
                 <img src="/img/wrtFileImageView.jpg">
-                <span>경포 해수욕장...</span>
+                <div class="diary-info">
+                    <span>경포 해수욕장...</span>
+                    <input type="text" name="content-shorts">
+                </div>
                 <button><a href="/modify-diary">수정</a></button>
                 <button><a href="/remove-diary">삭제</a></button>
             </div>
             <div class="diary-list">
                 <img src="/img/wrtFileImageView.jpg">
-                <span>경포 해수욕장...</span>
+                <div class="diary-info">
+                    <span>경포 해수욕장...</span>
+                    <input type="text" name="content-shorts">
+                </div>
                 <button><a href="/modify-diary">수정</a></button>
                 <button><a href="/remove-diary">삭제</a></button>
             </div>
+
             <div class="diary-list">
                 <img src="/img/wrtFileImageView.jpg">
-                <span>경포 해수욕장...</span>
+                <div class="diary-info">
+                    <span>경포 해수욕장...</span>
+                    <input type="text" name="content-shorts">
+                </div>
                 <button><a href="/modify-diary">수정</a></button>
-                <button><a href="#"></a>삭제</button>
+                <button><a href="/remove-diary">삭제</a></button>
             </div>
             <div class="register-btn">
                 <button><a href="/register-diary">일기 작성</a></button>
             </div>
         </div>
-        <div class="my-info">
-            <div class="my-inquiry">
-                <h3>내 문의 내역</h3>
-                <div class="inquiry-list">
-                    <div class="contact-history">문의 내역</div>
-                    <div class="answer-history">답변 내역</div>
-                </div>
-            </div>
-            <div class="my-activity">
-                <h3>내 활동 내역</h3>
-                <div class="activity-list">
-                    <div class="favorites">즐겨찾기</div>
-                    <div class="review">리뷰</div>
-                    <div class="diary">여행 일기</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>
+    </main>
+    </html>
 </html>

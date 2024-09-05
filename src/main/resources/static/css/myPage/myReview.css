@@ -1,0 +1,52 @@
+main {
+    width: 60%;
+    margin: 0 auto;
+    display: flex;
+    min-height: 100vh;
+
+}
+
+.main-center {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.main-content {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    padding: 20px;
+    text-align: center;
+}
+
+.content h1 {
+    display: flex;
+    justify-content: center;
+}
+
+.review-img img{
+    flex-shrink: 0;
+    width: 200px;
+    height: 200px;
+    margin-right: 15px;
+    border-radius: 10px;
+}
+
+.main-review {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    width: 30%;
+    margin-top: 20px;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

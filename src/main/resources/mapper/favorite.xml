@@ -3,15 +3,29 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gntour.gangneungyeojido.domain.mytravel.mapper.FavoritesMapper">
-    <select id="selectAllFavoritesByMember" resultType="Favorites">
-        select * from FAVORITES WHERE MEMBER_ID=#{memberId}
+<!--    <resultMap id="favoritesResultMap" type="com.gntour.gangneungyeojido.domain.mytravel.vo.Favorites">-->
+<!--        <result property="favoriteNo" column="FAVORITES_NO"/>-->
+<!--        <result property="memberId" column="MEMBER_ID"/>-->
+<!--        <result property="travelNo" column="TRAVEL_NO"/>-->
+<!--        <result property="regDate" column="REG_DATE"/>-->
+<!--        <result property="updateDate" column="UPDATE_DATE"/>-->
+<!--    </resultMap>-->
+<!--    <resultMap id="TravelInfoResultMap" type="com.gntour.gangneungyeojido.domain.travel.vo.TravelInfo" extends="favoritesResultMap">-->
+<!--        <result property="travelNo" column="TRAVEL_NO"/>-->
+<!--        <result property="travelName" column="TRAVEL_NAME"/>-->
+<!--        <result property="introduce" column="INTRODUCE"/>-->
+<!--    </resultMap>-->
+    <select id="selectAllFavoritesByMember" resultType="FavoritesResponse">
+        SELECT t.TRAVEL_NAME "TRAVEL_NAME", t.INTRODUCE "INTRODUCE", f.FAVORITES_NO "FAVORITES_NO", t.TRAVEL_NO "TRAVEL_NO"
+        FROM FAVORITES f
+        JOIN TRAVEL_INFO t ON f.FAVORITES_NO = t.TRAVEL_NO
         <trim prefix="ORDER BY">
             <if test="isNew.equals('Y')"> FAVORITES_NO DESC </if>
             <if test="isNew.equals('N')"> FAVORITES_NO ASC </if>
         </trim>
-
     </select>
-    <insert id="insertFavorite">
-
+    <insert id="insertFavorites">
+        INSERT INTO FAVORITES (MEMBER_ID,TRAVEL_NO,REG_DATE)
+        VALUES (MEMBER_ID = #{memberId}, TRAVEL_NO = #{travelNo}, REG_DATE = #{regDate})
     </insert>
 </mapper>
