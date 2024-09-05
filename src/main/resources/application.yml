@@ -2,6 +2,18 @@ server:
   port: 8899
 
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL_APP_ID}
+    password: ${EMAIL_APP_PW}
+    properties:
+      mail:
+        smtp:
+          auth: true # 5
+          timeout: 5000 # 6
+          starttls:
+            enable: true # 7
   application:
     name: gangneung-yeojido
   datasource:

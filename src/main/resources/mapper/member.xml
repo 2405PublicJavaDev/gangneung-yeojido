@@ -4,8 +4,8 @@
 
 <mapper namespace="com.gntour.gangneungyeojido.domain.member.mapper.MemberMapper">
     <insert id="insertMember">
-        INSERT INTO MEMBER(MEMBER_ID, PASSWORD, NAME, BIRTH_DATE, EMAIL, PHONE, STATUS, DELETE_YN, ROLE, REG_DATE, UPDATE_DATE)
-        VALUES(#{memberId}, #{password}, #{name}, #{birthDate}, #{email}, #{phone}, DEFAULT, DEFAULT, #{role}, DEFAULT, DEFAULT)
+        INSERT INTO MEMBER(MEMBER_ID, PASSWORD, NAME, BIRTH_DATE, EMAIL, PHONE, ROLE)
+        VALUES(#{memberId}, #{password}, #{name}, #{birthDate}, #{email}, #{phone}, #{role})
     </insert>
     <select id="selectOneById" resultType="Member">
         SELECT * FROM MEMBER WHERE MEMBER_ID = #{memberId}
