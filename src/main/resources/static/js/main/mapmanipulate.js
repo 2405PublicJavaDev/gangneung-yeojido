@@ -276,11 +276,28 @@ function drawMarkAndImages() {
 }
 function drawMarkAndImagesInternal() {
     // All images are loaded; now draw them
-    travelInfos.forEach((marker) => {
+    travelInfos.filter((marker) => {
+        if(marker.zoomLevel > zoomLevel) {
+            return false;
+        }
+        if(selectedCategory.length === 0) {
+            return true;
+        }
+        if(!marker.category) {
+            return true;
+        }
+        return selectedCategory.includes(marker.category);
+    }).forEach((marker) => {
         ctx.save();
         preSetupCtx();
-        const markerImage = markerImages
-            .find(marker => marker.category === 'DISPLAY');
+        let markerImage = markerImages
+            .find(markerImg => markerImg.category === marker.category);
+        if(markerImage == null) {
+            markerImage = markerImages
+                .find(markerImg => markerImg.category === 'DISPLAY');
+            // 분류되지 않은 경우 기본으로 전시를 보여준다.
+        }
+        console.log(markerImage);
         marker.x = lonToX(marker.longitude);
         marker.y = latToY(marker.latitude);
         ctx.drawImage(markerImage.image, marker.x, marker.y, MARKER_SIZE / scale, MARKER_SIZE / scale);

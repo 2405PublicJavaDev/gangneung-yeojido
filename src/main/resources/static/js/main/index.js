@@ -14,7 +14,6 @@ buttons.forEach(button => {
 
     // 이벤트 리스너를 추가합니다. (여기서는 예시로 클릭 이벤트를 사용합니다.)
     button.addEventListener('click', () => {
-        console.log(`Clicked button with id suffix: ${idSuffix}`);
         // 추가적인 동작을 여기에 작성할 수 있습니다.
         const index = selectedCategory.indexOf(idSuffix);
         if (index !== -1) {
@@ -26,7 +25,7 @@ buttons.forEach(button => {
             button.style.backgroundColor = buttonBackground.get(idSuffix);
             button.style.color = '#FFFFFF';
         }
-        console.log(selectedCategory);
+        drawGangneung();
     });
 });
 
