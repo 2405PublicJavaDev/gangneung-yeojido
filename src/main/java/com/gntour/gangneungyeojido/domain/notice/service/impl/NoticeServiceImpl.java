@@ -37,10 +37,7 @@ public class NoticeServiceImpl implements NoticeService {
         return noticeMapper.insertNotice(notice);
     }
 
-    @Override
-    public void removeNotice() {
 
-    }
 
     @Override
     public int modifyNotice(Notice notice) {

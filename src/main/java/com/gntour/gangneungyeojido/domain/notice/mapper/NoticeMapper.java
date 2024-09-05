@@ -14,6 +14,5 @@ public interface NoticeMapper {
     List<Notice> selectImportantNotices();
     Notice selectOneNotice(Long noticeNo);
     int insertNotice(Notice notice);
-    void deleteNotice();
     int updateNotice(Notice notice);
 }

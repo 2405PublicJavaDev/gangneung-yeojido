@@ -27,10 +27,6 @@ public interface NoticeService {
      **/
     int addNotice(Notice notice);
 
-    /**
-     * 공지사항 삭제 Service
-     **/
-    void removeNotice();
 
     /**
      * 공지사항 수정 Service
