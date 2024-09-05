@@ -25,42 +25,52 @@
       <div class="success-message hide message" id="id-success-message"></div>
       <div class="failure-message hide message" id="id-failure-message"></div>
 
-      <div class="input-group">
+      <div class="input-group" >
         <input type="password" id="password" placeholder="비밀번호" class="common-input" name="password">
-<!--         <i class="fi fi-rs-eye toggle-password"></i>-->
-        <i class="fi fi-rr-eye-crossed toggle-password"></i>
+         <i class="fi fi-rs-eye toggle-password pwIcon"></i>
+<!--        <i class="fi fi-rr-eye-crossed toggle-password"></i>-->
       </div>
 
+      <div class="success-message hide message" id="pw-success-message"></div>
       <div class="strongPassword-message hide message" id="pw-failure-message"></div>
 
       <div class="input-group">
         <input type="password" id="confirmPassword" placeholder="비밀번호 확인" class="common-input" name="confirmPassword">
-        <!-- <i class="fi fi-rs-eye toggle-password"></i> -->
-        <i class="fi fi-rr-eye-crossed toggle-password"></i>
+        <i class="fi fi-rs-eye toggle-password cpwIcon"></i>
+<!--        <i class="fi fi-rr-eye-crossed toggle-password"></i>-->
       </div>
 
+      <div class="success-message hide message" id="pw-check-success-message"></div>
       <div class="mismatch-message hide message" id="pw-check-failure-message"></div>
 
       <div class="input-group email-group">
         <input type="email" id="email" placeholder="이메일 주소" class="common-input email-input" name="email">
-        <button type="button" class="common-secondary-btn email-btn">인증번호 받기</button>
+        <button type="button" class="common-secondary-btn email-btn" id="email-btn">인증번호 받기</button>
       </div>
 
+      <div class="success-message hide message" id="email-success-message"></div>
       <div class="email-failure-message hide message" id="email-failure-message"></div>
 
       <div class="input-group auth-group">
-        <input type="number" id="auth" placeholder="인증 번호" class="common-input auth-input" name="auth">
-        <button type="button" class="common-secondary-btn auth-btn">인증</button>
+        <input type="text" id="auth" placeholder="인증번호 8자리" class="common-input auth-input" name="auth">
+        <button type="button" class="common-secondary-btn auth-btn" id="auth-btn">인증</button>
       </div>
       <div class="input-group">
         <input type="text" id="birthDate" placeholder="생년월일 8자리" class="common-input" name="birthDate">
       </div>
+      <div class="success-message hide message" id="birthdate-success-message"></div>
+      <div class="email-failure-message hide message" id="birthdate-failure-message"></div>
+
       <div class="input-group">
         <input type="text" id="name" placeholder="이름" class="common-input" name="name">
       </div>
+      <div class="success-message hide message" id="name-success-message"></div>
+      <div class="mismatch-message hide message" id="name-failure-message"></div>
       <div class="input-group">
-        <input type="tel" id="phone" placeholder="전화번호" class="common-input" name="phone">
+        <input type="tel" id="phone" placeholder="전화번호(숫자만 입력)" class="common-input" name="phone">
       </div>
+      <div class="success-message hide message" id="phone-success-message"></div>
+      <div class="email-failure-message hide message" id="phone-failure-message"></div>
       <button type="button" class="common-primary-btn signup-button" onclick="joinBtnClick();">회원가입하기</button>
     </form>
     <div class="find-links">

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gntour.gangneungyeojido.domain.email.mapper.EmailValidMapper">
+    <insert id="insertEmailValid">
+        INSERT INTO EMAIL_VALID(EMAIL, VALID_CODE, EXPIRED)
+        VALUES (#{email}, #{validCode}, #{expired})
+    </insert>
+    <update id="updateEmailValid">
+        UPDATE EMAIL_VALID
+        <set>
+            <if test="validCode != null" >
+                VALID_CODE = #{validCode},
+            </if>
+            <if test="validYn != null" >
+                VALID_YN = #{validYn},
+            </if>
+            <if test="expired != null" >
+                EXPIRED = #{expired},
+            </if>
+        </set>
+        WHERE EMAIL = #{email}
+    </update>
+    <select id="selectOneByEmail" resultType="EmailValid">
+        SELECT * FROM EMAIL_VALID WHERE EMAIL = #{email}
+    </select>
+</mapper>

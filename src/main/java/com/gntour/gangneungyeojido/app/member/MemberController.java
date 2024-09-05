@@ -3,11 +3,18 @@ package com.gntour.gangneungyeojido.app.member;
 
 import com.gntour.gangneungyeojido.app.admin.dto.LoginRequest;
 import com.gntour.gangneungyeojido.app.member.dto.JoinRequest;
+import com.gntour.gangneungyeojido.app.member.dto.SendCheckCodeRequest;
+import com.gntour.gangneungyeojido.app.member.dto.ValidCheckCodeRequest;
 import com.gntour.gangneungyeojido.common.MemberRole;
 import com.gntour.gangneungyeojido.common.MemberUtils;
+import com.gntour.gangneungyeojido.common.VerificationCodeGenerator;
 import com.gntour.gangneungyeojido.common.exception.BusinessException;
 import com.gntour.gangneungyeojido.common.exception.EmptyResponse;
 import com.gntour.gangneungyeojido.common.exception.ErrorCode;
+import com.gntour.gangneungyeojido.domain.email.service.EmailValidService;
+import com.gntour.gangneungyeojido.domain.email.vo.EmailMessage;
+import com.gntour.gangneungyeojido.domain.email.service.EmailService;
+import com.gntour.gangneungyeojido.domain.email.vo.EmailValid;
 import com.gntour.gangneungyeojido.domain.member.service.MemberService;
 import com.gntour.gangneungyeojido.domain.member.vo.Member;
 import jakarta.servlet.http.HttpSession;
@@ -15,17 +22,23 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 @Controller
 @Slf4j
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService mService;
+    private final EmailService emailService;
+    private final EmailValidService emailValidService;
 
     /**
      *  담당자 : 이경학님
@@ -106,20 +119,36 @@ public class MemberController {
     @PostMapping("/join")
     @ResponseBody
     public EmptyResponse joinMember(@RequestBody @Valid JoinRequest joinRequest){
+        if(!joinRequest.getPassword().equals(joinRequest.getConfirmPassword())) {
+            throw new BusinessException(ErrorCode.PW_PW_CHECK_NOT_MATCH);
+        }
+        if(!emailValidService.isValidEmail(joinRequest.getEmail(), joinRequest.getAuth())) {
+            throw new BusinessException(ErrorCode.EMAIL_VALID_FAIL);
+        }
         Member member = new Member();
         member.setMemberId(joinRequest.getMemberId());
         member.setPassword(joinRequest.getPassword());
         member.setName(joinRequest.getName());
-        member.setBirthDate(joinRequest.getBirthDate());
+        member.setBirthDate(convertStringToTimestamp(joinRequest.getBirthDate()));
         member.setEmail(joinRequest.getEmail());
         member.setPhone(joinRequest.getPhone());
-        member.setRole("MEMBER");
-        if(!joinRequest.getPassword().equals(joinRequest.getConfirmPassword())) {
-            throw new BusinessException(ErrorCode.PW_PW_CHECK_NOT_MATCH);
-        }
+        member.setRole(MemberRole.MEMBER.toString());
         int result = mService.joinMember(member);
-
+        if(result == 0) {
+            throw new BusinessException(ErrorCode.NO_UPDATE);
+        }
         return new EmptyResponse();
+    }
+
+    private Timestamp convertStringToTimestamp(String str) {
+        // "yyyyMMdd" 형식의 DateTimeFormatter 생성
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+
+        // LocalDate로 변환
+        LocalDate localDate = LocalDate.parse(str, formatter);
+
+        // LocalDate를 Timestamp로 변환
+        return Timestamp.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
     /**
@@ -145,5 +174,36 @@ public class MemberController {
      *  관련기능 : [회원관리 기능] 회원탈퇴
      */
     public void removeMember(){}
+
+    /**
+     * 담당자 : 이경학님
+     * 관련기능 : [회원관리 기능] 인증번호 보내기
+     */
+    @PostMapping("/send-check-code")
+    @ResponseBody
+    public EmptyResponse sendCheckCode(@RequestBody @Valid SendCheckCodeRequest req) {
+        String validCode = VerificationCodeGenerator.generateVerificationCode();
+        emailService.sendMail(new EmailMessage(
+                req.getEmail(),
+                "[강릉여지도] 강릉여지도계정 가입 인증번호", // TODO 제목 지정하기
+                validCode // TODO 내용 지정하기
+        ));
+        emailValidService.addOrUpdateValidCode(req.getEmail(), validCode);
+        return new EmptyResponse();
+    }
+
+    /**
+     * 담당자 : 이경학님
+     * 관련기능 : [회원관리 기능] 인증번호 확인
+     */
+    @PostMapping("/valid-check-code")
+    @ResponseBody
+    public EmptyResponse validCheckCode(@RequestBody @Valid ValidCheckCodeRequest req) {
+        boolean isValid = emailValidService.isValidEmail(req.getEmail(),req.getAuth());
+        if(!isValid) {
+            throw  new BusinessException(ErrorCode.EMAIL_VALID_FAIL);
+        }
+        return new EmptyResponse();
+    }
 
 }

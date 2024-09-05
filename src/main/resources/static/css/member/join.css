@@ -34,12 +34,13 @@ main {
 .toggle-password {
     position: absolute;
     right: 15px;
-    top: 42%;
+    top: 60%;
     transform: translateY(-50%);
     cursor: pointer;
     color: #888;
     font-size: 16px;
 }
+
 .email-group, .auth-group{
     display: flex;
     justify-content: space-between;
@@ -51,7 +52,6 @@ main {
 
 .email-btn, .auth-btn {
     width: 29%;
-    /*margin-bottom: 10px;*/
     margin-top: 10px;
 }
 
@@ -93,15 +93,16 @@ select:focus {
 
 .hide {
     display: none;
-
 }
 
 .message {
     color: #EE450C;
     font-size: 12px;
-    /*padding: 0px 30px 0px 30px;*/
 }
 
 .success-message {
     color: #3399FF;
+}
+.border-red:focus ,.border-red{
+    border: 1px solid #EE450C;
 }
