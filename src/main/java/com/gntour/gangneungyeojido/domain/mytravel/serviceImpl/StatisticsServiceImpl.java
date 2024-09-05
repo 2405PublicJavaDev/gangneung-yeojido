@@ -4,7 +4,8 @@ import com.gntour.gangneungyeojido.domain.mytravel.service.StatisticsService;
 
 public class StatisticsServiceImpl implements StatisticsService {
     @Override
-    public void getNumberOfRegistration() {
+    public int getNumberOfRegistration() {
 
+        return 0;
     }
 }

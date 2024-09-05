@@ -1,68 +1,14 @@
-main {
-    padding: 20px;
-    display: flex;
-    flex-direction: row;
-}
-
-.my-subject {
-    font-family: 'BMDOHYEON'
-}
-
-.my-sidebar {
-    width: 250px;
-    height: 800px;
-    background-color: #fff;
-    display: flex;
-    flex-direction: row;
-    padding: 20px;
-    box-sizing: border-box;
-    text-align: center;
-}
-
-.my-sidebar a {
-    text-decoration: none;
-    color: black;
-}
-
-.my-sideList h2 {
-    font-family: 'BMDOHYEON';
-    margin-bottom: 20px;
-}
-
-.my-sideList ul {
-    list-style-type: none;
-    padding-left: 0;
-}
-
-.my-sideList li {
-    margin-bottom: 10px;
-}
-
-.withdrawal {
-    margin-top: auto;
-    text-align: center;
-}
-
-.my-subject {
-
-}
-
 .main-content {
-    flex-grow: 1;
-    width: 1500px;
     height: 800px;
     border: 1px solid black;
     display: flex;
     flex-direction: column;
-    margin-left: 30px;
-    box-sizing: border-box;
-    flex-wrap: nowrap;
     justify-content: center;
 }
 
 .my-subject {
+    font-family: 'BMDOHYEON';
     display: flex;
-    justify-content: center;
 }
 
 .input-content {

@@ -13,6 +13,7 @@ public class TravelDiary {
     private Long travelNo;
     private String memberId;
     private String diaryContent;
+    private String diaryTitle;
     private Timestamp regDate;
     private Timestamp updateDate;
 }

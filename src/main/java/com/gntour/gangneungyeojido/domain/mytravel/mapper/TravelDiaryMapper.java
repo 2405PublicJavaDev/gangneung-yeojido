@@ -17,7 +17,7 @@ public interface TravelDiaryMapper {
 
     TravelDiary selectOneDiaryByMember(String memberId);
 
-    int insertDiary(TravelDiary travelDiary, String memberId);
+    int insertDiary(TravelDiary travelDiary);
 
     int insertDiaryFile(TravelDiaryFile diaryFile);
 

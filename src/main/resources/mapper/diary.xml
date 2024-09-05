@@ -11,8 +11,11 @@
         WHERE MEMBER_ID=#{memberId}
     </select>
     <insert id="insertDiary">
-        INSERT INTO TRAVEL_DIARY
-        VALUES(SEQ_TRAVEL_DIARY_NO.NEXTVAL,150,'khuser001','TEST',DEFAULT,DEFAULT)
+        <selectKey resultType="long" keyProperty="diaryNo" order="BEFORE">
+            SELECT SEQ_TRAVEL_DIARY_NO.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TRAVEL_DIARY(DIARY_NO, TRAVEL_NO, MEMBER_ID, DIARY_TITLE, DIARY_CONTENT)
+        VALUES(#{diaryNo},#{travelNo},#{memberId},#{diaryTitle},#{diaryContent})
     </insert>
     <delete id="deleteDiary">
         DELETE FROM TRAVEL_DIARY WHERE MEMBER_ID = #{memberId}

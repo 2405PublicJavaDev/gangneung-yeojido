@@ -1,5 +1,7 @@
 package com.gntour.gangneungyeojido.domain.mytravel.serviceImpl;
 
+import com.gntour.gangneungyeojido.common.FileUtil;
+import com.gntour.gangneungyeojido.common.UploadCategory;
 import com.gntour.gangneungyeojido.domain.mytravel.mapper.TravelDiaryMapper;
 import com.gntour.gangneungyeojido.domain.mytravel.service.TravelDiaryService;
 import com.gntour.gangneungyeojido.domain.mytravel.vo.TravelDiary;
@@ -13,6 +15,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TravelDiaryServiceImpl implements TravelDiaryService {
     private final TravelDiaryMapper travelDiaryMapper;
+    private final FileUtil fileUtil;
+
     @Override
     public List<TravelDiary> getAllDiariesByMember(String memberId) {
         return travelDiaryMapper.selectAllDiariesByMember(memberId);
@@ -24,8 +28,13 @@ public class TravelDiaryServiceImpl implements TravelDiaryService {
     }
 
     @Override
-    public int addDiary(TravelDiary travelDiary, MultipartFile uploadFile,String memberId) {
-        int result = travelDiaryMapper.insertDiary(travelDiary,memberId);
+    public int addDiary(TravelDiary travelDiary, List<MultipartFile> multipartFiles) {
+        int result = travelDiaryMapper.insertDiary(travelDiary);
+        try {
+            fileUtil.uploadFiles(UploadCategory.DIARY, multipartFiles, travelDiary.getDiaryNo());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         return result;
     }
 

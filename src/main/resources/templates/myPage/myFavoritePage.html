@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/my-page}"
+      layout:decorator="layout">
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        let travelInfos = /*[[${travelInfos}]]*/
+            console.log(travelInfos);
+    </script>
+    <script type="text/javascript" src="/js/main/mapdata.js"></script>
+    <script type="text/javascript" src="/js/main/mapconfig.js"></script>
+    <script type="text/javascript" src="/js/main/mapmanipulate.js"></script>
+    <script type="text/javascript" src="/js/main/index.js"></script>
+</th:block>
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/myPage/myFavorites.css">
+</th:block>
+<main layout:fragment="content">
+    <div class="main-center">
+        <div class="my-subject"><h1>마이페이지</h1></div>
+        <div class="main-content">
+            <!--정렬-->
+            <div class="sort-section">
+                <div onclick="sortFavorites()">
+                    <a onclick="sortFavorites();">최신순
+                        <img src="/img/mysort.png" width="20px" height="20px">
+                    </a>
+                </div>
+                </a>
+            </div>
+            <div th:each="favorite : ${favoritesList}" class="favorite">
+                <div class="star">
+                    <!--즐겨찾기-->
+                    <button onclick="addFavorite();">
+                        <img src="/img/myPage-star.png" width="30px" height="30px">
+                    </button>
+                </div>
+                <!-- 여행지 이미지 -->
+                <div class="favorite-img">
+                    <img src="/img/wrtFileImageView.jpg" width="100%" height="100%">
+                </div>
+                <div class="favorite-info">
+                    <table>
+                        <thead>
+                            <tr>
+                                <td th:text="${favorite.travelName}"></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td th:text="${favorite.introduce}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:javascript>
+        function sortFavorites() {
+
+        }
+
+        function addFavorite() {
+
+        }
+    </script>
+</main>
+</html>
