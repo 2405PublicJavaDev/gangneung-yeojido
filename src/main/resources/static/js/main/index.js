@@ -74,6 +74,8 @@ const getOutline = (travelNo) => {
         notLoadTag.style.display = 'none';
     }).catch((error) => {
         console.log('error', error);
+        notLoadTag.style.display = 'block';
+        notLoadTag.innerHTML = '오류가 발생햇습니다.'
     })
 
 }
