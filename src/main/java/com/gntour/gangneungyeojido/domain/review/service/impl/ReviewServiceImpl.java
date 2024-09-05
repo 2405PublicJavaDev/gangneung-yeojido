@@ -19,8 +19,8 @@ public class ReviewServiceImpl implements ReviewService {
     private final ReviewMapper rMapper;
 
     @Override
-    public void getAllReviewsByTravel() {
-
+    public Page<Review, Long> getAllReviewsByTravel(Integer currentPage, Long travelNo) {
+        return Page.of(currentPage,rMapper.selectAllReviewsCount(travelNo), travelNo, rMapper::selectAllReviews);
     }
 
     @Override
@@ -35,8 +35,8 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void addReview() {
-
+    public int addReview(Review review) {
+        return rMapper.insertReview(review);
     }
 
     @Override

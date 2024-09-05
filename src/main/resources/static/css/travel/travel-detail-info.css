@@ -1,0 +1,242 @@
+main {
+    width: 100%;
+    height: auto;
+    min-height: 1700px;
+    overflow: visible;
+}
+
+#main-top {
+    width: 100%;
+    height: 450px;
+    margin: 0 auto 100px;
+    background-color: #ccc;
+    border-bottom: 3px solid #3399FF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+    /* 타이틀 */
+    h1 {
+        font-family: "BMDOHYEON", serif;
+        font-size: 60px;
+        font-weight: 400;
+        margin-bottom: 8px;
+        letter-spacing: 3px;
+        color: #ffffff;
+    }
+    #category-box {
+        width: 120px;
+        height: 40px;
+        line-height: 40px;
+        background-color: #fff;
+        text-align: center;
+        border-radius: 20px;
+    }
+        #category-txt {
+            font-family: "Noto Sans KR", sans-serif;
+            font-size: 18px;
+            font-weight: 550;
+        }
+    /* 별점 */
+    #score-box {
+        margin-top: 20px;
+        width: 200px;
+        height: 40px;
+    }
+        [class^="fa"] {
+            font-size: 24px;
+        }
+        .checked {
+            color: orange;
+        }
+        p span {
+            font-size: 20px;
+        }
+        h1, #category-box, #score-box {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+        }
+    #items {
+        position: absolute;
+        border: 3px solid #3399FF;
+        border-bottom: none;
+        width: 190px;
+        height: 60px;
+        top: 390px;
+        right: 260px;
+        background-color: white;
+        border-top-left-radius: 25px;
+        border-top-right-radius: 25px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+    }
+        /* 길찾기 버튼 */
+        #find-road {
+            width: 100px;
+            height: 40px;
+            background-color: #00A155;
+            color: white;
+            border: none;
+            box-shadow: -4px 4px 1px #F9F1E6;
+            font-family: "Noto Sans KR", sans-serif;
+            font-size: 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+        #find-road:hover {
+            background-color: #00b962;
+        }
+    /* 즐겨찾기 버튼 */
+    .fa-bookmark {
+        margin-left: 20px;
+        margin-right: 8px;
+        cursor: pointer;
+        color: black;
+        background-color: white;
+        font-size: 30px;
+    }
+    .fa-bookmark.active {
+        color: #FFD43B;
+        font-weight: bolder;
+    }
+#main-bottom {
+    width: 70%;
+    height: auto;
+    margin: 0 auto;
+}
+    #type {
+        width: 95%;
+        height: 100px;
+        margin: 0 auto;
+    }
+    /*버튼 색상*/
+    .cng-btn {
+        position: relative;
+        width: 50%;
+        height: 100px;
+        float: left;
+        font-family: "Noto Sans KR", sans-serif;
+        font-size: 24px;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        background: #FFFFFF;
+        box-shadow: 0 3px 0 0 transparent;
+        transition: box-shadow 0.4s ease, color 0.4s ease;
+    }
+    .cng-btn:hover {
+        box-shadow: 0 3px 0 0 #f15454;
+        color: #f15454;
+    }
+    .selected {
+        box-shadow: 0 3px 0 0 #f15454;
+        color: #f15454;
+    }
+    .unselected {
+        box-shadow: none;
+        color: black;
+    }
+    /*정보 섹션*/
+    #info-section {
+        width: 100%;
+        height: auto;
+        min-height: 1000px;
+        margin: 0 auto;
+    }
+        #info-section-left {
+            width: 34%;
+            height: 600px;
+            float: left;
+        }
+            #info-section-left .thumbnail {
+                margin-left: 40px;
+                margin-top: 60px;
+                width: 380px;
+                height: 380px;
+                background-size: cover;
+                border-radius: 20px;
+                object-fit: cover;
+            }
+        #info-section-right {
+            width: 66%;
+            height: auto;
+            float: left;
+            padding: 60px 30px 0 30px;
+        }
+            .info-list li {
+                list-style-type: none;
+                width: 800px;
+                min-height: 70px;
+                height: auto;
+                overflow: hidden;
+                border-bottom: 2px dashed #D0D0D0;
+                display: flex;
+                align-items: center;
+                padding: 12px 0;
+            }
+                .title {
+                    width: 150px;
+                    height: 100%;
+                    font-size: 18px;
+                    font-family: "Noto Sans KR", sans-serif;
+                    font-weight: 600;
+                    color: black;
+                    padding-left: 20px;
+                    display: flex;
+                    align-items: center;
+                }
+                .text {
+                    width: 630px;
+                    height: auto;
+                    overflow: visible;
+                    font-size: 16px;
+                    font-family: "Noto Sans KR", sans-serif;
+                    word-wrap: break-word;
+                    letter-spacing: -0.6px;
+                    display: flex;
+                    align-items: center;
+                }
+                    .text a {
+                        text-decoration: none;
+                        font-size: 16px;
+                        font-weight: bold;
+                        color: #00A155;
+                        word-wrap: break-word;
+                        display: inline-block;
+                        width: 100%;
+                    }
+                    .text a.disabled {
+                        pointer-events: none; /* 링크 클릭 방지 */
+                        color: black; /* 링크 색상 변경 */
+                        font-weight: normal;
+                    }
+        #about-place {
+            width: 1300px;
+            height: auto;
+            margin-top: 30px;
+            margin-left: 40px;
+            margin-bottom: 100px;
+            color: black;
+            float: left;
+        }
+            h2 {
+                padding-bottom: 10px;
+                margin-left: 10px;
+                font-size: 26px;
+                color: #3399FF;
+            }
+            #info-text {
+                border-top: 3px solid #3399FF;
+                padding: 20px 10px 0 10px;
+                font-family: "Noto Sans KR", sans-serif;
+                font-size: 18px;
+                width: 1240px;
+                height: 100%;
+                letter-spacing: -0.3px;
+                line-height: 34px;
+            }
