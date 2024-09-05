@@ -8,6 +8,8 @@ import com.gntour.gangneungyeojido.domain.notice.vo.Notice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class NoticeServiceImpl implements NoticeService {
@@ -21,8 +23,8 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public void getImportantNotices() {
-
+    public List<Notice> getImportantNotices() {
+        return noticeMapper.selectImportantNotices();
     }
 
     @Override

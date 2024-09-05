@@ -26,21 +26,24 @@ public class NoticeController {
      */
     @GetMapping("/notice")
     public String showNoticeListPage(
-            Model model
-            , @RequestParam(value="currentPage", defaultValue = "1") Integer currentPage
-            , @RequestParam(value = "searchType", required = false) String searchType
-            , @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
+            Model model,
+            @RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,
+            @RequestParam(value = "searchType", required = false) String searchType,
+            @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
+        // 검색 조건 설정
         NoticeSearchCondition condition = new NoticeSearchCondition();
         if ("title".equals(searchType)) {
             condition.setTitle(searchKeyword);
         } else if ("content".equals(searchType)) {
             condition.setContent(searchKeyword);
         }
-        log.info("Search Condition - Title: {}, Content: {}", condition.getTitle(), condition.getContent());
+        // 중요 공지사항 3개 조회
+        List<Notice> importantNotices = noticeService.getImportantNotices();
+        model.addAttribute("importantNotices", importantNotices);
+        // 일반 공지사항 리스트 조회
         model.addAttribute("page", noticeService.getAllNotices(currentPage, condition));
         return "notice/notice-list";
     }
-
 
     /**
      * 담당자 : 김윤경님
@@ -56,10 +59,11 @@ public class NoticeController {
     /**
      * 담당자 : 김윤경님
      * 관련 기능 : [푸터 기능] 주요 공지사항 리스트 조회
-     * url :
      */
-
-    public void getImportantNoticeList(){
-
+    @ModelAttribute
+    public String getImportantNoticeList(Model model){
+        List<Notice> importantNotices = noticeService.getImportantNotices();
+        model.addAttribute("footerImportantNotices", importantNotices);
+        return "fragments/footer";
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 public interface NoticeMapper {
     List<Notice> selectAllNotices(int currentPage, NoticeSearchCondition condition, RowBounds rowBounds);
     int selectAllNoticesCount(NoticeSearchCondition condition);
-    void selectImportantNotices();
+    List<Notice> selectImportantNotices();
     Notice selectOneNotice(Long noticeNo);
     int insertNotice(Notice notice);
     void deleteNotice();
