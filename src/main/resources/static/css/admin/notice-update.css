@@ -28,6 +28,7 @@ label {
 .content-input{
     margin-top: 15px;
     height: 250px;
+    resize: none; /* textarea 사이즈 고정하도록*/
 }
 button {
     font-size: 1em;

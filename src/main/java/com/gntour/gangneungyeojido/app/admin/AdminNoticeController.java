@@ -4,15 +4,12 @@ import com.gntour.gangneungyeojido.app.notice.dto.NoticeSearchCondition;
 import com.gntour.gangneungyeojido.common.MemberUtils;
 import com.gntour.gangneungyeojido.domain.notice.service.NoticeService;
 import com.gntour.gangneungyeojido.domain.notice.vo.Notice;
-import com.gntour.gangneungyeojido.sample.dto.SampleSearchCondition;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @Slf4j
@@ -37,17 +34,18 @@ public class AdminNoticeController {
             Model model
             , @RequestParam(value="currentPage", defaultValue = "1") Integer currentPage
             , @RequestParam(value = "searchType", required = false) String searchType
-            , @RequestParam(value = "searchKeyword", required = false) String searchKeyword){
-//        NoticeSearchCondition condition = new NoticeSearchCondition();
-//        if ("title".equals(searchType)) {
-//            condition.setTitle(searchKeyword);
-//        } else if ("content".equals(searchType)) {
-//            condition.setContent(searchKeyword);
-//        }
-
-//        model.addAttribute("noticeList", noticeService.getAllNotices(currentPage, new NoticeSearchCondition(title, content)));
+            , @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
+        NoticeSearchCondition condition = new NoticeSearchCondition();
+        if ("title".equals(searchType)) {
+            condition.setTitle(searchKeyword);
+        } else if ("content".equals(searchType)) {
+            condition.setContent(searchKeyword);
+        }
+        log.info("Search Condition - Title: {}, Content: {}", condition.getTitle(), condition.getContent());
+        model.addAttribute("page", noticeService.getAllNotices(currentPage, condition));
         return "admin/notice-update-list";
     }
+
 
     /**
      * 담당자 : 김윤경님
@@ -80,6 +78,8 @@ public class AdminNoticeController {
     @PostMapping("/admin/notice/modify")
     public String modifyNotice(HttpSession session, Notice notice){
         notice.setAdminId(MemberUtils.getMemberIdFromSession(session));
+        notice.setImportantYn(notice.getImportantYn() != null ? notice.getImportantYn() : "N");
+        int result = noticeService.modifyNotice(notice);
         return "redirect:/notice/" + notice.getNoticeNo();
     }
 

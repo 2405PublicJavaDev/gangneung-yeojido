@@ -4,6 +4,11 @@
       layout:decorate="~{layouts/default}"
       layout:decorator="layout">
 <th:block layout:fragment="script">
+  <!-- memberId를 자바스크립트로 전달 -->
+  <script type="text/javascript">
+    const memberRole = 'ADMIN';  // session.getAttribute('MEMBER_ROLE');
+  </script>
+  <script type="text/javascript" src="/js/notice-detail.js"></script>
 </th:block>
 <th:block layout:fragment="css">
   <link rel="stylesheet" href="/css/notice-detail.css">
@@ -20,8 +25,9 @@
     </div>
 
     <div class="button-section">
-      <a class="list-btn" href="javascript:void(0);" onclick="history.back();">목록으로</a>
+      <a class="list-btn" href="javascript:void(0);" onclick="goBack();">목록으로</a>
     </div>
+
   </div>
 </main>
 </body>

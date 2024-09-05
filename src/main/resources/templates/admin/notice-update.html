@@ -11,7 +11,7 @@
 <main layout:fragment="content">
   <div class="main-container">
     <h1>공지사항 수정</h1>
-    <form action="admin/notice/modify/" method="post" th:object="${notice}" >
+    <form action="/admin/notice/modify" method="post" th:object="${notice}" >
       <input type="hidden" name="noticeNo" th:value="*{noticeNo}">
       <div>
         <label for="noticeTitle">제목</label>
@@ -28,7 +28,7 @@
       </div>
       <div class="button-container">
         <button type="submit" class="modify">수정</button>
-        <button type="button" class="cancel">취소</button>
+        <button type="button" class="cancel" onclick="history.back()">취소</button>
       </div>
     </form>
   </div>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="com.gntour.gangneungyeojido.domain.notice.mapper.NoticeMapper">
+
     <select id="selectAllNotices" resultType="Notice">
         SELECT * FROM NOTICE
         <where>
@@ -44,4 +44,11 @@
         insert into NOTICE(NOTICE_NO, NOTICE_SUBJECT, NOTICE_CONTENT, IMPORTANT_YN, ADMIN_ID, REG_DATE, UPDATE_DATE)
         values (#{noticeNo}, #{noticeSubject}, #{noticeContent}, #{importantYn}, #{adminId}, default, default)
     </insert>
+
+    <update id="updateNotice">
+        UPDATE NOTICE
+        SET NOTICE_SUBJECT = #{noticeSubject}, NOTICE_CONTENT=#{noticeContent}, IMPORTANT_YN=#{importantYn}
+          , UPDATE_DATE = DEFAULT
+        WHERE NOTICE_NO=#{noticeNo}
+    </update>
 </mapper>

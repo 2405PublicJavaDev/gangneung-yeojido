@@ -28,6 +28,8 @@ label {
 .content-input{
     margin-top: 15px;
     height: 250px;
+    resize: none;
+
 }
 button {
     font-size: 1em;
