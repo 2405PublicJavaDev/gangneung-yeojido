@@ -21,18 +21,36 @@
       <div class="input-group">
         <input type="text" id="memberId" placeholder="아이디" class="common-input" name="memberId">
       </div>
+
+      <div class="success-message hide message" id="id-success-message"></div>
+      <div class="failure-message hide message" id="id-failure-message"></div>
+
       <div class="input-group">
         <input type="password" id="password" placeholder="비밀번호" class="common-input" name="password">
 <!--         <i class="fi fi-rs-eye toggle-password"></i>-->
         <i class="fi fi-rr-eye-crossed toggle-password"></i>
       </div>
+
+      <div class="strongPassword-message hide message" id="pw-failure-message"></div>
+
       <div class="input-group">
         <input type="password" id="confirmPassword" placeholder="비밀번호 확인" class="common-input" name="confirmPassword">
         <!-- <i class="fi fi-rs-eye toggle-password"></i> -->
         <i class="fi fi-rr-eye-crossed toggle-password"></i>
       </div>
-      <div class="input-group">
-        <input type="email" id="email" placeholder="이메일주소" class="common-input" name="email">
+
+      <div class="mismatch-message hide message" id="pw-check-failure-message"></div>
+
+      <div class="input-group email-group">
+        <input type="email" id="email" placeholder="이메일 주소" class="common-input email-input" name="email">
+        <button type="button" class="common-secondary-btn email-btn">인증번호 받기</button>
+      </div>
+
+      <div class="email-failure-message hide message" id="email-failure-message"></div>
+
+      <div class="input-group auth-group">
+        <input type="number" id="auth" placeholder="인증 번호" class="common-input auth-input" name="auth">
+        <button type="button" class="common-secondary-btn auth-btn">인증</button>
       </div>
       <div class="input-group">
         <input type="text" id="birthDate" placeholder="생년월일 8자리" class="common-input" name="birthDate">
@@ -41,16 +59,9 @@
         <input type="text" id="name" placeholder="이름" class="common-input" name="name">
       </div>
       <div class="input-group">
-<!--      <div class="input-group telecom-phone">-->
-<!--        <select id="telecom" class="common-input">-->
-<!--          <option disabled selected>통신사 선택</option>-->
-<!--          <option>SKT</option>-->
-<!--          <option>KT</option>-->
-<!--          <option>LG</option>-->
-<!--        </select>-->
         <input type="tel" id="phone" placeholder="전화번호" class="common-input" name="phone">
       </div>
-      <button type="button" class="common-primary-btn signup-button" onclick="joinBtnClick()">회원가입하기</button>
+      <button type="button" class="common-primary-btn signup-button" onclick="joinBtnClick();">회원가입하기</button>
     </form>
     <div class="find-links">
       <a href="./find-id.html">아이디 찾기</a>

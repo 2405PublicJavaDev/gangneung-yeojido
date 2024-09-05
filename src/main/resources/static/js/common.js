@@ -61,7 +61,7 @@ const ajax = (config, onSuccess, onError) => {
     })
         .then((data) => onSuccess(data))
         .catch((error) => {
-            if(error.code === 'C001') {
+            if(error.code === 'C001' && !config.blockValidateForm) {
                 validateForm(error.errors);
             }
             onError(error);

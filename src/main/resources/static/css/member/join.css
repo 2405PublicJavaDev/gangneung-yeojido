@@ -8,7 +8,7 @@ main {
 
 .signup-container {
     padding: 20px;
-    width: 350px;
+    width: 400px;
 }
 
 .signup-container h1 {
@@ -19,22 +19,17 @@ main {
 .signup-container hr {
     background-color: black;
     height: 4px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .signup-form .input-group {
     position: relative;
-    /*margin-bottom: 15px;*/
 }
 
-/*.signup-form input {*/
-/*    width: 100%;*/
-/*    padding: 10px;*/
-/*    border: 1px solid #ddd;*/
-/*    border-radius: 4px;*/
-/*    box-sizing: border-box;*/
-/*    font-family: 'GmarketSansMedium';*/
-/*}*/
+.common-input {
+    margin-bottom: 0;
+    margin-top: 10px;
+}
 
 .toggle-password {
     position: absolute;
@@ -45,26 +40,25 @@ main {
     color: #888;
     font-size: 16px;
 }
-
-.telecom-phone {
+.email-group, .auth-group{
     display: flex;
-    gap: 10px;
+    justify-content: space-between;
 }
 
-.telecom-phone select {
-    width: 30%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-family: 'Noto Sans KR';
-    appearance: none;
-    color: #888;
+.email-input, .auth-input{
+    width: 68%;
 }
 
-.telecom-phone input {
-    width: 70%;
+.email-btn, .auth-btn {
+    width: 29%;
+    /*margin-bottom: 10px;*/
+    margin-top: 10px;
 }
+
+.common-secondary-btn:hover{
+    background-color: #808080;
+}
+
 
 input:focus,
 select:focus {
@@ -81,7 +75,7 @@ select:focus {
 }
 
 .signup-button {
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .find-links {
@@ -95,4 +89,19 @@ select:focus {
     text-decoration: none;
     font-size: 14px;
     font-family: 'Noto Sans KR';
+}
+
+.hide {
+    display: none;
+
+}
+
+.message {
+    color: #EE450C;
+    font-size: 12px;
+    /*padding: 0px 30px 0px 30px;*/
+}
+
+.success-message {
+    color: #3399FF;
 }
