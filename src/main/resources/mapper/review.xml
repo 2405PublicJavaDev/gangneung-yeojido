@@ -13,4 +13,15 @@
     <select id="selectAllReviewsByMember" resultType="Review">
         SELECT * FROM REVIEW WHERE MEMBER_ID = #{memberId}
     </select>
+    <insert id="insertReviewFile">
+        insert into REVIEW_FILE(REVIEW_FILE_NO, FILE_PATH, FILE_NAME, FILE_RENAME, REVIEW_NO)
+        values (SEQ_REVIEW_FILE_NO.NEXTVAL, #{filePath}, #{fileName}, #{fileRename}, #{reviewNo})
+    </insert>
+    <select id="selectAllReviewsFileByReviewNo" resultType="ReviewFile">
+        SELECT * FROM REVIEW_FILE
+        WHERE REVIEW_NO = #{reviewNo}
+    </select>
+    <delete id="deleteReviewFile">
+        delete from REVIEW_FILE WHERE REVIEW_NO = #{reviewNo}
+    </delete>
 </mapper>
