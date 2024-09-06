@@ -9,7 +9,7 @@ import java.util.List;
 public interface MemberService {
     Member loginMember(Member member);
     int joinMember(Member member);
-    void findMemberId();
+    Member findMemberId(Member member);
     void findPassword();
     int modifyMemberInfo(Member member);
     void removeMember();

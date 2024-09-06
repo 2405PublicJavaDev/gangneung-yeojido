@@ -6,29 +6,30 @@ main {
     padding: 20px;
 }
 
-.login-container {
+.find-id-container {
     padding: 20px;
-    width: 350px;
+    width: 400px;
 }
 
-.login-container h1 {
+.find-id-container h1 {
     font-family: 'BMDOHYEON';
     margin-bottom: 10px;
     text-align: center;
 }
 
-.login-container hr {
+.find-id-container hr {
     background-color: black;
     height: 4px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
-.login-btn {
-    margin-bottom: 10px;
+.common-input {
+    margin-bottom: 0;
     margin-top: 10px;
 }
 
-.signup-btn {
+.find-id-btn {
+    margin-top: 20px;
     margin-bottom: 10px;
 }
 
@@ -44,7 +45,36 @@ main {
     font-family: "Noto Sans KR";
 }
 
+.view-find-id {
+    background-color: #f3f3f3;
+    margin-top: 20px;
+    text-align: center;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .find-links a:hover {
     font-weight: bold;
     color: #3399FF;
 }
+
+.hide {
+    display: none;
+}
+
+.message {
+    color: #EE450C;
+    font-size: 12px;
+}
+
+.success-message {
+    color: #3399FF;
+}
+.border-red:focus ,.border-red{
+    border: 1px solid #EE450C;
+}
+
+
+

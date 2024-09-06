@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -37,8 +38,19 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void findMemberId() {
-
+    public Member findMemberId(Member member) {
+        Member result = mMapper.selectOneByName(member.getName());
+        if (result != null) {
+            // Timestamp를 LocalDate로 변환하여 날짜만 비교
+            LocalDate resultDate = result.getBirthDate().toLocalDateTime().toLocalDate();
+            LocalDate memberDate = member.getBirthDate().toLocalDateTime().toLocalDate();
+            log.info(resultDate.toString());
+            log.info(memberDate.toString());
+            if (resultDate.equals(memberDate)) {
+                return result;
+            }
+        }
+        throw new BusinessException(ErrorCode.ID_FIND_FAIL);
     }
 
     @Override

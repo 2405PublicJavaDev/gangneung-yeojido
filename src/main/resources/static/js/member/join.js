@@ -129,7 +129,7 @@ function validEmail(str) {
 }
 
 function validBirthdate(str) {
-    return /^\d{8}$/.test(str);
+    return /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/.test(str);
 }
 
 function isMatch(password1, password2) {
@@ -164,7 +164,7 @@ function idCheck() {
 
 function pwCheck() {
     if (!strongPassword(elInputPassword.value)) {
-        pwFailureMessage.innerHTML = '8~16글자의 영문(대/소문자), 숫자, 특수문자를 사용하세요.';
+        pwFailureMessage.innerHTML = '8~16글자의 영문(대/소문자), 숫자, 특수문자( !@#$%^*+=- )를 사용하세요.';
         pwSuccessMessage.classList.add('hide');
         pwFailureMessage.classList.remove('hide');
         elInputPassword.classList.add('border-red');

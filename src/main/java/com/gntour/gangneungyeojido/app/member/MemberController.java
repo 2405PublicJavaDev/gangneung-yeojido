@@ -2,9 +2,7 @@ package com.gntour.gangneungyeojido.app.member;
 
 
 import com.gntour.gangneungyeojido.app.admin.dto.LoginRequest;
-import com.gntour.gangneungyeojido.app.member.dto.JoinRequest;
-import com.gntour.gangneungyeojido.app.member.dto.SendCheckCodeRequest;
-import com.gntour.gangneungyeojido.app.member.dto.ValidCheckCodeRequest;
+import com.gntour.gangneungyeojido.app.member.dto.*;
 import com.gntour.gangneungyeojido.common.MemberRole;
 import com.gntour.gangneungyeojido.common.MemberUtils;
 import com.gntour.gangneungyeojido.common.VerificationCodeGenerator;
@@ -17,20 +15,23 @@ import com.gntour.gangneungyeojido.domain.email.service.EmailService;
 import com.gntour.gangneungyeojido.domain.email.vo.EmailValid;
 import com.gntour.gangneungyeojido.domain.member.service.MemberService;
 import com.gntour.gangneungyeojido.domain.member.vo.Member;
+import com.gntour.gangneungyeojido.domain.notice.service.NoticeService;
+import com.gntour.gangneungyeojido.domain.notice.vo.Notice;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -39,6 +40,7 @@ public class MemberController {
     private final MemberService mService;
     private final EmailService emailService;
     private final EmailValidService emailValidService;
+    private final NoticeService noticeService;
 
     /**
      *  담당자 : 이경학님
@@ -71,7 +73,7 @@ public class MemberController {
      *  담당자 : 이경학님
      *  관련기능 : [회원관리 기능(페이지 폼)] 비밀번호 찾기
      */
-    @GetMapping("/find_pw")
+    @GetMapping("/find-pw")
     public String showFindPasswordPage(){
         return "member/find-pw";
     }
@@ -158,7 +160,16 @@ public class MemberController {
      *  담당자 : 이경학님
      *  관련기능 : [회원관리 기능] 아이디 찾기
      */
-    public void findMemberId(){}
+    @PostMapping("/find-id")
+    @ResponseBody
+    public FindIdResponse findMemberId(@RequestBody @Valid FindIdRequest findIdRequest, Model model){
+        Member member = new Member();
+        member.setName(findIdRequest.getName());
+        member.setBirthDate(convertStringToTimestamp(findIdRequest.getBirthDate()));
+        member = mService.findMemberId(member);
+        log.info(member.toString());
+        return new FindIdResponse(member.getMemberId());
+    }
 
     /**
      *  담당자 : 이경학님
@@ -209,4 +220,14 @@ public class MemberController {
         return new EmptyResponse();
     }
 
+    /**
+     * 담당자 : 김윤경님
+     * 관련 기능 : [푸터 기능] 주요 공지사항 리스트 조회
+     */
+    @ModelAttribute
+    public String getImportantNoticeList(Model model){
+        List<Notice> importantNotices = noticeService.getImportantNotices();
+        model.addAttribute("footerImportantNotices", importantNotices);
+        return "fragments/footer";
+    }
 }
