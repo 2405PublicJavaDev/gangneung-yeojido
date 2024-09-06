@@ -1,14 +1,12 @@
 package com.gntour.gangneungyeojido.app.my.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class FavoritesResponse {
     private Long travelNo;
     private Long favoritesNo;

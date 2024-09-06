@@ -4,14 +4,33 @@
       layout:decorate="~{layouts/my-page}"
       layout:decorator="layout">
 <th:block layout:fragment="script">
-    <script th:inline="javascript">
-        let travelInfos = /*[[${travelInfos}]]*/
-            console.log(travelInfos);
+    <script type="text/javascript">
+        function sortFavorites() {
+            // 현재 URL에서 쿼리 문자열을 추출
+            const urlParams = new URLSearchParams(window.location.search);
+
+            // 'currentPage' 매개변수의 값을 가져오기
+            let currentPage = urlParams.get('currentPage');
+            let isNew = urlParams.get('isNew');
+            console.log(currentPage, isNew);
+            if(!currentPage) {
+                currentPage = 1;
+            }
+            if(!isNew) {
+                isNew = 'N';
+            }
+            if(isNew && isNew === 'Y') {
+               isNew = 'N';
+            } else {
+                isNew = 'Y';
+            }
+            location.href = `/favorites/list?currentPage=${currentPage}&isNew=${isNew}`;
+        }
+
+        function addFavorite() {
+
+        }
     </script>
-    <script type="text/javascript" src="/js/main/mapdata.js"></script>
-    <script type="text/javascript" src="/js/main/mapconfig.js"></script>
-    <script type="text/javascript" src="/js/main/mapmanipulate.js"></script>
-    <script type="text/javascript" src="/js/main/index.js"></script>
 </th:block>
 <th:block layout:fragment="css">
     <link rel="stylesheet" href="/css/myPage/myFavorites.css">
@@ -23,7 +42,8 @@
             <!--정렬-->
             <div class="sort-section">
                 <div onclick="sortFavorites()">
-                    <a onclick="sortFavorites();">최신순
+                    <a onclick="sortFavorites();">
+                        <span th:text="${isNew == 'Y' ? '최신순' : '오래된순'}"></span>
                         <img src="/img/mysort.png" width="20px" height="20px">
                     </a>
                 </div>
@@ -57,14 +77,5 @@
             </div>
         </div>
     </div>
-    <script th:javascript>
-        function sortFavorites() {
-
-        }
-
-        function addFavorite() {
-
-        }
-    </script>
 </main>
 </html>

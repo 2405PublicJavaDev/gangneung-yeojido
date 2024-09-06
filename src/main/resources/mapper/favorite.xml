@@ -19,10 +19,11 @@
         SELECT t.TRAVEL_NAME "TRAVEL_NAME", t.INTRODUCE "INTRODUCE", f.FAVORITES_NO "FAVORITES_NO", t.TRAVEL_NO "TRAVEL_NO"
         FROM FAVORITES f
         JOIN TRAVEL_INFO t ON f.FAVORITES_NO = t.TRAVEL_NO
-        <trim prefix="ORDER BY">
-            <if test="isNew.equals('Y')"> FAVORITES_NO DESC </if>
-            <if test="isNew.equals('N')"> FAVORITES_NO ASC </if>
-        </trim>
+        ORDER BY
+        <choose>
+            <when test='isNew.equals("Y")'> f.FAVORITES_NO DESC </when>
+            <otherwise> f.FAVORITES_NO ASC </otherwise>
+        </choose>
     </select>
     <insert id="insertFavorites">
         INSERT INTO FAVORITES (MEMBER_ID,TRAVEL_NO,REG_DATE)
