@@ -26,6 +26,5 @@ public class JoinRequest {
     private String email;
     @Pattern(regexp = PHONE_VALIDATION)
     private String phone;
-
     private String auth;
 }

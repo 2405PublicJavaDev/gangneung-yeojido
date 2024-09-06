@@ -9,6 +9,7 @@ import java.util.List;
 @Mapper
 public interface MemberMapper {
     Member selectOneById(String memberId);
+    Member selectOneByName(String memberName);
     List<Member> selectAllBlackListMember(Integer currentPage, RowBounds rowBounds);
     int selectAllBlackListMemberCount();
     int insertMember(Member member);

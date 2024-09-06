@@ -24,7 +24,7 @@ public class Validation {
     /**
      * BIRTH DATE 정규식
      */
-    public static final String BIRTHDATE_VALIDATION = "^\\d{8}$";
+    public static final String BIRTHDATE_VALIDATION = "^(19[0-9][0-9]|20\\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$";
 
     /**
      * PHONE 정규식

@@ -11,6 +11,7 @@ public enum ErrorCode {
     DUPLICATE_VALUE("C003", "중복값을 입력했습니다", HttpStatus.BAD_REQUEST),
     NO_UPDATE("C004", "DML 이 이루어진 row 가 한개도 없습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
     NOT_FOUND("C005", "404 NOT FOUND", HttpStatus.NOT_FOUND),
+    DATE_PARSE_ERROR("C006", "날짜가 잘못된 형식입니다", HttpStatus.BAD_REQUEST),
     // Member
     LOGIN_FAIL("M001", "로그인에 실패했습니다", HttpStatus.UNAUTHORIZED),
     EMAIL_VALID_FAIL("M002", "이메일 인증에 실패했습니다", HttpStatus.BAD_REQUEST),

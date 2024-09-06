@@ -9,6 +9,8 @@
     </insert>
     <select id="selectOneById" resultType="Member">
         SELECT * FROM MEMBER WHERE MEMBER_ID = #{memberId}
+    </select><select id="selectOneByName" resultType="Member">
+        SELECT * FROM MEMBER WHERE NAME = #{name}
     </select>
     <update id="updateMember">
         UPDATE MEMBER

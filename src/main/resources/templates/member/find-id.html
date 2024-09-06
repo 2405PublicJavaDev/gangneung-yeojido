@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}"
+      layout:decorator="layout">
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        function goToLogin() {
+            location.href = "/login";
+        }
+    </script>
+    <script type="text/javascript" src="/js/member/find-id.js"></script>
+</th:block>
+<th:block layout:fragment="css">
+    <link href="/css/member/find-id.css" rel="stylesheet">
+</th:block>
+<main layout:fragment="content">
+    <div class="find-id-container">
+        <h1>아이디 찾기</h1>
+        <hr>
+        <form class="find-id-form" action="/find-id" method="post" id="find-id-form">
+            <div class="input-group">
+                <input type="text" id="name" placeholder="이름" class="common-input" name="name">
+            </div>
+
+            <div class="success-message hide message" id="name-success-message"></div>
+            <div class="mismatch-message hide message" id="name-failure-message"></div>
+
+            <div class="input-group">
+                <input type="text" id="birthDate" placeholder="생년월일 8자리" class="common-input" name="birthDate">
+            </div>
+
+            <div class="success-message hide message" id="birthdate-success-message"></div>
+            <div class="email-failure-message hide message" id="birthdate-failure-message"></div>
+
+            <div class="view-find-id hide" id="view-find-id">
+                <span></span>
+            </div>
+
+            <button type="button" class="common-secondary-btn find-id-btn " id="find-id-btn" onclick="findIdBtnClick()">아이디 찾기</button>
+            <button type="button" class="common-primary-btn find-id-btn hide"id="login-Btn" onclick="goToLogin()">로그인</button>
+        </form>
+        <div class="find-links">
+            <a href="/find-id">아이디 찾기</a>
+            <a href="/find-pw">비밀번호 찾기</a>
+        </div>
+    </div>
+</main>
+</html>

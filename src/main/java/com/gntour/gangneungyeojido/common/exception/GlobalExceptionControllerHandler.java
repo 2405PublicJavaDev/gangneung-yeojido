@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.rmi.server.UID;
+import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -79,6 +80,15 @@ public class GlobalExceptionControllerHandler {
             return new ResponseEntity<>(response, ErrorCode.NOT_FOUND.getStatus());
         }
         return "common/error404";
+    }
+
+    @ExceptionHandler(DateTimeParseException.class)
+    public Object handleDateTimeParseException(DateTimeParseException e, Model model, HttpServletRequest request) {
+        if(isAjax(request)) {
+            final ErrorResponse response = ErrorResponse.of(ErrorCode.DATE_PARSE_ERROR, e.getMessage());
+            return new ResponseEntity<>(response, ErrorCode.DATE_PARSE_ERROR.getStatus());
+        }
+        return ERROR_PAGE;
     }
 
     /**

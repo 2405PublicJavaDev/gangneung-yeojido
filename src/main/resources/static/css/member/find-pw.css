@@ -1,0 +1,86 @@
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.find-pw-container {
+    padding: 20px;
+    width: 400px;
+}
+
+.find-pw-container h1 {
+    font-family: 'BMDOHYEON';
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.find-pw-container hr {
+    background-color: black;
+    height: 4px;
+    margin-bottom: 10px;
+}
+
+.find-pw-btn {
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+.common-input {
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+
+.find-links {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.find-links a {
+    color: #454545;
+    text-decoration: none;
+    font-size: 14px;
+    font-family: "Noto Sans KR";
+}
+
+.find-links a:hover {
+    font-weight: bold;
+    color: #3399FF;
+}
+
+.hide {
+    display: none;
+}
+
+.message {
+    color: #EE450C;
+    font-size: 12px;
+}
+
+.success-message {
+    color: #3399FF;
+}
+.border-red:focus ,.border-red{
+    border: 1px solid #EE450C;
+}
+
+.email-group, .auth-group{
+    display: flex;
+    justify-content: space-between;
+}
+
+.email-input, .auth-input{
+    width: 68%;
+}
+
+.email-btn, .auth-btn {
+    width: 28%;
+    margin-top: 10px;
+
+}
+
+.common-secondary-btn:hover{
+    background-color: #808080;
+}
