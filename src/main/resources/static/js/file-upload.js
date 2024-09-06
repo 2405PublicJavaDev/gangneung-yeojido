@@ -118,31 +118,18 @@ const loadImageFromURL = async (url) => {
 
         // Blob 객체를 File 객체로 변환
         const file = new File([blob], fileName, { type: blob.type });
+        inputFileData.push(file);
 
-        // 이미지 로드 및 크기 검사
-        const img = new Image();
-        const reader = new FileReader();
-
-        reader.onload = function(readerEvent) {
-            img.src = readerEvent.target.result;
-
-            img.onload = function() {
-                if (img.width > maxWidth || img.height > maxHeight) {
-                    imageSizeAlert();
-                } else {
-                    // 크기 조건에 맞으면 inputFileData에 추가
-                    file.result = readerEvent.target.result;
-                    inputFileData.push(file);
-                }
-            };
-        };
-
-        reader.readAsDataURL(file);
     } catch (error) {
         console.error('이미지를 로드하는 중 오류가 발생했습니다:', error);
     }
 };
 
 // 예시: 이미지 주소에서 로드
-loadImageFromURL('/gntour/DIARY/4f1b2be8-043b-48a1-8e4e-81ab153ed84c.png');
-thumbnailUpdate();
+// const updateThumbnailsAfterLoading = async () => {
+//     await loadImageFromURL('/gntour/DIARY/4f1b2be8-043b-48a1-8e4e-81ab153ed84c.png');
+//     await loadImageFromURL('/gntour/DIARY/4f1b2be8-043b-48a1-8e4e-81ab153ed84c.png');
+//     await loadImageFromURL('/gntour/DIARY/4f1b2be8-043b-48a1-8e4e-81ab153ed84c.png');
+//     thumbnailUpdate();  // 이미지 로드가 완료된 후 실행됩니다.
+// };
+// updateThumbnailsAfterLoading();
