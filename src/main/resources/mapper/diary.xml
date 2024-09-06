@@ -21,8 +21,8 @@
         DELETE FROM TRAVEL_DIARY WHERE MEMBER_ID = #{memberId}
     </delete>
     <insert id="insertDiaryFile">
-        insert into TRAVEL_DIARY_FILE(DIARY_FILE_NO, FILE_PATH, FILE_NAME, FILE_RENAME, DIARY_NO)
-        values (SEQ_TRAVEL_DIARY_FILE_NO.NEXTVAL, #{filePath}, #{fileName}, #{fileRename}, #{diaryNo})
+        insert into TRAVEL_DIARY_FILE(DIARY_FILE_NO, FILE_PATH, FILE_NAME, FILE_RENAME, DIARY_NO, WEB_PATH, FILE_ORDER)
+        values (SEQ_TRAVEL_DIARY_FILE_NO.NEXTVAL, #{filePath}, #{fileName}, #{fileRename}, #{diaryNo}, #{webPath}, #{fileOrder})
     </insert>
     <select id="selectAllDiariesFileByDiaryNo" resultType="TravelDiaryFile">
         SELECT * FROM TRAVEL_DIARY_FILE

@@ -15,4 +15,6 @@ public class QnAFile {
     private Long qnaNo;
     private Timestamp regDate;
     private Timestamp updateDate;
+    private String webPath;
+    private Long fileOrder;
 }

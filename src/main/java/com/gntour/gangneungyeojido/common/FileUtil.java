@@ -21,6 +21,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import static com.gntour.gangneungyeojido.common.FileConfig.FOLDER_PATH;
+
 
 @Component
 @Slf4j
@@ -40,6 +42,7 @@ public class FileUtil {
      */
     public int uploadFiles(UploadCategory uploadCategory, List<MultipartFile> files, Long fkNo) throws IOException {
         int result = 0;
+        long order = 1;
         for (MultipartFile file : files) {
             if(file.getOriginalFilename() != null && !file.getOriginalFilename().isBlank()) {
                 String fileName = file.getOriginalFilename();
@@ -50,7 +53,8 @@ public class FileUtil {
                 }
                 String filePath = FileConfig.realFolderPath + uploadCategory + "/" + fileRename;
                 file.transferTo(new File(folder, fileRename));
-                result += insertFileData(uploadCategory, fkNo,fileName, fileRename, filePath);
+                result += insertFileData(uploadCategory, fkNo,fileName, fileRename, filePath, order);
+                order++;
             }
         }
         return result;
@@ -71,7 +75,7 @@ public class FileUtil {
         return deleteFilesData(uploadCategory, fkNo);
     }
 
-    private int insertFileData(UploadCategory uploadCategory, Long fkNo, String fileName, String fileRename, String filePath) {
+    private int insertFileData(UploadCategory uploadCategory, Long fkNo, String fileName, String fileRename, String filePath, Long order) {
         int result = 0;
         switch(uploadCategory) {
             case SAMPLE -> {
@@ -88,6 +92,8 @@ public class FileUtil {
                 qnaFile.setFileRename(fileRename);
                 qnaFile.setFilePath(filePath);
                 qnaFile.setQnaNo(fkNo);
+                qnaFile.setWebPath(FOLDER_PATH + uploadCategory + "/" + fileRename);
+                qnaFile.setFileOrder(order);
                 result += qnaMapper.insertQnAFile(qnaFile);
             }
             case DIARY -> {
@@ -96,6 +102,8 @@ public class FileUtil {
                 diaryFile.setFileRename(fileRename);
                 diaryFile.setFilePath(filePath);
                 diaryFile.setDiaryNo(fkNo);
+                diaryFile.setWebPath(FOLDER_PATH + uploadCategory + "/"  + fileRename);
+                diaryFile.setFileOrder(order);
                 result += diaryMapper.insertDiaryFile(diaryFile);
             }
             case REVIEW -> {
@@ -104,6 +112,8 @@ public class FileUtil {
                 reviewFile.setFileRename(fileRename);
                 reviewFile.setFilePath(filePath);
                 reviewFile.setReviewNo(fkNo);
+                reviewFile.setWebPath(FOLDER_PATH + uploadCategory + "/"  + fileRename);
+                reviewFile.setFileOrder(order);
                 result += reviewMapper.insertReviewFile(reviewFile);
             }
         }

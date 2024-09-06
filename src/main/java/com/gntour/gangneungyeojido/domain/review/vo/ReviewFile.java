@@ -19,4 +19,6 @@ public class ReviewFile {
     private Long reviewNo;
     private Timestamp regDate;
     private Timestamp updateDate;
+    private String webPath;
+    private Long fileOrder;
 }

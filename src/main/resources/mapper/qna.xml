@@ -4,8 +4,8 @@
 
 <mapper namespace="com.gntour.gangneungyeojido.domain.qna.mapper.QnAMapper">
     <insert id="insertQnAFile">
-        insert into QNA_FILE(QNA_FILE_NO, FILE_PATH, FILE_NAME, FILE_RENAME, QNA_NO)
-        values (SEQ_QNA_FILE_NO.NEXTVAL, #{filePath}, #{fileName}, #{fileRename}, #{qnaNo})
+        insert into QNA_FILE(QNA_FILE_NO, FILE_PATH, FILE_NAME, FILE_RENAME, QNA_NO, WEB_PATH, FILE_ORDER)
+        values (SEQ_QNA_FILE_NO.NEXTVAL, #{filePath}, #{fileName}, #{fileRename}, #{qnaNo}, #{webPath}, #{fileOrder})
     </insert>
     <select id="selectAllQnAFileByQnANo" resultType="QnAFile">
         SELECT * FROM QNA_FILE

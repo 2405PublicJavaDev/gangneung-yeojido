@@ -24,8 +24,8 @@
         SELECT * FROM REVIEW WHERE MEMBER_ID = #{memberId}
     </select>
     <insert id="insertReviewFile">
-        insert into REVIEW_FILE(REVIEW_FILE_NO, FILE_PATH, FILE_NAME, FILE_RENAME, REVIEW_NO)
-        values (SEQ_REVIEW_FILE_NO.NEXTVAL, #{filePath}, #{fileName}, #{fileRename}, #{reviewNo})
+        insert into REVIEW_FILE(REVIEW_FILE_NO, FILE_PATH, FILE_NAME, FILE_RENAME, REVIEW_NO, WEB_PATH, FILE_ORDER)
+        values (SEQ_REVIEW_FILE_NO.NEXTVAL, #{filePath}, #{fileName}, #{fileRename}, #{reviewNo}, #{webPath}, #{fileOrder})
     </insert>
     <select id="selectAllReviewsFileByReviewNo" resultType="ReviewFile">
         SELECT * FROM REVIEW_FILE
