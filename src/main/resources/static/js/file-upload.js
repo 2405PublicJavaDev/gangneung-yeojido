@@ -56,7 +56,7 @@ const onlyImageAlert = () => {
     alert('이미지 파일만 선택해주세요.');
 }
 const maxFileAlert = () => {
-    alert('파일은 최대 5개까지 추가 가능합니다.');
+    alert(`파일은 최대 ${maxFileCount}개까지 추가 가능합니다.`);
 }
 const thumbnailUpdate = () => {
     const thumbnailRoot = document.querySelector('#file-thumbnail-root');
