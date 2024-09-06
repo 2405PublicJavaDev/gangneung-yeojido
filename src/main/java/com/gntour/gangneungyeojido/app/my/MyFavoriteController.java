@@ -11,12 +11,10 @@ import com.gntour.gangneungyeojido.domain.mytravel.vo.Favorites;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -32,7 +30,7 @@ public class MyFavoriteController {
      * 담당자 : 백인호님
      * 관련 기능 : [마이페이지 기능] 즐겨찾기 리스트 조회
      */
-    @GetMapping("/favorites/list")
+    @GetMapping("/favorites")
     public String showMyFavoritesPage(HttpSession session, Model model,
                                       @RequestParam(value="currentPage", defaultValue = "1") Integer currentPage,
                                       @RequestParam(value="isNew", defaultValue = "Y") String isNew) {
@@ -58,9 +56,14 @@ public class MyFavoriteController {
         return new EmptyResponse();
     };
 
-    /**
-     * 담당자 : 백인호님
-     * 관련 기능 :[마이페이지 기능] 즐겨찾기 해제
-     */
-    public void removeFavorite(){};
+    @GetMapping("/favorite")
+    public String removeFavorite(HttpSession session) {
+        Favorites favorites = new Favorites();
+        String favoriteNo = favorites.getFavoritesNo().toString();
+        int result = favoritesService.removeFavorite(favoriteNo);
+        if (result == 0) {
+            throw new BusinessException(ErrorCode.NO_UPDATE);
+        }
+        return "myPage/myFavoritePage";
+    }
 }

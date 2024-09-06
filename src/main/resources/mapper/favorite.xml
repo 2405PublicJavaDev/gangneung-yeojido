@@ -29,4 +29,7 @@
         INSERT INTO FAVORITES (MEMBER_ID,TRAVEL_NO,REG_DATE)
         VALUES (MEMBER_ID = #{memberId}, TRAVEL_NO = #{travelNo}, REG_DATE = #{regDate})
     </insert>
+    <delete id="deleteFavorites">
+        DELETE FROM FAVORITES WHERE FAVORITES_NO = #{favoritesNo}
+    </delete>
 </mapper>
