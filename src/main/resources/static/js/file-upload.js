@@ -42,7 +42,6 @@ inputFile.addEventListener('change', function(event) {
                     onlyImageAlert();
                 }
             });
-            thumbnailUpdate();
         } else {
             maxFileAlert();
         }
@@ -76,6 +75,7 @@ const thumbnailUpdate = () => {
             reader.readAsDataURL(file);
         });
     })).then(() => {
+        inputFile.value = '';
         inputFileData.forEach((file, index) => {
             const imgWrapper = document.createElement('div');
             imgWrapper.classList.add('file-thumbnail-wrapper');
@@ -107,3 +107,42 @@ const thumbnailUpdate = () => {
         console.log(error);
     })
 }
+
+const loadImageFromURL = async (url) => {
+    try {
+        const response = await fetch(url);
+        const blob = await response.blob();
+
+        // 파일명을 추출
+        const fileName = url.split('/').pop();
+
+        // Blob 객체를 File 객체로 변환
+        const file = new File([blob], fileName, { type: blob.type });
+
+        // 이미지 로드 및 크기 검사
+        const img = new Image();
+        const reader = new FileReader();
+
+        reader.onload = function(readerEvent) {
+            img.src = readerEvent.target.result;
+
+            img.onload = function() {
+                if (img.width > maxWidth || img.height > maxHeight) {
+                    imageSizeAlert();
+                } else {
+                    // 크기 조건에 맞으면 inputFileData에 추가
+                    file.result = readerEvent.target.result;
+                    inputFileData.push(file);
+                    thumbnailUpdate();
+                }
+            };
+        };
+
+        reader.readAsDataURL(file);
+    } catch (error) {
+        console.error('이미지를 로드하는 중 오류가 발생했습니다:', error);
+    }
+};
+
+// 예시: 이미지 주소에서 로드
+// loadImageFromURL('/gntour/DIARY/4f1b2be8-043b-48a1-8e4e-81ab153ed84c.png');
