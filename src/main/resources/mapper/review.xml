@@ -7,6 +7,7 @@
         SELECT *
         FROM REVIEW
         WHERE TRAVEL_NO = #{travelNo}
+        ORDER BY REVIEW_NO DESC
     </select>
     <select id="selectAllReviewsCount" resultType="_int">
         SELECT COUNT(*)
@@ -23,6 +24,13 @@
     <select id="selectAllReviewsByMember" resultType="Review">
         SELECT * FROM REVIEW WHERE MEMBER_ID = #{memberId}
     </select>
+    <insert id="insertReview">
+        <selectKey resultType="long" keyProperty="reviewNo" order="BEFORE">
+            SELECT SEQ_REVIEW_NO.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO REVIEW(REVIEW_NO, SCORE, PARENT_REVIEW_NO, REVIEW_CONTENT, TRAVEL_NO, MEMBER_ID)
+        VALUES(#{reviewNo},#{score},#{parentReviewNo},#{reviewContent},#{travelNo},#{memberId})
+    </insert>
     <insert id="insertReviewFile">
         insert into REVIEW_FILE(REVIEW_FILE_NO, FILE_PATH, FILE_NAME, FILE_RENAME, REVIEW_NO, WEB_PATH, FILE_ORDER)
         values (SEQ_REVIEW_FILE_NO.NEXTVAL, #{filePath}, #{fileName}, #{fileRename}, #{reviewNo}, #{webPath}, #{fileOrder})
@@ -31,6 +39,10 @@
         SELECT * FROM REVIEW_FILE
         WHERE REVIEW_NO = #{reviewNo}
     </select>
+    <delete id="deleteReview">
+        DELETE FROM REVIEW
+        WHERE REVIEW_NO = #{reviewNo}
+    </delete>
     <delete id="deleteReviewFile">
         delete from REVIEW_FILE WHERE REVIEW_NO = #{reviewNo}
     </delete>

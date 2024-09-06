@@ -8,3 +8,7 @@ document.querySelector("#header-my").addEventListener("click", (e) => {
     }
     myExpandVisible = !myExpandVisible;
 });
+
+function moveToMain() {location.href="/"}
+function moveToTravelList() {location.href="/travel/list"}
+function moveToLogin() {location.href="/login"}
