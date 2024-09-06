@@ -21,13 +21,15 @@ public class FavoritesServiceImpl implements FavoritesService {
 
     @Override
     public int addFavorite(String memberId, String favoritesNo) {
-        int result = favoritesMapper.insertFavorites(memberId,favoritesNo);
+        int result = favoritesMapper.insertFavorites(memberId);
         return result;
     }
 
     @Override
-    public void removeFavorite() {
-
+    public int removeFavorite(String favoritesNo) {
+        int result = favoritesMapper.insertFavorites(favoritesNo);
+        return result;
     }
+
 
 }

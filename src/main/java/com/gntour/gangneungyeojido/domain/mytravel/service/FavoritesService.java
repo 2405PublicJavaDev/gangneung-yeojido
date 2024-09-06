@@ -11,6 +11,5 @@ public interface FavoritesService {
 
     int addFavorite(String memberId, String favoritesNo);
 
-    void removeFavorite();
-
+    int removeFavorite(String favoritesNo);
 }
