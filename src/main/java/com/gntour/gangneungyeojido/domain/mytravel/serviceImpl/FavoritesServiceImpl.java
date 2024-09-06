@@ -26,8 +26,8 @@ public class FavoritesServiceImpl implements FavoritesService {
     }
 
     @Override
-    public int removeFavorite(String favoritesNo) {
-        int result = favoritesMapper.insertFavorites(favoritesNo);
+    public int removeFavorite(Long favoritesNo) {
+        int result = favoritesMapper.deleteFavorites(favoritesNo);
         return result;
     }
 

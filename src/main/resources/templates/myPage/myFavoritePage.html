@@ -27,7 +27,7 @@
         }
         function removeFavorite(favoriteNo) {
             if (confirm("정말로 즐겨찾기를 해제하시겠습니까?")) {
-                fetch(`/favorite?favoriteNo=${encodeURIComponent(favoriteNo)}`, {
+                fetch(`/favorite/${encodeURIComponent(favoriteNo)}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
@@ -68,7 +68,7 @@
             <div th:each="favorite : ${favoritesList}" class="favorite">
                 <div class="star">
                     <!--즐겨찾기-->
-                    <button onclick="removeFavorite(${favorite.FAVORITES_NO})">
+                    <button th:onclick="removeFavorite([[${favorite.favoritesNo}]])">
                         <img src="/img/myPage-star.png" width="30px" height="30px">
                     </button>
                 </div>

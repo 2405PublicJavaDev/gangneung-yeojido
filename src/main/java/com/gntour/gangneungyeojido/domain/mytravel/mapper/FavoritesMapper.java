@@ -15,5 +15,5 @@ public interface FavoritesMapper {
 
     int insertFavorites(String memberId);
 
-    int deleteFavorites(String favoritesNo);
+    int deleteFavorites(Long favoritesNo);
 }
