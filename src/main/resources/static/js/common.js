@@ -82,3 +82,16 @@ document.querySelectorAll('input').forEach(input => {
         input.classList.remove('common-input-error');
     }, true);
 })
+
+const logoutBtnClick = (e) => {
+    ajax({
+        url: '/logout',
+        method: 'post',
+    }, (response) => {
+        alert('로그아웃 되었습니다.');
+        location.href = '/';
+    }, (error) => {
+        alert('로그아웃 중에 오류가 발생했습니다.');
+        console.log(error);
+    })
+}

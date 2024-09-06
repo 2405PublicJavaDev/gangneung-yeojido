@@ -108,8 +108,11 @@ public class MemberController {
      *  담당자 : 이경학님
      *  관련기능 : [회원관리 기능] 로그인, 로그아웃
      */
-
-    public void logoutMember(){
+    @PostMapping("/logout")
+    @ResponseBody
+    public EmptyResponse logoutMember(HttpSession session){
+        session.invalidate();
+        return new EmptyResponse();
     }
 
     /**

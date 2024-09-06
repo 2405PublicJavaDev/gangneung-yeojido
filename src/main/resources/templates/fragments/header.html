@@ -15,7 +15,7 @@
     <div class="header-my-expand" th:if="${session.memberId != null && session.memberId != ''}">
         <p th:text="${session.memberId}"></p>
         <p>마이페이지</p>
-        <p>로그아웃</p>
+        <p onclick="logoutBtnClick();">로그아웃</p>
     </div>
 </header>
 </html>
