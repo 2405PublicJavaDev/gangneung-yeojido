@@ -133,7 +133,6 @@ const loadImageFromURL = async (url) => {
                     // 크기 조건에 맞으면 inputFileData에 추가
                     file.result = readerEvent.target.result;
                     inputFileData.push(file);
-                    thumbnailUpdate();
                 }
             };
         };
@@ -145,4 +144,5 @@ const loadImageFromURL = async (url) => {
 };
 
 // 예시: 이미지 주소에서 로드
-// loadImageFromURL('/gntour/DIARY/4f1b2be8-043b-48a1-8e4e-81ab153ed84c.png');
+loadImageFromURL('/gntour/DIARY/4f1b2be8-043b-48a1-8e4e-81ab153ed84c.png');
+thumbnailUpdate();
