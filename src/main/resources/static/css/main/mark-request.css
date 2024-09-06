@@ -8,7 +8,7 @@ main {
 
 .request-mark-container {
     padding: 20px;
-    width: 350px;
+    width: 400px;
 }
 
 .request-mark-container h1 {
@@ -19,61 +19,34 @@ main {
 .request-mark-container hr {
     background-color: black;
     height: 4px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .request-mark-form .input-group {
     position: relative;
-    /*margin-bottom: 15px;*/
+}
+
+.common-input {
+    margin-bottom: 0;
+    margin-top: 10px;
 }
 
 .address-group {
     display: flex;
-    flex-direction: row;
+    justify-content: space-between;
 }
 
-.address-group button {
-    width: 70px;
-    border-radius: 0;
+.address-input {
+    width: 68%;
 }
 
-/*.request-mark-form input {*/
-/*    width: 100%;*/
-/*    padding: 10px;*/
-/*    border: 1px solid #ddd;*/
-/*    border-radius: 4px;*/
-/*    box-sizing: border-box;*/
-/*    font-family: 'GmarketSansMedium';*/
-/*}*/
-
-.toggle-password {
-    position: absolute;
-    right: 15px;
-    top: 42%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #888;
-    font-size: 16px;
+#search-address-btn {
+    width: 28%;
+    margin-top: 10px;
 }
 
-.telecom-phone {
-    display: flex;
-    gap: 10px;
-}
-
-.telecom-phone select {
-    width: 30%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-family: 'Noto Sans KR';
-    appearance: none;
-    color: #888;
-}
-
-.telecom-phone input {
-    width: 70%;
+.common-secondary-btn:hover{
+    background-color: #808080;
 }
 
 input:focus,
@@ -86,23 +59,32 @@ select:focus {
     background-color: #3399FF;
 }
 
-.find-links a:hover {
+.hide {
+    display: none;
+}
+
+.message {
+    color: #EE450C;
+    font-size: 12px;
+}
+
+.success-message {
     color: #3399FF;
+}
+.border-red:focus ,.border-red{
+    border: 1px solid #EE450C;
+}
+
+.register-btn {
+    margin-top: 10px;
+    text-align: center;
 }
 
 .request-mark-button {
-    margin-top: 10px;
-}
-
-.find-links {
-    display: flex;
-    justify-content: space-evenly;
-    margin-top: 20px;
-}
-
-.find-links a {
-    color: #666;
-    text-decoration: none;
-    font-size: 14px;
-    font-family: 'Noto Sans KR';
+    width: 100px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
 }
