@@ -20,7 +20,7 @@ public interface ReviewMapper {
     int insertReview(Review review);
     int insertReviewFile(ReviewFile reviewFile);
     void insertReviewComplain();
-    void updateReview();
-    void deleteReview();
+    int updateReview(Review review);
+    int deleteReview(Long reviewNo);
     int deleteReviewFile(Long reviewNo);
 }

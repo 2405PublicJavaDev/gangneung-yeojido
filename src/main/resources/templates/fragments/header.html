@@ -4,13 +4,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <header th:fragment="header">
-    <img id="header-logo" src="/img/main_logo.png" alt="main logo"/>
-    <button id="header-tour" class="header-text-button">관광지 찾기</button>
+    <img id="header-logo" src="/img/main_logo.png" alt="main logo" onclick="moveToMain();"/>
+    <button id="header-tour" class="header-text-button" onclick="moveToTravelList();">관광지 찾기</button>
     <div class="header-login-area" th:if="${session.memberId != null && session.memberId != ''}">
         <img id="header-my" src="/img/default_profile.png" alt="profile">
     </div>
     <div class="header-login-area" th:if="${session.memberId ==null || session.memberId == ''}">
-        <button id="header-login" class="header-text-button">로그인</button>
+        <button id="header-login" class="header-text-button" onclick="moveToLogin();">로그인</button>
     </div>
     <div class="header-my-expand" th:if="${session.memberId != null && session.memberId != ''}">
         <p th:text="${session.memberId}"></p>

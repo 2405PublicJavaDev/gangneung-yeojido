@@ -9,12 +9,14 @@ main {
     width: 100%;
     height: 450px;
     margin: 0 auto 100px;
-    background-color: #ccc;
     border-bottom: 3px solid #3399FF;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    --background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
     /* 타이틀 */
     h1 {
@@ -23,6 +25,7 @@ main {
         font-weight: 400;
         margin-bottom: 8px;
         letter-spacing: 3px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* 텍스트에 그림자 추가 */
         color: #ffffff;
     }
     #category-box {
@@ -40,23 +43,31 @@ main {
         }
     /* 별점 */
     #score-box {
-        margin-top: 20px;
+        margin-top: 10px;
         width: 200px;
         height: 40px;
+        text-align: center;
     }
+        #score-box p {
+            width: 100%;
+        }
+        #score-box span {
+            font-size: 20px;
+        }
+        #score-box span:last-child {
+            color: #FFF;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+        }
         [class^="fa"] {
-            font-size: 24px;
+            font-size: 18px;
         }
         .checked {
             color: orange;
         }
-        p span {
-            font-size: 20px;
-        }
         h1, #category-box, #score-box {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
         }
     #items {
         position: absolute;
@@ -74,7 +85,7 @@ main {
         align-items: center;
     }
         /* 길찾기 버튼 */
-        #find-road {
+        #go-diary {
             width: 100px;
             height: 40px;
             background-color: #00A155;
@@ -82,12 +93,12 @@ main {
             border: none;
             box-shadow: -4px 4px 1px #F9F1E6;
             font-family: "Noto Sans KR", sans-serif;
-            font-size: 18px;
+            font-size: 16px;
             border-radius: 30px;
             cursor: pointer;
             margin: 0 10px;
         }
-        #find-road:hover {
+        #go-diary:hover {
             background-color: #00b962;
         }
     /* 즐겨찾기 버튼 */

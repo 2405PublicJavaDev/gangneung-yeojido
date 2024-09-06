@@ -7,101 +7,115 @@ const getReviews = (travelNo, curPage) => {
         // review 구성하기
         const reviewRows = document.querySelector('#review-rows');
         reviewRows.replaceChildren();
-        response.data.forEach((review) => {
-            const oneReview = document.createElement('div');
-            oneReview.className = 'one-review';
 
-            // 개인 아이디 div
-            const personalId = document.createElement('div');
-            personalId.className = 'personal-id';
-            personalId.textContent = review.memberId; // 사용자 아이디 넣기
+        if (response.data.length === 0) {
+            const noReviewsMessage = document.createElement('h2');
+            noReviewsMessage.textContent = '등록된 리뷰가 없습니다';
+            noReviewsMessage.className = 'no-reviews-message';
+            reviewRows.appendChild(noReviewsMessage);
+        } else {
+            response.data.forEach((review) => {
+                const oneReview = document.createElement('div');
+                oneReview.className = 'one-review';
 
-            // content div
-            const content = document.createElement('div');
-            content.className = 'review-content';
+                // 개인 아이디 div
+                const personalId = document.createElement('div');
+                personalId.className = 'personal-id';
+                personalId.textContent = review.memberId; // 사용자 아이디 넣기
 
-            // content-top div
-            const contentTop = document.createElement('div');
-            contentTop.className = 'content-top';
+                // content div
+                const content = document.createElement('div');
+                content.className = 'review-content';
 
-            // 별점 (fa-star)
-            const starContainer = document.createElement('p');
-            starContainer.className = 'main-detail-content-photo-star';
+                // content-top div
+                const contentTop = document.createElement('div');
+                contentTop.className = 'content-top';
 
-            for (let i = 1; i <= 5; i++) {
-                const star = document.createElement('span');
-                star.className = i <= Math.floor(review.score) ? 'fa fa-star checked' : (i === Math.ceil(review.score) ? 'fa fa-star-half-o checked' : 'fa fa-star');
-                starContainer.appendChild(star);
-            }
-            const scoreSpan = document.createElement('span');
-            scoreSpan.textContent = review.score != null ? review.score : '0.0';
-            scoreSpan.style.marginLeft = '8px';
-            starContainer.appendChild(scoreSpan);
+                // 별점 (fa-star)
+                const starContainer = document.createElement('p');
+                starContainer.className = 'main-detail-content-photo-star';
 
-            // 버튼 메뉴
-            const buttonMenu = document.createElement('div');
-            buttonMenu.className = 'button-menu';
+                for (let i = 1; i <= 5; i++) {
+                    const star = document.createElement('span');
+                    star.className = i <= Math.floor(review.score) ? 'fa fa-star checked' : (i === Math.ceil(review.score) ? 'fa fa-star-half-o checked' : 'fa fa-star');
+                    starContainer.appendChild(star);
+                }
+                const scoreSpan = document.createElement('span');
+                scoreSpan.textContent = review.score != null ? review.score.toFixed(1) : '0.0';
+                scoreSpan.style.marginLeft = '8px';
+                starContainer.appendChild(scoreSpan);
 
-            const modifyBtn = document.createElement('button');
-            modifyBtn.className = 'select-btn';
-            modifyBtn.id = 'modify-btn';
-            modifyBtn.textContent = '수정';
+                // 버튼 메뉴
+                const buttonMenu = document.createElement('div');
+                buttonMenu.className = 'button-menu';
 
-            const removeBtn = document.createElement('button');
-            removeBtn.className = 'select-btn';
-            removeBtn.id = 'remove-btn';
-            removeBtn.textContent = '삭제';
+                const modifyBtn = document.createElement('button');
+                modifyBtn.className = 'select-btn';
+                modifyBtn.id = 'modify-btn';
+                modifyBtn.textContent = '수정';
 
-            buttonMenu.appendChild(modifyBtn);
-            buttonMenu.appendChild(removeBtn);
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'select-btn';
+                removeBtn.id = 'remove-btn';
+                removeBtn.textContent = '삭제';
 
-            // content-bottom (내용 추가)
-            const contentBottom = document.createElement('div');
-            contentBottom.className = 'content-bottom';
-            contentBottom.textContent = review.reviewContent; // 리뷰 내용 넣기
+                buttonMenu.appendChild(modifyBtn);
+                buttonMenu.appendChild(removeBtn);
 
-            // content-top, button, content-bottom 추가
-            contentTop.appendChild(starContainer);
-            contentTop.appendChild(buttonMenu);
-            content.appendChild(contentTop);
-            content.appendChild(contentBottom);
+                // content-bottom (내용 추가)
+                const contentBottom = document.createElement('div');
+                contentBottom.className = 'content-bottom';
+                contentBottom.textContent = review.reviewContent; // 리뷰 내용 넣기
 
-            // 사진 섹션
-            const photo = document.createElement('div');
-            photo.className = 'photo';
+                // content-top, button, content-bottom 추가
+                contentTop.appendChild(starContainer);
+                contentTop.appendChild(buttonMenu);
+                content.appendChild(contentTop);
+                content.appendChild(contentBottom);
 
-            const img = document.createElement('img');
-            img.className = 'thumbnail';
-            img.alt = 'thumbnail';
-            img.src = review.imageUrl != null ? review.imageUrl : '/img/no-image.png'; // 이미지 추가
+                // 사진 섹션
+                const photo = document.createElement('div');
+                photo.className = 'photo';
 
-            photo.appendChild(img);
+                const img = document.createElement('img');
+                img.className = 'thumbnail';
+                img.alt = 'thumbnail';
+                img.src = review.imageUrl != null ? review.imageUrl : '/img/no-image.png'; // 이미지 추가
 
-            // 댓글 섹션 (비워둠)
-            const reply = document.createElement('div');
-            reply.className = 'reply';
+                photo.appendChild(img);
 
-            // 전체 구조를 one-review에 추가
-            oneReview.appendChild(personalId);
-            oneReview.appendChild(content);
-            oneReview.appendChild(photo);
-            oneReview.appendChild(reply);
+                // 댓글 섹션 (비워둠)
+                const reply = document.createElement('div');
+                reply.className = 'reply';
 
-            // reviewRows에 oneReview 추가
-            reviewRows.appendChild(oneReview);
+                // 전체 구조를 one-review에 추가
+                oneReview.appendChild(personalId);
+                oneReview.appendChild(content);
+                oneReview.appendChild(photo);
+                oneReview.appendChild(reply);
 
-        })
+                // reviewRows에 oneReview 추가
+                reviewRows.appendChild(oneReview);
+
+            })
+        }
 
         // pagination 구성하기
         const paginationUl = document.getElementById('pagination');
         paginationUl.replaceChildren();
+        // 페이지 버튼 클릭 시 상단으로 이동
+        const scrollToPosition = (position) => {
+            window.scrollTo({ top: position, behavior: 'smooth' });
+        };
         if(response.hasPrev) {
             const li = document.createElement("li");
             li.className = 'common-pagination-li-end';
             const prev = document.createElement('a');
             prev.innerHTML = '이전';
-            prev.onclick = () => getReviews(travelNo, curPage - 1);
-            // prev.href = `/travel/review/${travelNo}?currentPage=${curPage - 1}`;
+            prev.onclick = () => {
+                getReviews(travelNo, curPage - 1);
+                scrollToPosition(600);  // 원하는 높이로 조정 (예: 200px)
+            };
             prev.innerHTML = '이전'
             li.appendChild(prev);
             paginationUl.appendChild(li);
@@ -112,8 +126,10 @@ const getReviews = (travelNo, curPage) => {
             const a = document.createElement('a');
             a.href = `javascript:void(0)`;
             a.textContent = i;
-            a.onclick = () => getReviews(travelNo, i);
-            // a.href = `/travel/review/${travelNo}?currentPage=${i}`;
+            a.onclick = () => {
+                getReviews(travelNo, i);
+                scrollToPosition(600);  // 원하는 높이로 조정
+            };
             li.appendChild(a);
             paginationUl.appendChild(li);
         }
@@ -121,10 +137,12 @@ const getReviews = (travelNo, curPage) => {
             const li = document.createElement("li");
             li.className = 'common-pagination-li-end';
             const next = document.createElement('a');
-            // next.href = `/travel/review/${travelNo}?currentPage=${curPage + 1}`;
             next.href = `javascript:void(0)`; // 수정된 부분
             next.innerHTML = '다음';
-            next.onclick = () => getReviews(travelNo, curPage + 1); // 수정된 부분
+            next.onclick = () => {
+                getReviews(travelNo, curPage + 1);
+                scrollToPosition(600);  // 원하는 높이로 조정
+            };
             li.appendChild(next);
             paginationUl.appendChild(li);
         }

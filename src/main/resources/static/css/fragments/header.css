@@ -15,12 +15,13 @@ header {
     margin-left: 100px;
     height: 110px;
     padding: 8px;
+    cursor: pointer;
 }
 
 .header-text-button {
     background: transparent;
     border: transparent;
-
+    cursor: pointer;
 }
 
 #header-tour{

@@ -95,3 +95,11 @@ const logoutBtnClick = (e) => {
         console.log(error);
     })
 }
+
+const openDialog = () => {
+    document.querySelector('.dialog-bg').classList.remove('dialog-noshow');
+}
+
+const closeDialog = () => {
+    document.querySelector('.dialog-bg').classList.add('dialog-noshow');
+}

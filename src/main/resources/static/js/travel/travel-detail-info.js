@@ -53,7 +53,7 @@ for (let i = 1; i <= 5; i++) {
 }
 // 숫자는 별점 뒤에 그대로 표시
 const scoreText = document.createElement('span');
-scoreText.innerText = `${score.toFixed(1)}`;  // 별점 숫자를 표시
+scoreText.innerText = (score % 1 === 0) ? `${score.toFixed(1)}` : `${score.toFixed(1)}`;
 starContainer.appendChild(scoreText);
 scoreText.style.marginLeft = '8px';
 
@@ -82,4 +82,7 @@ function selectReview() {
     infoBtn.classList.add('unselected');
     infoBtn.classList.remove('selected');
 }
-
+let dialogShown = false;
+document.querySelector('#register-review-btn').addEventListener('click', () => {
+    openDialog();
+})
