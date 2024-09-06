@@ -56,10 +56,8 @@ public class MyFavoriteController {
         return new EmptyResponse();
     };
 
-    @GetMapping("/favorite")
-    public String removeFavorite(HttpSession session) {
-        Favorites favorites = new Favorites();
-        String favoriteNo = favorites.getFavoritesNo().toString();
+    @GetMapping("/favorite/{favoriteNo}")
+    public String removeFavorite(HttpSession session, @PathVariable Long favoriteNo) {
         int result = favoritesService.removeFavorite(favoriteNo);
         if (result == 0) {
             throw new BusinessException(ErrorCode.NO_UPDATE);
