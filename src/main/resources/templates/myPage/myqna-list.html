@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/my-page}"
+      layout:decorator="layout">
+<th:block layout:fragment="script">
+    <script type="text/javascript" src="/js/main/mapdata.js"></script>
+    <script type="text/javascript" src="/js/main/mapconfig.js"></script>
+    <script type="text/javascript" src="/js/main/mapmanipulate.js"></script>
+    <script type="text/javascript" src="/js/main/index.js"></script>
+</th:block>
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/myPage/myqna-list.css">
+</th:block>
+<main layout:fragment="content">
+    <div class="my-subject"><h1>나의 문의내역 리스트</h1></div>
+    <div class="main-content">
+        <div class="myqna-list">
+            <img src="/img/wrtFileImageView.jpg">
+            <div class="myqna-info">
+                <span>경포 해수욕장...</span>
+                <input type="text" name="content-shorts">
+            </div>
+        </div>
+        <div class="myqna-list">
+            <img src="/img/wrtFileImageView.jpg">
+            <div class="myqna-info">
+                <span>경포 해수욕장...</span>
+                <input type="text" name="content-shorts">
+            </div>
+            <button><a href="/modify-myqna">수정</a></button>
+            <button><a href="/remove-myqna">삭제</a></button>
+        </div>
+        <div class="myqna-list">
+            <img src="/img/wrtFileImageView.jpg">
+            <div class="myqna-info">
+                <span>경포 해수욕장...</span>
+                <input type="text" name="content-shorts">
+            </div>
+            <button><a href="/modify-myqna">수정</a></button>
+            <button><a href="/remove-myqna">삭제</a></button>
+        </div>
+        <div class="myqna-list">
+            <img src="/img/wrtFileImageView.jpg">
+            <div class="myqna-info">
+                <span>경포 해수욕장...</span>
+                <input type="text" name="content-shorts">
+            </div>
+            <button><a href="/modify-myqna">수정</a></button>
+            <button><a href="/remove-myqna">삭제</a></button>
+        </div>
+
+        <div class="myqna-list">
+            <img src="/img/wrtFileImageView.jpg">
+            <div class="myqna-info">
+                <span>경포 해수욕장...</span>
+                <input type="text" name="content-shorts">
+            </div>
+            <button><a href="/modify-myqna">수정</a></button>
+            <button><a href="/remove-myqna">삭제</a></button>
+        </div>
+        <div class="register-btn">
+            <button><a href="/register-myqna">문의사항 작성</a></button>
+        </div>
+    </div>
+</main>
+</html>
+</html>

@@ -11,6 +11,39 @@
 <main layout:fragment="content">
     <div class="main-container">
         <h1>QnA 답변 달기</h1>
+
+        <div class="question-container">
+            <p><strong th:text="${qna.memberId}"></strong>님께서 문의하신 내용입니다.</p>
+            <p><strong>제목:</strong> <span th:text="${qna.qnaSubject}"></span></p>
+            <p><strong>문의내용:</strong></p>
+            <p th:text="${qna.qnaContent}"></p>
+            <!-- 첨부파일 영역 -->
+            <div class="attachments">
+                <p><strong>첨부파일:</strong></p>
+                <ul>
+                    <!-- 첨부파일이 있으면 리스트를 출력 -->
+                    <li th:each="file : ${qnaFiles}">
+                        <a th:href="@{${file.webPath}}" th:text="${file.fileName}">파일 다운로드</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <form action="/admin/qna/answer" method="post">
+            <input type="hidden" name="qnaNo" th:value="${qna.qnaNo}">
+
+            <div class="input-group">
+                <label for="title">답변 제목</label>
+                <input type="text" id="title" name="title" placeholder="답변 제목을 입력하세요" required>
+            </div>
+
+            <div class="input-group">
+                <label for="notice">답변 내용</label>
+                <textarea id="notice" name="notice" placeholder="답변 내용을 입력하세요" required></textarea>
+            </div>
+
+            <button type="submit">답변 등록</button>
+        </form>
     </div>
 </main>
 </html>

@@ -1,5 +1,8 @@
 package com.gntour.gangneungyeojido.domain.qna.mapper;
 
+import com.gntour.gangneungyeojido.app.admin.dto.QnAResponse;
+import com.gntour.gangneungyeojido.domain.qna.vo.QnA;
+import com.gntour.gangneungyeojido.domain.qna.vo.QnAAnswer;
 import com.gntour.gangneungyeojido.domain.qna.vo.QnAFile;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -7,18 +10,19 @@ import java.util.List;
 
 @Mapper
 public interface QnAMapper {
-    void selectAllQnA();
+    List<QnAResponse> selectAllQnA();
     List<QnAFile> selectAllQnAFileByQnANo(Long qnaNo);
     void selectAllQnACount();
-    void selectAllQnACountByMember();
+    List<QnA> selectAllQnACountByMember(String memberId);
     void selectAllQnAAnswer();
     void selectAllQnAAnswerCount();
     void selectAllQnAAnswerCountByMember();
-    void insertQnA();
+    int insertQnA(QnA qna);
     int insertQnAFile(QnAFile qnaFile);
-    void insertQnAAnswer();
+    int insertQnAAnswer(QnAAnswer qnaAnswer);
     void deleteQnA();
     int deleteQnAFile(Long qnaNo);
     void deleteQnAAnswer();
+    QnA selectQnAById(Long qnaNo);
 
 }
