@@ -23,9 +23,11 @@
             <div class="input-group">
                 <input type="text" id="travelName" name="travelName" placeholder="여행지명" class="common-input">
             </div>
+            <div class="success-message hide message" id="travel-name-success-message"></div>
+            <div class="failure-message hide message" id="travel-name-failure-message"></div>
             <div class="input-group address-group">
-                <input type="text" id="address" name="address" placeholder="주소" class="common-input">
-                <button type="button" class="common-primary-btn" id="search-address-btn">검색</button>
+                <input type="text" id="address" name="address" placeholder="주소" class="common-input address-input">
+                <button type="button" class="common-secondary-btn" id="search-address-btn">검색</button>
             </div>
             <div class="input-group">
                 <input type="tel" id="phone" placeholder="전화번호" class="common-input" name="phone">
@@ -53,8 +55,10 @@
             </div>
             <input type="hidden" id="latitude" name="latitude">
             <input type="hidden" id="longitude" name="longitude">
-            <button type="button" class="common-primary-btn request-mark-button" id="request-mark-btn">승인 요청</button>
-            <button type="button" class="common-secondary-btn request-mark-button" id="cancel-btn">취소</button>
+            <div class="register-btn">
+                <button type="button" class="common-primary-btn request-mark-button" id="request-mark-btn">승인 요청</button>
+                <button type="button" class="common-secondary-btn request-mark-button" id="cancel-btn">취소</button>
+            </div>
         </form>
     </div>
 </main>

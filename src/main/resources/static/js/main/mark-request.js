@@ -36,10 +36,15 @@ document.querySelector("#request-mark-btn").addEventListener("click", (e) => {
     const formTag = document.querySelector("#request-mark-form");
     const formData = new FormData(formTag);
     const formProps = Object.fromEntries(formData);
+    if(!travelNameCheck()) {
+        elTravelName.scrollIntoView({behavior: 'smooth', block: 'start'});
+        return;
+    }
     ajax({
         url: '/mark-request',
         method: 'post',
-        payload: formProps
+        payload: formProps,
+        blockValidateForm: true
     }, (response) => {
         console.log(response);
         alert('마커 승인을 요청하였습니다.')
@@ -52,3 +57,27 @@ document.querySelector("#request-mark-btn").addEventListener("click", (e) => {
 document.querySelector("#cancel-btn").addEventListener("click", (e) => {
     location.href="/";
 })
+
+const elTravelName = document.querySelector('#travelName');
+const travelNameSuccessMessage = document.querySelector('#travel-name-success-message');
+const travelNameFailureMessage = document.querySelector('#travel-name-failure-message');
+elTravelName.onkeyup = function () {
+    travelNameCheck();
+}
+const validTravelName = (str) => {
+    return str.length > 0;
+}
+const travelNameCheck = () => {
+    if (!validTravelName(elTravelName.value)) {
+        travelNameFailureMessage.innerHTML = '여행지는 빈칸이면 안됩니다.';
+        travelNameSuccessMessage.classList.add('hide');
+        travelNameFailureMessage.classList.remove('hide');
+        elTravelName.classList.add('border-red');
+        return false;
+    }
+    travelNameFailureMessage.classList.add('hide');
+    elTravelName.classList.remove('border-red');
+    travelNameSuccessMessage.innerHTML = '사용할 수 있는 여행지명입니다.';
+    travelNameSuccessMessage.classList.remove('hide');
+    return true;
+}
