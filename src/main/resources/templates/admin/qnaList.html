@@ -11,28 +11,30 @@
 <main layout:fragment="content">
     <div class="main-container">
         <h1>QnA 리스트(관리자)</h1>
+        <p class="guide-message">
+            관리자용 QNA 리스트 페이지입니다. <br>
+            공지사항 제목 클릭 시 답변으로 이동합니다.
+        </p>
         <div>
             <table class="common-table">
                 <thead>
                 <tr>
                     <th>QnA 번호</th>
                     <th>글제목</th>
-                    <th>작성날짜</th>
-                    <th>답변 여부</th>
+                    <th>작성자</th>
+                    <th>날짜</th>
+                    <th>답변여부</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>안녕하세요</td>
-                    <td>2024.08.30</td>
-                    <td>Y</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>안녕하세요</td>
-                    <td>2024.08.30</td>
-                    <td>Y</td>
+                <tr th:each="qna : ${qnaList}">
+                    <td th:text="${qna.qnaNo}"></td>
+                    <td>
+                        <a th:href="@{/admin/qna/answer(qnaNo=${qna.qnaNo})}" th:text="${qna.qnaSubject}"></a>
+                    </td>
+                    <td th:text="${qna.memberId}"></td>
+                    <td th:text="${#dates.format(qna.regDate, 'yyyy-MM-dd')}"></td>
+                    <td th:text="${qna.qnaAnswerCount > 0 ? '답변 완료' : '미답변'}"></td>
                 </tr>
                 </tbody>
             </table>

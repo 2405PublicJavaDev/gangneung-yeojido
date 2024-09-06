@@ -3,14 +3,55 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gntour.gangneungyeojido.domain.qna.mapper.QnAMapper">
+
+    <select id="selectAllQnACountByMember" resultType="TravelDiary">
+        SELECT * FROM QNA
+        WHERE MEMBER_ID=#{memberId} ORDER BY QNA_NO DESC
+    </select>
+
+    <select id="selectAllQnA" resultType="QnAResponse">
+        SELECT Q.QNA_NO "QNA_NO", Q.QNA_SUBJECT "QNA_SUBJECT", Q.MEMBER_ID "MEMBER_ID", Q.REG_DATE "REG_DATE", COUNT(A.ANSWER_NO) "QNA_ANSWER_COUNT"
+        FROM QNA Q
+        LEFT JOIN QNA_ANSWER A
+        ON Q.QNA_NO = A.QNA_NO
+        GROUP BY Q.QNA_NO, Q.QNA_SUBJECT, Q.MEMBER_ID, Q.REG_DATE
+        ORDER BY QNA_NO DESC
+    </select>
+
+    <insert id="insertQnA" useGeneratedKeys="true" keyProperty="qnaNo">
+        <selectKey resultType="long" keyProperty="qnaNo" order="BEFORE">
+            SELECT SEQ_QNA_NO.NEXTVAL FROM DUAL
+        </selectKey>
+        insert into QNA(QNA_NO, QNA_SUBJECT, QNA_CONTENT, MEMBER_ID, REG_DATE, UPDATE_DATE)
+        values (SEQ_QNA_NO.NEXTVAL, #{qnaSubject}, #{qnaContent}, #{memberId}, default, default)
+    </insert>
+
     <insert id="insertQnAFile">
+        <selectKey resultType="long" keyProperty="qnaNo" order="BEFORE">
+            SELECT SEQ_QNA_FILE_NO.NEXTVAL FROM DUAL
+        </selectKey>
         insert into QNA_FILE(QNA_FILE_NO, FILE_PATH, FILE_NAME, FILE_RENAME, QNA_NO, WEB_PATH, FILE_ORDER)
-        values (SEQ_QNA_FILE_NO.NEXTVAL, #{filePath}, #{fileName}, #{fileRename}, #{qnaNo}, #{webPath}, #{fileOrder})
+        values (#{qnaNo}, #{filePath}, #{fileName}, #{fileRename}, #{qnaNo}, #{webPath}, #{fileOrder})
     </insert>
     <select id="selectAllQnAFileByQnANo" resultType="QnAFile">
         SELECT * FROM QNA_FILE
         WHERE QNA_NO = #{qnaNo}
     </select>
+
+    <select id="selectQnAById" resultType="QnA">
+        SELECT QNA_NO, QNA_SUBJECT, QNA_CONTENT, MEMBER_ID, REG_DATE, UPDATE_DATE
+        FROM QNA
+        WHERE QNA_NO = #{qnaNo}
+    </select>
+
+    <insert id="insertQnAAnswer" useGeneratedKeys="true" keyProperty="answerNo">
+        <selectKey resultType="long" keyProperty="answerNo" order="BEFORE">
+            SELECT SEQ_QNAANSWER_NO.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO QNA_ANSWER (ANSWER_NO, ANSWER_SUBJECT, ANSWER_CONTENT, QNA_NO, MEMBER_ID, REG_DATE, UPDATE_DATE)
+        VALUES (#{answerNo}, #{answerSubject}, #{answerContent}, #{qnaNo}, #{memberId}, SYSDATE, SYSDATE)
+    </insert>
+
     <delete id="deleteQnAFile">
         delete from QNA_FILE WHERE QNA_NO = #{qnaNo}
     </delete>
