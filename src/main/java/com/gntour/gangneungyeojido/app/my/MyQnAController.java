@@ -1,5 +1,6 @@
 package com.gntour.gangneungyeojido.app.my;
 
+import com.gntour.gangneungyeojido.app.my.dto.MyQnAResponse;
 import com.gntour.gangneungyeojido.common.MemberUtils;
 import com.gntour.gangneungyeojido.domain.qna.service.QnAService;
 import com.gntour.gangneungyeojido.domain.qna.vo.QnA;
@@ -24,11 +25,11 @@ public class MyQnAController {
      */
     @GetMapping("/myqna")
     public String showMyQnAListPage(HttpSession session, Model model){
-    QnA qna = new QnA();
-    List<QnA> myqnaList = qnaService.getAllQnAAnswerByMember(MemberUtils.getMemberIdFromSession(session));
-    model.addAttribute("myqnaList", myqnaList);
-    return "myPage/myqna-list";
-    };
+        List<MyQnAResponse> myqnaList = qnaService.getAllQnAAnswerByMember(MemberUtils.getMemberIdFromSession(session));
+        model.addAttribute("myqnaList", myqnaList);
+        model.addAttribute("memberName", MemberUtils.getMemberIdFromSession(session));
+        return "myPage/myqna-list";
+    }
 
     /**
      * 담당자 : 김윤경님

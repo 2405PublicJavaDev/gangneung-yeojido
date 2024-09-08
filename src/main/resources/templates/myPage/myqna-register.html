@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/default}"
+      layout:decorate="~{layouts/my-page}"
       layout:decorator="layout">
 <th:block layout:fragment="script">
   <script type="text/javascript" src="/js/file-upload.js"></script>
@@ -46,27 +46,27 @@
       </div>
     </form>
   </div>
-<!--  <script th:javascript>-->
-<!--    document.querySelector('#submit-btn').addEventListener('click', (e) => {-->
-<!--      e.preventDefault();-->
-<!--      const formTag = document.querySelector("#uploadForm");-->
-<!--      const formData = new FormData(formTag);-->
-<!--      ajax({-->
-<!--                url: '/register-qna',-->
-<!--                method: 'post',-->
-<!--                payload: formData,-->
-<!--                isMultipart: true-->
-<!--              },-->
-<!--              (response) => {-->
-<!--                console.log('response', response);-->
-<!--              },-->
-<!--              (error) => {-->
-<!--                console.log('error',error)}-->
-<!--      );-->
-<!--    })-->
-<!--    function goback() {-->
-<!--      history.go(-1);-->
-<!--    }-->
-<!--  </script>-->
+    <script th:javascript>
+      document.querySelector('#submit-btn').addEventListener('click', (e) => {
+        e.preventDefault();
+        const formTag = document.querySelector("#uploadForm");
+        const formData = new FormData(formTag);
+        ajax({
+                  url: '/register-qna',
+                  method: 'post',
+                  payload: formData,
+                  isMultipart: true
+                },
+                (response) => {
+                  console.log('response', response);
+                },
+                (error) => {
+                  console.log('error',error)}
+        );
+      })
+      function goback() {
+        history.go(-1);
+      }
+    </script>
 </main>
 </html>

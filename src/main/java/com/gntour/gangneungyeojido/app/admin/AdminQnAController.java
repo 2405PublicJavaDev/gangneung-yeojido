@@ -58,7 +58,7 @@ public class AdminQnAController {
     @PostMapping("/admin/qna/answer")
     public String addQnAAnswer(@RequestParam("qnaNo") Long qnaNo,
                                @RequestParam("title") String title,
-                               @RequestParam("notice") String notice,
+                               @RequestParam("content") String content,
                                HttpSession session) {
         QnAAnswer qnaAnswer = new QnAAnswer();
         // 세션에서 관리자 ID 가져오기
@@ -70,7 +70,7 @@ public class AdminQnAController {
         // 답변 객체에 값 설정
         qnaAnswer.setQnaNo(qnaNo);
         qnaAnswer.setAnswerSubject(title);
-        qnaAnswer.setAnswerContent(notice);
+        qnaAnswer.setAnswerContent(content);
         qnaAnswer.setMemberId(memberId);
         log.info("답변 정보: " + qnaAnswer.toString());
         // 답변을 저장
@@ -84,10 +84,13 @@ public class AdminQnAController {
     }
 
 
+
     /**
      * 담당자 : 김윤경님
      * 관련 기능 : [관리자 기능] QnA 삭제
      * url :
      */
     public void removeQnAAnswer(){}
+
+
 }

@@ -1,3 +1,20 @@
+@font-face {
+    font-family: 'BMDOHYEON';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+main {
+    padding: 20px;
+}
+/* 화면 타이틀 */
+h1 {
+    font-family: 'BMDOHYEON', sans-serif;
+    padding-bottom: 50px;
+    padding-top: 20px;
+    text-align: center;
+}
+
 .container {
     display: flex;
     flex-direction: row;
@@ -6,6 +23,9 @@
 }
 
 .main-content-wrapper {
+    margin : 0 auto;
+    justify-content: center;
+    max-width: 1000px;
     flex: 1;
     padding: 20px;
 }
@@ -19,65 +39,39 @@
     margin-bottom: 20px;
 }
 
-.myqna-list {
-    height: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 15px;
-    padding: 10px;
-    background-color: #ffffff;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+/*테이블*/
+.common-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
 }
 
-.myqna-list img {
-    margin-right: 15px;
-    width: 200px;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 5px;
-}
-
-.myqna-list span {
+.common-table th,
+.common-table td {
+    padding: 12px;
     text-align: center;
-}
-.myqna-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+    font-family: 'Noto Sans KR';
+    border: none;
 }
 
-.myqna-info span {
+.common-table th {
+    background-color: #ffffff;
+    color: black;
     font-size: 16px;
     font-weight: bold;
-    margin-bottom: 5px;
+    border-bottom: 2px solid #007FFF;
 }
 
-.myqna-info input {
-    padding: 5px;
+.common-table td {
     font-size: 14px;
-    border: 1px solid #ddd;
-    border-radius: 3px;
 }
 
-.myqna-list button {
-    margin-left: 10px;
-    padding: 5px 10px;
-    background-color: #007bff;
-    border: none;
-    border-radius: 3px;
-    color: white;
-    cursor: pointer;
+.common-table tbody tr {
+    border-bottom: 1px solid #ddd;
 }
 
-.myqna-list button a {
-    color: white;
-    text-decoration: none;
-}
-
-.myqna-list button:hover {
-    background-color: #0056b3;
+.common-table tr:hover {
+    background-color: #e2e2e26c;
 }
 
 .register-btn {

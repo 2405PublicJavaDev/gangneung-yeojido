@@ -5,26 +5,38 @@ main {
 #uploadForm {
     padding: 20px;
     border-radius: 5px;
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
 }
 /* 화면 타이틀 */
 h1 {
     font-family: 'BMDOHYEON', sans-serif;
-    padding-bottom: 50px;
+    padding-bottom: 20px;
     padding-top : 20px;
     text-align: center;
+}
+.subtitle {
+    font-size: 1em;
+    text-align: center;
+    color: #666;
+    margin-bottom: 20px;
+}
+.main-content{
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 30px;
 }
 form div {
     margin-bottom: 20px;
 }
-
 .subject-input{
     margin-top: 15px;
 }
 .content-input{
     margin-top: 15px;
     height: 250px;
+    resize:none;
 }
 button {
     font-size: 1em;
@@ -78,4 +90,22 @@ button:hover {
     background-color: #45a049;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     transform: translateY(-2px);
+}
+
+table {
+    margin: 0 auto;
+    text-align: center;
+    max-width: 1000px;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
 }

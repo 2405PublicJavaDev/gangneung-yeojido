@@ -12,13 +12,12 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
+    /*background-color: #f5f5f5;*/
 }
 
 /* 화면 타이틀 */
 h1 {
     font-family: 'BMDOHYEON', sans-serif;
-    border-bottom: 2px solid #eee;
     padding-bottom: 10px;
     text-align: center;
 }
