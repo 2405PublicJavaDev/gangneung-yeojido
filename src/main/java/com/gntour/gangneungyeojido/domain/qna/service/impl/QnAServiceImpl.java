@@ -69,12 +69,16 @@ public class QnAServiceImpl implements QnAService {
     }
     @Override
     public void removeQnA() {
-
     }
 
     @Override
-    public void removeQnAAnswer() {
+    public void removeQnAAnswer(Long answerNo) {
+        qnaMapper.deleteQnAAnswer(answerNo);  // 매퍼를 통해 답변 삭제 쿼리 실행
+    }
 
+    @Override
+    public QnAAnswer getQnAAnswerByQnANo(Long qnaNo) {
+        return qnaMapper.selectQnAAnswerByQnANo(qnaNo);  // QnA 번호로 답변 조회
     }
     @Override
     public List<QnAFile> getQnAFilesByQnANo(Long qnaNo) {

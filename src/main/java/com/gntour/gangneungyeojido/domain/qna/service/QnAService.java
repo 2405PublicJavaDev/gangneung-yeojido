@@ -18,8 +18,9 @@ public interface QnAService {
     int addQnA(QnA qna, List<MultipartFile> files);
     int addQnAAnswer(QnAAnswer qnaAnswer);  // 답변 추가 메서드
     void removeQnA();
-    void removeQnAAnswer();
+    void removeQnAAnswer(Long answerNo);  // 답변 삭제 메서드
 
     QnA getQnAById(Long qnaNo);
     List<QnAFile> getQnAFilesByQnANo(Long qnaNo);
+    QnAAnswer getQnAAnswerByQnANo(Long qnaNo);  // QnA 번호로 답변 조회 메서드
 }
