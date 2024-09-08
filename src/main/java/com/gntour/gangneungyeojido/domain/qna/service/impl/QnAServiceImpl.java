@@ -41,6 +41,13 @@ public class QnAServiceImpl implements QnAService {
     public List<MyQnAResponse> getAllQnAAnswerByMember(String memberId) {
         return qnaMapper.selectMyQnAListByMember(memberId);  // 새로운 쿼리로 수정
     }
+
+    @Override
+    public List<MyQnAResponse> getOneQnADetailByQnANo(Long qnaNo) {
+        return qnaMapper.selectOneQnADetailByQnANo(qnaNo);  // 매퍼 쿼리 호출
+
+    }
+
     @Override
     public QnA getQnAById(Long qnaNo) {
         return qnaMapper.selectQnAById(qnaNo);  // 매퍼에서 데이터 조회

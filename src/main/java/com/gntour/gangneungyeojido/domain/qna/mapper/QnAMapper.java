@@ -14,6 +14,7 @@ public interface QnAMapper {
     List<QnAResponse> selectAllQnA();
     List<QnAFile> selectAllQnAFileByQnANo(Long qnaNo);
     List<MyQnAResponse> selectMyQnAListByMember(String memberId);
+
     void selectAllQnACount();
     List<QnA> selectAllQnACountByMember(String memberId);
     void selectAllQnAAnswer();
@@ -26,5 +27,5 @@ public interface QnAMapper {
     int deleteQnAFile(Long qnaNo);
     void deleteQnAAnswer();
     QnA selectQnAById(Long qnaNo);
-
+    List<MyQnAResponse> selectOneQnADetailByQnANo(Long qnaNo);
 }

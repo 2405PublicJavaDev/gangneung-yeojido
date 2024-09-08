@@ -46,6 +46,15 @@
         WHERE Q.MEMBER_ID = #{memberId}
         ORDER BY Q.QNA_NO DESC
     </select>
+
+    <select id="selectOneQnADetailByQnANo" resultType="MyQnAResponse">
+        SELECT Q.QNA_NO, Q.QNA_SUBJECT, Q.QNA_CONTENT, Q.MEMBER_ID, Q.REG_DATE AS QNA_REG_DATE,
+               A.ANSWER_NO, A.ANSWER_SUBJECT, A.ANSWER_CONTENT, A.REG_DATE AS ANSWER_REG_DATE
+        FROM QNA Q
+                 LEFT JOIN QNA_ANSWER A ON Q.QNA_NO = A.QNA_NO
+        WHERE Q.QNA_NO = #{qnaNo}
+    </select>
+
     <select id="selectQnAById" resultType="QnA">
         SELECT QNA_NO, QNA_SUBJECT, QNA_CONTENT, MEMBER_ID, REG_DATE, UPDATE_DATE
         FROM QNA

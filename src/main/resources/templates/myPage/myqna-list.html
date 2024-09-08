@@ -32,7 +32,7 @@
                     </tr>
                     <tr th:each="qna : ${myqnaList}">
                         <td>
-                            <a th:href="@{/myPage/myqna(qnaNo=${qna.qnaNo})}" th:text="${qna.qnaSubject}"></a>
+                            <a th:href="@{/myqna/{qnaNo}(qnaNo=${qna.qnaNo})}" th:text="${qna.qnaSubject}"></a>
                         </td>
                         <td th:text="${#dates.format(qna.qnaRegDate, 'yyyy-MM-dd')}"></td>
                         <td th:text="${qna.answerNo != null ? '답변 완료' : '미답변'}"></td>
@@ -43,7 +43,7 @@
         </div>
 
         <div class="register-btn">
-            <button><a  th:href="@{/myqna/register}>문의사항 작성</a></button>
+            <button><a th:href="@{/myqna/register}">문의사항 작성</a></button>
         </div>
     </div>
 </main>
