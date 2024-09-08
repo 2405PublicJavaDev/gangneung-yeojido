@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/default}"
+      layout:decorate="~{layouts/my-page}"
       layout:decorator="layout">
 <th:block layout:fragment="script">
   <script type="text/javascript" src="/js/main/mapdata.js"></script>
@@ -13,50 +13,42 @@
   <link rel="stylesheet" href="/css/myPage/myqna-detail.css">
 </th:block>
 <main layout:fragment="content">
-  <div>
-    <form id="uploadForm">
-      <input type="hidden" value="352" name="travelNo">
-      <div class="my-subject"><h1>1:1 문의 등록</h1></div>
-      <div class="main-content">
-        <div class="input-content">
-          <div class="input-sub"> <b>제목</b>
-            <input type="text" name="myqnaTitle" required class="common-input subject-input" id="myqna-subject" placeholder="제목을 입력해주세요">
-          </div>
-          <b>내용</b>
-          <textarea name="myqnaContent" required class="common-input content-input" id="myqna-content" placeholder="내용을 입력해주세요"></textarea>
-          <div class="file-upload">
-            <input type="file" id="file-upload-input" name="uploadFile">
-            <label for="file-upload-input" class="file-upload-btn" id="uploadBtn">파일 선택</label>
-          </div>
-        </div>
-        <div class="register-btn">
-          <button type="button" class="register" id="submit-btn">등록</button>
-          <button type="button" class="cancel" onclick="goback();">취소</button>
-        </div>
+  <div class="main-container">
+    <h1>나의 문의내역 상세</h1>
+
+    <!-- 문의내역 반복 출력 -->
+    <div class="question-container" th:each="qna : ${qnaDetail}">
+      <p><strong th:text="${qna.memberId}"></strong>님께서 문의하신 내용입니다.</p>
+      <p><strong>제목:</strong> <span th:text="${qna.qnaSubject}"></span></p>
+      <p><strong>문의내용:</strong></p>
+      <p th:text="${qna.qnaContent}"></p>
+      <!-- 첨부파일 영역 -->
+      <div class="attachments">
+        <p><strong>첨부파일:</strong></p>
+        <ul>
+          <li th:each="file : ${qnaFiles}">
+            <a th:href="@{${file.webPath}}" th:text="${file.fileName}">파일 다운로드</a>
+          </li>
+        </ul>
       </div>
-    </form>
+
+      <!-- 관리자 답변이 있으면 답변 내용 출력 -->
+      <div class="answer-container" th:if="${qna.answerNo != null}">
+        <p><strong>답변 제목:</strong> <span th:text="${qna.answerSubject}"></span></p>
+        <p><strong>답변 내용:</strong></p>
+        <p th:text="${qna.answerContent}"></p>
+      </div>
+
+      <!-- 답변이 없으면 메시지 출력 -->
+      <div class="no-answer" th:if="${qna.answerNo == null}">
+        <p>아직 답변이 등록되지 않았습니다.</p>
+      </div>
+    </div>
+
+    <!-- 목록으로 돌아가기 버튼 -->
+    <div class="button-container">
+      <a href="/myqna" class="btn-back">목록으로 돌아가기</a>
+    </div>
   </div>
-  <script th:javascript>
-    document.querySelector('#submit-btn').addEventListener('click', (e) => {
-      e.preventDefault();
-      const formTag = document.querySelector("#uploadForm");
-      const formData = new FormData(formTag);
-      ajax({
-                url: '/register-myqna',
-                method: 'post',
-                payload: formData,
-                isMultipart: true
-              },
-              (response) => {
-                console.log('response', response);
-              },
-              (error) => {
-                console.log('error',error)}
-      );
-    })
-    function goback() {
-      history.go(-1);
-    }
-  </script>
 </main>
 </html>

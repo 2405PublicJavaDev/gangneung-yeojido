@@ -58,7 +58,7 @@ public class AdminQnAController {
     @PostMapping("/admin/qna/answer")
     public String addQnAAnswer(@RequestParam("qnaNo") Long qnaNo,
                                @RequestParam("title") String title,
-                               @RequestParam("content") String content,
+                               @RequestParam("notice") String notice,
                                HttpSession session) {
         QnAAnswer qnaAnswer = new QnAAnswer();
         // 세션에서 관리자 ID 가져오기
@@ -70,7 +70,7 @@ public class AdminQnAController {
         // 답변 객체에 값 설정
         qnaAnswer.setQnaNo(qnaNo);
         qnaAnswer.setAnswerSubject(title);
-        qnaAnswer.setAnswerContent(content);
+        qnaAnswer.setAnswerContent(notice);
         qnaAnswer.setMemberId(memberId);
         log.info("답변 정보: " + qnaAnswer.toString());
         // 답변을 저장
