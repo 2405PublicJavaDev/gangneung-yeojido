@@ -39,9 +39,6 @@
     border-radius: 5px;
 }
 
-.diary-list span {
-    text-align: center;
-}
 .diary-info {
     flex: 1;
     display: flex;

@@ -9,12 +9,12 @@ public interface TravelDiaryService {
 
     List<TravelDiary> getAllDiariesByMember(String memberId);
 
-    TravelDiary getDetailDiaryByMember(String memberId);
+    TravelDiary getDetailDiaryByMember(int diaryNo, String memberId);
 
     int addDiary(TravelDiary travelDiary, List<MultipartFile> multipartFiles);
 
-    void modifyDiary();
 
+    int modifyDiary(TravelDiary travelDiary, List<MultipartFile> uploadFiles);
     int removeDiary(String memberId);
 
 }

@@ -23,8 +23,8 @@ public class TravelDiaryServiceImpl implements TravelDiaryService {
     }
 
     @Override
-    public TravelDiary getDetailDiaryByMember(String memberId) {
-        return travelDiaryMapper.selectOneDiaryByMember(memberId);
+    public TravelDiary getDetailDiaryByMember(int diaryNo, String memberId) {
+        return travelDiaryMapper.selectOneDiaryByMember(diaryNo, memberId);
     }
 
     @Override
@@ -39,14 +39,30 @@ public class TravelDiaryServiceImpl implements TravelDiaryService {
     }
 
     @Override
-    public void modifyDiary() {
+    public int modifyDiary(TravelDiary updatedDiary, List<MultipartFile> multipartFiles) {
+        // 1. 기존 데이터 업데이트
+        int result = travelDiaryMapper.updateDiary(updatedDiary);
 
+        // 2. 기존 파일 삭제 (필요한 경우)
+        travelDiaryMapper.deleteDiaryFile(updatedDiary.getDiaryNo());
+
+        // 3. 새 파일 업로드 처리
+        try {
+            fileUtil.uploadFiles(UploadCategory.DIARY, multipartFiles, updatedDiary.getDiaryNo());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return result;
     }
+
 
     @Override
     public int removeDiary(String memberId) {
         int result = travelDiaryMapper.deleteDiary(memberId);
         return result;
     }
+
+
 
 }

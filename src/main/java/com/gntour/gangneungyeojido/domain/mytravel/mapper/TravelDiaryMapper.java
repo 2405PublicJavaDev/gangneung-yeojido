@@ -9,19 +9,20 @@ import java.util.List;
 @Mapper
 public interface TravelDiaryMapper {
 
+    // 리스트 조회
     List<TravelDiary> selectAllDiariesByMember(String memberId);
 
     void selectAllDiariesCountByMember();
 
     List<TravelDiaryFile> selectAllDiariesFileByDiaryNo(Long diaryNo);
 
-    TravelDiary selectOneDiaryByMember(String memberId);
+    TravelDiary selectOneDiaryByMember(int diaryNo, String memberId);
 
     int insertDiary(TravelDiary travelDiary);
 
     int insertDiaryFile(TravelDiaryFile diaryFile);
 
-    void updateDiary();
+    int updateDiary(TravelDiary updatedDiary);
 
     int deleteDiary(String memberId);
 

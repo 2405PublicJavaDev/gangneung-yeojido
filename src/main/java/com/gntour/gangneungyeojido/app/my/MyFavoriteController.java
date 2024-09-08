@@ -26,6 +26,7 @@ public class MyFavoriteController {
 
     private final FavoritesService favoritesService;
 
+
     /**
      * 담당자 : 백인호님
      * 관련 기능 : [마이페이지 기능] 즐겨찾기 리스트 조회
@@ -64,4 +65,6 @@ public class MyFavoriteController {
         }
         return "myPage/myFavoritePage";
     }
+
+
 }
