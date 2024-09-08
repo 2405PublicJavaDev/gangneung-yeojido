@@ -16,7 +16,6 @@
         ORDER BY NOTICE_NO DESC
     </select>
 
-
     <select id="selectAllNoticesCount" resultType="_int">
         SELECT COUNT(*) FROM NOTICE
         <where>

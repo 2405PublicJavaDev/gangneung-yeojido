@@ -1,6 +1,7 @@
 package com.gntour.gangneungyeojido.domain.qna.mapper;
 
 import com.gntour.gangneungyeojido.app.admin.dto.QnAResponse;
+import com.gntour.gangneungyeojido.app.my.dto.MyQnAResponse;
 import com.gntour.gangneungyeojido.domain.qna.vo.QnA;
 import com.gntour.gangneungyeojido.domain.qna.vo.QnAAnswer;
 import com.gntour.gangneungyeojido.domain.qna.vo.QnAFile;
@@ -12,6 +13,7 @@ import java.util.List;
 public interface QnAMapper {
     List<QnAResponse> selectAllQnA();
     List<QnAFile> selectAllQnAFileByQnANo(Long qnaNo);
+    List<MyQnAResponse> selectMyQnAListByMember(String memberId);
     void selectAllQnACount();
     List<QnA> selectAllQnACountByMember(String memberId);
     void selectAllQnAAnswer();

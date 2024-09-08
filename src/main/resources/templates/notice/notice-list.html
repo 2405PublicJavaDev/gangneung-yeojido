@@ -57,7 +57,6 @@
           </td>
           <td th:text="${#dates.format(notice.regDate, 'yyyy-MM-dd')}">등록날짜</td>
         </tr>
-        </tr>
 
         <!-- 검색 결과가 없을 때 중요 공지사항도 숨기기 -->
         <tr th:if="${#lists.isEmpty(page.data)}">

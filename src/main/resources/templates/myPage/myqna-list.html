@@ -13,56 +13,38 @@
     <link rel="stylesheet" href="/css/myPage/myqna-list.css">
 </th:block>
 <main layout:fragment="content">
-    <div class="my-subject"><h1>나의 문의내역 리스트</h1></div>
-    <div class="main-content">
-        <div class="myqna-list">
-            <img src="/img/wrtFileImageView.jpg">
-            <div class="myqna-info">
-                <span>경포 해수욕장...</span>
-                <input type="text" name="content-shorts">
-            </div>
+<!--    메인 컨텐츠 영역-->
+    <div class="main-content-wrapper">
+<!--    메인 컨텐츠 제목-->
+        <div class="my-subject">
+            <h1>나의 문의내역 리스트</h1>
         </div>
-        <div class="myqna-list">
-            <img src="/img/wrtFileImageView.jpg">
-            <div class="myqna-info">
-                <span>경포 해수욕장...</span>
-                <input type="text" name="content-shorts">
+<!--    메인 컨텐츠 출력 영역(나의 문의 리스트)-->
+        <div class="register-list">
+            <div class="register-top-section">
+                <h3><p th:text="${memberName} + '님께서 남기신 1:1 문의내역 입니다.'"></p></h3>
+                <table class="common-table">
+                    <tr>
+                        <th>글제목</th>
+                        <th>문의 작성날짜</th>
+                        <th>답변 상태</th>
+                        <th>답변 작성날짜</th>
+                    </tr>
+                    <tr th:each="qna : ${myqnaList}">
+                        <td>
+                            <a th:href="@{/myPage/myqna(qnaNo=${qna.qnaNo})}" th:text="${qna.qnaSubject}"></a>
+                        </td>
+                        <td th:text="${#dates.format(qna.qnaRegDate, 'yyyy-MM-dd')}"></td>
+                        <td th:text="${qna.answerNo != null ? '답변 완료' : '미답변'}"></td>
+                        <td th:text="${qna.answerRegDate != null ? #dates.format(qna.answerRegDate, 'yyyy-MM-dd') : '-'}"></td>
+                    </tr>
+                </table>
             </div>
-            <button><a href="/modify-myqna">수정</a></button>
-            <button><a href="/remove-myqna">삭제</a></button>
-        </div>
-        <div class="myqna-list">
-            <img src="/img/wrtFileImageView.jpg">
-            <div class="myqna-info">
-                <span>경포 해수욕장...</span>
-                <input type="text" name="content-shorts">
-            </div>
-            <button><a href="/modify-myqna">수정</a></button>
-            <button><a href="/remove-myqna">삭제</a></button>
-        </div>
-        <div class="myqna-list">
-            <img src="/img/wrtFileImageView.jpg">
-            <div class="myqna-info">
-                <span>경포 해수욕장...</span>
-                <input type="text" name="content-shorts">
-            </div>
-            <button><a href="/modify-myqna">수정</a></button>
-            <button><a href="/remove-myqna">삭제</a></button>
         </div>
 
-        <div class="myqna-list">
-            <img src="/img/wrtFileImageView.jpg">
-            <div class="myqna-info">
-                <span>경포 해수욕장...</span>
-                <input type="text" name="content-shorts">
-            </div>
-            <button><a href="/modify-myqna">수정</a></button>
-            <button><a href="/remove-myqna">삭제</a></button>
-        </div>
         <div class="register-btn">
-            <button><a href="/register-myqna">문의사항 작성</a></button>
+            <button><a  th:href="@{/myqna/register}>문의사항 작성</a></button>
         </div>
     </div>
 </main>
-</html>
 </html>

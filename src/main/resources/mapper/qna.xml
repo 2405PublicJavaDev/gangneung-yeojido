@@ -4,7 +4,7 @@
 
 <mapper namespace="com.gntour.gangneungyeojido.domain.qna.mapper.QnAMapper">
 
-    <select id="selectAllQnACountByMember" resultType="TravelDiary">
+    <select id="selectAllQnACountByMember" resultType="QnA">
         SELECT * FROM QNA
         WHERE MEMBER_ID=#{memberId} ORDER BY QNA_NO DESC
     </select>
@@ -12,8 +12,8 @@
     <select id="selectAllQnA" resultType="QnAResponse">
         SELECT Q.QNA_NO "QNA_NO", Q.QNA_SUBJECT "QNA_SUBJECT", Q.MEMBER_ID "MEMBER_ID", Q.REG_DATE "REG_DATE", COUNT(A.ANSWER_NO) "QNA_ANSWER_COUNT"
         FROM QNA Q
-        LEFT JOIN QNA_ANSWER A
-        ON Q.QNA_NO = A.QNA_NO
+                 LEFT JOIN QNA_ANSWER A
+                           ON Q.QNA_NO = A.QNA_NO
         GROUP BY Q.QNA_NO, Q.QNA_SUBJECT, Q.MEMBER_ID, Q.REG_DATE
         ORDER BY QNA_NO DESC
     </select>
@@ -23,7 +23,7 @@
             SELECT SEQ_QNA_NO.NEXTVAL FROM DUAL
         </selectKey>
         insert into QNA(QNA_NO, QNA_SUBJECT, QNA_CONTENT, MEMBER_ID, REG_DATE, UPDATE_DATE)
-        values (SEQ_QNA_NO.NEXTVAL, #{qnaSubject}, #{qnaContent}, #{memberId}, default, default)
+        values (#{qnaNo}, #{qnaSubject}, #{qnaContent}, #{memberId}, default, default)
     </insert>
 
     <insert id="insertQnAFile">
@@ -38,6 +38,14 @@
         WHERE QNA_NO = #{qnaNo}
     </select>
 
+    <select id="selectMyQnAListByMember" resultType="MyQnAResponse">
+        SELECT Q.QNA_NO, Q.QNA_SUBJECT, Q.QNA_CONTENT, Q.MEMBER_ID, Q.REG_DATE AS QNA_REG_DATE,
+               A.ANSWER_NO, A.ANSWER_SUBJECT, A.ANSWER_CONTENT, A.REG_DATE AS ANSWER_REG_DATE
+        FROM QNA Q
+                 LEFT JOIN QNA_ANSWER A ON Q.QNA_NO = A.QNA_NO
+        WHERE Q.MEMBER_ID = #{memberId}
+        ORDER BY Q.QNA_NO DESC
+    </select>
     <select id="selectQnAById" resultType="QnA">
         SELECT QNA_NO, QNA_SUBJECT, QNA_CONTENT, MEMBER_ID, REG_DATE, UPDATE_DATE
         FROM QNA

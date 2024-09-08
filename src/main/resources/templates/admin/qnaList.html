@@ -37,6 +37,20 @@
                     <td th:text="${qna.qnaAnswerCount > 0 ? '답변 완료' : '미답변'}"></td>
                 </tr>
                 </tbody>
+<!--                <tfoot>-->
+<!--                &lt;!&ndash;페이지네이션&ndash;&gt;-->
+<!--                <ul class="common-pagination">-->
+<!--                    <li class="common-pagination-li-end">-->
+<!--                        <a th:href="@{/admin/qna(currentPage=${page.prevPage})}" th:if="${page.hasPrev}">이전</a>-->
+<!--                    </li>-->
+<!--                    <li th:classappend="${i == page.currentPage} ? 'common-pagination-li common-pagination-li-active' : 'common-pagination-li'" th:each="i : ${#numbers.sequence(page.startNavi, page.endNavi)}">-->
+<!--                        <a th:href="@{/admin/qna(currentPage=${i})}" th:text="${i}"></a>-->
+<!--                    </li>-->
+<!--                    <li class="common-pagination-li-end">-->
+<!--                        <a th:href="@{/admin/qna(currentPage=${page.nextPage})}" th:if="${page.hasNext}">다음</a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--                </tfoot>-->
             </table>
         </div>
     </div>

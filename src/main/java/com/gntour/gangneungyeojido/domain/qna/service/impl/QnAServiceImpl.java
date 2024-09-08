@@ -1,6 +1,7 @@
 package com.gntour.gangneungyeojido.domain.qna.service.impl;
 
 import com.gntour.gangneungyeojido.app.admin.dto.QnAResponse;
+import com.gntour.gangneungyeojido.app.my.dto.MyQnAResponse;
 import com.gntour.gangneungyeojido.common.FileUtil;
 import com.gntour.gangneungyeojido.common.UploadCategory;
 import com.gntour.gangneungyeojido.domain.qna.mapper.QnAMapper;
@@ -37,8 +38,8 @@ public class QnAServiceImpl implements QnAService {
     }
 
     @Override
-    public List<QnA> getAllQnAAnswerByMember(String memberId) {
-        return qnaMapper.selectAllQnACountByMember(memberId);
+    public List<MyQnAResponse> getAllQnAAnswerByMember(String memberId) {
+        return qnaMapper.selectMyQnAListByMember(memberId);  // 새로운 쿼리로 수정
     }
     @Override
     public QnA getQnAById(Long qnaNo) {
