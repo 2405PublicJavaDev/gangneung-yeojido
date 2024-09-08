@@ -33,7 +33,7 @@ public class AdminQnAController {
         List<QnAResponse> qnaList = qnaService.getAllQnA();
         log.info(qnaList.toString());
         model.addAttribute("qnaList", qnaList);
-        return "admin/qnaList";
+        return "admin/qna-list";
     }
     /**
      * 담당자 : 김윤경님
@@ -43,11 +43,12 @@ public class AdminQnAController {
     public String showRegisterQnAAnswerPage(@RequestParam("qnaNo") Long qnaNo, Model model) {
         // QnA 번호에 해당하는 QnA 데이터를 가져옴
         QnA qna = qnaService.getQnAById(qnaNo);
-        // QnA 번호에 해당하는 파일 목록을 가져옴
+        QnAAnswer qnaAnswer = qnaService.getQnAAnswerByQnANo(qnaNo);
         List<QnAFile> qnaFiles = qnaService.getQnAFilesByQnANo(qnaNo);
         model.addAttribute("qna", qna);  // QnA 데이터를 모델에 추가
         model.addAttribute("qnaFiles", qnaFiles);  // 파일 목록을 모델에 추가
-        return "admin/qnaAnswer";  // 답변 폼 페이지로 이동
+        model.addAttribute("qnaAnswer", qnaAnswer);
+        return "admin/qna-answer";  // 답변 폼 페이지로 이동
     }
 
 
@@ -72,7 +73,6 @@ public class AdminQnAController {
         qnaAnswer.setAnswerSubject(title);
         qnaAnswer.setAnswerContent(notice);
         qnaAnswer.setMemberId(memberId);
-        log.info("답변 정보: " + qnaAnswer.toString());
         // 답변을 저장
         int result = qnaService.addQnAAnswer(qnaAnswer);
         if (result > 0) {
@@ -80,7 +80,7 @@ public class AdminQnAController {
         } else {
             log.error("답변 등록 실패");
         }
-        return "redirect:/admin/qna";  // 답변 등록 후 리스트 페이지로 리다이렉트
+        return "redirect:/admin/qna/answer?qnaNo=" + qnaNo;
     }
 
 
@@ -90,7 +90,16 @@ public class AdminQnAController {
      * 관련 기능 : [관리자 기능] QnA 삭제
      * url :
      */
-    public void removeQnAAnswer(){}
-
-
+    @PostMapping("/admin/qna/answer/delete")
+    public String removeQnAAnswer(@RequestParam("qnaNo") Long qnaNo, @RequestParam("answerNo") Long answerNo) {
+        try {
+            qnaService.removeQnAAnswer(answerNo);  // 답변 삭제 로직 호출
+            log.info("답변 삭제 성공: answerNo = " + answerNo);
+        } catch (Exception e) {
+            log.error("답변 삭제 실패: answerNo = " + answerNo, e);
+        }
+        return "redirect:/admin/qna/answer?qnaNo=" + qnaNo;  // 삭제 후 QnA 상세 페이지로 리다이렉트
+    }
 }
+
+

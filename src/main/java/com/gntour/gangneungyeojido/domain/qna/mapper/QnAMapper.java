@@ -25,7 +25,8 @@ public interface QnAMapper {
     int insertQnAAnswer(QnAAnswer qnaAnswer);
     void deleteQnA();
     int deleteQnAFile(Long qnaNo);
-    void deleteQnAAnswer();
+    void deleteQnAAnswer(Long answerNo);  // 답변 삭제 메서드
     QnA selectQnAById(Long qnaNo);
     List<MyQnAResponse> selectOneQnADetailByQnANo(Long qnaNo);
+    QnAAnswer selectQnAAnswerByQnANo(Long qnaNo);
 }

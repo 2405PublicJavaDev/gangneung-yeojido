@@ -46,7 +46,10 @@
         WHERE Q.MEMBER_ID = #{memberId}
         ORDER BY Q.QNA_NO DESC
     </select>
-
+    <select id="selectQnAAnswerByQnANo" resultType="QnAAnswer">
+        SELECT * FROM QNA_ANSWER
+        WHERE QNA_NO = #{qnaNo}
+    </select>
     <select id="selectOneQnADetailByQnANo" resultType="MyQnAResponse">
         SELECT Q.QNA_NO, Q.QNA_SUBJECT, Q.QNA_CONTENT, Q.MEMBER_ID, Q.REG_DATE AS QNA_REG_DATE,
                A.ANSWER_NO, A.ANSWER_SUBJECT, A.ANSWER_CONTENT, A.REG_DATE AS ANSWER_REG_DATE
@@ -71,5 +74,9 @@
 
     <delete id="deleteQnAFile">
         delete from QNA_FILE WHERE QNA_NO = #{qnaNo}
+    </delete>
+
+    <delete id="deleteQnAAnswer">
+        DELETE FROM QNA_ANSWER WHERE ANSWER_NO = #{answerNo}
     </delete>
 </mapper>

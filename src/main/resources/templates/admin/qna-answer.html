@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin}"
+      layout:decorator="layout">
+
+<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/admin/qna-answer.css">
+</th:block>
+
+<main layout:fragment="content">
+    <div class="main-container">
+        <h1>QnA 답변 달기</h1>
+
+        <!-- 문의 내용 출력 영역 -->
+        <div class="question-container">
+            <p><strong th:text="${qna.memberId}"></strong>님께서 문의하신 내용입니다.</p>
+            <p><strong>제목:</strong> <span th:text="${qna.qnaSubject}"></span></p>
+            <p><strong>문의내용:</strong></p>
+            <p th:text="${qna.qnaContent}"></p>
+
+            <!-- 첨부파일 출력 영역 -->
+            <div class="attachments">
+                <p><strong>첨부파일:</strong></p>
+                <ul>
+                    <li th:each="file : ${qnaFiles}">
+                        <a th:href="@{${file.webPath}}" th:text="${file.fileName}">파일 다운로드</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 답변이 있을 경우 답변 내용을 출력 + 삭제버튼 -->
+        <div class="answer-container" th:if="${qnaAnswer != null}">
+            <p><strong>답변 제목:</strong> <span th:text="${qnaAnswer.answerSubject}"></span></p>
+            <p><strong>답변 내용:</strong></p>
+            <p th:text="${qnaAnswer.answerContent}"></p>
+            <div class="button-group">
+                <form th:action="@{/admin/qna/answer/delete(qnaNo=${qna.qnaNo}, answerNo=${qnaAnswer.answerNo})}" method="post" style="display:inline-block;">
+                    <button type="submit" class="btn-delete">답변 삭제</button>
+                </form>
+                <a th:href="@{/admin/qna}" class="btn-back">목록으로</a>
+            </div>
+        </div>
+
+        <!-- 답변이 없으면 답변 등록 폼을 출력 -->
+        <div th:if="${qnaAnswer == null}">
+            <form action="/admin/qna/answer" method="post">
+                <input type="hidden" name="qnaNo" th:value="${qna.qnaNo}">
+
+                <div class="input-group">
+                    <label for="title">답변 제목</label>
+                    <input type="text" id="title" name="title" placeholder="답변 제목을 입력하세요" required>
+                </div>
+                <div class="input-group">
+                    <label for="notice">답변 내용</label>
+                    <textarea id="notice" name="notice" placeholder="답변 내용을 입력하세요" required></textarea>
+                </div>
+                <div class="button-group">
+                    <button type="submit">답변 등록</button>
+                    <a th:href="@{/admin/qna}" class="btn-back">목록으로</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+</html>
