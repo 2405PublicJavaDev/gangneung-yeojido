@@ -16,17 +16,18 @@
         <div class="my-subject"><h1>나의 여행일기</h1></div>
         <div class="main-content">
             <div class="input-content">
-                <div class="input-content">
-                    <div class="input-sub">
-                        <input type="text" name="diary-sub" placeholder="제목을 입력해주세요">
-                    </div>
-                    <textarea name="diary-content" placeholder="내용을 입력해주세요"> </textarea>
+                <<div th:if="${travelDiary != null}">
+                    <h2 th:text="${travelDiary.diaryTitle}"></h2>
+                    <p th:text="${travelDiary.diaryContent}"></p>
+                </div>
+            </div>
+                <div th:if="${travelDiary == null}">
+                    <p>다이어리 정보를 찾을 수 없습니다.</p>
                 </div>
             </div>
             <div class="register-btn">
                 <button><a href="/modify-diary">수정</a></button>
                 <button>삭제</button>
             </div>
-        </div>
     </main>
 </html>

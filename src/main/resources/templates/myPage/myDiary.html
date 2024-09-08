@@ -3,63 +3,33 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/my-page}"
       layout:decorator="layout">
-<th:block layout:fragment="script">
-    <script type="text/javascript" src="/js/main/mapdata.js"></script>
-    <script type="text/javascript" src="/js/main/mapconfig.js"></script>
-    <script type="text/javascript" src="/js/main/mapmanipulate.js"></script>
-    <script type="text/javascript" src="/js/main/index.js"></script>
-</th:block>
-<th:block layout:fragment="css">
-    <link rel="stylesheet" href="/css/myPage/myDiary.css">
-</th:block>
-    <main layout:fragment="content">
-        <div class="my-subject"><h1>나의 여행일기 목록</h1></div>
-        <div class="main-content">
-            <div class="diary-list">
+<head>
+    <th:block layout:fragment="script">
+        <script type="text/javascript" src="/js/main/mapdata.js"></script>
+        <script type="text/javascript" src="/js/main/mapconfig.js"></script>
+        <script type="text/javascript" src="/js/main/mapmanipulate.js"></script>
+        <script type="text/javascript" src="/js/main/index.js"></script>
+    </th:block>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" href="/css/myPage/myDiary.css">
+    </th:block>
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="my-subject"><h1>나의 여행일기 목록</h1></div>
+    <div class="main-content">
+        <div th:each="diary : ${travelDiaryList}" class="diary-list">
+            <a th:href="@{/diary-detail/{diaryNo}(diaryNo=${diary.diaryNo})}">
                 <img src="/img/wrtFileImageView.jpg">
-                <div class="diary-info">
-                    <span>경포 해수욕장...</span>
-                    <input type="text" name="content-shorts">
-                </div>
-            </div>
-            <div class="diary-list">
-                <img src="/img/wrtFileImageView.jpg">
-                <div class="diary-info">
-                    <span>경포 해수욕장...</span>
-                    <input type="text" name="content-shorts">
-                </div>
-                <button><a href="/modify-diary">수정</a></button>
-                <button><a href="/remove-diary">삭제</a></button>
-            </div>
-            <div class="diary-list">
-                <img src="/img/wrtFileImageView.jpg">
-                <div class="diary-info">
-                    <span>경포 해수욕장...</span>
-                    <input type="text" name="content-shorts">
-                </div>
-                <button><a href="/modify-diary">수정</a></button>
-                <button><a href="/remove-diary">삭제</a></button>
-            </div>
-            <div class="diary-list">
-                <img src="/img/wrtFileImageView.jpg">
-                <div class="diary-info">
-                    <span>경포 해수욕장...</span>
-                    <input type="text" name="content-shorts">
-                </div>
-                <button><a href="/modify-diary">수정</a></button>
-                <button><a href="/remove-diary">삭제</a></button>
-            </div>
-
-            <div class="diary-list">
-                <img src="/img/wrtFileImageView.jpg">
-                <div class="diary-info">
-                    <span>경포 해수욕장...</span>
-                    <input type="text" name="content-shorts">
-                </div>
-                <button><a href="/modify-diary">수정</a></button>
-                <button><a href="/remove-diary">삭제</a></button>
+            </a>
+            <div class="diary-info">
+                <a th:href="@{/diary-detail/{diaryNo}(diaryNo=${diary.diaryNo})}">
+                    <span th:text="${diary.travelName}"></span>
+                </a>
+                <label th:text="${diary.diaryContent}"></label>
             </div>
         </div>
-    </main>
-    </html>
+    </div>
+</main>
+</body>
 </html>

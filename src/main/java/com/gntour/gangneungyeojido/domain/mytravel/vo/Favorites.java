@@ -14,4 +14,6 @@ public class Favorites {
     private Long travelNo;
     private Timestamp regDate;
     private Timestamp updateDate;
+
+
 }

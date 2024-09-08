@@ -2,13 +2,19 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gntour.gangneungyeojido.domain.mytravel.mapper.TravelDiaryMapper">
-    <select id="selectAllDiariesByMember" resultType="TravelDiary">
-        SELECT * FROM TRAVEL_DIARY
-        WHERE MEMBER_ID=#{memberId} ORDER BY DIARY_NO DESC
+    <select id="selectAllDiariesByMember" resultType="DiaryResponse">
+        SELECT T.TRAVEL_NAME "TRAVEL_NAME", D.DIARY_CONTENT "DIARY_CONTENT", D.DIARY_NO "DIARY_NO", T.TRAVEL_NO "TRAVEL_NO"
+        FROM TRAVEL_DIARY D
+        JOIN TRAVEL_INFO T ON D.DIARY_NO = T.TRAVEL_NO
     </select>
     <select id="selectOneDiaryByMember" resultType="TravelDiary">
-        SELECT * FROM TRAVEL_DIARY
-        WHERE MEMBER_ID=#{memberId}
+        SELECT DIARY_NO, DIARY_TITLE, DIARY_CONTENT, REG_DATE, UPDATE_DATE
+        FROM TRAVEL_DIARY
+        WHERE DIARY_NO = #{diaryNo} AND MEMBER_ID = #{memberId}
+    </select>
+    <select id="selectAllDiariesFileByDiaryNo" resultType="TravelDiaryFile">
+        SELECT * FROM TRAVEL_DIARY_FILE
+        WHERE DIARY_NO = #{diaryNo}
     </select>
     <insert id="insertDiary">
         <selectKey resultType="long" keyProperty="diaryNo" order="BEFORE">
@@ -17,17 +23,17 @@
         INSERT INTO TRAVEL_DIARY(DIARY_NO, TRAVEL_NO, MEMBER_ID, DIARY_TITLE, DIARY_CONTENT)
         VALUES(#{diaryNo},#{travelNo},#{memberId},#{diaryTitle},#{diaryContent})
     </insert>
-    <delete id="deleteDiary">
-        DELETE FROM TRAVEL_DIARY WHERE MEMBER_ID = #{memberId}
-    </delete>
     <insert id="insertDiaryFile">
         insert into TRAVEL_DIARY_FILE(DIARY_FILE_NO, FILE_PATH, FILE_NAME, FILE_RENAME, DIARY_NO, WEB_PATH, FILE_ORDER)
         values (SEQ_TRAVEL_DIARY_FILE_NO.NEXTVAL, #{filePath}, #{fileName}, #{fileRename}, #{diaryNo}, #{webPath}, #{fileOrder})
     </insert>
-    <select id="selectAllDiariesFileByDiaryNo" resultType="TravelDiaryFile">
-        SELECT * FROM TRAVEL_DIARY_FILE
-        WHERE DIARY_NO = #{diaryNo}
-    </select>
+    <update id="updateDiary">
+        UPDATE TRAVEL_DIARY
+        SET TRAVEL_NO = #{travelNo},DIARY_TITLE = #{diaryTitle},DIARY_CONTENT = #{diaryContent} WHERE DIARY_NO = #{diaryNo}
+    </update>
+    <delete id="deleteDiary">
+        DELETE FROM TRAVEL_DIARY WHERE MEMBER_ID = #{memberId}
+    </delete>
     <delete id="deleteDiaryFile">
         delete from TRAVEL_DIARY_FILE WHERE DIARY_NO = #{diaryNo}
     </delete>

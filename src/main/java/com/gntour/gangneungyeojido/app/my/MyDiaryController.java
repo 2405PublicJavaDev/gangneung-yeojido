@@ -36,7 +36,6 @@ public class MyDiaryController {
      */
     @GetMapping("/diary")
     public String showMyDiariesPage(HttpSession session, Model model){
-        Favorites favorites = new Favorites();
         List<TravelDiary> travelDiaryList = travelDiaryService.getAllDiariesByMember(MemberUtils.getMemberIdFromSession(session));
         model.addAttribute("travelDiaryList", travelDiaryList);
         return "/myPage/myDiary";
@@ -46,12 +45,12 @@ public class MyDiaryController {
      * 담당지 : 백인호님
      * 관련 가눙 : [마이페이지 기능] 나의 여행 기록 상세 조회
      */
-    @GetMapping("/diary-detail")
-    public String showMyDetailDiaryPage(HttpSession session, Model model){
-        TravelDiary travelDiary = travelDiaryService.getDetailDiaryByMember(MemberUtils.getMemberIdFromSession(session));
+    @GetMapping("/diary-detail/{diaryNo}")
+    public String showMyDetailDiaryPage(@PathVariable int diaryNo, HttpSession session, Model model){
+        TravelDiary travelDiary = travelDiaryService.getDetailDiaryByMember(diaryNo,MemberUtils.getMemberIdFromSession(session));
         model.addAttribute("travelDiary", travelDiary);
-        return "/myPage/myDiaryDetail";
-    };
+        return "myPage/myDiaryDetail";
+    }
 
     /**
      * 담당자 : 백인호님
@@ -90,7 +89,7 @@ public class MyDiaryController {
      * 관련 기능 : [마이페이지 기능(페이지 폼)] 나의 여행 기록 수정
      */
     @GetMapping("/modify-diary")
-    public String showUpdateMyDiaryPage(){
+    public String showUpdateMyDiaryPage(Model model,HttpSession session){
         return "/myPage/modify-myDiary";
     };
 
@@ -100,22 +99,31 @@ public class MyDiaryController {
      * 관련 기능 : [마이페이지 기능] 나의 여행 기록 수정
      */
     @PostMapping("/modify-diary")
-    public String modifyDiaryPage(){
-        return null;
-    };
+    public String modifyDiary(
+            @ModelAttribute @Valid DiaryAddRequest diaryAddRequest,
+            @RequestParam("uploadFiles") List<MultipartFile> uploadFiles,
+            HttpSession session,
+            RedirectAttributes redirectAttributes
+    ) {
+        TravelDiary travelDiary = new TravelDiary();
+        travelDiary.setTravelNo(diaryAddRequest.getTravelNo());
+        travelDiary.setDiaryTitle(diaryAddRequest.getDiaryTitle());
+        travelDiary.setDiaryContent(diaryAddRequest.getDiaryContent());
+        travelDiary.setMemberId(MemberUtils.getMemberIdFromSession(session));
 
-
-    /**
-     * 담당자 : 백인호님
-     * 관련 기능 : [마이페이지 기능] 나의 여행 기록 수정
-     */
-    public void modifyDiary(){};
-
+        int result = travelDiaryService.modifyDiary(travelDiary, uploadFiles);
+        if (result == 0) {
+            redirectAttributes.addFlashAttribute("message", "수정 실패");
+            return "redirect:/modify-diary";
+        }
+        redirectAttributes.addFlashAttribute("message", "수정 성공");
+        return "redirect:/diary";
+    }
     /**
      * 담당자 : 백인호님
      * 관련 기능 : [마이페이지 기능] 나의 여행 기록 삭제
      */
-    @GetMapping("/remove")
+    @PostMapping("/remove/{diaryNo}")
     public String removeDiary(HttpSession session){
         int result = travelDiaryService.removeDiary(MemberUtils.getMemberIdFromSession(session));
         return "redirect:/diary";
