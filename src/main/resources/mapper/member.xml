@@ -9,7 +9,8 @@
     </insert>
     <select id="selectOneById" resultType="Member">
         SELECT * FROM MEMBER WHERE MEMBER_ID = #{memberId}
-    </select><select id="selectOneByName" resultType="Member">
+    </select>
+    <select id="selectOneByName" resultType="Member">
         SELECT * FROM MEMBER WHERE NAME = #{name}
     </select>
     <update id="updateMember">
@@ -38,4 +39,9 @@
         FROM MEMBER
         WHERE STATUS IN ('WARN', 'BLACK')
     </select>
+    <update id="deleteMember">
+        UPDATE MEMBER
+        SET DELETE_YN = 'Y'
+        WHERE MEMBER_ID = #{memberId}
+    </update>
 </mapper>

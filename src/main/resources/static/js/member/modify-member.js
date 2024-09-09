@@ -12,11 +12,7 @@ const modifyBtnClick = () => {
         elInputConfirmPassword.scrollIntoView({behavior: 'smooth', block: 'start'});
         return;
     }
-    // if (!emailCheck()) {
-    //     // alert('이메일 오류');
-    //     elInputEmail.scrollIntoView({behavior: 'smooth', block: 'start'});
-    //     return;
-    // }
+
     if (!phoneCheck()) {
         // alert('전화번호 오류');
         elPhone.scrollIntoView({behavior: 'smooth', block: 'start'});
@@ -32,15 +28,7 @@ const modifyBtnClick = () => {
         (response) => {
             location.href = "modify-member";
         }
-        // ,
-        // (error) => {
-        //     if (error.code === 'C003') {
-        //         alert('아이디 혹은 이메일이 중복되었습니다.');
-        //     } else if (error.code === 'M002') {
-        //         alert('이메일 인증 실패')
-        //     }
-        //     console.log('error', error);
-        // }
+
     );
 
 }
@@ -52,10 +40,6 @@ const pwFailureMessage = document.querySelector('#pw-failure-message');
 const elInputConfirmPassword = document.querySelector('#confirmPassword');
 const pwCheckSuccessMessage = document.querySelector('#pw-check-success-message');
 const pwCheckFailureMessage = document.querySelector('#pw-check-failure-message');
-// 이메일 정보 가져오기
-const elInputEmail = document.querySelector('#email');
-const emailSuccessMessage = document.querySelector('#email-success-message');
-const emailFailureMessage = document.querySelector('#email-failure-message');
 // 전화번호 정보 가져오기
 const elPhone = document.querySelector('#phone');
 const phoneSuccessMessage = document.querySelector('#phone-success-message');
@@ -64,13 +48,10 @@ const phoneFailureMessage = document.querySelector('#phone-failure-message');
 elInputPassword.onkeyup = function () {
     pwCheck();
 };
-
 elInputConfirmPassword.onkeyup = function () {
     pwCheckCheck();
 };
-elInputEmail.onkeyup = function () {
-    emailCheck();
-}
+
 elPhone.onkeyup = function () {
     phoneCheck();
 }
@@ -78,10 +59,6 @@ elPhone.onkeyup = function () {
 // form 조건식 정의 시작
 function strongPassword(str) {
     return /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/.test(str);
-}
-
-function validEmail(str) {
-    return /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(str);
 }
 
 function isMatch(password1, password2) {
@@ -93,7 +70,6 @@ function validPhone(str) {
 }
 
 // form 조건식 정의 종료
-
 
 function pwCheck() {
     if (!strongPassword(elInputPassword.value)) {
@@ -125,22 +101,6 @@ function pwCheckCheck() {
     return true;
 }
 
-function emailCheck() {
-    if (!validEmail(elInputEmail.value)) {
-        emailFailureMessage.innerHTML = '이메일이 유효하지 않습니다.';
-        emailSuccessMessage.classList.add('hide');
-        emailFailureMessage.classList.remove('hide');
-        elInputEmail.classList.add('border-red');
-        return false;
-    }
-    emailSuccessMessage.classList.remove('hide');
-    emailSuccessMessage.innerHTML = '유효한 이메일 주소입니다.'
-    emailFailureMessage.classList.add('hide');
-    elInputEmail.classList.remove('border-red');
-    return true;
-}
-
-
 function phoneCheck() {
     if (!validPhone(elPhone.value)) {
         phoneFailureMessage.innerHTML = '전화번호가 유효하지 않습니다.';
@@ -156,39 +116,6 @@ function phoneCheck() {
     return true;
 }
 
-document.querySelector('#email-btn').addEventListener('click', (e) => {
-    ajax({
-        url: '/send-check-code',
-        method: 'post',
-        payload: {
-            'email': elInputEmail.value
-        },
-        blockValidateForm: true,
-    }, (response) => {
-        console.log(response);
-        alert('이메일 보냄');
-    }, (error) => {
-        console.log(error);
-        alert('이메일 보냄 오류')
-    })
-});
-document.querySelector('#auth-btn').addEventListener('click', (e) => {
-    ajax({
-        url: '/valid-check-code',
-        method: 'post',
-        payload: {
-            'email': elInputEmail.value,
-            'auth': document.querySelector('#auth').value
-        },
-        blockValidateForm: true,
-    }, (response) => {
-        console.log(response);
-        alert('이메일 검증 성공');
-    }, (error) => {
-        console.log(error);
-        alert('이메일 검증 실패');
-    })
-})
 
 // 패스워드 아이콘 클릭
 const pwIcon = document.querySelector('.pwIcon');

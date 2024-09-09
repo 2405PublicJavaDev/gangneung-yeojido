@@ -12,7 +12,7 @@ public interface MemberService {
     Member findMemberId(Member member);
     void findPassword();
     int modifyMemberInfo(Member member);
-    void removeMember();
+    int removeMember(String memberId);
     Page<Member, Void> getAllBlackListMember(int currentPage);
     Member getProfileMember(String memberId);
 }

@@ -28,7 +28,7 @@ const findIdBtnClick = () => {
             loginBtn.classList.remove(('hide'))
         }, (error) => {
         console.log(error);
-        if(error.code === 'M003') {
+        if(error.code === 'M003' || error.code === 'C002') {
             birthdateSuccessMessage.classList.remove('hide');
             birthdateSuccessMessage.classList.add('hide');
             birthdateFailureMessage.classList.remove('hide');

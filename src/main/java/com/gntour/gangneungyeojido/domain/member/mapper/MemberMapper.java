@@ -14,5 +14,5 @@ public interface MemberMapper {
     int selectAllBlackListMemberCount();
     int insertMember(Member member);
     int updateMember(Member member);
-    void deleteMember();
+    int deleteMember(String memberId);
 }

@@ -46,20 +46,6 @@ main {
     font-size: 16px;
 }
 
-.email-group, .auth-group{
-    display: flex;
-    justify-content: space-between;
-}
-
-.email-input, .auth-input{
-    width: 68%;
-}
-
-.email-btn, .auth-btn {
-    width: 28%;
-    margin-top: 10px;
-}
-
 input:focus {
     outline: currentColor;
     border-color: #3399FF;
@@ -72,8 +58,6 @@ input:focus {
 .modify-member-btn{
     margin-top: 20px;
 }
-
-
 
 .hide {
     display: none;
