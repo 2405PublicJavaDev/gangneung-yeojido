@@ -2,143 +2,61 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>강릉여지도</title>
-    <style>
-        @font-face {
-            font-family: 'BMDOHYEON';
-            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff') format('woff');
-            font-weight: normal;
-            font-style: normal;
-        }
-
-        /* 기본 스타일 */
-        body {
-            margin: 0;
-            padding: 0;
-            /* font-family: Arial, sans-serif; */
-            /* background-color: #f4f4f4; */
-            /* color: #333333; */
-        }
-
-        .email-container {
-            max-width: 450px;
-            margin: 0 auto;
-            /* background-color: #ffffff; */
-        }
-
-        /* 헤더 */
-        .title {
-            padding: 40px 20px;
-            background-color: #007FFF;
-        }
-
-        .title h1 {
-            margin: 0;
+    <link href="https://fonts.googleapis.com/css2?family=BM+DOHYEON&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body style="margin: 0;
+            padding: 0;">
+<main>
+    <div class="email-container" style="max-width: 450px;
+            margin: 0 auto;">
+        <div class="title" style="padding: 40px 20px;
+            background-color: #007FFF;">
+            <h1 style="margin: 0;
             color: #000000;
             font-size: 26px;
-            font-family: BMDOHYEON;
-        }
+            font-family: BMDOHYEON;">강릉여지도 계정</h1>
+        </div>
 
-        /* 본문 */
-        .content {
-            padding: 40px 20px;
+        <div class="content" style="padding: 40px 20px;
             background-color: #333333;
-            color: #ffffff;
-        }
-
-        .content h2 {
-            margin: 0 0 20px 0;
+            color: #ffffff;">
+            <h2 style="margin: 0 0 20px 0;
             font-size: 20px;
             font-weight: normal;
-            font-family: 'Noto Sans KR';
-        }
-
-        .content p {
-            margin: 0 0 20px 0;
+            font-family: 'Noto Sans KR';">강릉여지도 가입을 위한 인증번호입니다.</h2>
+            <p style="margin: 0 0 20px 0;
             font-size: 16px;
-            font-family: 'Noto Sans KR';
-        }
+            font-family: 'Noto Sans KR';">아래 인증번호를 확인하여 이메일 인증을 완료해 주세요.</p>
 
-        /* 인증 정보 */
-        .verification-info {
-            margin: 20px 0;
-        }
+            <hr class="divider" style="border: none;
+            border-top: 1px solid #555555;
+            margin: 10px 0;">
 
-        .verification-item {
-            display: flex;
+            <div class="verification-info" style="margin: 20px 0;">
+                <div class="verification-item" style="display: flex;
             flex-direction: column;
             align-items: center;
             padding: 10px 0;
-            position: relative;
-        }
+            position: relative;">
+                    <span class="verification-label" style="font-family:'Noto Sans KR';position:absolute;left:0;color:#cccccc;">인증번호</span>
+                    <span class="verification-value" th:text="${sendCode}" style="font-family:'Noto Sans KR';color:#4dabf7;font-weight:bold;text-align:center;width:100%;"></span>
+                </div>
+            </div>
 
-        .verification-label {
-            position: absolute;
-            left: 0;
-            color: #cccccc;
-        }
-
-        .verification-value {
-            color: #4dabf7;
-            font-weight: bold;
-            text-align: center;
-            width: 100%;
-        }
-
-        span{
-            font-family: 'Noto Sans KR';
-        }
-
-        /* 구분선 */
-        .divider {
-            border: none;
+            <hr class="divider" style="border: none;
             border-top: 1px solid #555555;
-            margin: 10px 0;
-        }
+            margin: 10px 0;">
+        </div>
 
-        /* 푸터 */
-        .footer {
-            padding: 20px;
+        <div class="footer" style="padding: 20px;
             background-color: #333333;
             color: #cccccc;
             font-size: 12px;
-            text-align: center;
-        }
-
-        .footer p {
-            font-family: 'Noto Sans KR';
-        }
-
-    </style>
-</head>
-<body>
-    <main>
-        <div class="email-container">
-            <div class="title">
-                <h1>강릉여지도 계정</h1>
-            </div>
-
-            <div class="content">
-                <h2>강릉여지도 가입을 위한 인증번호입니다.</h2>
-                <p>아래 인증번호를 확인하여 이메일 인증을 완료해 주세요.</p>
-
-                <hr class="divider">
-
-                <div class="verification-info">
-                    <div class="verification-item">
-                        <span class="verification-label">인증번호</span>
-                        <span class="verification-value" th:text="${sendCode}">88617690</span>
-                    </div>
-                </div>
-
-                <hr class="divider">
-            </div>
-
-            <div class="footer">
-                <p>본 메일은 발신 전용으로 회신이 되지 않습니다.</p>
-                <p>Gangneung-Yeojido Corp. All rights reserved.</p>
-            </div>
+            text-align: center;">
+            <p style="font-family: 'Noto Sans KR';">본 메일은 발신 전용으로 회신이 되지 않습니다.</p>
+            <p style="font-family: 'Noto Sans KR';">Gangneung-Yeojido Corp. All rights reserved.</p>
         </div>
-    </main>
+    </div>
+</main>
 </body>
 </html>

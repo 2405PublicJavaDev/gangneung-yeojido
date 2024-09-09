@@ -59,7 +59,7 @@ header {
 }
 
 .header-my-expand>p {
-    border-bottom: 1px solid black;
+    /*border-bottom: 1px solid #007FFF;*/
     padding: 10px;
     text-align: center;
     cursor: pointer;

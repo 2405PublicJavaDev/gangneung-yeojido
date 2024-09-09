@@ -15,17 +15,31 @@ const findPwBtnClick = () => {
     ajax({
             url: '/find-pw',
             method: 'post',
-            payload: formProps,
+            payload: formProps,'email': elInputEmail.value,
             blockValidateForm: true
         },
         (response) => {
+            alert('임시 비밀번호가 이메일로 전송되었습니다.');
             location.href = "/login";
         },
-        (error) => {
-            if (error.code === 'M002') {
-                alert('이메일 인증 실패')
+        (error)=>{
+            console.error(error);
+            if(error.code === 'M003' || error.code === 'C001'){
+                idSuccessMessage.classList.remove('hide');
+                idSuccessMessage.classList.add('hide');
+                idFailureMessage.classList.remove('hide');
+                // birthdateFailureMessage.classList.add('hide');
+                emailSuccessMessage.classList.remove('hide');
+                emailSuccessMessage.classList.add('hide');
+                emailFailureMessage.classList.remove('hide');
+                emailFailureMessage.innerHTML = '유효하지 않은 회원정보입니다.';
+                idFailureMessage.innerHTML = '유효하지 않은 회원정보입니다.';
+
+                elInputMemberId.classList.remove('border-red');
+                elInputMemberId.classList.add('border-red');
+                elInputEmail.classList.remove('border-red');
+                elInputEmail.classList.add('border-red');
             }
-            console.log('error', error);
         }
     );
 
@@ -99,36 +113,20 @@ function emailCheck() {
 
 
 
-document.querySelector('#email-btn').addEventListener('click', (e) => {
-    ajax({
-        url: '/send-check-code',
-        method: 'post',
-        payload: {
-            'email': elInputEmail.value
-        },
-        blockValidateForm: true,
-    }, (response) => {
-        console.log(response);
-        alert('이메일 보냄');
-    }, (error) => {
-        console.log(error);
-        alert('이메일 보냄 오류')
-    })
-});
-document.querySelector('#auth-btn').addEventListener('click', (e) => {
-    ajax({
-        url: '/valid-check-code',
-        method: 'post',
-        payload: {
-            'email': elInputEmail.value,
-            'auth': document.querySelector('#auth').value
-        },
-        blockValidateForm: true,
-    }, (response) => {
-        console.log(response);
-        alert('이메일 검증 성공');
-    }, (error) => {
-        console.log(error);
-        alert('이메일 검증 실패');
-    })
-})
+// document.querySelector('#find-pw-btn').addEventListener('click', (e) => {
+//     ajax({
+//         url: '/find-pw',
+//         method: 'post',
+//         payload: {
+//             'email': elInputEmail.value
+//         },
+//         blockValidateForm: true,
+//     }, (response) => {
+//         console.log(response);
+//         alert('이메일 보냄');
+//     }, (error) => {
+//         console.log(error);
+//         alert('이메일 보냄 오류')
+//     })
+// });
+

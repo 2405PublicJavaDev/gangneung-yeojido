@@ -8,7 +8,7 @@ main {
 
 .find-pw-container {
     padding: 20px;
-    width: 400px;
+    width: 350px;
 }
 
 .find-pw-container h1 {
@@ -66,20 +66,20 @@ main {
     border: 1px solid #EE450C;
 }
 
-.email-group, .auth-group{
-    display: flex;
-    justify-content: space-between;
-}
+/*.email-group, .auth-group{*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*}*/
 
-.email-input, .auth-input{
-    width: 68%;
-}
+/*.email-input, .auth-input{*/
+/*    width: 68%;*/
+/*}*/
 
-.email-btn, .auth-btn {
-    width: 28%;
-    margin-top: 10px;
+/*.email-btn, .auth-btn {*/
+/*    width: 28%;*/
+/*    margin-top: 10px;*/
 
-}
+/*}*/
 
 .common-secondary-btn:hover{
     background-color: #808080;

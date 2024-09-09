@@ -13,7 +13,7 @@
     <div class="find-pw-container">
         <h1>비밀번호 찾기</h1>
         <hr>
-        <form class="find-pw-form" action="/find-pw" method="post" id="find-pw-form">
+        <form class="find-pw-form" id="find-pw-form">
             <div class="input-group">
                 <input type="text" id="memberId" placeholder="아이디" class="common-input" name="memberId">
             </div>
@@ -23,17 +23,12 @@
 
             <div class="input-group email-group">
                 <input type="email" id="email" placeholder="이메일 주소" class="common-input email-input" name="email">
-                <button type="button" class="common-secondary-btn email-btn" id="email-btn">인증번호 받기</button>
+<!--                <button type="button" class="common-secondary-btn email-btn" id="email-btn">임시 비밀번호 받기</button>-->
             </div>
 
             <div class="success-message hide message" id="email-success-message"></div>
             <div class="email-failure-message hide message" id="email-failure-message"></div>
-
-            <div class="input-group auth-group">
-               <input type="text" id="auth" placeholder="인증번호 8자리" class="common-input auth-input" name="auth">
-                <button type="button" class="common-secondary-btn auth-btn" id="auth-btn">인증</button>
-            </div>
-               <button type="button" class="common-primary-btn find-pw-btn" onclick="findPwBtnClick()">비밀번호 찾기</button>
+               <button type="button" class="common-primary-btn find-pw-btn" id="find-pw-btn" onclick="findPwBtnClick()">임시 비밀번호 받기</button>
         </form>
         <div class="find-links">
             <a href="/find-id">아이디 찾기</a>

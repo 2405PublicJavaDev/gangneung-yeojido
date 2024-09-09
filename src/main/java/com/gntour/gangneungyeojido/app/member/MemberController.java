@@ -5,6 +5,7 @@ import com.gntour.gangneungyeojido.app.admin.dto.LoginRequest;
 import com.gntour.gangneungyeojido.app.member.dto.*;
 import com.gntour.gangneungyeojido.common.MemberRole;
 import com.gntour.gangneungyeojido.common.MemberUtils;
+import com.gntour.gangneungyeojido.common.ResetPasswordGenerator;
 import com.gntour.gangneungyeojido.common.VerificationCodeGenerator;
 import com.gntour.gangneungyeojido.common.exception.BusinessException;
 import com.gntour.gangneungyeojido.common.exception.EmptyResponse;
@@ -100,7 +101,13 @@ public class MemberController {
      *  담당자 : 이경학님
      *  관련기능 : [회원관리 기능(페이지 폼)] 회원탈퇴
      */
-    public void showRemoveMemberPage(){}
+    @GetMapping("/remove-member")
+    public String showRemoveMemberPage(HttpSession session, Model model){
+        String memberId = (String) session.getAttribute(MemberUtils.MEMBER_ID);
+        Member member = mService.getProfileMember(memberId);
+        model.addAttribute("member", member);
+        return "member/remove-member";
+    }
 
     /**
      *  담당자 : 이경학님
@@ -220,7 +227,24 @@ public class MemberController {
      *  담당자 : 이경학님
      *  관련기능 : [회원관리 기능] 회원탈퇴
      */
-    public void removeMember(){}
+    @PostMapping("/remove-member")
+    @ResponseBody
+    public EmptyResponse removeMember(@RequestBody @Valid RemoveMemberRequest removeMemberRequest, HttpSession session){
+        String loginMemberId = (String) session.getAttribute(MemberUtils.MEMBER_ID);
+        Member member = mService.getProfileMember(loginMemberId);
+        if(member == null) {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
+        log.info(member.toString());
+        log.info(removeMemberRequest.toString());
+        if(member.getMemberId().equals(removeMemberRequest.getMemberId()) && member.getPassword().equals(removeMemberRequest.getPassword())) {
+            int result = mService.removeMember(member.getMemberId());
+            session.invalidate();
+            return new EmptyResponse();
+        } else {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
+    }
 
     /**
      * 담당자 : 이경학님
@@ -247,7 +271,7 @@ public class MemberController {
         ctx.setVariable("sendCode", validCode);
 
         final String result = templateEngine.process("member/verificationmail", ctx);
-        log.info(result);
+
         emailService.sendMail(new EmailMessage(
                 req.getEmail(),
                 "[강릉여지도] 강릉여지도계정 가입 인증번호",
@@ -269,6 +293,59 @@ public class MemberController {
             throw  new BusinessException(ErrorCode.EMAIL_VALID_FAIL);
         }
         return new EmptyResponse();
+    }
+
+    /**
+     * 담당자 : 이경학님
+     * 관련기능 : [회원관리 기능] 임시비밀번호 보내기
+     */
+    @PostMapping("/find-pw")
+    @ResponseBody
+    public EmptyResponse resetPassword(@RequestBody @Valid FindPwRequest findPwRequest) {
+        // 임시 비밀번호 생성
+        String resetpassword = ResetPasswordGenerator.generateVerificationCode();
+        // 회원 조회및 유효한 회원인지 체크
+        Member member = mService.getProfileMember(findPwRequest.getMemberId());
+        if(member == null) {
+            throw new BusinessException(ErrorCode.ID_FIND_FAIL);
+        }
+        log.info(findPwRequest.toString());
+        log.info(member.toString());
+        if(!member.getMemberId().equals(findPwRequest.getMemberId()) || !member.getEmail().equals(findPwRequest.getEmail())) {
+            throw new BusinessException(ErrorCode.INVALID_INPUT_VALUE);
+        } else {
+
+        // 임시 비밀번호를 DB 설정
+        member.setPassword(resetpassword);
+        mService.modifyMemberInfo(member);
+
+        // 임시 비밀번호를 이메일 보내기
+        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+        templateResolver.setPrefix("templates/");
+        templateResolver.setCacheable(false);
+        templateResolver.setSuffix(".html");
+        templateResolver.setTemplateMode("HTML");
+
+        // https://github.com/thymeleaf/thymeleaf/issues/606
+        templateResolver.setForceTemplateMode(true);
+
+        templateEngine.setTemplateResolver(templateResolver);
+
+        Context ctx = new Context();
+
+        ctx.setVariable("sendResetPassword", resetpassword);
+
+        final String result = templateEngine.process("member/reset-password-mail", ctx);
+
+        emailService.sendMail(new EmailMessage(
+                findPwRequest.getEmail(),
+                "[강릉여지도] 강릉여지도 계정 임시 비밀번호",
+                result
+        ));
+        emailValidService.addOrUpdateValidCode(findPwRequest.getEmail(), resetpassword);
+        return new EmptyResponse();
+        }
     }
 
     /**

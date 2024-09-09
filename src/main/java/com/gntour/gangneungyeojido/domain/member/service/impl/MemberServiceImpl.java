@@ -25,7 +25,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Member loginMember(Member member) {
         Member result = mMapper.selectOneById(member.getMemberId());
-        if (result != null && result.getPassword() != null && result.getPassword().equals(member.getPassword())) {
+        if (result != null && result.getPassword() != null && result.getPassword().equals(member.getPassword()) && result.getDeleteYn().equals("N")) {
             return result;
         } else {
             throw new BusinessException(ErrorCode.LOGIN_FAIL);
@@ -64,8 +64,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void removeMember() {
-
+    public int removeMember(String memberId) {
+        return mMapper.deleteMember(memberId);
     }
 
     @Override

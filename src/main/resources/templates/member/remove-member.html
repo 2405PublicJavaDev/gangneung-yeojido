@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/my-page}"
+      layout:decorator="layout">
+<th:block layout:fragment="script">
+  <script type="text/javascript" src="/js/member/remove-member.js"></script>
+</th:block>
+<th:block layout:fragment="css">
+  <link href="/css/member/remove-member.css" rel="stylesheet">
+</th:block>
+<main layout:fragment="content">
+  <div class="remove-member-container">
+    <h1>회원 탈퇴</h1>
+    <hr>
+    <form action="/remove-member" method="post" id="remove-member-form" class="remove-member-form">
+      <div class="input-group">
+        <input type="text" id="memberId" placeholder="아이디" class="common-input" name="memberId" th:value="${member.memberId}" readonly>
+      </div>
+      <div class="input-group" >
+        <input type="password" id="password" placeholder="비밀번호" class="common-input" name="password">
+        <i class="fi fi-rs-eye toggle-password pwIcon"></i>
+        <!--        <i class="fi fi-rr-eye-crossed toggle-password"></i>-->
+      </div>
+
+      <div class="success-message hide message" id="pw-success-message"></div>
+      <div class="strongPassword-message hide message" id="pw-failure-message"></div>
+
+      <button type="button" class="common-primary-btn remove-member-btn" onclick="removeBtnClick();">회원 탈퇴</button>
+    </form>
+  </div>
+</main>
+</html>
