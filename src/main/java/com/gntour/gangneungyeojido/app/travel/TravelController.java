@@ -1,6 +1,7 @@
 package com.gntour.gangneungyeojido.app.travel;
 
 import com.gntour.gangneungyeojido.app.travel.dto.ReviewResponse;
+import com.gntour.gangneungyeojido.app.travel.dto.TravelListSearchCondition;
 import com.gntour.gangneungyeojido.app.travel.dto.TravelSearchCondition;
 import com.gntour.gangneungyeojido.common.MemberUtils;
 import com.gntour.gangneungyeojido.common.Page;
@@ -12,6 +13,7 @@ import com.gntour.gangneungyeojido.domain.notice.vo.Notice;
 import com.gntour.gangneungyeojido.domain.review.service.ReviewService;
 import com.gntour.gangneungyeojido.domain.review.vo.Review;
 import com.gntour.gangneungyeojido.domain.travel.service.TravelService;
+import com.gntour.gangneungyeojido.domain.travel.vo.TravelInfo;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -36,23 +38,33 @@ public class TravelController {
      * 관련기능 : [여행지 기능] 여행지 리스트 조회
      */
     @GetMapping("/travel/list")
-    public String showTravelListPage(Model model
-            , @RequestParam(value="currentPage", defaultValue = "1") Integer currentPage) {
-        model.addAttribute("page", travelService.getAllTravelsPage(currentPage, 12));
+    public String showTravelListPage(
+            @RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,
+            @RequestParam(value = "travelName", required = false) String travelName,
+            @RequestParam(value = "region", required = false) String region,
+            @RequestParam(value = "category", required = false) String category,
+            Model model
+    ) {
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("travelName", travelName);
+        model.addAttribute("region", region);
+        model.addAttribute("category", category);
         return "travel/travel-list";
     }
 
     /**
      * 담당자 : 엄태운님
-     * 관련기능 : [여행지 기능] 검색한 여행지 리스트 조회
+     * 관련기능 : [여행지 기능] 여행지 리스트 조회, [여행지 기능] 검색한 여행지 리스트 조회
      */
-    @PostMapping("/travel/search-list")
-    public String showSearchedTravelListPage(Model model
-        , @RequestParam("searchKeyword") String searchKeyword
-        , @RequestParam(value="currentPage", defaultValue = "1") Integer currentPage) {
-        model.addAttribute("tList", travelService.selectSearchedTravelsPage(searchKeyword));
-        System.out.print(searchKeyword);
-        return "travel/search-travel-list";
+    @GetMapping("/travel")
+    @ResponseBody
+    public Page<TravelInfo, TravelListSearchCondition> getTravelList(
+            @RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,
+             @RequestParam(value = "travelName", required = false) String travelName,
+            @RequestParam(value = "region", required = false) String region,
+            @RequestParam(value = "category", required = false) String category
+            ) {
+        return travelService.getAllTravelsPage(currentPage, 12,new TravelListSearchCondition(travelName, region, category));
     }
 
     /**
