@@ -17,6 +17,9 @@
         GROUP BY Q.QNA_NO, Q.QNA_SUBJECT, Q.MEMBER_ID, Q.REG_DATE
         ORDER BY QNA_NO DESC
     </select>
+    <select id="selectAllQnACount" resultType="_int">
+        SELECT COUNT(*) FROM QNA
+    </select>
 
     <insert id="insertQnA" useGeneratedKeys="true" keyProperty="qnaNo">
         <selectKey resultType="long" keyProperty="qnaNo" order="BEFORE">

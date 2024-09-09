@@ -3,6 +3,7 @@ package com.gntour.gangneungyeojido.domain.qna.service.impl;
 import com.gntour.gangneungyeojido.app.admin.dto.QnAResponse;
 import com.gntour.gangneungyeojido.app.my.dto.MyQnAResponse;
 import com.gntour.gangneungyeojido.common.FileUtil;
+import com.gntour.gangneungyeojido.common.Page;
 import com.gntour.gangneungyeojido.common.UploadCategory;
 import com.gntour.gangneungyeojido.domain.qna.mapper.QnAMapper;
 import com.gntour.gangneungyeojido.domain.qna.service.QnAService;
@@ -23,8 +24,8 @@ public class QnAServiceImpl implements QnAService {
     private final FileUtil fileUtil;
 
     @Override
-    public List<QnAResponse> getAllQnA() {
-        return qnaMapper.selectAllQnA();
+    public Page<QnAResponse, Void> getAllQnA(Integer currentPage) {
+        return Page.of(currentPage,qnaMapper.selectAllQnACount(), qnaMapper::selectAllQnA);
     }
 
     @Override

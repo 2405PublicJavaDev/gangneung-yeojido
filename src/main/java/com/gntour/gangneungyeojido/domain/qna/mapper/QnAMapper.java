@@ -6,16 +6,17 @@ import com.gntour.gangneungyeojido.domain.qna.vo.QnA;
 import com.gntour.gangneungyeojido.domain.qna.vo.QnAAnswer;
 import com.gntour.gangneungyeojido.domain.qna.vo.QnAFile;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;
 
 @Mapper
 public interface QnAMapper {
-    List<QnAResponse> selectAllQnA();
+    List<QnAResponse> selectAllQnA(Integer currentPage, RowBounds rowBounds);
     List<QnAFile> selectAllQnAFileByQnANo(Long qnaNo);
     List<MyQnAResponse> selectMyQnAListByMember(String memberId);
 
-    void selectAllQnACount();
+    int selectAllQnACount();
     List<QnA> selectAllQnACountByMember(String memberId);
     void selectAllQnAAnswer();
     void selectAllQnAAnswerCount();

@@ -3,6 +3,7 @@ package com.gntour.gangneungyeojido.app.admin;
 
 import com.gntour.gangneungyeojido.app.admin.dto.QnAResponse;
 import com.gntour.gangneungyeojido.common.MemberUtils;
+import com.gntour.gangneungyeojido.common.Page;
 import com.gntour.gangneungyeojido.domain.qna.service.QnAService;
 import com.gntour.gangneungyeojido.domain.qna.vo.QnA;
 import com.gntour.gangneungyeojido.domain.qna.vo.QnAAnswer;
@@ -28,11 +29,11 @@ public class AdminQnAController {
      * 관련 기능 : [관리자 기능] QnA 질의 리스트 조회
      */
     @GetMapping("/admin/qna")
-    public String showQnAListPage(Model model) {
+    public String showQnAListPage(Model model, @RequestParam(value = "currentPage", defaultValue = "1") Integer currentPAge) {
         // QnA 리스트를 서비스에서 가져와서 모델에 추가
-        List<QnAResponse> qnaList = qnaService.getAllQnA();
-        log.info(qnaList.toString());
-        model.addAttribute("qnaList", qnaList);
+        Page<QnAResponse, Void> qnaList = qnaService.getAllQnA(currentPAge);
+        log.info(qnaList.getData().toString());
+        model.addAttribute("page", qnaList);
         return "admin/qna-list";
     }
     /**
