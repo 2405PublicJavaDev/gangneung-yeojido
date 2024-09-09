@@ -116,6 +116,11 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
+    public List<TravelInfo> selectSearchedTravelsPage(String searchKeyword) {
+        return travelMapper.selectSearchedTravels(searchKeyword);
+    };
+
+    @Override
     public Double getScoreByTravelNo(Long travelNo) {
         return travelMapper.getScoreByTravelNo(travelNo);
     }

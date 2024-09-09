@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="reply-popup" class="dialog-bg dialog-noshow" id="reply-popup">
+    <form id="reply-upload-form">
+        <div class="white-bg">
+            <h3>답글 등록</h3><br>
+            <textarea name="reviewContent" required class="common-input content-input" id="review-content" cols="30" rows="10" style="resize:none;" placeholder="내용을 입력해주세요"></textarea>
+            <button class="btn btn-add" id="reply-register">등록</button>
+            <button class="btn btn-cancel" id="reply-close">취소</button>
+        </div>
+    </form>
+</div>
+</html>

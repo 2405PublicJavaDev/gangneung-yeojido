@@ -1,5 +1,7 @@
 package com.gntour.gangneungyeojido.app.travel;
 
+import com.gntour.gangneungyeojido.app.travel.dto.ReviewResponse;
+import com.gntour.gangneungyeojido.app.travel.dto.TravelSearchCondition;
 import com.gntour.gangneungyeojido.common.MemberUtils;
 import com.gntour.gangneungyeojido.common.Page;
 import com.gntour.gangneungyeojido.common.exception.BusinessException;
@@ -42,24 +44,59 @@ public class TravelController {
 
     /**
      * 담당자 : 엄태운님
+     * 관련기능 : [여행지 기능] 검색한 여행지 리스트 조회
+     */
+    @PostMapping("/travel/search-list")
+    public String showSearchedTravelListPage(Model model
+        , @RequestParam("searchKeyword") String searchKeyword
+        , @RequestParam(value="currentPage", defaultValue = "1") Integer currentPage) {
+        model.addAttribute("tList", travelService.selectSearchedTravelsPage(searchKeyword));
+        System.out.print(searchKeyword);
+        return "travel/search-travel-list";
+    }
+
+    /**
+     * 담당자 : 엄태운님
      * 관련기능 : [여행지 기능] 여행지 상세 정보 조회
      */
     @GetMapping("/travel/detail/{travelNo}")
     public String showTravelDetailPage(@PathVariable Long travelNo, Model model) {
         model.addAttribute("detail", travelService.getDetailTravel(travelNo));
         model.addAttribute("score", travelService.getScoreByTravelNo(travelNo));
+
         return "travel/travel-detail";
     }
 
     /**
      * 담당자 : 엄태운님
-     * 관련기능 : [여행지 기능] 여행지 리뷰 리스트 조회
+     * 관련기능 : [여행지 기능] 내가 쓴 여행지 리뷰 리스트 조회
+     * 리뷰 중에서 내가 쓴 리뷰를 보여준다.
      */
-    @GetMapping("/travel/review/{travelNo}")
+    @GetMapping("/travel/myreview/{travelNo}")
     @ResponseBody
-    public Page<Review, Long> showTravelReviewPage(@PathVariable Long travelNo
-            , @RequestParam(value="currentPage", defaultValue = "1") Integer currentPage) {
-        return reviewService.getAllReviewsByTravel(currentPage, travelNo);
+    public ReviewResponse getMyReview(@PathVariable Long travelNo, HttpSession session) {
+        String memberId = MemberUtils.getMemberIdFromSession(session);
+        ReviewResponse reviewResponse = new ReviewResponse();
+        if(memberId != null) {
+            reviewResponse = reviewService.getMyReview(travelNo, memberId);
+        }
+        return reviewResponse;
+    }
+
+    /**
+     * 담당자 : 엄태운님
+     * 관련기능 : [여행지 기능] 여행지 리뷰 리스트 조회
+     * 여행지 리뷰를 페이지로 보여준다.
+     */
+    @GetMapping("/travel/review")
+    @ResponseBody
+    public Page<ReviewResponse, TravelSearchCondition> showTravelReviewPage(
+            @RequestParam("travelNo") Long travelNo,
+            @RequestParam(value = "reviewNo", required = false) Long reviewNo,
+            @RequestParam(value="currentPage", defaultValue = "1") Integer currentPage) {
+        Page<ReviewResponse, TravelSearchCondition> page = reviewService.getAllReviewsByTravel(currentPage, travelNo, reviewNo);
+        log.info(page.getData().toString());
+        return page;
     }
 
     /**
@@ -85,7 +122,7 @@ public class TravelController {
      * 담당자 : 엄태운님
      * 관련기능 : [여행지 기능] 여행지 리뷰 수정
      */
-    @PostMapping("/review/modify{reviewNo}")
+    @PostMapping("/review/modify/{reviewNo}")
     @ResponseBody
     public void updateReview(Review review, @PathVariable Long reviewNo
             , @RequestParam MultipartFile reloadFile) {
@@ -96,7 +133,7 @@ public class TravelController {
      * 담당자 : 엄태운님
      * 관련기능 : [여행지 기능] 여행지 리뷰 삭제
      */
-    @GetMapping("/review/remove/{reviewNo}")
+    @DeleteMapping("/review/remove/{reviewNo}")
     @ResponseBody
     public String removeReview(@PathVariable Long reviewNo) {
         int result = reviewService.removeReview(reviewNo);
@@ -107,7 +144,9 @@ public class TravelController {
      * 담당자 : 엄태운님
      * 관련기능 : [여행지 기능] 여행지 리뷰 신고
      */
-    public void complainReview() {
+    @PostMapping("/review/complain/{category}")
+    @ResponseBody
+    public void complainReview(@PathVariable("category") String category, HttpSession session) {
 
     }
 
@@ -115,8 +154,18 @@ public class TravelController {
      * 담당자 : 엄태운님
      * 관련기능 : [여행지 기능] 여행지 댓글 등록
      */
-    public void addReviewReply() {
-
+    @PostMapping("/reply/add")
+    @ResponseBody
+    public EmptyResponse addReviewReply(HttpSession session,
+            Model model,
+            @ModelAttribute @Valid Review review) {
+        String replyWriter = MemberUtils.getMemberIdFromSession(session);
+        review.setMemberId(replyWriter);
+        int result = reviewService.addReviewReply(review);
+        if(result == 0) {
+            throw new BusinessException(ErrorCode.NO_UPDATE);
+        }
+        return new EmptyResponse();
     }
 
     /**

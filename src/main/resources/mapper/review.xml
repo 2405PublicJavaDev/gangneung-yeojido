@@ -3,16 +3,83 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gntour.gangneungyeojido.domain.review.mapper.ReviewMapper">
-    <select id="selectAllReviews" resultType="Review">
-        SELECT *
-        FROM REVIEW
-        WHERE TRAVEL_NO = #{travelNo}
-        ORDER BY REVIEW_NO DESC
+    <resultMap id="reviewResultMap" type="ReviewResponse">
+        <id property="reviewNo" column="REVIEW_NO" />
+        <result property="score" column="SCORE" />
+        <result property="reviewContent" column="REVIEW_CONTENT" />
+        <result property="parentReviewNo" column="PARENT_REVIEW_NO" />
+        <result property="travelNo" column="TRAVEL_NO" />
+        <result property="memberId" column="MEMBER_ID" />
+        <result property="regDate" column="REG_DATE" />
+        <result property="updateDate" column="UPDATE_DATE" />
+
+        <!-- Mapping the collection of ReviewFiles -->
+        <collection property="reviewFiles" ofType="ReviewFile">
+            <id property="reviewFileNo" column="REVIEW_FILE_NO" />
+            <result property="filePath" column="FILE_PATH" />
+            <result property="fileName" column="FILE_NAME" />
+            <result property="fileRename" column="FILE_RENAME" />
+            <result property="webPath" column="WEB_PATH" />
+            <result property="fileOrder" column="FILE_ORDER" />
+            <result property="regDate" column="FILE_REG_DATE" />
+            <result property="updateDate" column="FILE_UPDATE_DATE" />
+        </collection>
+    </resultMap>
+    <select id="selectAllReviews" resultMap="reviewResultMap">
+        SELECT
+            r.REVIEW_NO,
+            r.SCORE,
+            r.REVIEW_CONTENT,
+            r.PARENT_REVIEW_NO,
+            r.TRAVEL_NO,
+            r.MEMBER_ID,
+            r.REG_DATE,
+            r.UPDATE_DATE,
+            rf.REVIEW_FILE_NO,
+            rf.FILE_PATH,
+            rf.FILE_NAME,
+            rf.FILE_RENAME,
+            rf.WEB_PATH,
+            rf.FILE_ORDER,
+            rf.REG_DATE as FILE_REG_DATE,
+            rf.UPDATE_DATE as FILE_UPDATE_DATE
+        FROM
+            REVIEW r
+        LEFT JOIN
+            REVIEW_FILE rf
+        ON
+            r.REVIEW_NO = rf.REVIEW_NO
+        <where>
+            <if test="condition.travelNo != null">
+                AND TRAVEL_NO = #{condition.travelNo}
+            </if>
+            <choose>
+                <when test="condition.reviewNo != null">
+                    AND PARENT_REVIEW_NO = #{condition.reviewNo}
+                </when>
+                <otherwise>
+                    AND PARENT_REVIEW_NO IS NULL
+                </otherwise>
+            </choose>
+        </where>
+        ORDER BY REVIEW_NO DESC, rf.FILE_ORDER ASC
     </select>
     <select id="selectAllReviewsCount" resultType="_int">
         SELECT COUNT(*)
         FROM REVIEW
-        WHERE TRAVEL_NO = #{travelNo}
+        <where>
+            <if test="travelNo != null">
+                AND TRAVEL_NO = #{travelNo}
+            </if>
+            <choose>
+                <when test="reviewNo != null">
+                    AND PARENT_REVIEW_NO = #{reviewNo}
+                </when>
+                <otherwise>
+                    AND PARENT_REVIEW_NO IS NULL
+                </otherwise>
+            </choose>
+        </where>
     </select>
    <select id="selectAllComplainReviews" resultType="ReviewComplain">
        SELECT * FROM REVIEW_COMPLAIN
@@ -24,12 +91,40 @@
     <select id="selectAllReviewsByMember" resultType="Review">
         SELECT * FROM REVIEW WHERE MEMBER_ID = #{memberId}
     </select>
+    <select id="selectMyReview" resultMap="reviewResultMap">
+        SELECT
+            r.REVIEW_NO,
+            r.SCORE,
+            r.REVIEW_CONTENT,
+            r.PARENT_REVIEW_NO,
+            r.TRAVEL_NO,
+            r.MEMBER_ID,
+            r.REG_DATE,
+            r.UPDATE_DATE,
+            rf.REVIEW_FILE_NO,
+            rf.FILE_PATH,
+            rf.FILE_NAME,
+            rf.FILE_RENAME,
+            rf.WEB_PATH,
+            rf.FILE_ORDER,
+            rf.REG_DATE as FILE_REG_DATE,
+            rf.UPDATE_DATE as FILE_UPDATE_DATE
+        FROM
+            REVIEW r
+                LEFT JOIN
+            REVIEW_FILE rf
+            ON
+                r.REVIEW_NO = rf.REVIEW_NO
+        WHERE TRAVEL_NO = #{travelNo}
+        AND MEMBER_ID = #{memberId}
+        ORDER BY rf.FILE_ORDER ASC
+    </select>
     <insert id="insertReview">
         <selectKey resultType="long" keyProperty="reviewNo" order="BEFORE">
             SELECT SEQ_REVIEW_NO.NEXTVAL FROM DUAL
         </selectKey>
         INSERT INTO REVIEW(REVIEW_NO, SCORE, PARENT_REVIEW_NO, REVIEW_CONTENT, TRAVEL_NO, MEMBER_ID)
-        VALUES(#{reviewNo},#{score},#{parentReviewNo},#{reviewContent},#{travelNo},#{memberId})
+        VALUES(#{reviewNo},#{score},#{reviewNo},#{reviewContent},#{travelNo},#{memberId})
     </insert>
     <insert id="insertReviewFile">
         insert into REVIEW_FILE(REVIEW_FILE_NO, FILE_PATH, FILE_NAME, FILE_RENAME, REVIEW_NO, WEB_PATH, FILE_ORDER)

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<div th:fragment="review-popup" class="dialog-bg dialog-noshow" id="review-popup">
-    <form id="uploadForm">
+<div th:fragment="review-update-popup" class="dialog-bg dialog-noshow" id="review-update-popup">
+    <form id="review-update-form">
         <div class="white-bg">
-            <h3 class="review-popup-title">리뷰 등록</h3><br>
+            <h3 class="review-popup-title">리뷰 수정</h3><br>
             <p id="review-main-detail-content-photo-star">
                 <span class="fa fa-star" data-value="1"></span>
                 <span class="fa fa-star" data-value="2"></span>
@@ -22,7 +22,7 @@
                     <img>
                 </dialog>
             </div>
-            <button class="btn btn-add" id="register">등록</button>
+            <button class="btn btn-add" id="modify-review">수정</button>
             <button class="btn btn-cancel" id="close">취소</button>
         </div>
     </form>

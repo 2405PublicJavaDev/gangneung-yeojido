@@ -32,6 +32,7 @@ public interface TravelService {
     int modifyTravel(TravelInfo travelInfo);
     int removeTravel(Long travelNo);
 
+    List<TravelInfo> selectSearchedTravelsPage(String searchKeyword);
     /**
      * 여행지 별점 받아오는 Service
      */

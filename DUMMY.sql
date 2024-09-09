@@ -146,3 +146,34 @@ ROLLBACK;
 DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
 END;
 /
+
+DECLARE
+v_score_list SYS.ODCINUMBERLIST := SYS.ODCINUMBERLIST(1.0, 2.0, 3.0, 4.0, 5.0);
+BEGIN
+    -- REVIEW 테이블에 500개의 레코드를 삽입합니다.
+FOR i IN 1..100 LOOP
+
+        -- 선택된 TRAVEL_NO가 유효한지 확인
+INSERT INTO REVIEW (
+    REVIEW_NO,
+    SCORE,
+    REVIEW_CONTENT,
+    PARENT_REVIEW_NO,
+    TRAVEL_NO,
+    MEMBER_ID,
+    REG_DATE,
+    UPDATE_DATE
+) VALUES (
+             SEQ_REVIEW_NO.NEXTVAL,
+             v_score_list(TRUNC(DBMS_RANDOM.VALUE(1, 5))),  -- SCORE는 1.0 ~ 5.0 사이에서 랜덤 선택
+             'Review content ' || i,  -- REVIEW_CONTENT는 임의의 텍스트
+             904,
+             352,  -- 유효한 TRAVEL_NO
+             'admin',
+             SYSTIMESTAMP,
+             SYSTIMESTAMP
+         );
+END LOOP;
+COMMIT;
+END;
+/
