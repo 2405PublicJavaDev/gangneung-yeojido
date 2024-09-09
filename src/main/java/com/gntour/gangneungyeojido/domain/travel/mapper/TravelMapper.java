@@ -32,4 +32,7 @@ public interface TravelMapper {
      * 여행지 별점 받아오는 Service
      */
     Double getScoreByTravelNo(Long travelNo);
+
+    List<TravelInfo> selectSearchedTravels(String searchKeyword);
+    Review selectMyReview(Long travelNo, String memberId);
 }

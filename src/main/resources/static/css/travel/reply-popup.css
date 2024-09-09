@@ -1,0 +1,22 @@
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: #3399FF;
+}
+#review-main-detail-content-photo-star .fa-star {
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+}
+#review-main-detail-content-photo-star .star-checked {
+    color: #FFA500;
+}

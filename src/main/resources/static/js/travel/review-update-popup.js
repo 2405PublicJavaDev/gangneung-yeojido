@@ -1,12 +1,11 @@
-document.querySelector('#close').addEventListener('click', (e) => {
-    e.preventDefault();
-    document.querySelector('#review-popup').classList.add('dialog-noshow');
+document.querySelector('#close').addEventListener('click', () => {
+    document.querySelector('#review-update-popup').classList.add('dialog-noshow');
 })
 
-// 리뷰 등록
-document.querySelector('#register').addEventListener('click', (e) => {
+// 리뷰 수정
+document.querySelector('#modify-review').addEventListener('click', (e) => {
     e.preventDefault();
-    const formTag = document.querySelector("#uploadForm");
+    const formTag = document.querySelector("#review-update-form");
     const formData = new FormData(formTag);
     // 파일을 FormData에 추가
     inputFileData.forEach(file => {
@@ -15,14 +14,14 @@ document.querySelector('#register').addEventListener('click', (e) => {
     formData.append('score',  document.querySelector('#rating-value').innerHTML);
     formData.append('travelNo', document.querySelector('input[name="travelNo"]').value);
     ajax({
-            url: `/review/add`,
+            url: `/review/modify/{travelNo}`,
             method: 'post',
             payload: formData,
             isMultipart: true
         },
         (response) => {
             console.log('response', response);
-            alert("리뷰 등록이 완료되었습니다.");
+            alert("리뷰 수정이 완료되었습니다.");
             location.href=`/travel/detail/${travelNo}`;
         },
         (error) => {

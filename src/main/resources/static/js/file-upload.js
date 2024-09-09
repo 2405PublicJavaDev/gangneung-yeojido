@@ -127,9 +127,10 @@ const loadImageFromURL = async (url) => {
 
 // 예시: 이미지 주소에서 로드
 // const updateThumbnailsAfterLoading = async () => {
-//     await loadImageFromURL('/gntour/DIARY/4f1b2be8-043b-48a1-8e4e-81ab153ed84c.png');
-//     await loadImageFromURL('/gntour/DIARY/4f1b2be8-043b-48a1-8e4e-81ab153ed84c.png');
-//     await loadImageFromURL('/gntour/DIARY/4f1b2be8-043b-48a1-8e4e-81ab153ed84c.png');
+//     const webPath = ['/gntour/DIARY/4f1b2be8-043b-48a1-8e4e-81ab153ed84c.png', '/gntour/DIARY/4f1b2be8-043b-48a1-8e4e-81ab153ed84c.png', '/gntour/DIARY/4f1b2be8-043b-48a1-8e4e-81ab153ed84c.png'];
+//     for (const w of webPath) {
+//         await loadImageFromURL(w);
+//     }
 //     thumbnailUpdate();  // 이미지 로드가 완료된 후 실행됩니다.
 // };
 // updateThumbnailsAfterLoading();

@@ -12,6 +12,7 @@
     <link href="/css/fragments/header.css" rel="stylesheet">
     <link href="/css/fragments/footer.css" rel="stylesheet">
     <link href="/css/travel/review-popup.css" rel="stylesheet">
+    <link href="/css/travel/reply-popup.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/file-upload.css">
     <!-- 각 페이지의 css가 작성될 위치 -->
     <th:block layout:fragment="css"></th:block>
@@ -25,10 +26,12 @@
 <footer th:replace="fragments/footer::footer"></footer>
 
 <div th:replace="travel/review-popup::review-popup"></div>
+<div th:replace="travel/reply-popup::reply-popup"></div>
 <script type="text/javascript" src="/js/common.js"></script>
 <script type="text/javascript" src="/js/fragments/header.js"></script>
 <script type="text/javascript" src="/js/fragments/footer.js"></script>
 <script type="text/javascript" src="/js/travel/review-popup.js"></script>
+<script type="text/javascript" src="/js/travel/reply-popup.js"></script>
 <script type="text/javascript" src="/js/file-upload.js"></script>
 <!-- 각 페이지의 script가 작성될 위치 -->
 <th:block layout:fragment="script"></th:block>

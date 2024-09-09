@@ -1,5 +1,7 @@
 package com.gntour.gangneungyeojido.domain.review.service.impl;
 
+import com.gntour.gangneungyeojido.app.travel.dto.ReviewResponse;
+import com.gntour.gangneungyeojido.app.travel.dto.TravelSearchCondition;
 import com.gntour.gangneungyeojido.common.FileUtil;
 import com.gntour.gangneungyeojido.common.Page;
 import com.gntour.gangneungyeojido.common.UploadCategory;
@@ -20,12 +22,11 @@ import java.util.List;
 @Transactional
 public class ReviewServiceImpl implements ReviewService {
     private final ReviewMapper rMapper;
-    private final ReviewMapper reviewMapper;
     private final FileUtil fileUtil;
 
     @Override
-    public Page<Review, Long> getAllReviewsByTravel(Integer currentPage, Long travelNo) {
-        return Page.of(currentPage,rMapper.selectAllReviewsCount(travelNo), travelNo, rMapper::selectAllReviews);
+    public Page<ReviewResponse, TravelSearchCondition> getAllReviewsByTravel(Integer currentPage, Long travelNo, Long reviewNo) {
+        return Page.of(currentPage,rMapper.selectAllReviewsCount(new TravelSearchCondition(travelNo, reviewNo)), new TravelSearchCondition(travelNo, reviewNo), rMapper::selectAllReviews);
     }
 
     @Override
@@ -57,18 +58,16 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public int removeReview(Long reviewNo) {
-        return reviewMapper.deleteReview(reviewNo);
+        return rMapper.deleteReview(reviewNo);
     }
 
     @Override
-    public void complainReview() {
-
+    public void complainReview(String category) {
+//        return rMapper.
     }
 
     @Override
-    public void addReviewReply() {
-
-    }
+    public int addReviewReply(Review review) { return rMapper.insertReview(review); }
 
     @Override
     public void modifyReviewReply() {
@@ -78,5 +77,10 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public void removeReviewReply() {
 
+    }
+
+    @Override
+    public ReviewResponse getMyReview(Long travelNo, String memberId) {
+        return rMapper.selectMyReview(travelNo, memberId);
     }
 }

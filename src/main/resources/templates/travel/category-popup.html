@@ -1,10 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="complain-popup" class="dialog-bg dialog-noshow" id="complain-popup">
+    <form id="complain-form">
+        <div class="white-bg">
+            <h3 class="complain-popup-title">리뷰 신고</h3><br>
+            <select name="complainKeyword" id="category">
+                <option value="" disabled selected>신고 사유를 선택해주세요</option>
+                <option value="category1">해당 여행지와 관련 없는 리뷰</option>
+                <option value="category2">광고 또는 프로모션이 포함된 리뷰</option>
+                <option value="category3">악의적인 비하 의도가 포함된 리뷰</option>
+                <option value="category4">욕설 또는 선정적 언어가 포함된 리뷰</option>
+                <option value="category5">주소 또는 개인 정보가 포함된 리뷰</option>
+            </select>
+            <br>
+            <button class="btn btn-submit" id="submit-review">제출</button>
+            <button class="btn btn-cancel" id="close">취소</button>
+        </div>
+    </form>
+</div>
 </html>

@@ -82,7 +82,8 @@ function selectReview() {
     infoBtn.classList.add('unselected');
     infoBtn.classList.remove('selected');
 }
-let dialogShown = false;
-document.querySelector('#register-review-btn').addEventListener('click', () => {
-    openDialog();
+
+document.querySelector("#go-diary").addEventListener('click', (e) => {
+    e.preventDefault();
+    location.href = `/register-diary?travelNo=${travelNo}`;
 })

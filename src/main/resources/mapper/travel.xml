@@ -7,6 +7,13 @@
         SELECT *
         FROM TRAVEL_INFO
     </select>
+    <select id="selectSearchedTravels">
+        SELECT *
+        FROM TRAVEL_INFO
+        WHERE TRAVEL_NAME
+        LIKE '%'||#{searchKeyword}||'%'
+        ORDER BY TRAVEL_NO DESC
+    </select>
     <select id="selectAllThisMonthTravels" resultType="TravelInfo">
         SELECT *
         FROM (
