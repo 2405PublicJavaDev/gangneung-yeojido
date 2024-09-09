@@ -14,8 +14,8 @@ public interface TravelDiaryService {
 
     int addDiary(TravelDiary travelDiary, List<MultipartFile> multipartFiles);
 
-
     int modifyDiary(TravelDiary travelDiary, List<MultipartFile> uploadFiles);
+
     int removeDiary(String memberId);
 
 }
