@@ -115,6 +115,7 @@ public class MemberController {
         member = mService.loginMember(member);
         session.setAttribute(MemberUtils.MEMBER_ID, member.getMemberId());
         session.setAttribute(MemberUtils.MEMBER_ROLE, member.getRole());
+        session.setAttribute(MemberUtils.MEMBER_STATUS, member.getStatus());
         return new EmptyResponse();
     }
 
