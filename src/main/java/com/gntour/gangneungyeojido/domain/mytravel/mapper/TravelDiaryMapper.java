@@ -3,6 +3,7 @@ package com.gntour.gangneungyeojido.domain.mytravel.mapper;
 import com.gntour.gangneungyeojido.domain.mytravel.vo.TravelDiary;
 import com.gntour.gangneungyeojido.domain.mytravel.vo.TravelDiaryFile;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;
 
@@ -10,9 +11,9 @@ import java.util.List;
 public interface TravelDiaryMapper {
 
     // 리스트 조회
-    List<TravelDiary> selectAllDiariesByMember(String memberId);
+    List<TravelDiary> selectAllDiariesByMember(Integer currentPage, String memberId, RowBounds rowBounds);
 
-    void selectAllDiariesCountByMember();
+    int selectAllDiariesCountByMember(String memberId);
 
     List<TravelDiaryFile> selectAllDiariesFileByDiaryNo(Long diaryNo);
 

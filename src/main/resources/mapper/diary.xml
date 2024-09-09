@@ -5,7 +5,13 @@
     <select id="selectAllDiariesByMember" resultType="DiaryResponse">
         SELECT T.TRAVEL_NAME "TRAVEL_NAME", D.DIARY_CONTENT "DIARY_CONTENT", D.DIARY_NO "DIARY_NO", T.TRAVEL_NO "TRAVEL_NO"
         FROM TRAVEL_DIARY D
-        JOIN TRAVEL_INFO T ON D.DIARY_NO = T.TRAVEL_NO
+        JOIN TRAVEL_INFO T ON D.TRAVEL_NO = T.TRAVEL_NO
+        WHERE D.MEMBER_ID = #{memberId}
+    </select>
+    <select id="selectAllDiariesCountByMember" resultType="_int">
+        SELECT COUNT(*)
+        FROM TRAVEL_DIARY
+        WHERE MEMBER_ID = #{memberId}
     </select>
     <select id="selectOneDiaryByMember" resultType="TravelDiary">
         SELECT DIARY_NO, DIARY_TITLE, DIARY_CONTENT, REG_DATE, UPDATE_DATE

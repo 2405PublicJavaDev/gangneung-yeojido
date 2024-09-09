@@ -1,6 +1,7 @@
 package com.gntour.gangneungyeojido.domain.mytravel.serviceImpl;
 
 import com.gntour.gangneungyeojido.common.FileUtil;
+import com.gntour.gangneungyeojido.common.Page;
 import com.gntour.gangneungyeojido.common.UploadCategory;
 import com.gntour.gangneungyeojido.domain.mytravel.mapper.TravelDiaryMapper;
 import com.gntour.gangneungyeojido.domain.mytravel.service.TravelDiaryService;
@@ -18,8 +19,8 @@ public class TravelDiaryServiceImpl implements TravelDiaryService {
     private final FileUtil fileUtil;
 
     @Override
-    public List<TravelDiary> getAllDiariesByMember(String memberId) {
-        return travelDiaryMapper.selectAllDiariesByMember(memberId);
+    public Page<TravelDiary, String> getAllDiariesByMember(Integer currentPage, String memberId) {
+        return Page.of(currentPage, travelDiaryMapper.selectAllDiariesCountByMember(memberId), memberId, travelDiaryMapper::selectAllDiariesByMember);
     }
 
     @Override

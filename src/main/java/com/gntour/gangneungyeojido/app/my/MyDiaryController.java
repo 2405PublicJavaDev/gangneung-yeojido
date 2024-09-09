@@ -2,6 +2,7 @@ package com.gntour.gangneungyeojido.app.my;
 
 import com.gntour.gangneungyeojido.app.my.dto.DiaryAddRequest;
 import com.gntour.gangneungyeojido.common.MemberUtils;
+import com.gntour.gangneungyeojido.common.Page;
 import com.gntour.gangneungyeojido.common.exception.BusinessException;
 import com.gntour.gangneungyeojido.common.exception.EmptyResponse;
 import com.gntour.gangneungyeojido.common.exception.ErrorCode;
@@ -35,9 +36,9 @@ public class MyDiaryController {
      *
      */
     @GetMapping("/diary")
-    public String showMyDiariesPage(HttpSession session, Model model){
-        List<TravelDiary> travelDiaryList = travelDiaryService.getAllDiariesByMember(MemberUtils.getMemberIdFromSession(session));
-        model.addAttribute("travelDiaryList", travelDiaryList);
+    public String showMyDiariesPage(HttpSession session, Model model, @RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage){
+        Page<TravelDiary, String> travelDiaryList = travelDiaryService.getAllDiariesByMember(currentPage, MemberUtils.getMemberIdFromSession(session));
+        model.addAttribute("page", travelDiaryList);
         return "/myPage/myDiary";
     };
 
