@@ -40,33 +40,17 @@
           </div>
         </div>
         <div class="register-btn">
-          <button type="button" class="register" id="submit-btn">등록</button>
-          <button type="button" class="cancel" onclick="goback();">취소</button>
+          <button type="submit" class="register" id="submit-btn">등록</button>
+          <button type="button" class="cancel" onclick="history.back()">취소</button>
         </div>
       </div>
     </form>
   </div>
-    <script th:javascript>
-      document.querySelector('#submit-btn').addEventListener('click', (e) => {
-        e.preventDefault();
-        const formTag = document.querySelector("#uploadForm");
-        const formData = new FormData(formTag);
-        ajax({
-                  url: '/register-qna',
-                  method: 'post',
-                  payload: formData,
-                  isMultipart: true
-                },
-                (response) => {
-                  console.log('response', response);
-                },
-                (error) => {
-                  console.log('error',error)}
-        );
-      })
-      function goback() {
-        history.go(-1);
-      }
+    <script>
+      document.getElementById("uploadForm").addEventListener("submit", function(e) {
+        // 제출 버튼을 비활성화하여 중복 제출 방지
+        document.getElementById("submit-btn").disabled = true;
+      });
     </script>
 </main>
 </html>

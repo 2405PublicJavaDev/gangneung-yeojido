@@ -30,12 +30,14 @@
     </insert>
 
     <insert id="insertQnAFile">
-        <selectKey resultType="long" keyProperty="qnaNo" order="BEFORE">
+        <selectKey resultType="long" keyProperty="qnaFileNo" order="BEFORE">
             SELECT SEQ_QNA_FILE_NO.NEXTVAL FROM DUAL
         </selectKey>
         insert into QNA_FILE(QNA_FILE_NO, FILE_PATH, FILE_NAME, FILE_RENAME, QNA_NO, WEB_PATH, FILE_ORDER)
-        values (#{qnaNo}, #{filePath}, #{fileName}, #{fileRename}, #{qnaNo}, #{webPath}, #{fileOrder})
+        values (#{qnaFileNo}, #{filePath}, #{fileName}, #{fileRename}, #{qnaNo}, #{webPath}, #{fileOrder})
     </insert>
+
+    
     <select id="selectAllQnAFileByQnANo" resultType="QnAFile">
         SELECT * FROM QNA_FILE
         WHERE QNA_NO = #{qnaNo}

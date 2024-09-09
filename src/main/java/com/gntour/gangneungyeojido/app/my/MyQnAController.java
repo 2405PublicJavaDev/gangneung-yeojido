@@ -58,14 +58,18 @@ public class MyQnAController {
      * 관련 기능 : [마이페이지 기능] 문의 내역(QnA) 등록
      */
     @PostMapping("/myqna/register")
-    @ResponseBody
-    public String addQnA(@ModelAttribute QnA qna
-            , HttpSession session
-            , @RequestParam("uploadFile") List<MultipartFile> uploadFiles){
+    public String addQnA(@ModelAttribute QnA qna, HttpSession session,
+                         @RequestParam(value = "uploadFile", required = false) List<MultipartFile> uploadFiles) {
         qna.setMemberId(MemberUtils.getMemberIdFromSession(session));
+        // QnA 등록
         int result = qnaService.addQnA(qna, uploadFiles);
-        return "myPage/myqna-register";
-    };
+        // 성공적으로 등록된 경우에 디테일 페이지로 리다이렉트
+        if (result > 0) {
+            return "redirect:/myqna/" + qna.getQnaNo();  // 디테일 페이지로 리다이렉트
+        }
+        // 실패한 경우
+        return "myPage/myqna-register";  // 등록 페이지로 다시 리다이렉트
+    }
     /**
      * 담당자 : 김윤경님
      * 관련 기능 : [마이페이지 기능] 문의 내역(QnA) 삭제
