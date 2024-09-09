@@ -70,7 +70,7 @@ public class FileUtil {
     public int deleteFiles(UploadCategory uploadCategory, Long fkNo) throws IOException {
         List<?> files = selectFileData(uploadCategory, fkNo);
         if(!deleteFilesReal(uploadCategory, files)) {
-            throw new IOException("file not delete completely");
+            log.info("file not delete completely maybe file does not exist");
         }
         return deleteFilesData(uploadCategory, fkNo);
     }
