@@ -82,7 +82,15 @@ public class MemberController {
      *  담당자 : 이경학님
      *  관련기능 : [회원관리 기능(페이지 폼)] 회원정보 수정
      */
-    public void showModifyMemberInfoPage(){}
+    @GetMapping("/modify-member")
+    public String showModifyMemberInfoPage(HttpSession session, Model model){
+        String memberId = (String) session.getAttribute(MemberUtils.MEMBER_ID);
+        Member member = mService.getProfileMember(memberId);
+        String memberBirthDate = convertTimestampToString(member.getBirthDate());
+        model.addAttribute("member", member);
+        model.addAttribute("memberBirthDate", memberBirthDate);
+        return "member/modify-member";
+    }
 
     /**
      *  담당자 : 이경학님
@@ -156,13 +164,18 @@ public class MemberController {
         return Timestamp.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
+    private String convertTimestampToString(Timestamp timestamp) {
+        LocalDate localDate = timestamp.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        return localDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+    }
+
     /**
      *  담당자 : 이경학님
      *  관련기능 : [회원관리 기능] 아이디 찾기
      */
     @PostMapping("/find-id")
     @ResponseBody
-    public FindIdResponse findMemberId(@RequestBody @Valid FindIdRequest findIdRequest, Model model){
+    public FindIdResponse findMemberId(@RequestBody @Valid FindIdRequest findIdRequest){
         Member member = new Member();
         member.setName(findIdRequest.getName());
         member.setBirthDate(convertStringToTimestamp(findIdRequest.getBirthDate()));
@@ -181,7 +194,22 @@ public class MemberController {
      *  담당자 : 이경학님
      *  관련기능 : [회원관리 기능] 회원정보 수정
      */
-    public void modifyMemberInfo(){}
+    @PostMapping("/modify-member")
+    @ResponseBody
+    public EmptyResponse modifyMemberInfo(@RequestBody @Valid ModifyMemberRequest modifyMemberRequest, HttpSession session){
+        if(!modifyMemberRequest.getPassword().equals(modifyMemberRequest.getConfirmPassword())) {
+            throw new BusinessException(ErrorCode.PW_PW_CHECK_NOT_MATCH);
+        }
+        String loginMemberId = (String) session.getAttribute(MemberUtils.MEMBER_ID);
+        Member member = mService.getProfileMember(loginMemberId);
+        member.setPassword(modifyMemberRequest.getPassword());
+        member.setEmail(modifyMemberRequest.getEmail());
+        member.setPhone(modifyMemberRequest.getPhone());
+
+        int result = mService.modifyMemberInfo(member);
+
+        return new EmptyResponse();
+    }
 
     /**
      *  담당자 : 이경학님

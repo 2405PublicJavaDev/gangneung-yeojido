@@ -1,34 +1,39 @@
 main {
     flex: 1;
     display: flex;
+    padding: 5px 5px 5px 5px;
     justify-content: center;
     align-items: center;
-    padding: 20px;
 }
 
-.signup-container {
+.edit-profile-container {
     padding: 20px;
     width: 400px;
 }
 
-.signup-container h1 {
+.edit-profile-container h1 {
     font-family: 'BMDOHYEON';
     margin-bottom: 10px;
     text-align: center;
 }
-.signup-container hr {
+
+.edit-profile-container hr {
     background-color: black;
     height: 4px;
     margin-bottom: 10px;
 }
 
-.signup-form .input-group {
+.input-group {
     position: relative;
 }
 
 .common-input {
     margin-bottom: 0;
     margin-top: 10px;
+}
+
+.password{
+    padding-right: 30px;
 }
 
 .toggle-password {
@@ -55,10 +60,6 @@ main {
     margin-top: 10px;
 }
 
-.common-secondary-btn:hover{
-    background-color: #808080;
-}
-
 input:focus {
     outline: currentColor;
     border-color: #3399FF;
@@ -68,26 +69,11 @@ input:focus {
     background-color: #3399FF;
 }
 
-.find-links a:hover {
-    color: #3399FF;
-}
-
-.signup-button {
+.modify-member-btn{
     margin-top: 20px;
 }
 
-.find-links {
-    display: flex;
-    justify-content: space-evenly;
-    margin-top: 20px;
-}
 
-.find-links a {
-    color: #666;
-    text-decoration: none;
-    font-size: 14px;
-    font-family: 'Noto Sans KR';
-}
 
 .hide {
     display: none;
@@ -104,3 +90,4 @@ input:focus {
 .border-red:focus ,.border-red{
     border: 1px solid #EE450C;
 }
+
