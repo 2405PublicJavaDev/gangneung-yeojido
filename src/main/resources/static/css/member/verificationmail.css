@@ -1,0 +1,104 @@
+@font-face {
+    font-family: 'BMDOHYEON';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 기본 스타일 */
+body {
+    margin: 0;
+    padding: 0;
+    /* font-family: Arial, sans-serif; */
+    /* background-color: #f4f4f4; */
+    /* color: #333333; */
+}
+
+.email-container {
+    max-width: 450px;
+    margin: 0 auto;
+    /* background-color: #ffffff; */
+}
+
+/* 헤더 */
+.title {
+    padding: 40px 20px;
+    background-color: #007FFF;
+}
+
+.title h1 {
+    margin: 0;
+    color: #000000;
+    font-size: 26px;
+    font-family: BMDOHYEON;
+}
+
+/* 본문 */
+.content {
+    padding: 40px 20px;
+    background-color: #333333;
+    color: #ffffff;
+}
+
+.content h2 {
+    margin: 0 0 20px 0;
+    font-size: 20px;
+    font-weight: normal;
+    font-family: 'Noto Sans KR';
+}
+
+.content p {
+    margin: 0 0 20px 0;
+    font-size: 16px;
+    font-family: 'Noto Sans KR';
+}
+
+/* 인증 정보 */
+.verification-info {
+    margin: 20px 0;
+}
+
+.verification-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    position: relative;
+}
+
+.verification-label {
+    position: absolute;
+    left: 0;
+    color: #cccccc;
+}
+
+.verification-value {
+    color: #4dabf7;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+}
+
+span{
+    font-family: 'Noto Sans KR';
+}
+
+/* 구분선 */
+.divider {
+    border: none;
+    border-top: 1px solid #555555;
+    margin: 10px 0;
+}
+
+/* 푸터 */
+.footer {
+    padding: 20px;
+    background-color: #333333;
+    color: #cccccc;
+    font-size: 12px;
+    text-align: center;
+}
+
+.footer p {
+    font-family: 'Noto Sans KR';
+}
