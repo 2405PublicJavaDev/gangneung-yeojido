@@ -4,10 +4,6 @@
       layout:decorate="~{layouts/my-page}"
       layout:decorator="layout">
 <th:block layout:fragment="script">
-  <script type="text/javascript" src="/js/main/mapdata.js"></script>
-  <script type="text/javascript" src="/js/main/mapconfig.js"></script>
-  <script type="text/javascript" src="/js/main/mapmanipulate.js"></script>
-  <script type="text/javascript" src="/js/main/index.js"></script>
 </th:block>
 <th:block layout:fragment="css">
   <link rel="stylesheet" href="/css/myPage/myqna-detail.css">
@@ -20,9 +16,9 @@
     <div class="question-container" th:each="qna : ${qnaDetail}">
       <h3><strong th:text="${qna.memberId}"></strong>님께서 문의하신 내용입니다.</h3><br>
       <strong>제목</strong>
-      <p th:text="${qna.qnaSubject}"></p>
+      <p th:text="${qna.qnaSubject}"></p><br>
       <strong>내용</strong>
-      <p th:text="${qna.qnaContent}"></p>
+      <p th:text="${qna.qnaContent}"></p><br>
       <!-- 첨부파일 영역 -->
       <div class="attachments">
         <strong>첨부파일</strong>
@@ -36,22 +32,50 @@
       <!-- 관리자 답변이 있으면 답변 내용 출력 -->
       <div class="answer-container" th:if="${qna.answerNo != null}">
         <strong>답변 제목</strong>
-        <p><span th:text="${qna.answerSubject}"></span></p>
+        <p><span th:text="${qna.answerSubject}"></span></p><br>
         <strong>답변 내용</strong>
-        <p th:text="${qna.answerContent}"></p>
+        <p th:text="${qna.answerContent}"></p><br>
       </div>
 
       <!-- 답변이 없으면 메시지 출력 -->
       <div class="no-answer" th:if="${qna.answerNo == null}">
-        <p>아직 답변이 등록되지 않았습니다.</p>
+        <p class="not-yet">아직 답변이 등록되지 않았습니다.</p>
+        <p>곧 답변을 등록해드리겠습니다. </p>
       </div>
-
-    </div>
-
-    <!-- 목록으로 돌아가기 버튼 -->
-    <div class="button-container">
-      <a href="/myqna" class="btn-back">목록으로</a>
     </div>
   </div>
+    <!-- 삭제 및 목록으로 버튼 -->
+    <div class="button-container">
+      <!-- 삭제 버튼 -->
+      <button type="button" class="btn btn-delete" onclick="confirmDelete()">삭제</button>
+      <!-- 목록으로 돌아가는 버튼 -->
+      <button type="button" class="btn btn-back"><a href="/myqna" class="btn btn-back">목록으로</a></button>
+    </div>
+    <script type="text/javascript">
+      function confirmDelete() {
+        if (confirm('정말 삭제하시겠습니까?')) {
+          // 삭제를 확인하면, DELETE 요청을 보냄
+          const qnaNo = [[${qnaDetail[0].qnaNo}]]; // QnA 번호를 가져옴
+          fetch(`/myqna/${qnaNo}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }).then(response => {
+            if (response.ok) {
+              // 삭제 후 목록 페이지로 리다이렉트
+              window.location.href = '/myqna';
+            } else {
+              alert('삭제 중 오류가 발생했습니다.');
+            }
+          }).catch(error => {
+            console.error('Error:', error);
+            alert('삭제 중 오류가 발생했습니다.');
+          });
+        }
+      }
+    </script>
+
+
 </main>
 </html>

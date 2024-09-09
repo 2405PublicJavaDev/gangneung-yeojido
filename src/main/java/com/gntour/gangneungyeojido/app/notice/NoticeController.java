@@ -3,6 +3,7 @@ package com.gntour.gangneungyeojido.app.notice;
 import com.gntour.gangneungyeojido.app.notice.dto.NoticeSearchCondition;
 import com.gntour.gangneungyeojido.domain.notice.service.NoticeService;
 import com.gntour.gangneungyeojido.domain.notice.vo.Notice;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -50,10 +51,16 @@ public class NoticeController {
      * 관련 기능 : [공지사항 기능] 공지사항 세부 사항 조회
      */
     @GetMapping("/notice/{noticeNo}")
-    public String showNoticeDetailPage(Model model
+    public String showNoticeDetailPage(Model model, HttpSession session
             , @PathVariable("noticeNo") Long noticeNo){
         Notice notice = noticeService.getDetailNotice(noticeNo);
         model.addAttribute("notice", notice);
+        // 세션에서 사용자 역할을 가져옴
+        String memberRole = (String) session.getAttribute("MEMBER_ROLE");
+        if (memberRole == null) {
+            memberRole = "USER";  // 기본적으로 비회원은 일반 사용자로 처리
+        }
+        model.addAttribute("memberRole", memberRole);
         return "notice/notice-detail";
     }
     /**

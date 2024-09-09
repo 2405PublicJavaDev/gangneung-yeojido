@@ -25,17 +25,17 @@
                 <h3><p th:text="${memberName} + '님께서 남기신 1:1 문의내역 입니다.'"></p></h3>
                 <table class="common-table">
                     <tr>
-                        <th>글제목</th>
-                        <th>문의 작성날짜</th>
+                        <th>등록일</th>
+                        <th>제목</th>
                         <th>답변 상태</th>
-                        <th>답변 작성날짜</th>
+                        <th>답변 등록일</th>
                     </tr>
                     <tr th:each="qna : ${myqnaList}">
+                        <td th:text="${#dates.format(qna.qnaRegDate, 'yyyy-MM-dd')}"></td>
                         <td>
                             <a th:href="@{/myqna/{qnaNo}(qnaNo=${qna.qnaNo})}" th:text="${qna.qnaSubject}"></a>
                         </td>
-                        <td th:text="${#dates.format(qna.qnaRegDate, 'yyyy-MM-dd')}"></td>
-                        <td th:text="${qna.answerNo != null ? '답변 완료' : '미답변'}"></td>
+                        <td th:text="${qna.answerNo != null ? '답변 완료' : '대기중'}"></td>
                         <td th:text="${qna.answerRegDate != null ? #dates.format(qna.answerRegDate, 'yyyy-MM-dd') : '-'}"></td>
                     </tr>
                 </table>
@@ -43,7 +43,7 @@
         </div>
 
         <div class="register-btn">
-            <button><a th:href="@{/myqna/register}">문의사항 작성</a></button>
+            <button><a th:href="@{/myqna/register}">문의 등록</a></button>
         </div>
     </div>
 </main>

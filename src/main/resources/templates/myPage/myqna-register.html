@@ -5,11 +5,29 @@
       layout:decorator="layout">
 <th:block layout:fragment="script">
   <script type="text/javascript" src="/js/file-upload.js"></script>
-  <script type="text/javascript" src="/js/main/mapdata.js"></script>
-  <script type="text/javascript" src="/js/main/mapconfig.js"></script>
-  <script type="text/javascript" src="/js/main/mapmanipulate.js"></script>
-  <script type="text/javascript" src="/js/main/index.js"></script>
-  <script type="text/javascript" src="/js/member/myqna-register.js"></script>
+  <script type="text/javascript">
+    document.getElementById("uploadForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const formTag = document.querySelector("#uploadForm");
+      const formData = new FormData(formTag);
+      inputFileDataHandler['qna-upload'].inputFileData.forEach(file => {
+        formData.append('uploadFile', file);
+      });
+      ajax({
+                url: '/myqna/register',
+                method: 'post',
+                payload: formData,
+                isMultipart: true
+              },
+              (response) => {
+                console.log('response', response);
+                location.href="/myqna/" + response.qnaNo;
+              },
+              (error) => {
+                console.log('error',error)}
+      );
+    });
+  </script>
 </th:block>
 <th:block layout:fragment="css">
   <link rel="stylesheet" href="/css/file-upload.css">
@@ -17,7 +35,7 @@
 </th:block>
 <main layout:fragment="content">
   <div>
-    <form id="uploadForm" action="/myqna/register" method="post">
+    <form id="uploadForm">
       <div class="my-subject">
         <h1>나의 문의사항 등록</h1>
         <input type="hidden" value="{memberId}">
@@ -29,28 +47,22 @@
           </div>
           <b>내용</b>
           <textarea name="qnaContent" required class="common-input content-input" id="qna-content" placeholder="내용을 입력해주세요"></textarea>
-          <div class="file-upload">
+          <div class="file-upload" id="register-diary-file-upload">
             <input type="file" accept="image/*" multiple>
-            <button type="button" id="uploadBtn">이미지 추가</button>
-            <div id="file-thumbnail-root">
+            <button type="button" id="uploadBtn" class="upload-image-btn">이미지 추가</button>
+            <div class="file-thumbnail-root">
             </div>
             <dialog class="imgDialog">
               <img>
             </dialog>
           </div>
         </div>
-        <div class="register-btn">
-          <button type="submit" class="register" id="submit-btn">등록</button>
-          <button type="button" class="cancel" onclick="history.back()">취소</button>
+        <div class="register-btn ">
+          <button type="submit" class="register submit-button" id="submit-btn">등록</button>
+          <button type="button" class="cancel submit-button" onclick="history.back()">취소</button>
         </div>
       </div>
     </form>
   </div>
-    <script>
-      document.getElementById("uploadForm").addEventListener("submit", function(e) {
-        // 제출 버튼을 비활성화하여 중복 제출 방지
-        document.getElementById("submit-btn").disabled = true;
-      });
-    </script>
 </main>
 </html>

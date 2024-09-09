@@ -1,7 +1,13 @@
 package com.gntour.gangneungyeojido.app.my;
 
+import com.gntour.gangneungyeojido.app.admin.dto.QnAResponse;
+import com.gntour.gangneungyeojido.app.member.dto.AddQnAResponse;
 import com.gntour.gangneungyeojido.app.my.dto.MyQnAResponse;
 import com.gntour.gangneungyeojido.common.MemberUtils;
+import com.gntour.gangneungyeojido.common.exception.BusinessException;
+import com.gntour.gangneungyeojido.common.exception.ErrorCode;
+import com.gntour.gangneungyeojido.domain.notice.service.NoticeService;
+import com.gntour.gangneungyeojido.domain.notice.vo.Notice;
 import com.gntour.gangneungyeojido.domain.qna.service.QnAService;
 import com.gntour.gangneungyeojido.domain.qna.vo.QnA;
 import com.gntour.gangneungyeojido.domain.qna.vo.QnAFile;
@@ -20,12 +26,17 @@ import java.util.List;
 @Slf4j
 public class MyQnAController {
     private final QnAService qnaService;
+    private final NoticeService noticeService;
     /**
      * 담당자 : 김윤경님
      * 관련 기능 : [마이페이지 기능] 문의 내역(QnA) 리스트 조회
      */
     @GetMapping("/myqna")
     public String showMyQnAListPage(HttpSession session, Model model){
+        String memberId = MemberUtils.getMemberIdFromSession(session);
+        if(memberId == null){
+            return "redirect:/login";
+        }
         List<MyQnAResponse> myqnaList = qnaService.getAllQnAAnswerByMember(MemberUtils.getMemberIdFromSession(session));
         model.addAttribute("myqnaList", myqnaList);
         model.addAttribute("memberName", MemberUtils.getMemberIdFromSession(session));
@@ -38,6 +49,10 @@ public class MyQnAController {
      */
     @GetMapping("/myqna/{qnaNo}")
     public String showMyDetailQnAPage(@PathVariable Long qnaNo, HttpSession session, Model model){
+        String memberId = MemberUtils.getMemberIdFromSession(session);
+        if(memberId == null){
+            return "redirect:/login";
+        }
         // 해당 QnA 디테일 정보를 가져오는 메서드 호출
         List<MyQnAResponse> qnaDetail = qnaService.getOneQnADetailByQnANo(qnaNo);
         List<QnAFile> qnaFiles = qnaService.getQnAFilesByQnANo(qnaNo);
@@ -50,7 +65,11 @@ public class MyQnAController {
      * 관련 기능 : [마이페이지 기능(페이지 폼)] 문의 내역(QnA) 등록
      */
     @GetMapping("/myqna/register")
-    public String showAddQnAPage(){
+    public String showAddQnAPage(HttpSession session){
+        String memberId = MemberUtils.getMemberIdFromSession(session);
+        if(memberId == null){
+            return "redirect:/login";
+        }
         return "myPage/myqna-register";
     }
     /**
@@ -58,21 +77,39 @@ public class MyQnAController {
      * 관련 기능 : [마이페이지 기능] 문의 내역(QnA) 등록
      */
     @PostMapping("/myqna/register")
-    public String addQnA(@ModelAttribute QnA qna, HttpSession session,
-                         @RequestParam(value = "uploadFile", required = false) List<MultipartFile> uploadFiles) {
+    @ResponseBody
+    public AddQnAResponse addQnA(@ModelAttribute QnA qna, HttpSession session,
+                                 @RequestParam(value = "uploadFile", required = false) List<MultipartFile> uploadFiles) {
         qna.setMemberId(MemberUtils.getMemberIdFromSession(session));
-        // QnA 등록
         int result = qnaService.addQnA(qna, uploadFiles);
-        // 성공적으로 등록된 경우에 디테일 페이지로 리다이렉트
+        AddQnAResponse res = new AddQnAResponse();
         if (result > 0) {
-            return "redirect:/myqna/" + qna.getQnaNo();  // 디테일 페이지로 리다이렉트
+            res.setQnaNo(qna.getQnaNo());
+        } else {
+            throw new BusinessException(ErrorCode.NO_UPDATE);
         }
-        // 실패한 경우
-        return "myPage/myqna-register";  // 등록 페이지로 다시 리다이렉트
+        return res;
     }
     /**
      * 담당자 : 김윤경님
      * 관련 기능 : [마이페이지 기능] 문의 내역(QnA) 삭제
      */
-    public void removeQnA(){};
+    @PostMapping("/myqna/{qnaNo}")
+    public String removeQnA(@PathVariable Long qnaNo, HttpSession session) {
+        String memberId = MemberUtils.getMemberIdFromSession(session);
+        // QnA 삭제 (답변과 첨부파일도 함께 삭제)
+        qnaService.removeQnA(qnaNo, memberId);
+        return "redirect:/myqna";  // 삭제 후 목록 페이지로 리다이렉트
+    }
+    /**
+     * 담당자 : 김윤경님
+     * 관련 기능 : [푸터 기능] 주요 공지사항 리스트 조회
+     */
+    @ModelAttribute
+    public String getImportantNoticeList(Model model){
+        List<Notice> importantNotices = noticeService.getImportantNotices();
+        model.addAttribute("footerImportantNotices", importantNotices);
+        return "fragments/footer";
+    }
+
 }
