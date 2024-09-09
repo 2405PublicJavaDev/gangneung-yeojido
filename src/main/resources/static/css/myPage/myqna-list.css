@@ -83,12 +83,14 @@ h1 {
 }
 
 .register-btn button {
-    padding: 10px 20px;
-    background-color: #28a745;
-    border: none;
-    border-radius: 3px;
+    background-color: #007FFF;
+    width: 20%;
+    padding: 10px;
     color: white;
+    border: none;
+    border-radius: 30px;
     cursor: pointer;
+    font-family: "Noto Sans KR";
 }
 
 .register-btn button a {
@@ -97,7 +99,7 @@ h1 {
 }
 
 .register-btn button:hover {
-    background-color: #218838;
+    background-color: #3399FF;
 }
 
 .my-info {

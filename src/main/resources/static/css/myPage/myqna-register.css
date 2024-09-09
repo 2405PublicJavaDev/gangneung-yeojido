@@ -65,31 +65,17 @@ button:hover {
     overflow: hidden;
     margin: 10px;
 }
-.file-upload input[type=file] {
-    position: absolute;
-    left: 0;
-    top: 0;
-    opacity: 0;
-    cursor: pointer;
-    width: 100%;
-    height: 100%;
-}
-.file-upload-btn {
+
+.uploadBtn {
     border: none;
     color: white;
     background-color: #4CAF50;
-    padding: 12px 24px;
-    border-radius: 25px;
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 12px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
-.file-upload-btn:hover {
+.uploadBtn:hover {
     background-color: #45a049;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    transform: translateY(-2px);
 }
 
 table {
