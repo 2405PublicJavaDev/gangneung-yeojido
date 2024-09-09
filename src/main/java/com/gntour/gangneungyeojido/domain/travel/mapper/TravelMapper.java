@@ -1,5 +1,6 @@
 package com.gntour.gangneungyeojido.domain.travel.mapper;
 
+import com.gntour.gangneungyeojido.app.travel.dto.TravelListResponse;
 import com.gntour.gangneungyeojido.app.travel.dto.TravelListSearchCondition;
 import com.gntour.gangneungyeojido.domain.review.vo.Review;
 import com.gntour.gangneungyeojido.app.admin.dto.ReqMarkAddRequest;
@@ -19,7 +20,7 @@ public interface TravelMapper {
     List<TravelInfo> selectAllTravels();
     List<TravelInfo> selectAllThisMonthTravels();
     int selectAllTravelsCount(TravelListSearchCondition condition);
-    List<TravelInfo> selectAllTravelsPage(int currentPage, TravelListSearchCondition condition,RowBounds rowBounds);
+    List<TravelListResponse> selectAllTravelsPage(int currentPage, TravelListSearchCondition condition, RowBounds rowBounds);
     TravelInfo selectOneTravel(Long travelNo);
     List<ReqMarkAdd> selectAllRequestMark(int currentPage, RowBounds rowBounds);
     int selectAllRequestMarkCount();

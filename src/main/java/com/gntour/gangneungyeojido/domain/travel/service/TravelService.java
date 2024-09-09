@@ -2,6 +2,7 @@ package com.gntour.gangneungyeojido.domain.travel.service;
 
 import com.gntour.gangneungyeojido.app.admin.dto.ReqMarkAddRequest;
 import com.gntour.gangneungyeojido.app.main.dto.ReqMarkAddInMainRequest;
+import com.gntour.gangneungyeojido.app.travel.dto.TravelListResponse;
 import com.gntour.gangneungyeojido.app.travel.dto.TravelListSearchCondition;
 import com.gntour.gangneungyeojido.app.travel.dto.TravelSearchCondition;
 import com.gntour.gangneungyeojido.common.Page;
@@ -22,7 +23,7 @@ public interface TravelService {
     /**
      * 여행지 정보 Page Service
      */
-    Page<TravelInfo, TravelListSearchCondition> getAllTravelsPage(int currentPage, int boardLimit, TravelListSearchCondition condition);
+    Page<TravelListResponse, TravelListSearchCondition> getAllTravelsPage(int currentPage, int boardLimit, TravelListSearchCondition condition);
     TravelInfo getDetailTravel(Long travelNo);
     List<TravelInfo> getThisMonthTravel();
 
