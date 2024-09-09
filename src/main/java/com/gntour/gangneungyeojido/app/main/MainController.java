@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gntour.gangneungyeojido.app.admin.dto.ReqMarkAddRequest;
 import com.gntour.gangneungyeojido.app.main.dto.ReqMarkAddInMainRequest;
+import com.gntour.gangneungyeojido.common.MemberStatus;
 import com.gntour.gangneungyeojido.common.MemberUtils;
 import com.gntour.gangneungyeojido.common.exception.BusinessException;
 import com.gntour.gangneungyeojido.common.exception.EmptyResponse;
@@ -46,7 +47,10 @@ public class MainController {
      * 관련기능: [메인 기능(페이지 폼)] 마커 승인 요청
      */
     @GetMapping("/mark-request")
-    public String showAddReqMarkerPage() {
+    public String showAddReqMarkerPage(HttpSession session) {
+        if(MemberUtils.getMemberIdFromSession(session) == null) {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
         return "main/mark-request";
     }
 
@@ -67,6 +71,12 @@ public class MainController {
     @PostMapping("/mark-request")
     @ResponseBody
     public EmptyResponse addReqMarker(HttpSession session, @RequestBody @Valid ReqMarkAddInMainRequest req) {
+        if(MemberUtils.getMemberIdFromSession(session) == null) {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
+        if(MemberUtils.getMemberStatusFromSession(session) == MemberStatus.BLACK) {
+            throw new BusinessException(ErrorCode.BLACK_LIST);
+        }
         req.setMemberId(MemberUtils.getMemberIdFromSession(session));
         int result = travelService.addRequestMark(req);
         if(result == 0) {

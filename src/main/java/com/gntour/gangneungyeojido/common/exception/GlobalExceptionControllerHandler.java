@@ -19,6 +19,7 @@ import java.util.regex.Pattern;
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionControllerHandler {
+    private static final String ERROR_PAGE_CODE = "code";
     private static final String ERROR_PAGE_MSG = "msg";
     private static final String ERROR_PAGE = "common/error";
     private static final Pattern UNIQUE_PATTERN = Pattern.compile("ORA-00001: unique constraint \\(([^)]+)\\) violated");
@@ -34,6 +35,7 @@ public class GlobalExceptionControllerHandler {
             final ErrorResponse response = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE, ex.getBindingResult());
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
+        model.addAttribute(ERROR_PAGE_CODE, ErrorCode.INVALID_INPUT_VALUE);
         model.addAttribute(ERROR_PAGE_MSG, ex.getMessage());
         return ERROR_PAGE;
     }
@@ -52,6 +54,7 @@ public class GlobalExceptionControllerHandler {
             final ErrorResponse response = ErrorResponse.of(e.getErrorCode());
             return new ResponseEntity<>(response, e.getErrorCode().getStatus());
         }
+        model.addAttribute(ERROR_PAGE_CODE,  e.getErrorCode());
         model.addAttribute(ERROR_PAGE_MSG, e.getMessage());
         return ERROR_PAGE;
     }
@@ -69,6 +72,7 @@ public class GlobalExceptionControllerHandler {
             final ErrorResponse response = ErrorResponse.of(ErrorCode.DUPLICATE_VALUE, additionalMessage);
             return new ResponseEntity<>(response, ErrorCode.DUPLICATE_VALUE.getStatus());
         }
+        model.addAttribute(ERROR_PAGE_CODE, ErrorCode.DUPLICATE_VALUE);
         model.addAttribute(ERROR_PAGE_MSG, e.getMessage());
         return ERROR_PAGE;
     }
@@ -88,6 +92,8 @@ public class GlobalExceptionControllerHandler {
             final ErrorResponse response = ErrorResponse.of(ErrorCode.DATE_PARSE_ERROR, e.getMessage());
             return new ResponseEntity<>(response, ErrorCode.DATE_PARSE_ERROR.getStatus());
         }
+        model.addAttribute(ERROR_PAGE_CODE, ErrorCode.DATE_PARSE_ERROR);
+        model.addAttribute(ERROR_PAGE_MSG, e.getMessage());
         return ERROR_PAGE;
     }
 
@@ -101,12 +107,16 @@ public class GlobalExceptionControllerHandler {
             final ErrorResponse response = ErrorResponse.of(ErrorCode.INTERNAL_SERVER_ERROR);
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        model.addAttribute(ERROR_PAGE_CODE, ErrorCode.INTERNAL_SERVER_ERROR);
         model.addAttribute(ERROR_PAGE_MSG, "심각한 서버 에러 발생 반드시 조치하세요");
         return ERROR_PAGE;
     }
 
     private boolean isAjax(HttpServletRequest request) {
         String contentTypeHeader = request.getHeader("Content-Type");
+        if(contentTypeHeader == null) {
+            return false;
+        }
         if(contentTypeHeader.startsWith("multipart/form-data")) {
             return true;
         }
