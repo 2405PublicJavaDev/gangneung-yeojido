@@ -5,12 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class TravelListSearchCondition {
     private String travelName;
-    private String region;
-    private String category;
+    private List<String> region;
+    private List<String> category;
 }

@@ -13,12 +13,45 @@
             currentPage = 1;
         }
     </script>
+    <script type="text/javascript" src="/js/main/mapdata.js"></script>
+    <script type="text/javascript" src="/js/travel/travel-mapconfig.js"></script>
+    <script type="text/javascript" src="/js/travel/travel-mapmanipulate.js"></script>
     <script type="text/javascript" src="/js/travel/travel-list.js"></script>
 </th:block>
 <th:block layout:fragment="css">
     <link href="/css/travel/travel-list.css" rel="stylesheet">
+    <link href="/css/travel/travel-list-category-popup.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/c04d10f9dd.js" crossorigin="anonymous"></script>
 </th:block>
+<div layout:fragment="dialogs">
+    <!--카테고리 선택 팝업-->
+    <div class="dialog-bg dialog-noshow" id="category-popup">
+            <div class="white-bg dialog-main-root">
+                <div class="dialog-main-content">
+                    <div class="dialog-section">
+                        <span>지역</span>
+                        <canvas id="myCanvas" width="225" height="300"></canvas>
+                    </div>
+                    <div class="dialog-section">
+                        <span>분류</span>
+                        <div class="travel-list-category-row">
+                            <button type="button" class="travel-list-category-btn" id="categoryMOUNTAIN">산·트래킹</button>
+                            <button type="button" class="travel-list-category-btn" id="categorySEA">바다·해안</button>
+                        </div>
+                        <div class="travel-list-category-row">
+                            <button type="button" class="travel-list-category-btn" id="categoryPARK">호수·공원</button>
+                            <button type="button" class="travel-list-category-btn" id="categoryHISTORY">역사·유적</button>
+                        </div>
+                        <div class="travel-list-category-row">
+                            <button type="button" class="travel-list-category-btn" id="categoryDISPLAY">전시</button>
+                            <button type="button" class="travel-list-category-btn" id="categoryLEISURE">레저·체험</button>
+                        </div>
+                    </div>
+                </div>
+                <button id="apply-btn">필터 적용</button>
+            </div>
+    </div>
+</div>
 <main layout:fragment="content">
     <div id="main-top">
 
@@ -35,7 +68,7 @@
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
             </div>
-            <button id="condition-btn" class="btn-icon" type="submit">
+            <button id="condition-btn" class="btn-icon" type="button">
                 <i class="fa-solid fa-sliders"></i>
             </button>
         </div>
