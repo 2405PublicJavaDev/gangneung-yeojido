@@ -89,8 +89,14 @@ public class MyDiaryController {
      * 담당자 : 백인호님
      * 관련 기능 : [마이페이지 기능(페이지 폼)] 나의 여행 기록 수정
      */
-    @GetMapping("/modify-diary")
-    public String showUpdateMyDiaryPage(Model model,HttpSession session){
+    @GetMapping("/modify-diary/{diaryNo}")
+    public String showUpdateMyDiaryPage(
+            @PathVariable int diaryNo,
+            HttpSession session,
+            Model model
+    ){
+        TravelDiary travelDiary = travelDiaryService.getDetailDiaryByMember(diaryNo,MemberUtils.getMemberIdFromSession(session));
+        model.addAttribute("travelDiary", travelDiary);
         return "/myPage/modify-myDiary";
     };
 
