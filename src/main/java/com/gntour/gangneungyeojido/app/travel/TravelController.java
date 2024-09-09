@@ -41,8 +41,8 @@ public class TravelController {
     public String showTravelListPage(
             @RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,
             @RequestParam(value = "travelName", required = false) String travelName,
-            @RequestParam(value = "region", required = false) String region,
-            @RequestParam(value = "category", required = false) String category,
+            @RequestParam(value = "region", required = false) List<String> region,
+            @RequestParam(value = "category", required = false) List<String> category,
             Model model
     ) {
         model.addAttribute("currentPage", currentPage);
@@ -61,8 +61,8 @@ public class TravelController {
     public Page<TravelInfo, TravelListSearchCondition> getTravelList(
             @RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,
              @RequestParam(value = "travelName", required = false) String travelName,
-            @RequestParam(value = "region", required = false) String region,
-            @RequestParam(value = "category", required = false) String category
+            @RequestParam(value = "region", required = false) List<String> region,
+            @RequestParam(value = "category", required = false) List<String> category
             ) {
         return travelService.getAllTravelsPage(currentPage, 12,new TravelListSearchCondition(travelName, region, category));
     }

@@ -32,11 +32,21 @@
             <if test="condition.travelName != null">
                 AND TRAVEL_NAME LIKE '%' || #{condition.travelName} || '%'
             </if>
-            <if test="condition.region != null">
-                AND REGION = #{condition.region}
+
+            <if test="condition.region != null and condition.region.size > 0">
+                AND (
+                <foreach collection="condition.region" item="reg" separator="OR">
+                    REGION = #{reg}
+                </foreach>
+                )
             </if>
-            <if test="condition.category != null">
-                AND CATEGORY = #{condition.category}
+
+            <if test="condition.category != null and condition.category.size > 0">
+                AND (
+                <foreach collection="condition.category" item="cat" separator="OR">
+                    CATEGORY = #{cat}
+                </foreach>
+                )
             </if>
         </where>
         ORDER BY TRAVEL_NO DESC
@@ -48,11 +58,21 @@
             <if test="travelName != null">
                 AND TRAVEL_NAME LIKE '%' || #{travelName} || '%'
             </if>
-            <if test="region != null">
-                AND REGION = #{region}
+
+            <if test="region != null and region.size > 0">
+                AND (
+                <foreach collection="region" item="reg" separator="OR">
+                    REGION = #{reg}
+                </foreach>
+                )
             </if>
-            <if test="category != null">
-                AND CATEGORY = #{category}
+
+            <if test="category != null and category.size > 0">
+                AND (
+                <foreach collection="category" item="cat" separator="OR">
+                    CATEGORY = #{cat}
+                </foreach>
+                )
             </if>
         </where>
     </select>

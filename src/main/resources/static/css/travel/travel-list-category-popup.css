@@ -1,0 +1,89 @@
+.dialog-bg {
+    width : 100%;
+    height : 100%;
+    position : fixed;
+    background : rgba(0,0,0,0.5);
+    z-index : 5;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.dialog-noshow {
+    display:none;
+}
+
+.white-bg {
+    background: white;
+    border-radius: 30px;
+    width: 800px;
+    position: relative;
+    text-align: center;
+}
+
+.dialog-main-root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.dialog-main-content {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+}
+
+.dialog-section {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 50%;
+    padding: 20px;
+}
+
+.dialog-section:last-of-type {
+    background-color: #f4f6f9;
+    border-bottom-right-radius: 30px;
+    border-top-right-radius: 30px;
+}
+
+.dialog-section span{
+    font-weight: bold;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.travel-list-category-row {
+    margin-top: 10px;
+}
+.travel-list-category-btn {
+    cursor: pointer;
+    height: 50px;
+    width: 153px;
+    border-radius: 25px;
+    border: transparent;
+    background-color: white;
+    color: black;
+    font-size: 17px;
+    font-weight: bold;
+    box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.05);
+}
+
+#apply-btn {
+    width: 100%;
+    height: 60px;
+    background-color: #007FFF;
+    border: transparent;
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+canvas {
+    cursor: pointer;
+}

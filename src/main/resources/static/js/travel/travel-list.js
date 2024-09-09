@@ -1,13 +1,13 @@
 const getPage = (currentPage, travelName, region, category) => {
     let additionalQueryString = '';
-    if (travelName) {
+    if (travelName && travelName !== 'null' && travelName !== 'undefined') {
         additionalQueryString += '&travelName=' + travelName;
     }
-    if (region) {
-        additionalQueryString += '&region=' + region;
+    if (region  && region !== 'null' && region !== 'undefined') {
+        additionalQueryString += region;
     }
-    if (category) {
-        additionalQueryString += '&category=' + category;
+    if (category && category !== 'null' && category !== 'undefined') {
+        additionalQueryString += category;
     }
 
     const root = document.querySelector('#main-bottom');
@@ -45,21 +45,21 @@ const getPage = (currentPage, travelName, region, category) => {
                     if (response.hasPrev) {
                         paginationUlInnerHTML += `
                                 <li class="common-pagination-li-end">
-                                    <a href="javascript:void(0);" onclick="getPage(${response.prevPage}, ${travelName}, ${region}, ${category})">이전</a>
+                                    <a href="javascript:void(0);" onclick="getPage(${response.prevPage}, '${travelName}', '${region}', '${category}')">이전</a>
                                 </li>
                             `;
                     }
                     for (let i = response.startNavi; i <= response.endNavi; i++) {
                         paginationUlInnerHTML += `
-                                <li class="${i == response.currentPage ? 'common-pagination-li common-pagination-li-active' : 'common-pagination-li'}">
-                                    <a href="javascript:void(0);" onclick="getPage(${i}, ${travelName}, ${region}, ${category})">${i}</a>
+                                <li class="${i == currentPage ? 'common-pagination-li common-pagination-li-active' : 'common-pagination-li'}">
+                                    <a href="javascript:void(0);" onclick="getPage(${i}, '${travelName}', '${region}', '${category}')">${i}</a>
                                 </li>
                             `;
                     }
                     if (response.hasNext) {
                         paginationUlInnerHTML += `
                                 <li class="common-pagination-li-end">
-                                    <a href="javascript:void(0);" onclick="getPage(${response.nextPage}, ${travelName}, ${region}, ${category})">다음</a>
+                                    <a href="javascript:void(0);" onclick="getPage(${response.nextPage}, '${travelName}', '${region}', '${category}')">다음</a>
                                 </li>
                             `;
                     }
@@ -67,8 +67,10 @@ const getPage = (currentPage, travelName, region, category) => {
                     root.appendChild(paginationUl);
 
                     setTimeout(() => {
-                        document.querySelector(".travels").style.opacity = '1';
-                        document.querySelector(".travels").style.transform = 'translateY(0)';
+                        if(document.querySelector(".travels")) {
+                            document.querySelector(".travels").style.opacity = '1';
+                            document.querySelector(".travels").style.transform = 'translateY(0)';
+                        }
                     }, 50);
 
                     const icons = document.querySelectorAll('.fa-bookmark');
@@ -141,3 +143,72 @@ document.querySelector('#search-btn').addEventListener('click', (e) => {
     e.preventDefault();
     getPage(1, document.querySelector('#search-text').value, null, null);
 });
+
+document.querySelector('#condition-btn').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.querySelector('#category-popup').classList.remove('dialog-noshow');
+})
+
+document.querySelector('#apply-btn').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.querySelector('#category-popup').classList.add('dialog-noshow');
+});
+
+const buttons = document.querySelectorAll('button[id^="category"]');
+const buttonBackground = new Map();
+buttonBackground.set("MOUNTAIN", "#00A155");
+buttonBackground.set("SEA", "#007FFF");
+buttonBackground.set("PARK", "#FF7E04");
+buttonBackground.set("HISTORY", "#A064FF");
+buttonBackground.set("DISPLAY", "#FF4274");
+buttonBackground.set("LEISURE", "#18BDAA");
+// 각 버튼에 대해 이벤트를 추가합니다.
+buttons.forEach(button => {
+    // id에서 'category' 이후의 부분을 추출합니다.
+    const idSuffix = button.id.replace('category', '');
+
+    // 이벤트 리스너를 추가합니다. (여기서는 예시로 클릭 이벤트를 사용합니다.)
+    button.addEventListener('click', () => {
+        // 추가적인 동작을 여기에 작성할 수 있습니다.
+        const index = selectedCategory.indexOf(idSuffix);
+        if (index !== -1) {
+            selectedCategory.splice(index, 1);
+            button.style.backgroundColor = '#FFFFFF';
+            button.style.color = '#000000';
+        } else {
+            selectedCategory.push(idSuffix);
+            button.style.backgroundColor = buttonBackground.get(idSuffix);
+            button.style.color = '#FFFFFF';
+        }
+        applyFilter();
+    });
+});
+
+const applyFilter = () => {
+    let regionString = null;
+    if(selectedRegion.length > 0) {
+        regionString = "";
+        selectedRegion.forEach((region) => {
+            console.log(region);
+            if(region === '주문진권') {
+                regionString += "&region=JUMUNJIN";
+            } else if (region === '대관령권') {
+                regionString += "&region=DAEGWALLYEONG";
+            } else if (region === '시내권') {
+                regionString += "&region=CITY";
+            } else if (region === '정동진옥계권'){
+                regionString += "&region=JEONGDONGJIN";
+            } else if (region === '경포권') {
+                regionString += "&region=GYEONGPO";
+            }
+        })
+    }
+    let categoryString = null;
+    if(selectedCategory.length > 0) {
+        categoryString = "";
+        selectedCategory.forEach((category) => {
+            categoryString += "&category=" + category;
+        })
+    }
+    getPage(1, null, regionString,categoryString);
+}
