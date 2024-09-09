@@ -1,5 +1,6 @@
 package com.gntour.gangneungyeojido.app.admin;
 
+import com.gntour.gangneungyeojido.app.travel.dto.TravelListSearchCondition;
 import com.gntour.gangneungyeojido.common.exception.BusinessException;
 import com.gntour.gangneungyeojido.common.exception.EmptyResponse;
 import com.gntour.gangneungyeojido.common.exception.ErrorCode;
@@ -24,7 +25,7 @@ public class AdminTravelController {
      */
     @GetMapping("/admin/travel")
     public String showAllTravelPage(Model model, @RequestParam(value="currentPage", defaultValue = "1") Integer currentPage) {
-        model.addAttribute("page", travelService.getAllTravelsPage(currentPage, 10));
+        model.addAttribute("page", travelService.getAllTravelsPage(currentPage, 10, new TravelListSearchCondition()));
         return "admin/travel-list";
     }
 

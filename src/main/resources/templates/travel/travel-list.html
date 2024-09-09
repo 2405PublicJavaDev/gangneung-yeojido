@@ -4,6 +4,15 @@
       layout:decorate="~{layouts/default}"
       layout:decorator="layout">
 <th:block layout:fragment="script">
+    <script th:inline="javascript">
+        let currentPage = /*[[${currentPage}]]*/;
+        let travelName = /*[[${travelName}]]*/;
+        let region = /*[[${region}]]*/;
+        let category = /*[[${category}]]*/;
+        if(!currentPage) {
+            currentPage = 1;
+        }
+    </script>
     <script type="text/javascript" src="/js/travel/travel-list.js"></script>
 </th:block>
 <th:block layout:fragment="css">
@@ -12,64 +21,26 @@
 </th:block>
 <main layout:fragment="content">
     <div id="main-top">
+
         <h3>
             <span class="highlight">전체 관광지</span> 조회
             <p id="detail-text">강릉시의 모든 관광지를 확인할 수 있어요</p>
         </h3>
         <!--검색창-->
         <div id="search">
-            <form action="/travel/search-list" method="post">
-                <div class="search-box">
-                    <input class="input-text" id="search-text" type="text" placeholder="여행지 이름으로 검색해보세요"
-                        name="searchKeyword">
-                    <button id="search-btn" class="btn-icon" type="submit">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </button>
-                </div>
-                <button id="condition-btn" class="btn-icon" type="submit">
-                    <i class="fa-solid fa-sliders"></i>
+            <div class="search-box">
+                <input class="input-text" id="search-text" type="text" placeholder="여행지 이름으로 검색해보세요"
+                       name="searchKeyword">
+                <button id="search-btn" class="btn-icon" type="button">
+                    <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
-            </form>
+            </div>
+            <button id="condition-btn" class="btn-icon" type="submit">
+                <i class="fa-solid fa-sliders"></i>
+            </button>
         </div>
     </div>
     <div id="main-bottom">
-        <!--리스트 출력-->
-        <ul class="travels">
-            <li th:each="travel : ${page.data}">
-                <div class="travel-image">
-                    <a th:href="@{/travel/detail/{no}(no = ${travel.travelNo}, currentPage=${page.currentPage})}">
-                        <img class="thumbnail" alt="thumbnail"
-                             th:src="${travel.imageUrl != null ? travel.imageUrl : '/img/sample_img.png'}">
-                    </a>
-                </div>
-                <div class="travel-detail">
-                    <div class="travel-title">
-                        <a th:href="@{/travel/detail/{no}(no = ${travel.travelNo}, currentPage=${page.currentPage})}" th:text="${travel.travelName}"></a>
-                        <i class="fa-regular fa-bookmark"></i>
-                    </div>
-                    <div class="travel-address">
-                        <div class="address-left">
-                            <i class="fa-solid fa-location-dot"></i>
-                        </div>
-                        <div class="address-right">
-                            <span class="address-text" th:text="${travel.address}"></span>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ul>
-        <!--페이지네이션-->
-        <ul class="common-pagination">
-            <li class="common-pagination-li-end">
-                <a th:href="@{/travel/list(currentPage=${page.prevPage})}" th:if="${page.hasPrev}">이전</a>
-            </li>
-            <li th:classappend="${i == page.currentPage} ? 'common-pagination-li common-pagination-li-active' : 'common-pagination-li'" th:each="i : ${#numbers.sequence(page.startNavi, page.endNavi)}">
-                <a th:href="@{/travel/list(currentPage=${i})}" th:text="${i}"></a>
-            </li>
-            <li class="common-pagination-li-end">
-                <a th:href="@{/travel/list(currentPage=${page.nextPage})}" th:if="${page.hasNext}">다음</a>
-            </li>
-        </ul>
     </div>
 </main>
 </html>

@@ -2,6 +2,7 @@ package com.gntour.gangneungyeojido.domain.travel.service.impl;
 
 import com.gntour.gangneungyeojido.app.admin.dto.ReqMarkAddRequest;
 import com.gntour.gangneungyeojido.app.main.dto.ReqMarkAddInMainRequest;
+import com.gntour.gangneungyeojido.app.travel.dto.TravelListSearchCondition;
 import com.gntour.gangneungyeojido.common.Page;
 import com.gntour.gangneungyeojido.domain.review.vo.Review;
 import com.gntour.gangneungyeojido.domain.travel.mapper.TravelMapper;
@@ -28,8 +29,8 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public Page<TravelInfo, Void> getAllTravelsPage(int currentPage, int boardLimit) {
-        return Page.of(currentPage, travelMapper.selectAllTravelsCount(), travelMapper::selectAllTravelsPage, boardLimit,10);
+    public Page<TravelInfo, TravelListSearchCondition> getAllTravelsPage(int currentPage, int boardLimit, TravelListSearchCondition condition) {
+        return Page.of(currentPage, travelMapper.selectAllTravelsCount(condition), condition, travelMapper::selectAllTravelsPage, boardLimit,10);
     }
 
     @Override
