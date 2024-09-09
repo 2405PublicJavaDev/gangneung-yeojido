@@ -21,11 +21,15 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring6.SpringTemplateEngine;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -225,10 +229,28 @@ public class MemberController {
     @ResponseBody
     public EmptyResponse sendCheckCode(@RequestBody @Valid SendCheckCodeRequest req) {
         String validCode = VerificationCodeGenerator.generateVerificationCode();
+        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+        templateResolver.setPrefix("templates/");
+        templateResolver.setCacheable(false);
+        templateResolver.setSuffix(".html");
+        templateResolver.setTemplateMode("HTML");
+
+        // https://github.com/thymeleaf/thymeleaf/issues/606
+        templateResolver.setForceTemplateMode(true);
+
+        templateEngine.setTemplateResolver(templateResolver);
+
+        Context ctx = new Context();
+
+        ctx.setVariable("sendCode", validCode);
+
+        final String result = templateEngine.process("member/verificationmail", ctx);
+        log.info(result);
         emailService.sendMail(new EmailMessage(
                 req.getEmail(),
-                "[강릉여지도] 강릉여지도계정 가입 인증번호", // TODO 제목 지정하기
-                validCode // TODO 내용 지정하기
+                "[강릉여지도] 강릉여지도계정 가입 인증번호",
+                result
         ));
         emailValidService.addOrUpdateValidCode(req.getEmail(), validCode);
         return new EmptyResponse();
