@@ -25,9 +25,29 @@
         )
         WHERE ROWNUM <![CDATA[<]]>= 10
     </select>
-    <select id="selectAllTravelsPage" resultType="TravelInfo">
-        SELECT *
-        FROM TRAVEL_INFO
+    <select id="selectAllTravelsPage" resultType="TravelListResponse">
+        SELECT
+            T.TRAVEL_NO,
+            T.TRAVEL_NAME,
+            T.LATITUDE,
+            T.LONGITUDE,
+            T.ADDRESS,
+            T.PHONE,
+            T.USE_TIME,
+            T.PARK_FEE,
+            T.ENTRY_FEE,
+            T.USE_FEE,
+            T.INTRODUCE,
+            T.REGION,
+            T.CATEGORY,
+            T.ZOOM_LEVEL,
+            T.SITE_URL,
+            T.IMAGE_URL,
+            T.REG_DATE,
+            T.UPDATE_DATE,
+            F.FAVORITES_NO
+        FROM TRAVEL_INFO T
+        LEFT JOIN FAVORITES F ON F.TRAVEL_NO = T.TRAVEL_NO AND F.MEMBER_ID = #{condition.memberId}
         <where>
             <if test="condition.travelName != null">
                 AND TRAVEL_NAME LIKE '%' || #{condition.travelName} || '%'

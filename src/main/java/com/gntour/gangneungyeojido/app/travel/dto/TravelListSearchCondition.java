@@ -15,4 +15,5 @@ public class TravelListSearchCondition {
     private String travelName;
     private List<String> region;
     private List<String> category;
+    private String memberId;
 }

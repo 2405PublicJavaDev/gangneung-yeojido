@@ -1,6 +1,7 @@
 package com.gntour.gangneungyeojido.app.travel;
 
 import com.gntour.gangneungyeojido.app.travel.dto.ReviewResponse;
+import com.gntour.gangneungyeojido.app.travel.dto.TravelListResponse;
 import com.gntour.gangneungyeojido.app.travel.dto.TravelListSearchCondition;
 import com.gntour.gangneungyeojido.app.travel.dto.TravelSearchCondition;
 import com.gntour.gangneungyeojido.common.MemberUtils;
@@ -58,13 +59,15 @@ public class TravelController {
      */
     @GetMapping("/travel")
     @ResponseBody
-    public Page<TravelInfo, TravelListSearchCondition> getTravelList(
+    public Page<TravelListResponse, TravelListSearchCondition> getTravelList(
             @RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage,
              @RequestParam(value = "travelName", required = false) String travelName,
             @RequestParam(value = "region", required = false) List<String> region,
-            @RequestParam(value = "category", required = false) List<String> category
+            @RequestParam(value = "category", required = false) List<String> category,
+            HttpSession session
             ) {
-        return travelService.getAllTravelsPage(currentPage, 12,new TravelListSearchCondition(travelName, region, category));
+        String memberId = MemberUtils.getMemberIdFromSession(session);
+        return travelService.getAllTravelsPage(currentPage, 12,new TravelListSearchCondition(travelName, region, category, memberId));
     }
 
     /**
