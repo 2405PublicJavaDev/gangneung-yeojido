@@ -76,11 +76,13 @@ public class TravelController {
     @ResponseBody
     public ReviewResponse getMyReview(@PathVariable Long travelNo, HttpSession session) {
         String memberId = MemberUtils.getMemberIdFromSession(session);
-        ReviewResponse reviewResponse = new ReviewResponse();
         if(memberId != null) {
-            reviewResponse = reviewService.getMyReview(travelNo, memberId);
+            ReviewResponse reviewResponse = reviewService.getMyReview(travelNo, memberId);
+            if(reviewResponse != null) {
+                return reviewResponse;
+            }
         }
-        return reviewResponse;
+        return new ReviewResponse();
     }
 
     /**
@@ -108,7 +110,7 @@ public class TravelController {
     public EmptyResponse addReview(HttpSession session
            , Model model
            , @ModelAttribute @Valid Review review
-           , @RequestParam("uploadFile") List<MultipartFile> uploadFiles) {
+           , @RequestParam(value = "uploadFile", required = false) List<MultipartFile> uploadFiles) {
         String reviewWriter = MemberUtils.getMemberIdFromSession(session);
         review.setMemberId(reviewWriter);
         int result = reviewService.addReview(uploadFiles, review);
@@ -122,11 +124,36 @@ public class TravelController {
      * 담당자 : 엄태운님
      * 관련기능 : [여행지 기능] 여행지 리뷰 수정
      */
-    @PostMapping("/review/modify/{reviewNo}")
+    @GetMapping("/review/modify/{travelNo}")
     @ResponseBody
-    public void updateReview(Review review, @PathVariable Long reviewNo
-            , @RequestParam MultipartFile reloadFile) {
-        int result = reviewService.modifyReview(review);
+    public ReviewResponse modifyReview(@PathVariable Long travelNo, HttpSession session) {
+        String memberId = MemberUtils.getMemberIdFromSession(session);
+        log.info(memberId);
+        if(memberId == null) {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
+        ReviewResponse reviewResponse = reviewService.getMyReview(travelNo, memberId);
+        if(reviewResponse != null) {
+            return reviewResponse;
+        }
+        return new ReviewResponse();
+    }
+
+    /**
+     * 담당자 : 엄태운님
+     * 관련기능 : [여행지 기능] 여행지 리뷰 수정
+     */
+    @PutMapping("/review/modify")
+    @ResponseBody
+    public EmptyResponse updateReview(Review review
+            , @RequestParam(value = "reloadFile", required = false) List<MultipartFile> reloadFile, HttpSession session) {
+        String memberId = MemberUtils.getMemberIdFromSession(session);
+        if(memberId == null) {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
+        review.setMemberId(memberId);
+        int result = reviewService.modifyReview(review, reloadFile);
+        return new EmptyResponse();
     }
 
     /**
@@ -135,9 +162,9 @@ public class TravelController {
      */
     @DeleteMapping("/review/remove/{reviewNo}")
     @ResponseBody
-    public String removeReview(@PathVariable Long reviewNo) {
+    public EmptyResponse removeReview(@PathVariable Long reviewNo) {
         int result = reviewService.removeReview(reviewNo);
-        return "redirect:/travel/detail/{travelNo}";
+        return new EmptyResponse();
     }
 
     /**

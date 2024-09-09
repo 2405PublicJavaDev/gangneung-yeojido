@@ -34,6 +34,17 @@
     flex-direction: row;
     gap: 10px;
 }
+/*
+#file-thumbnail-root 와 정확히 같은 css
+중복코드인 것은 맞으나 호환성을 위해
+두개의 css 코드를 작성함
+*/
+.file-thumbnail-root {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
 .file-thumbnail-wrapper {
     height: 150px;
     width: 150px;

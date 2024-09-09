@@ -63,7 +63,7 @@
             height: 35px;
             display: flex;
         }
-         p {
+         .content-top p {
              width: 780px;
              height: 30px;
          }

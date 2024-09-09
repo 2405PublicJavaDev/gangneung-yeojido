@@ -45,6 +45,8 @@ const reviewToDom = (review) => {
 
     // 내가 쓴 리뷰는 수정, 삭제 버튼 / 아니면 신고 버튼
     if(review.memberId === memberId) {
+        personalId.innerHTML = "나의 리뷰";
+        personalId.style.fontWeight = 'bold';
         const modifyBtn = document.createElement('button');
         modifyBtn.className = 'select-btn';
         modifyBtn.id = 'modify-btn';
@@ -53,19 +55,20 @@ const reviewToDom = (review) => {
         modifyBtn.addEventListener('click', (e) => {
             e.preventDefault();
             ajax({
-                url: `/review/modify/${review.reviewNo}`,
+                url: `/review/modify/${travelNo}`,
                 method: 'GET'
             }, (response) => {
                 console.log(response);
+                document.querySelector('#review-update-no').value = response.reviewNo;
                 // 팝업 창 보여주기
                 document.querySelector('#review-update-popup').classList.remove('dialog-noshow');
 
                 // 가져온 데이터로 팝업 필드 채우기
                 document.querySelector('#review-content').value = response.reviewContent; // 리뷰 내용
-                document.querySelector('#rating-value').textContent = response.score.toFixed(1); // 리뷰 점수
+                document.querySelector('#rating-update-value').textContent = response.score.toFixed(1); // 리뷰 점수
 
                 // 별점 채우기
-                const stars = document.querySelectorAll('.fa-star');
+                const stars = document.querySelectorAll('#review-update-popup .fa-star');
                 const score = response.score;
 
                 stars.forEach((star, index) => {
@@ -82,6 +85,17 @@ const reviewToDom = (review) => {
                         star.classList.remove('fa-star-half-o');
                     }
                 });
+                
+                // 이미지 채우기
+                const updateThumbnailsAfterLoading = async () => {
+                    for (const reviewFile of response.reviewFiles) {
+                        await inputFileDataHandler['review-modify-file-upload'].loadImageFromURL(reviewFile.webPath);
+                    }
+                }
+                updateThumbnailsAfterLoading().then(() => {
+                    inputFileDataHandler['review-modify-file-upload'].thumbnailUpdate();
+                });
+                //
             }, (error) => {
                 console.log(error);
             });
@@ -321,7 +335,7 @@ const getReviews = (travelNo, curPage) => {
             registerBtn.textContent = '리뷰 작성';
             myReviewTag.appendChild(registerBtn);
             registerBtn.addEventListener('click', () => {
-                document.querySelector('#review-popup').classList.remove('dialog-noshow');
+                document.querySelector('#review-add-popup').classList.remove('dialog-noshow');
             });
         }
     }, (error) => {

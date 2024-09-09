@@ -117,6 +117,7 @@
                 r.REVIEW_NO = rf.REVIEW_NO
         WHERE TRAVEL_NO = #{travelNo}
         AND MEMBER_ID = #{memberId}
+        AND PARENT_REVIEW_NO IS NULL
         ORDER BY rf.FILE_ORDER ASC
     </select>
     <insert id="insertReview">
@@ -124,7 +125,7 @@
             SELECT SEQ_REVIEW_NO.NEXTVAL FROM DUAL
         </selectKey>
         INSERT INTO REVIEW(REVIEW_NO, SCORE, PARENT_REVIEW_NO, REVIEW_CONTENT, TRAVEL_NO, MEMBER_ID)
-        VALUES(#{reviewNo},#{score},#{reviewNo},#{reviewContent},#{travelNo},#{memberId})
+        VALUES(#{reviewNo},#{score},#{parentReviewNo},#{reviewContent},#{travelNo},#{memberId})
     </insert>
     <insert id="insertReviewFile">
         insert into REVIEW_FILE(REVIEW_FILE_NO, FILE_PATH, FILE_NAME, FILE_RENAME, REVIEW_NO, WEB_PATH, FILE_ORDER)
@@ -141,4 +142,12 @@
     <delete id="deleteReviewFile">
         delete from REVIEW_FILE WHERE REVIEW_NO = #{reviewNo}
     </delete>
+    <update id="updateReview">
+        UPDATE REVIEW
+        SET SCORE=#{score},
+            REVIEW_CONTENT=#{reviewContent},
+            UPDATE_DATE=SYSTIMESTAMP
+        WHERE REVIEW_NO=#{reviewNo}
+        AND MEMBER_ID=#{memberId}
+    </update>
 </mapper>
