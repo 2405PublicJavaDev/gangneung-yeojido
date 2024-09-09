@@ -10,6 +10,7 @@ import com.gntour.gangneungyeojido.domain.review.service.ReviewService;
 import com.gntour.gangneungyeojido.domain.review.vo.Review;
 import lombok.RequiredArgsConstructor;
 import com.gntour.gangneungyeojido.domain.review.vo.ReviewComplain;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +21,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class ReviewServiceImpl implements ReviewService {
     private final ReviewMapper rMapper;
     private final FileUtil fileUtil;
@@ -44,7 +46,9 @@ public class ReviewServiceImpl implements ReviewService {
     public int addReview(List<MultipartFile> uploadFile, Review review) {
         int result = rMapper.insertReview(review);
         try {
-            result += fileUtil.uploadFiles(UploadCategory.REVIEW, uploadFile, review.getReviewNo());
+            if(uploadFile != null && uploadFile.size() > 0) {
+                result += fileUtil.uploadFiles(UploadCategory.REVIEW, uploadFile, review.getReviewNo());
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -52,8 +56,18 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public int modifyReview(Review review) {
-        return rMapper.updateReview(review);
+    public int modifyReview(Review review, List<MultipartFile> reloadFile) {
+        log.info(review.toString());
+        int result = rMapper.updateReview(review);
+        try {
+            fileUtil.deleteFiles(UploadCategory.REVIEW, review.getReviewNo());
+            if(reloadFile != null && reloadFile.size() > 0) {
+                result += fileUtil.uploadFiles(UploadCategory.REVIEW, reloadFile, review.getReviewNo());
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
     }
 
     @Override

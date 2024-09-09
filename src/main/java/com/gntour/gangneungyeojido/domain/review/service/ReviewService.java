@@ -15,7 +15,7 @@ public interface ReviewService {
     Page<ReviewComplain, Void> getAllComplainReviews(int currentPage);
     List<Review> getAllReviewsByMember(String memberId);
     int addReview(List<MultipartFile> uploadFiles, Review review);
-    int modifyReview(Review review);
+    int modifyReview(Review review, List<MultipartFile> reloadFile);
     int removeReview(Long reviewNo);
     void complainReview(String category);
     int addReviewReply(Review review);

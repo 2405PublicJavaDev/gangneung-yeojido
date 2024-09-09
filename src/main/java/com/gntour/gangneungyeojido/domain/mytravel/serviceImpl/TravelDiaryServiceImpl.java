@@ -32,7 +32,9 @@ public class TravelDiaryServiceImpl implements TravelDiaryService {
     public int addDiary(TravelDiary travelDiary, List<MultipartFile> multipartFiles) {
         int result = travelDiaryMapper.insertDiary(travelDiary);
         try {
-            fileUtil.uploadFiles(UploadCategory.DIARY, multipartFiles, travelDiary.getDiaryNo());
+            if(multipartFiles != null && multipartFiles.size() > 0) {
+                fileUtil.uploadFiles(UploadCategory.DIARY, multipartFiles, travelDiary.getDiaryNo());
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -72,7 +72,7 @@ public class MyDiaryController {
             HttpSession session,
             Model model,
             @ModelAttribute @Valid DiaryAddRequest diaryAddRequest,
-            @RequestParam("uploadFile") List<MultipartFile> uploadFiles
+            @RequestParam(value = "uploadFile", required = false) List<MultipartFile> uploadFiles
     ){
         TravelDiary travelDiary = new TravelDiary();
         travelDiary.setTravelNo(diaryAddRequest.getTravelNo());
