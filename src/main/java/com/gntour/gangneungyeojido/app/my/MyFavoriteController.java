@@ -1,8 +1,10 @@
 package com.gntour.gangneungyeojido.app.my;
 
+import com.gntour.gangneungyeojido.app.my.dto.AddFavoriteRequest;
 import com.gntour.gangneungyeojido.app.my.dto.FavoritesResponse;
 import com.gntour.gangneungyeojido.app.my.dto.FavoritesSearchCondition;
 import com.gntour.gangneungyeojido.common.MemberUtils;
+import com.gntour.gangneungyeojido.common.Page;
 import com.gntour.gangneungyeojido.common.exception.BusinessException;
 import com.gntour.gangneungyeojido.common.exception.EmptyResponse;
 import com.gntour.gangneungyeojido.common.exception.ErrorCode;
@@ -35,8 +37,13 @@ public class MyFavoriteController {
     public String showMyFavoritesPage(HttpSession session, Model model,
                                       @RequestParam(value="currentPage", defaultValue = "1") Integer currentPage,
                                       @RequestParam(value="isNew", defaultValue = "Y") String isNew) {
-        List<FavoritesResponse> favoritesList = favoritesService.getAllFavoritesByMember(new FavoritesSearchCondition(MemberUtils.getMemberIdFromSession(session), isNew));
-        model.addAttribute("favoritesList",favoritesList);
+        String memberId = MemberUtils.getMemberIdFromSession(session);
+        if(memberId == null) {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
+        Page<FavoritesResponse, FavoritesSearchCondition> page = favoritesService.getAllFavoritesByMember(currentPage, new FavoritesSearchCondition(memberId, isNew));
+        log.info(page.getData().toString());
+        model.addAttribute("page",page);
         model.addAttribute("isNew", isNew);
          return "myPage/myFavoritePage";
     }
@@ -47,23 +54,30 @@ public class MyFavoriteController {
      */
     @PostMapping("/favorites")
     @ResponseBody
-    public EmptyResponse addFavorite(HttpSession session) {
-        Favorites favorites = new Favorites();
-        String favoriteNo = favorites.getFavoritesNo().toString();
-        int result =  favoritesService.addFavorite(favoriteNo,MemberUtils.getMemberIdFromSession(session));
+    public EmptyResponse addFavorite(@RequestBody AddFavoriteRequest req, HttpSession session) {
+        String memberId = MemberUtils.getMemberIdFromSession(session);
+        if(memberId == null) {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
+        int result =  favoritesService.addFavorite(memberId, req.getTravelNo());
         if(result == 0) {
             throw new BusinessException(ErrorCode.NO_UPDATE);
         }
         return new EmptyResponse();
     };
 
-    @GetMapping("/favorite/{favoriteNo}")
-    public String removeFavorite(HttpSession session, @PathVariable Long favoriteNo) {
-        int result = favoritesService.removeFavorite(favoriteNo);
+    @DeleteMapping("/favorite/{favoriteNo}")
+    @ResponseBody
+    public EmptyResponse removeFavorite(HttpSession session, @PathVariable Long favoriteNo) {
+        String memberId = MemberUtils.getMemberIdFromSession(session);
+        if(memberId == null) {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
+        int result = favoritesService.removeFavorite(memberId, favoriteNo);
         if (result == 0) {
             throw new BusinessException(ErrorCode.NO_UPDATE);
         }
-        return "myPage/myFavoritePage";
+        return new EmptyResponse();
     }
 
 

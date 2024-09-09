@@ -145,3 +145,7 @@ main a {
     align-items: flex-start;
     align-content: space-around;
 }
+img {
+    width: 250px;
+    height: 250px;
+}

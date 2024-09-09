@@ -1,11 +1,13 @@
 package com.gntour.gangneungyeojido.domain.mytravel.serviceImpl;
 
+import com.gntour.gangneungyeojido.app.my.dto.MyDiaryResponse;
 import com.gntour.gangneungyeojido.common.FileUtil;
 import com.gntour.gangneungyeojido.common.Page;
 import com.gntour.gangneungyeojido.common.UploadCategory;
 import com.gntour.gangneungyeojido.domain.mytravel.mapper.TravelDiaryMapper;
 import com.gntour.gangneungyeojido.domain.mytravel.service.TravelDiaryService;
 import com.gntour.gangneungyeojido.domain.mytravel.vo.TravelDiary;
+import com.gntour.gangneungyeojido.domain.mytravel.vo.TravelDiaryFile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,12 +21,12 @@ public class TravelDiaryServiceImpl implements TravelDiaryService {
     private final FileUtil fileUtil;
 
     @Override
-    public Page<TravelDiary, String> getAllDiariesByMember(Integer currentPage, String memberId) {
+    public Page<MyDiaryResponse, String> getAllDiariesByMember(Integer currentPage, String memberId) {
         return Page.of(currentPage, travelDiaryMapper.selectAllDiariesCountByMember(memberId), memberId, travelDiaryMapper::selectAllDiariesByMember);
     }
 
     @Override
-    public TravelDiary getDetailDiaryByMember(int diaryNo, String memberId) {
+    public MyDiaryResponse getDetailDiaryByMember(int diaryNo, String memberId) {
         return travelDiaryMapper.selectOneDiaryByMember(diaryNo, memberId);
     }
 
@@ -42,30 +44,30 @@ public class TravelDiaryServiceImpl implements TravelDiaryService {
     }
 
     @Override
-    public int modifyDiary(TravelDiary updatedDiary, List<MultipartFile> multipartFiles) {
-        // 1. 기존 데이터 업데이트
-        int result = travelDiaryMapper.updateDiary(updatedDiary);
-
-        // 2. 기존 파일 삭제 (필요한 경우)
-        travelDiaryMapper.deleteDiaryFile(updatedDiary.getDiaryNo());
-
-        // 3. 새 파일 업로드 처리
-        try {
-            fileUtil.uploadFiles(UploadCategory.DIARY, multipartFiles, updatedDiary.getDiaryNo());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+    public int modifyDiary(TravelDiary updatedDiary, List<MultipartFile> uploadFiles) {
+        int updateResult = travelDiaryMapper.updateDiary(updatedDiary);
+        if (uploadFiles != null && !uploadFiles.isEmpty()) {
+            // 기존 파일 삭제
+            travelDiaryMapper.deleteDiaryFile(updatedDiary.getDiaryNo());
+            // 새로운 파일 삽입
+            for (MultipartFile file : uploadFiles) {
+                TravelDiaryFile diaryFile = new TravelDiaryFile();
+                // 파일 데이터 세팅
+                diaryFile.setDiaryNo(updatedDiary.getDiaryNo());
+                travelDiaryMapper.insertDiaryFile(diaryFile);
+            }
         }
-
-        return result;
+        return updateResult;
     }
 
 
     @Override
-    public int removeDiary(String memberId) {
-        int result = travelDiaryMapper.deleteDiary(memberId);
-        return result;
+    public int removeDiary(int diaryNo, String memberId) {
+        return travelDiaryMapper.deleteDiary(memberId);
     }
 
-
-
+    @Override
+    public int removeDiaryFiles(int diaryNo) {
+        return travelDiaryMapper.deleteDiaryFile((long) diaryNo);
+    }
 }

@@ -10,43 +10,114 @@ main {
     width: 100%;
     margin-top: 20px;
 }
-
-.main-content {
+#main-bottom {
     width: 100%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    flex-grow: 1;
-    padding: 20px;
-    text-align: center;
 }
-
-.content h1 {
+.my-subject h1 {
     display: flex;
     justify-content: center;
 }
 
-.review-img img{
-    flex-shrink: 0;
-    width: 200px;
-    height: 200px;
-    margin-right: 15px;
-    border-radius: 10px;
-}
-
-.main-review {
+.travels {
+    margin: 15px auto;
     display: flex;
-    flex-direction: column;
-    margin-left: 20px;
-    width: 30%;
-    margin-top: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+}
+.travels li {
+    width: 350px;
+    height: 100%;
+    margin: 10px 15px;
 }
 
-a {
-    color: #007bff;
+/* 썸네일 */
+.travel-image {
+    height: 330px;
+}
+.thumbnail {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    border-radius: 20px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+.thumbnail:hover {
+    transform: scale(1.03);
+}
+.travel-detail {
+    margin-top: 15px;
+    padding-left: 5px;
+}
+/* 여행지명 */
+.travel-title {
+    margin-bottom: 15px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.travel-title a, .travel-title a:visited
+, .travel-title a:link {
     text-decoration: none;
+    color: black;
+    font-size: 19px;
+    letter-spacing: -2px;
+    font-weight: bold;
+    font-family: "Noto Sans KR", sans-serif;
 }
 
-a:hover {
-    text-decoration: underline;
+/* 즐겨찾기 버튼 */
+.fa-bookmark {
+    cursor: pointer;
+    color: black;
+    background-color: white;
+    font-size: 22px;
+    padding-right: 10px;
+    padding-top: 3px;
+}
+.fa-bookmark.active {
+    color: #FFD43B;
+    font-weight: bolder;
+}
+/* 주소 */
+.travel-address {
+    margin: 0 5px;
+    width: 98%;
+    height: 100%;
+}
+.review-content {
+    margin-top: 10px;
+}
+/* 주소 아이콘 */
+.address-left {
+    width: 8%;
+    float: left;
+}
+.fa-location-dot {
+    color: #00A155;
+    font-size: 22px;
+    padding-right: 3px;
+    padding-top: 3px;
+}
+.address-right {
+    width: 92%;
+    float: right;
+    padding-bottom: 5px;
+}
+.address-text {
+    font-size: 17px;
+    letter-spacing: -1.4px;
+    font-weight: normal;
+    font-family: "Noto Sans KR", sans-serif;
+}
+.common-pagination {
+    margin: 80px 0;
+}
+
+.common-pagination a {
+    text-decoration: none;
 }

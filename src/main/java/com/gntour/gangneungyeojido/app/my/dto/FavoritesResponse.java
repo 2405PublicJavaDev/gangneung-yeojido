@@ -12,4 +12,5 @@ public class FavoritesResponse {
     private Long favoritesNo;
     private String travelName;
     private String introduce;
+    private String imageUrl;
 }

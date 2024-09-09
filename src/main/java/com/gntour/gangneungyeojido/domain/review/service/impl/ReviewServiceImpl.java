@@ -1,5 +1,6 @@
 package com.gntour.gangneungyeojido.domain.review.service.impl;
 
+import com.gntour.gangneungyeojido.app.my.dto.MyReviewResponse;
 import com.gntour.gangneungyeojido.app.travel.dto.ReviewResponse;
 import com.gntour.gangneungyeojido.app.travel.dto.TravelSearchCondition;
 import com.gntour.gangneungyeojido.common.FileUtil;
@@ -32,8 +33,8 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<Review> getAllReviewsByMember(String memberId) {
-        return rMapper.selectAllReviewsByMember(memberId);
+    public Page<MyReviewResponse, String> getAllReviewsByMember(Integer currentPage, String memberId) {
+        return Page.of(currentPage, rMapper.selectAllReviewsCountByMember(memberId), memberId, rMapper::selectAllReviewsByMember, 12, 10);
     }
 
     @Override

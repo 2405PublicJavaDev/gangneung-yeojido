@@ -177,3 +177,102 @@ END LOOP;
 COMMIT;
 END;
 /
+DECLARE
+v_score        NUMBER(3,1);
+    v_member_id    VARCHAR2(100);
+    v_review_no    NUMBER;
+    v_p_r_no       NUMBER := NULL; -- PARENT_REVIEW_NO, 기본값은 NULL
+    v_travel_no    NUMBER := 352;  -- TRAVEL_NO 기본값
+    v_member_prefix VARCHAR2(10) := 'khuser';
+    v_member_suffix NUMBER(3);
+    v_score_index  NUMBER := 1;    -- SCORE 순환 인덱스
+BEGIN
+FOR i IN 1..100 LOOP
+        -- SCORE를 1.0에서 5.0까지 순차적으로 설정
+        v_score := ROUND(v_score_index, 1);
+        v_score_index := v_score_index + 1;
+        IF v_score_index > 5 THEN
+            v_score_index := 1;
+END IF;
+
+        -- MEMBER_ID를 순차적으로 설정 (khuser001 ~ khuser100)
+        v_member_suffix := i;
+        v_member_id := v_member_prefix || LPAD(v_member_suffix, 3, '0');
+
+        -- SEQUENCE를 사용하여 REVIEW_NO를 설정
+SELECT SEQ_REVIEW_NO.NEXTVAL INTO v_review_no FROM DUAL;
+
+-- REVIEW 테이블에 데이터 삽입
+INSERT INTO REVIEW (
+    REVIEW_NO,
+    SCORE,
+    REVIEW_CONTENT,
+    PARENT_REVIEW_NO,
+    TRAVEL_NO,
+    MEMBER_ID,
+    REG_DATE,
+    UPDATE_DATE
+) VALUES (
+             v_review_no,
+             v_score,
+             'Sample review content', -- REVIEW_CONTENT 기본값
+             v_p_r_no,
+             v_travel_no,
+             v_member_id,
+             SYSTIMESTAMP,
+             SYSTIMESTAMP
+         );
+END LOOP;
+
+COMMIT;
+END;
+/
+
+DECLARE
+v_score        NUMBER(3,1);
+    v_member_id    VARCHAR2(100) := 'khuser002'; -- MEMBER_ID 고정
+    v_review_no    NUMBER;
+    v_p_r_no       NUMBER := NULL; -- PARENT_REVIEW_NO, 기본값은 NULL
+    v_travel_no    NUMBER;       -- TRAVEL_NO, 순서대로 설정
+    v_member_prefix VARCHAR2(10) := 'khuser';
+    v_score_index  NUMBER := 1;    -- SCORE 순환 인덱스
+BEGIN
+FOR i IN 148..168 LOOP
+        -- 현재 TRAVEL_NO 설정
+        v_travel_no := i;
+
+        -- SCORE를 1.0에서 5.0까지 순차적으로 설정
+        v_score := ROUND(v_score_index, 1);
+        v_score_index := v_score_index + 1;
+        IF v_score_index > 5 THEN
+            v_score_index := 1;
+END IF;
+
+        -- SEQUENCE를 사용하여 REVIEW_NO를 설정
+SELECT SEQ_REVIEW_NO.NEXTVAL INTO v_review_no FROM DUAL;
+
+-- REVIEW 테이블에 데이터 삽입
+INSERT INTO REVIEW (
+    REVIEW_NO,
+    SCORE,
+    REVIEW_CONTENT,
+    PARENT_REVIEW_NO,
+    TRAVEL_NO,
+    MEMBER_ID,
+    REG_DATE,
+    UPDATE_DATE
+) VALUES (
+             v_review_no,
+             v_score,
+             'Sample review content', -- REVIEW_CONTENT 기본값
+             v_p_r_no,
+             v_travel_no,
+             v_member_id,
+             SYSTIMESTAMP,
+             SYSTIMESTAMP
+         );
+END LOOP;
+
+COMMIT;
+END;
+/

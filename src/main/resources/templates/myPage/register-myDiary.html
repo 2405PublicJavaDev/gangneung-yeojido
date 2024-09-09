@@ -10,6 +10,15 @@
             e.preventDefault();
             const formTag = document.querySelector("#uploadForm");
             const formData = new FormData(formTag);
+            const urlParams = new URLSearchParams(window.location.search);
+
+            // 'currentPage' 매개변수의 값을 가져오기
+            const travelNo = urlParams.get('travelNo');
+            if(!travelNo) {
+                alert('유효하지 않은 travel No 입니다.');
+                return;
+            }
+            formData.append('travelNo', travelNo)
             // 파일을 FormData에 추가
             inputFileDataHandler['register-diary-file-upload'].inputFileData.forEach(file => {
                 formData.append('uploadFile', file);
@@ -41,7 +50,6 @@
 <!--    <img src="/gntour/DIARY/0efffa16-de3c-4509-8bef-ee67eb88465b.png">-->
     <div>
         <form id="uploadForm">
-            <input type="hidden" value="352" name="travelNo">
         <div class="my-subject"><h1>나의 여행일기 등록</h1></div>
             <div class="main-content">
                 <div class="input-content">
