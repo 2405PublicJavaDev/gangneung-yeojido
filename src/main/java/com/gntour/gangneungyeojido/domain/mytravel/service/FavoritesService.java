@@ -2,14 +2,15 @@ package com.gntour.gangneungyeojido.domain.mytravel.service;
 
 import com.gntour.gangneungyeojido.app.my.dto.FavoritesResponse;
 import com.gntour.gangneungyeojido.app.my.dto.FavoritesSearchCondition;
+import com.gntour.gangneungyeojido.common.Page;
 
 import java.util.List;
 
 public interface FavoritesService {
 
-    List<FavoritesResponse> getAllFavoritesByMember(FavoritesSearchCondition searchCondition);
+    Page<FavoritesResponse, FavoritesSearchCondition> getAllFavoritesByMember(Integer currentPage, FavoritesSearchCondition searchCondition);
 
-    int addFavorite(String memberId, String favoritesNo);
+    int addFavorite(String memberId, Long travelNo);
 
-    int removeFavorite(Long favoritesNo);
+    int removeFavorite(String memberId, Long favoritesNo);
 }

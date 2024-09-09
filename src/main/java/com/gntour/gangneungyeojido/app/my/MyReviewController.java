@@ -1,6 +1,10 @@
 package com.gntour.gangneungyeojido.app.my;
 
+import com.gntour.gangneungyeojido.app.my.dto.MyReviewResponse;
 import com.gntour.gangneungyeojido.common.MemberUtils;
+import com.gntour.gangneungyeojido.common.Page;
+import com.gntour.gangneungyeojido.common.exception.BusinessException;
+import com.gntour.gangneungyeojido.common.exception.ErrorCode;
 import com.gntour.gangneungyeojido.domain.review.service.ReviewService;
 import com.gntour.gangneungyeojido.domain.review.vo.Review;
 import jakarta.servlet.http.HttpSession;
@@ -9,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -24,10 +29,14 @@ public class MyReviewController {
      * 관련 기능 : [마이페이지 기능] 나의 리뷰 리스트 조회
      */
     @GetMapping("/review")
-    public String showMyReviewPage(HttpSession session, Model model) {
-        List<Review> reviewList = reviewService.getAllReviewsByMember(MemberUtils.getMemberIdFromSession(session));
+    public String showMyReviewPage(HttpSession session, Model model, @RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage) {
+        String memberId = MemberUtils.getMemberIdFromSession(session);
+        if(memberId == null) {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
+        Page<MyReviewResponse, String> reviewList = reviewService.getAllReviewsByMember(currentPage, memberId);
         // log.info("reviewList {}", reviewList);
-        model.addAttribute("reviewList", reviewList);
+        model.addAttribute("page", reviewList);
         return "/myPage/myReview";
     };
 }

@@ -14,7 +14,6 @@ main {
 .main-content {
     flex-grow: 1;
     padding: 20px;
-    background-color: #fff;
 }
 
 .content h1 {
@@ -32,6 +31,14 @@ main {
 
 .sort-section a {
     cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.sort-section a:hover {
+    text-decoration: none;
 }
 
 .favorite {
@@ -124,4 +131,9 @@ a:hover {
     text-decoration: underline;
 }
 
+.no-favorite {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+}
 

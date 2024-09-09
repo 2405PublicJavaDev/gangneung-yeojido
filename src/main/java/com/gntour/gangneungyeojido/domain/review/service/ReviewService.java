@@ -1,5 +1,6 @@
 package com.gntour.gangneungyeojido.domain.review.service;
 
+import com.gntour.gangneungyeojido.app.my.dto.MyReviewResponse;
 import com.gntour.gangneungyeojido.app.travel.dto.ReviewResponse;
 import com.gntour.gangneungyeojido.app.travel.dto.TravelSearchCondition;
 import com.gntour.gangneungyeojido.common.Page;
@@ -13,7 +14,7 @@ import java.util.List;
 public interface ReviewService {
     Page<ReviewResponse, TravelSearchCondition> getAllReviewsByTravel(Integer currentPage, Long travelNo, Long reviewNo);
     Page<ReviewComplain, Void> getAllComplainReviews(int currentPage);
-    List<Review> getAllReviewsByMember(String memberId);
+    Page<MyReviewResponse, String> getAllReviewsByMember(Integer currentPage, String memberId);
     int addReview(List<MultipartFile> uploadFiles, Review review);
     int modifyReview(Review review, List<MultipartFile> reloadFile);
     int removeReview(Long reviewNo);

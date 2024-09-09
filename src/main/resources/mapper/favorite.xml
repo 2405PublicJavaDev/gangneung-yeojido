@@ -3,33 +3,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gntour.gangneungyeojido.domain.mytravel.mapper.FavoritesMapper">
-<!--    <resultMap id="favoritesResultMap" type="com.gntour.gangneungyeojido.domain.mytravel.vo.Favorites">-->
-<!--        <result property="favoriteNo" column="FAVORITES_NO"/>-->
-<!--        <result property="memberId" column="MEMBER_ID"/>-->
-<!--        <result property="travelNo" column="TRAVEL_NO"/>-->
-<!--        <result property="regDate" column="REG_DATE"/>-->
-<!--        <result property="updateDate" column="UPDATE_DATE"/>-->
-<!--    </resultMap>-->
-<!--    <resultMap id="TravelInfoResultMap" type="com.gntour.gangneungyeojido.domain.travel.vo.TravelInfo" extends="favoritesResultMap">-->
-<!--        <result property="travelNo" column="TRAVEL_NO"/>-->
-<!--        <result property="travelName" column="TRAVEL_NAME"/>-->
-<!--        <result property="introduce" column="INTRODUCE"/>-->
-<!--    </resultMap>-->
     <select id="selectAllFavoritesByMember" resultType="FavoritesResponse">
-        SELECT t.TRAVEL_NAME "TRAVEL_NAME", t.INTRODUCE "INTRODUCE", f.FAVORITES_NO "FAVORITES_NO", t.TRAVEL_NO "TRAVEL_NO"
+        SELECT t.TRAVEL_NAME "TRAVEL_NAME", t.INTRODUCE "INTRODUCE", f.FAVORITES_NO "FAVORITES_NO", t.TRAVEL_NO "TRAVEL_NO", t.IMAGE_URL "IMAGE_URL"
         FROM FAVORITES f
-        JOIN TRAVEL_INFO t ON f.FAVORITES_NO = t.TRAVEL_NO
+        JOIN TRAVEL_INFO t ON f.TRAVEL_NO = t.TRAVEL_NO
+        WHERE MEMBER_ID=#{condition.memberId}
         ORDER BY
         <choose>
-            <when test='isNew.equals("Y")'> f.FAVORITES_NO DESC </when>
+            <when test='condition.isNew.equals("Y")'> f.FAVORITES_NO DESC </when>
             <otherwise> f.FAVORITES_NO ASC </otherwise>
         </choose>
     </select>
+    <select id="selectAllFavoritesCountByMember" resultType="_int">
+        SELECT COUNT(*) FROM FAVORITES
+        WHERE MEMBER_ID=#{memberId}
+    </select>
     <insert id="insertFavorites">
-        INSERT INTO FAVORITES (MEMBER_ID,TRAVEL_NO,REG_DATE)
-        VALUES (MEMBER_ID = #{memberId}, TRAVEL_NO = #{travelNo}, REG_DATE = #{regDate})
+        INSERT INTO FAVORITES (FAVORITES_NO, MEMBER_ID,TRAVEL_NO)
+        VALUES (SEQ_FAVORITES_NO.NEXTVAL, #{memberId}, #{travelNo})
     </insert>
     <delete id="deleteFavorites">
-        DELETE FROM FAVORITES WHERE FAVORITES_NO = #{favoritesNo}
+        DELETE FROM FAVORITES WHERE FAVORITES_NO = #{favoritesNo} AND MEMBER_ID = #{memberId}
     </delete>
 </mapper>

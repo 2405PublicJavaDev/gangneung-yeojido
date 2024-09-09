@@ -2,10 +2,37 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gntour.gangneungyeojido.domain.mytravel.mapper.TravelDiaryMapper">
-    <select id="selectAllDiariesByMember" resultType="DiaryResponse">
-        SELECT T.TRAVEL_NAME "TRAVEL_NAME", D.DIARY_CONTENT "DIARY_CONTENT", D.DIARY_NO "DIARY_NO", T.TRAVEL_NO "TRAVEL_NO"
+    <resultMap id="diaryResultMap" type="MyDiaryResponse">
+        <id property="diaryNo" column="DIARY_NO" />
+        <result property="travelNo" column="TRAVEL_NO" />
+        <result property="diaryTitle" column="DIARY_TITLE" />
+        <result property="diaryContent" column="DIARY_CONTENT" />
+
+        <!-- Mapping the collection of ReviewFiles -->
+        <collection property="diaryFiles" ofType="TravelDiaryFile">
+            <id property="diaryFileNo" column="DIARY_FILE_NO" />
+            <result property="filePath" column="FILE_PATH" />
+            <result property="fileName" column="FILE_NAME" />
+            <result property="fileRename" column="FILE_RENAME" />
+            <result property="webPath" column="WEB_PATH" />
+            <result property="fileOrder" column="FILE_ORDER" />
+            <result property="regDate" column="FILE_REG_DATE" />
+            <result property="updateDate" column="FILE_UPDATE_DATE" />
+        </collection>
+    </resultMap>
+    <select id="selectAllDiariesByMember" resultMap="diaryResultMap">
+        SELECT T.TRAVEL_NO "TRAVEL_NO", D.DIARY_CONTENT "DIARY_CONTENT", D.DIARY_NO "DIARY_NO", D.DIARY_TITLE "DIARY_TITLE",
+               F.DIARY_FILE_NO "DIARY_FILE_NO",
+               F.FILE_PATH "FILE_PATH",
+               F.FILE_NAME "FILE_NAME",
+               F.FILE_RENAME "FILE_RENAME",
+               F.WEB_PATH "WEB_PATH",
+               F.FILE_ORDER "FILE_ORDER",
+               F.REG_DATE "FILE_REG_DATE",
+               F.UPDATE_DATE "FILE_UPDATE_DATE"
         FROM TRAVEL_DIARY D
         JOIN TRAVEL_INFO T ON D.TRAVEL_NO = T.TRAVEL_NO
+        LEFT JOIN TRAVEL_DIARY_FILE F ON D.DIARY_NO = F.DIARY_NO
         WHERE D.MEMBER_ID = #{memberId}
     </select>
     <select id="selectAllDiariesCountByMember" resultType="_int">
@@ -13,10 +40,20 @@
         FROM TRAVEL_DIARY
         WHERE MEMBER_ID = #{memberId}
     </select>
-    <select id="selectOneDiaryByMember" resultType="TravelDiary">
-        SELECT DIARY_NO, DIARY_TITLE, DIARY_CONTENT, REG_DATE, UPDATE_DATE
-        FROM TRAVEL_DIARY
-        WHERE DIARY_NO = #{diaryNo} AND MEMBER_ID = #{memberId}
+    <select id="selectOneDiaryByMember" resultMap="diaryResultMap">
+        SELECT T.TRAVEL_NO "TRAVEL_NO", D.DIARY_CONTENT "DIARY_CONTENT", D.DIARY_NO "DIARY_NO", D.DIARY_TITLE "DIARY_TITLE",
+               F.DIARY_FILE_NO "DIARY_FILE_NO",
+               F.FILE_PATH "FILE_PATH",
+               F.FILE_NAME "FILE_NAME",
+               F.FILE_RENAME "FILE_RENAME",
+               F.WEB_PATH "WEB_PATH",
+               F.FILE_ORDER "FILE_ORDER",
+               F.REG_DATE "FILE_REG_DATE",
+               F.UPDATE_DATE "FILE_UPDATE_DATE"
+        FROM TRAVEL_DIARY D
+                 JOIN TRAVEL_INFO T ON D.TRAVEL_NO = T.TRAVEL_NO
+                 LEFT JOIN TRAVEL_DIARY_FILE F ON D.DIARY_NO = F.DIARY_NO
+        WHERE D.MEMBER_ID = #{memberId} AND D.DIARY_NO = #{diaryNo}
     </select>
     <select id="selectAllDiariesFileByDiaryNo" resultType="TravelDiaryFile">
         SELECT * FROM TRAVEL_DIARY_FILE
@@ -35,7 +72,11 @@
     </insert>
     <update id="updateDiary">
         UPDATE TRAVEL_DIARY
-        SET TRAVEL_NO = #{travelNo},DIARY_TITLE = #{diaryTitle},DIARY_CONTENT = #{diaryContent} WHERE DIARY_NO = #{diaryNo}
+        SET TRAVEL_NO = #{travelNo},
+            DIARY_TITLE = #{diaryTitle},
+            DIARY_CONTENT = #{diaryContent},
+            UPDATE_DATE = SYSDATE
+        WHERE DIARY_NO = #{diaryNo}
     </update>
     <delete id="deleteDiary">
         DELETE FROM TRAVEL_DIARY WHERE MEMBER_ID = #{memberId}

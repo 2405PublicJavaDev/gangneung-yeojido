@@ -1,6 +1,8 @@
 package com.gntour.gangneungyeojido.app.my;
 
 import com.gntour.gangneungyeojido.app.my.dto.DiaryAddRequest;
+import com.gntour.gangneungyeojido.app.my.dto.DiaryModifyRequest;
+import com.gntour.gangneungyeojido.app.my.dto.MyDiaryResponse;
 import com.gntour.gangneungyeojido.common.MemberUtils;
 import com.gntour.gangneungyeojido.common.Page;
 import com.gntour.gangneungyeojido.common.exception.BusinessException;
@@ -37,7 +39,11 @@ public class MyDiaryController {
      */
     @GetMapping("/diary")
     public String showMyDiariesPage(HttpSession session, Model model, @RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage){
-        Page<TravelDiary, String> travelDiaryList = travelDiaryService.getAllDiariesByMember(currentPage, MemberUtils.getMemberIdFromSession(session));
+        String memberId = MemberUtils.getMemberIdFromSession(session);
+        if(memberId == null) {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
+        Page<MyDiaryResponse, String> travelDiaryList = travelDiaryService.getAllDiariesByMember(currentPage, memberId);
         model.addAttribute("page", travelDiaryList);
         return "/myPage/myDiary";
     };
@@ -48,7 +54,7 @@ public class MyDiaryController {
      */
     @GetMapping("/diary-detail/{diaryNo}")
     public String showMyDetailDiaryPage(@PathVariable int diaryNo, HttpSession session, Model model){
-        TravelDiary travelDiary = travelDiaryService.getDetailDiaryByMember(diaryNo,MemberUtils.getMemberIdFromSession(session));
+        MyDiaryResponse travelDiary = travelDiaryService.getDetailDiaryByMember(diaryNo,MemberUtils.getMemberIdFromSession(session));
         model.addAttribute("travelDiary", travelDiary);
         return "myPage/myDiaryDetail";
     }
@@ -95,7 +101,7 @@ public class MyDiaryController {
             HttpSession session,
             Model model
     ){
-        TravelDiary travelDiary = travelDiaryService.getDetailDiaryByMember(diaryNo,MemberUtils.getMemberIdFromSession(session));
+        MyDiaryResponse travelDiary = travelDiaryService.getDetailDiaryByMember(diaryNo,MemberUtils.getMemberIdFromSession(session));
         model.addAttribute("travelDiary", travelDiary);
         return "/myPage/modify-myDiary";
     };
@@ -107,15 +113,15 @@ public class MyDiaryController {
      */
     @PostMapping("/modify-diary")
     public String modifyDiary(
-            @ModelAttribute @Valid DiaryAddRequest diaryAddRequest,
+            @ModelAttribute @Valid DiaryModifyRequest diaryModifyRequest,
             @RequestParam("uploadFiles") List<MultipartFile> uploadFiles,
             HttpSession session,
             RedirectAttributes redirectAttributes
     ) {
         TravelDiary travelDiary = new TravelDiary();
-        travelDiary.setTravelNo(diaryAddRequest.getTravelNo());
-        travelDiary.setDiaryTitle(diaryAddRequest.getDiaryTitle());
-        travelDiary.setDiaryContent(diaryAddRequest.getDiaryContent());
+        travelDiary.setTravelNo(diaryModifyRequest.getTravelNo());
+        travelDiary.setDiaryTitle(diaryModifyRequest.getDiaryTitle());
+        travelDiary.setDiaryContent(diaryModifyRequest.getDiaryContent());
         travelDiary.setMemberId(MemberUtils.getMemberIdFromSession(session));
 
         int result = travelDiaryService.modifyDiary(travelDiary, uploadFiles);
@@ -130,9 +136,12 @@ public class MyDiaryController {
      * 담당자 : 백인호님
      * 관련 기능 : [마이페이지 기능] 나의 여행 기록 삭제
      */
-    @PostMapping("/remove/{diaryNo}")
-    public String removeDiary(HttpSession session){
-        int result = travelDiaryService.removeDiary(MemberUtils.getMemberIdFromSession(session));
+    @GetMapping("/remove/{diaryNo}")
+    public String removeDiary(HttpSession session, @PathVariable int diaryNo){
+        int result = travelDiaryService.removeDiary(diaryNo,MemberUtils.getMemberIdFromSession(session));
+        if(result == 0) {
+            throw new BusinessException(ErrorCode.NO_UPDATE);
+        }
         return "redirect:/diary";
     };
 

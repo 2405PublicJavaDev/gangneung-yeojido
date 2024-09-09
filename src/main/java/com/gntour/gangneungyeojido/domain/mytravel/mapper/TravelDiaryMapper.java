@@ -1,5 +1,6 @@
 package com.gntour.gangneungyeojido.domain.mytravel.mapper;
 
+import com.gntour.gangneungyeojido.app.my.dto.MyDiaryResponse;
 import com.gntour.gangneungyeojido.domain.mytravel.vo.TravelDiary;
 import com.gntour.gangneungyeojido.domain.mytravel.vo.TravelDiaryFile;
 import org.apache.ibatis.annotations.Mapper;
@@ -11,13 +12,13 @@ import java.util.List;
 public interface TravelDiaryMapper {
 
     // 리스트 조회
-    List<TravelDiary> selectAllDiariesByMember(Integer currentPage, String memberId, RowBounds rowBounds);
+    List<MyDiaryResponse> selectAllDiariesByMember(Integer currentPage, String memberId, RowBounds rowBounds);
 
     int selectAllDiariesCountByMember(String memberId);
 
     List<TravelDiaryFile> selectAllDiariesFileByDiaryNo(Long diaryNo);
 
-    TravelDiary selectOneDiaryByMember(int diaryNo, String memberId);
+    MyDiaryResponse selectOneDiaryByMember(int diaryNo, String memberId);
 
     int insertDiary(TravelDiary travelDiary);
 

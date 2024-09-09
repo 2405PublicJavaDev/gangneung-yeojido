@@ -40,17 +40,22 @@
 <main layout:fragment="content">
     <!--    <img src="/gntour/DIARY/0efffa16-de3c-4509-8bef-ee67eb88465b.png">-->
     <div>
-        <form action="/modify-diary" method="post" enctype="multipart/form-data" id="uploadForm">>
-            <input type="hidden" value="352" name="travelNo" th:value="${travelDiary.travelNo}">
+        <form id="uploadForm" th:action="@{/modify-diary}" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="travelNo" th:value="${travelDiary.travelNo}">
             <div class="my-subject"><h1>나의 여행일기 수정</h1></div>
             <div class="main-content">
                 <div class="input-content">
                     <div class="input-sub">
                         <b>제목</b>
-                        <input type="text" name="diaryTitle" required class="common-input subject-input" id="diary-subject">
+                        <input type="text" name="diaryTitle" required class="common-input subject-input"
+                               th:value="${travelDiary.diaryTitle}" id="diary-subject">
                     </div>
                     <b>내용</b>
-                    <textarea name="diaryContent" required class="common-input content-input" id="diary-content"></textarea>
+
+                    <textarea name="diaryContent" required class="common-input content-input"
+                              id="diary-content"
+                              th:text="${travelDiary.diaryContent}">
+                    </textarea>
                     <div class="file-upload">
                         <input type="file" accept="image/*" multiple>
                         <button type="button" id="uploadBtn">이미지 추가</button>
@@ -62,7 +67,8 @@
                     </div>
                 </div>
                 <div class="register-btn">
-                    <button type="button" class="update submit-button" id="submit-btn">수정</button>
+                    <input type="file" name="uploadFile" hidden>
+                    <button type="button" class="register submit-button" id="submit-btn" name="">수정</button>
                     <button type="button" class="cancel submit-button" onclick="goback();">취소</button>
                 </div>
             </div>

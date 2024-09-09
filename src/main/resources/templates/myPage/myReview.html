@@ -4,27 +4,57 @@
       layout:decorate="~{layouts/my-page}"
       layout:decorator="layout">
 <th:block layout:fragment="script">
-    <script type="text/javascript" src="/js/main/mapdata.js"></script>
-    <script type="text/javascript" src="/js/main/mapconfig.js"></script>
-    <script type="text/javascript" src="/js/main/mapmanipulate.js"></script>
-    <script type="text/javascript" src="/js/main/index.js"></script>
 </th:block>
 <th:block layout:fragment="css">
     <link rel="stylesheet" href="/css/myPage/myReview.css">
+    <script src="https://kit.fontawesome.com/c04d10f9dd.js" crossorigin="anonymous"></script>
 </th:block>
 <main layout:fragment="content">
     <div class="main-center">
         <div class="my-subject"><h1>리뷰 목록</h1></div>
-        <div class="main-content">
-            <div class="main-review">
-                <div class="review-sub">
-                    <h4>경포 해변 <img src="/img/marker.png" alt="" width="20px" height="20px"></h4>
-                </div>
-                <div class="review-img">
-                    <img src="/img/wrtFileImageView.jpg" width="100%" height="100%">
-                </div>
-                <div class="review-detail">경포해변 여행후기</div>
-            </div>
+        <div id="main-bottom">
+            <!--리스트 출력-->
+            <ul class="travels">
+                <li th:each="travel : ${page.data}">
+                    <div class="travel-image">
+                        <a th:href="@{/travel/detail/{no}(no = ${travel.travelNo}, currentPage=${page.currentPage})}">
+                            <img class="thumbnail" alt="thumbnail"
+                                 th:src="${travel.imageUrl != null ? travel.imageUrl : '/img/sample_img.png'}">
+                        </a>
+                    </div>
+                    <div class="travel-detail">
+                        <div class="travel-title">
+                            <a th:href="@{/travel/detail/{no}(no = ${travel.travelNo}, currentPage=${page.currentPage})}" th:text="${travel.travelName}"></a>
+                        </div>
+                        <div class="travel-address">
+                            <div class="address-left">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div class="address-right">
+                                <span class="address-text" th:text="${travel.address.length() > 20 ? travel.address.substring(0,20) + '...' : travel.address}"></span>
+                            </div>
+                        </div>
+                        <div class="review-content">
+                            <p th:text="${travel.reviewContent.length() > 20 ? travel.reviewContent.substring(0, 20) + '...' : travel.reviewContent}"></p>
+                        </div>
+                    </div>
+                </li>
+                <!-- 부족한 항목을 빈 항목으로 채우기 -->
+                <li th:if="${(page.data.size() % 4) != 0}" th:each="i : ${#numbers.sequence(0, (4 - (page.data.size() % 4)))}">
+                </li>
+            </ul>
+            <!--페이지네이션-->
+            <ul class="common-pagination">
+                <li class="common-pagination-li-end">
+                    <a th:href="@{/review(currentPage=${page.prevPage})}" th:if="${page.hasPrev}">이전</a>
+                </li>
+                <li th:classappend="${i == page.currentPage} ? 'common-pagination-li common-pagination-li-active' : 'common-pagination-li'" th:each="i : ${#numbers.sequence(page.startNavi, page.endNavi)}">
+                    <a th:href="@{/review(currentPage=${i})}" th:text="${i}"></a>
+                </li>
+                <li class="common-pagination-li-end">
+                    <a th:href="@{/review(currentPage=${page.nextPage})}" th:if="${page.hasNext}">다음</a>
+                </li>
+            </ul>
         </div>
     </div>
 </main>
