@@ -53,16 +53,22 @@ public class QnAServiceImpl implements QnAService {
     public QnA getQnAById(Long qnaNo) {
         return qnaMapper.selectQnAById(qnaNo);  // 매퍼에서 데이터 조회
     }
+
     @Override
     public int addQnA(QnA qna, List<MultipartFile> files) {
         int result = qnaMapper.insertQnA(qna);
-        try {
-            result += fileUtil.uploadFiles(UploadCategory.QNA, files, qna.getQnaNo());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        // 2. 첨부파일이 있을 경우에만 파일을 업로드
+        if (files != null && !files.isEmpty()) {
+            try {
+                // 파일 업로드는 파일이 있을 때만 처리
+                result += fileUtil.uploadFiles(UploadCategory.QNA, files, qna.getQnaNo());
+            } catch (IOException e) {
+                throw new RuntimeException("파일 업로드 중 오류가 발생했습니다.", e);
+            }
         }
         return result;
     }
+
 
     @Override
     public int addQnAAnswer(QnAAnswer qnaAnswer) {
