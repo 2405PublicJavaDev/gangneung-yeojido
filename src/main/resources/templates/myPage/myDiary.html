@@ -18,7 +18,7 @@
 <main layout:fragment="content">
     <div class="my-subject"><h1>나의 여행일기 목록</h1></div>
     <div class="main-content">
-        <div th:each="diary : ${travelDiaryList}" class="diary-list">
+        <div th:each="diary : ${page.data}" class="diary-list">
             <a th:href="@{/diary-detail/{diaryNo}(diaryNo=${diary.diaryNo})}">
                 <img src="/img/wrtFileImageView.jpg">
             </a>
@@ -29,6 +29,17 @@
                 <label th:text="${diary.diaryContent}"></label>
             </div>
         </div>
+        <ul class="common-pagination" th:if="${page.totalCount > 0}">
+            <li class="common-pagination-li-end">
+                <a th:href="@{/admin/black-list(currentPage=${page.prevPage})}" th:if="${page.hasPrev}">이전</a>
+            </li>
+            <li th:classappend="${i == page.currentPage} ? 'common-pagination-li common-pagination-li-active' : 'common-pagination-li'" th:each="i : ${#numbers.sequence(page.startNavi, page.endNavi)}">
+                <a th:href="@{/admin/black-list(currentPage=${i})}" th:text="${i}"></a>
+            </li>
+            <li class="common-pagination-li-end">
+                <a th:href="@{/admin/black-list(currentPage=${page.nextPage})}" th:if="${page.hasNext}">다음</a>
+            </li>
+        </ul>
     </div>
 </main>
 </body>
