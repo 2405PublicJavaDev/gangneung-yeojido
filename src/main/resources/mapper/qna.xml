@@ -77,11 +77,16 @@
         VALUES (#{answerNo}, #{answerSubject}, #{answerContent}, #{qnaNo}, #{memberId}, SYSDATE, SYSDATE)
     </insert>
 
+    <delete id="deleteQnA">
+        DELETE FROM QNA WHERE QNA_NO = #{qnaNo}
+    </delete>
+
     <delete id="deleteQnAFile">
-        delete from QNA_FILE WHERE QNA_NO = #{qnaNo}
+        DELETE FROM QNA_FILE WHERE QNA_NO = #{qnaNo}
     </delete>
 
     <delete id="deleteQnAAnswer">
         DELETE FROM QNA_ANSWER WHERE ANSWER_NO = #{answerNo}
     </delete>
+
 </mapper>

@@ -33,8 +33,9 @@ label {
 }
 button {
     font-size: 1em;
-    width: 100px;
-    height: 30px;
+    width: 120px;
+    height: 40px;
+    padding : 2px;
     background-color: #007FFF;
     color: white;
     border: none;

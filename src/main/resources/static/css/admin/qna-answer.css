@@ -28,9 +28,13 @@ h1 {
     border-radius: 5px;
     background-color: #fafafa;
 }
+h3{
+    text-align: center;
+}
 .question-container p {
     margin: 5px 0;
     font-size: 14px;
+    margin-left: 15px;
 }
 .input-group {
     margin-top: 20px;
@@ -43,24 +47,33 @@ h1 {
 .input-group input, .input-group textarea {
     width: 100%;
     padding: 10px;
+    margin-bottom: 10px;
     border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: "Noto Sans KR";
+}
+.input-group input, .input-group textarea:focus{
+    outline: none;
+    border-color: #3399FF;
 }
 .input-group textarea {
     resize: vertical;
     height: 150px;
+    resize: none;
 }
 /* 공통 버튼 스타일 */
 button, .btn-back {
-    font-size: 1em;
-    width: 100px;
-    height: 30px;
     background-color: #007FFF;
+    width: 100px;
+    padding: 5px;
     color: white;
     border: none;
     border-radius: 30px;
     cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    font-size: 1em;
     margin: 0 5px; /* 버튼 간격 */
 }
 
@@ -70,24 +83,33 @@ button:hover, .btn-back:hover {
 
 /* 삭제 버튼만 붉은색 유지 */
 .btn-delete {
-    background-color: #f44336; /* 붉은색 */
+    background-color: #f44336;
 }
 
 .btn-delete:hover {
-    background-color: #e53935; /* 마우스 호버시 붉은색 */
+    background-color: #e53935;
 }
 
 /* 목록으로 이동 버튼 */
 .btn-back {
-    background-color: #007FFF; /* 파란색 */
+    background-color: #c7c7c7; /* 파란색 */
 }
 
 .btn-back:hover {
     background-color: #3399FF; /* 마우스 호버시 색상 */
 }
-
+.answer-container{
+    padding-top: 10px;
+    width: 95%;
+    margin : 0 auto;
+}
+.answer-container p{
+    margin-left: 15px;
+    font-size: 0.9em;
+}
 
 .button-group {
+    padding-top: 20px;
     display: flex;
     align-items: center;
     justify-content: center;

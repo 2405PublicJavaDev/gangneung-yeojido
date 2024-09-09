@@ -74,9 +74,22 @@ public class QnAServiceImpl implements QnAService {
     public int addQnAAnswer(QnAAnswer qnaAnswer) {
         return qnaMapper.insertQnAAnswer(qnaAnswer);
     }
+
     @Override
-    public void removeQnA() {
+    public void removeQnA(Long qnaNo, String memberId) {
+        // 1. QnA가 회원의 소유인지 확인 (보안 강화)
+        QnA qna = qnaMapper.selectQnAById(qnaNo);
+        // 2. 관련된 파일 삭제
+        qnaMapper.deleteQnAFile(qnaNo);
+        // 3. 관련된 답변 삭제
+        QnAAnswer answer = qnaMapper.selectQnAAnswerByQnANo(qnaNo);
+        if (answer != null) {
+            qnaMapper.deleteQnAAnswer(answer.getAnswerNo());
+        }
+        // 4. 마지막으로 QnA 삭제
+        qnaMapper.deleteQnA(qnaNo);
     }
+
 
     @Override
     public void removeQnAAnswer(Long answerNo) {

@@ -1,6 +1,8 @@
+/* 공통 레이아웃 */
 main {
     padding: 20px;
 }
+
 .main-container {
     padding: 20px;
     border-radius: 5px;
@@ -8,19 +10,21 @@ main {
     margin: 0 auto;
 }
 
+/* 기본 폰트 설정 */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    /*background-color: #f5f5f5;*/
 }
 
-/* 화면 타이틀 */
+/* 타이틀 스타일 */
 h1 {
     font-family: 'BMDOHYEON', sans-serif;
     padding-bottom: 10px;
     text-align: center;
 }
+
+/* 문의 내역 컨테이너 */
 .question-container {
     margin-top: 20px;
     padding: 10px;
@@ -28,40 +32,58 @@ h1 {
     border-radius: 5px;
     background-color: #fafafa;
 }
+.attachments a{
+    padding-left: 20px;
+    font-size: 0.9em;
+}
+/* 문의 내용 텍스트 스타일 */
 .question-container p {
     margin: 5px 0;
     font-size: 14px;
-}.answer-container, .no-answer {
-     margin-top: 20px;
-     margin-left : 10px;
-     padding: 10px;
-     border: 1px solid #ddd;
-     border-radius: 5px;
-     background-color: #f0f0f0;
- }
- h3{
-     text-align: center;
- }
-p {
     padding-left: 20px;
 }
-.button-container {
-    text-align: center;
+
+/* 답변 및 미답변 영역 스타일 */
+.answer-container, .no-answer {
     margin-top: 20px;
+    margin-left: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f0f0f0;
 }
 
-.btn-back {
+/* h3 태그 중앙 정렬 */
+h3 {
+    text-align: center;
+}
+
+/* 버튼 컨테이너 중앙 정렬 */
+.button-container {
+    text-align: center;
+}
+
+/* 버튼 공통 스타일 */
+
+.btn {
     background-color: #007FFF;
-    width: 20%;
-    padding: 10px;
+    width: 100px;
+    padding: 5px;
     color: white;
     border: none;
     border-radius: 30px;
     cursor: pointer;
-    text-decoration-line: none;
+    text-decoration: none;
     text-align: center;
+    font-size: 1em;
 }
-
+.btn-delete{
+    background-color : #e53935
+}
+.btn-delete:hover{
+    background-color : #EE450C;
+}
+/* 버튼 hover 스타일 */
 .btn-back:hover {
     background-color: #3399FF;
 }

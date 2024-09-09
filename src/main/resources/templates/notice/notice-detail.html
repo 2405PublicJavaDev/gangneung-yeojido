@@ -6,7 +6,7 @@
 <th:block layout:fragment="script">
   <!-- memberId를 자바스크립트로 전달 -->
   <script type="text/javascript">
-    const memberRole = 'ADMIN';  // session.getAttribute('MEMBER_ROLE');
+    const memberRole = 'USER';
   </script>
   <script type="text/javascript" src="/js/notice-detail.js"></script>
 </th:block>
@@ -25,7 +25,7 @@
     </div>
 
     <div class="button-section">
-      <a class="list-btn" href="javascript:void(0);" onclick="goBack();">목록으로</a>
+      <a class="list-btn" href="javascript:void(0);" onclick="goBack();">이전으로</a>
     </div>
 
   </div>
