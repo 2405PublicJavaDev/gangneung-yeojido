@@ -10,9 +10,9 @@
     <link href="/css/travel/travel-complain.css" rel="stylesheet">
 </th:block>
 <main layout:fragment="content">
-    <form id="complain-form" action="/review/complain" method="post">
+    <form id="complain-form" th:action="@{/review/complain/{travelNo}(travelNo=${travelNo})}" method="post">
         <input type="hidden" name="travelNo">
-        <input type="hidden" name="reviewNo">
+        <input type="hidden" name="reviewNo" th:value="${reviewNo}">
         <input type="hidden" name="complainKeyword">
         <div class="complain-bg">
             <h2 class="complain-title">리뷰 신고</h2>
