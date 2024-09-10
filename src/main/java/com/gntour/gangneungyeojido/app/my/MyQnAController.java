@@ -1,6 +1,5 @@
 package com.gntour.gangneungyeojido.app.my;
 
-import com.gntour.gangneungyeojido.app.admin.dto.QnAResponse;
 import com.gntour.gangneungyeojido.app.member.dto.AddQnAResponse;
 import com.gntour.gangneungyeojido.app.my.dto.MyQnAResponse;
 import com.gntour.gangneungyeojido.common.MemberUtils;
@@ -18,8 +17,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.util.List;
+//사용하지 않는 import 삭제 : ctrl + alt + o
+
 
 @Controller
 @RequiredArgsConstructor
@@ -35,7 +35,8 @@ public class MyQnAController {
     public String showMyQnAListPage(HttpSession session, Model model){
         String memberId = MemberUtils.getMemberIdFromSession(session);
         if(memberId == null){
-            return "redirect:/login";
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+//            return "redirect:/login";
         }
         List<MyQnAResponse> myqnaList = qnaService.getAllQnAAnswerByMember(MemberUtils.getMemberIdFromSession(session));
         model.addAttribute("myqnaList", myqnaList);
@@ -51,7 +52,8 @@ public class MyQnAController {
     public String showMyDetailQnAPage(@PathVariable Long qnaNo, HttpSession session, Model model){
         String memberId = MemberUtils.getMemberIdFromSession(session);
         if(memberId == null){
-            return "redirect:/login";
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+//            return "redirect:/login";
         }
         // 해당 QnA 디테일 정보를 가져오는 메서드 호출
         List<MyQnAResponse> qnaDetail = qnaService.getOneQnADetailByQnANo(qnaNo);
@@ -68,7 +70,8 @@ public class MyQnAController {
     public String showAddQnAPage(HttpSession session){
         String memberId = MemberUtils.getMemberIdFromSession(session);
         if(memberId == null){
-            return "redirect:/login";
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+//            return "redirect:/login";
         }
         return "myPage/myqna-register";
     }
@@ -97,10 +100,14 @@ public class MyQnAController {
     @PostMapping("/myqna/{qnaNo}")
     public String removeQnA(@PathVariable Long qnaNo, HttpSession session) {
         String memberId = MemberUtils.getMemberIdFromSession(session);
+        if(memberId == null) {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
         // QnA 삭제 (답변과 첨부파일도 함께 삭제)
         qnaService.removeQnA(qnaNo, memberId);
         return "redirect:/myqna";  // 삭제 후 목록 페이지로 리다이렉트
     }
+
     /**
      * 담당자 : 김윤경님
      * 관련 기능 : [푸터 기능] 주요 공지사항 리스트 조회

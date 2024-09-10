@@ -24,18 +24,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminQnAController {
     private final QnAService qnaService;
+    // QnA 관련 비즈니스 로직 담당하는 QnAService 필드 선언
     /**
      * 담당자 : 김윤경님
      * 관련 기능 : [관리자 기능] QnA 질의 리스트 조회
      */
     @GetMapping("/admin/qna")
-    public String showQnAListPage(Model model, @RequestParam(value = "currentPage", defaultValue = "1") Integer currentPAge) {
+    public String showQnAListPage(Model model, @RequestParam(value = "currentPage", defaultValue = "1") Integer currentPage) {
         // QnA 리스트를 서비스에서 가져와서 모델에 추가
-        Page<QnAResponse, Void> qnaList = qnaService.getAllQnA(currentPAge);
+        Page<QnAResponse, Void> qnaList = qnaService.getAllQnA(currentPage);
         log.info(qnaList.getData().toString());
         model.addAttribute("page", qnaList);
         return "admin/qna-list";
     }
+
     /**
      * 담당자 : 김윤경님
      * 관련 기능 : [관리자 기능(페이지 폼)] QnA 관리자로서 답변 달기
@@ -43,7 +45,7 @@ public class AdminQnAController {
     @GetMapping("/admin/qna/answer")
     public String showRegisterQnAAnswerPage(@RequestParam("qnaNo") Long qnaNo, Model model) {
         // QnA 번호에 해당하는 QnA 데이터를 가져옴
-        QnA qna = qnaService.getQnAById(qnaNo);
+        QnA qna = qnaService.getQnAByQnANo(qnaNo);
         QnAAnswer qnaAnswer = qnaService.getQnAAnswerByQnANo(qnaNo);
         List<QnAFile> qnaFiles = qnaService.getQnAFilesByQnANo(qnaNo);
         model.addAttribute("qna", qna);  // QnA 데이터를 모델에 추가
@@ -52,7 +54,6 @@ public class AdminQnAController {
         return "admin/qna-answer";  // 답변 폼 페이지로 이동
     }
 
-
     /**
      * 담당자 : 김윤경님
      * 관련 기능 : [관리자 기능] QnA 관리자로서 답변 달기
@@ -60,7 +61,7 @@ public class AdminQnAController {
     @PostMapping("/admin/qna/answer")
     public String addQnAAnswer(@RequestParam("qnaNo") Long qnaNo,
                                @RequestParam("title") String title,
-                               @RequestParam("notice") String notice,
+                               @RequestParam("content") String content,
                                HttpSession session) {
         QnAAnswer qnaAnswer = new QnAAnswer();
         // 세션에서 관리자 ID 가져오기
@@ -72,7 +73,7 @@ public class AdminQnAController {
         // 답변 객체에 값 설정
         qnaAnswer.setQnaNo(qnaNo);
         qnaAnswer.setAnswerSubject(title);
-        qnaAnswer.setAnswerContent(notice);
+        qnaAnswer.setAnswerContent(content);
         qnaAnswer.setMemberId(memberId);
         // 답변을 저장
         int result = qnaService.addQnAAnswer(qnaAnswer);
@@ -84,12 +85,9 @@ public class AdminQnAController {
         return "redirect:/admin/qna/answer?qnaNo=" + qnaNo;
     }
 
-
-
     /**
      * 담당자 : 김윤경님
      * 관련 기능 : [관리자 기능] QnA 삭제
-     * url :
      */
     @PostMapping("/admin/qna/answer/delete")
     public String removeQnAAnswer(@RequestParam("qnaNo") Long qnaNo, @RequestParam("answerNo") Long answerNo) {

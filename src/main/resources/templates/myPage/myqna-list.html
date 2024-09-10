@@ -22,7 +22,7 @@
 <!--    메인 컨텐츠 출력 영역(나의 문의 리스트)-->
         <div class="register-list">
             <div class="register-top-section">
-                <h3><p th:text="${memberName} + '님께서 남기신 1:1 문의내역 입니다.'"></p></h3>
+                <h3 th:text="${memberName} + '님께서 남기신 1:1 문의내역 입니다.'"></h3><br>
                 <table class="common-table">
                     <tr>
                         <th>등록일</th>
@@ -30,7 +30,12 @@
                         <th>답변 상태</th>
                         <th>답변 등록일</th>
                     </tr>
-                    <tr th:each="qna : ${myqnaList}">
+                    <!-- 문의 내역이 없을 때 -->
+                    <tr th:if="${#lists.isEmpty(myqnaList)}">
+                        <td colspan="4" style="text-align:center;">등록하신 문의내역이 없습니다.</td>
+                    </tr>
+                    <!-- 문의 내역이 있을 때 -->
+                    <tr th:each="qna : ${myqnaList}" th:if="${!#lists.isEmpty(myqnaList)}">
                         <td th:text="${#dates.format(qna.qnaRegDate, 'yyyy-MM-dd')}"></td>
                         <td>
                             <a th:href="@{/myqna/{qnaNo}(qnaNo=${qna.qnaNo})}" th:text="${qna.qnaSubject}"></a>

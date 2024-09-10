@@ -91,6 +91,7 @@ h1 {
     border-radius: 30px;
     cursor: pointer;
     font-family: "Noto Sans KR";
+    margin-top:40px;
 }
 
 .register-btn button a {
