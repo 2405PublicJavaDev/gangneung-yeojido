@@ -110,23 +110,3 @@ function emailCheck() {
     elInputEmail.classList.remove('border-red');
     return true;
 }
-
-
-
-// document.querySelector('#find-pw-btn').addEventListener('click', (e) => {
-//     ajax({
-//         url: '/find-pw',
-//         method: 'post',
-//         payload: {
-//             'email': elInputEmail.value
-//         },
-//         blockValidateForm: true,
-//     }, (response) => {
-//         console.log(response);
-//         alert('이메일 보냄');
-//     }, (error) => {
-//         console.log(error);
-//         alert('이메일 보냄 오류')
-//     })
-// });
-

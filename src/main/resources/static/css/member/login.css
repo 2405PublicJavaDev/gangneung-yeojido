@@ -23,6 +23,12 @@ main {
     margin-bottom: 20px;
 }
 
+.common-input {
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+.common-input-error {}
+
 .login-btn {
     margin-bottom: 10px;
     margin-top: 10px;
@@ -47,4 +53,20 @@ main {
 .find-links a:hover {
     font-weight: bold;
     color: #3399FF;
+}
+
+.hide {
+    display: none;
+}
+
+.message {
+    color: #EE450C;
+    font-size: 12px;
+}
+
+.success-message {
+    color: #3399FF;
+}
+.border-red:focus ,.border-red{
+    border: 1px solid #EE450C;
 }

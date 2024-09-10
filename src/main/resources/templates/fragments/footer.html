@@ -15,6 +15,7 @@
                 <a th:href="@{/notice}" th:text="'더보기 ▶'"></a>
             </div>
         </div>
+            <hr>
         <ul>
             <li th:each="notice : ${footerImportantNotices}">
                 <!-- 제목이 20자를 초과하면 20자까지만 자르고 "..." 추가 -->
