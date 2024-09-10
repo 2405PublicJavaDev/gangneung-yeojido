@@ -16,10 +16,14 @@
         cursor: pointer;
         font-size: 16px;
         margin: 30px 20px 20px 0;
+        box-shadow: -4px 4px 1px #F9F1E6;
+        transition: all 0.3s ease;
         font-family: "Noto Sans KR", sans-serif;
     }
     #register-review-btn:hover {
         background-color: #3399FF;
+        transform: translateY(-2px); /* Y축으로 살짝 위로 이동 */
+        box-shadow: -4px 8px 5px rgba(0, 0, 0, 0.2); /* 그림자 강화 */
     }
     #my-review {
         width: 100%;

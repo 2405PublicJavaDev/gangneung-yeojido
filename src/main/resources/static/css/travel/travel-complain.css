@@ -1,0 +1,62 @@
+.complain-bg {
+    width: 400px;
+    height: 600px;
+    margin: 0 auto;
+    /*text-align: center;*/
+}
+h2 {
+    margin-top: 80px;
+    text-align: center;
+}
+.complain-options {
+    width: 100%;
+    margin-top: 20px;
+}
+.complain-options p {
+    margin: 10px 0;
+}
+.complain-reason {
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.complain-reason:hover {
+    background-color: #f1f1f1;
+}
+
+.complain-reason.selected {
+    background-color: #d3e0ff;
+    border-color: #6c9df7;
+}
+
+.buttons {
+    width: 100%;
+    height: 40px;
+    text-align: center;
+}
+.btn {
+    width: 80px;
+    height: 40px;
+    background-color: #007FFF;
+    color: white;
+    border: none;
+    box-shadow: -4px 4px 1px #F9F1E6;
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 16px;
+    border-radius: 30px;
+    cursor: pointer;
+    margin: 0 10px;
+}
+button:hover {
+    background-color: #3399FF;
+}
+#close {
+    background-color: #454545;
+}
+#close:hover {
+    background-color: #808080;
+}

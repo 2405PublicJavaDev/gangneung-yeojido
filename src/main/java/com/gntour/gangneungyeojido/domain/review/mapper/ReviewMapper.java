@@ -22,7 +22,7 @@ public interface ReviewMapper {
     List<MyReviewResponse> selectAllReviewsByMember(Integer currentPage, String memberId, RowBounds rowBounds);
     int insertReview(Review review);
     int insertReviewFile(ReviewFile reviewFile);
-    void insertReviewComplain(String category);
+    int insertReviewComplain(ReviewComplain complain);
     int updateReview(Review review);
     int deleteReview(Long reviewNo);
     int deleteReviewFile(Long reviewNo);

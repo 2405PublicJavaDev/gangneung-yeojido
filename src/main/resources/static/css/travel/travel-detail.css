@@ -92,6 +92,7 @@ main {
             color: white;
             border: none;
             box-shadow: -4px 4px 1px #F9F1E6;
+            transition: all 0.3s ease;
             font-family: "Noto Sans KR", sans-serif;
             font-size: 16px;
             border-radius: 30px;
@@ -100,6 +101,8 @@ main {
         }
         #go-diary:hover {
             background-color: #00b962;
+            transform: translateY(-2px); /* Y축으로 살짝 위로 이동 */
+            box-shadow: -4px 8px 5px rgba(0, 0, 0, 0.2); /* 그림자 강화 */
         }
     /* 즐겨찾기 버튼 */
     .fa-bookmark {

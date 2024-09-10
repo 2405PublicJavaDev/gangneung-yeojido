@@ -77,8 +77,8 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void complainReview(String category) {
-//        return rMapper.
+    public int complainReview(ReviewComplain complain) {
+        return rMapper.insertReviewComplain(complain);
     }
 
     @Override

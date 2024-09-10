@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}"
+      layout:decorator="layout">
+<th:block layout:fragment="script">
+</th:block>
+<th:block layout:fragment="css">
+    <link href="/css/travel/travel-complain.css" rel="stylesheet">
+</th:block>
+<main layout:fragment="content">
+    <form id="complain-form" action="/review/complain" method="post">
+        <input type="hidden" name="travelNo">
+        <input type="hidden" name="reviewNo">
+        <input type="hidden" name="complainKeyword">
+        <div class="complain-bg">
+            <h2 class="complain-title">리뷰 신고</h2>
+            <div class="complain-options">
+                <p class="complain-reason" data-value="noRelated">해당 여행지와 관련 없는 리뷰</p>
+                <p class="complain-reason" data-value="commercial">광고 또는 프로모션이 포함된 리뷰</p>
+                <p class="complain-reason" data-value="agressive">악의적인 비하 의도가 포함된 리뷰</p>
+                <p class="complain-reason" data-value="abusive">욕설 또는 선정적 언어가 포함된 리뷰</p>
+                <p class="complain-reason" data-value="personal">주소 또는 개인 정보가 포함된 리뷰</p>
+            </div>
+            <br>
+            <div class="buttons">
+                <button class="btn btn-submit" id="submit-review" type="button">제출</button>
+                <button class="btn btn-cancel" id="close" type="button" onclick="goBack()">취소</button>
+            </div>
+        </div>
+    </form>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const reasons = document.querySelectorAll(".complain-reason");
+            const submitButton = document.querySelector("#submit-review");
+            const form = document.getElementById("complain-form");
+
+            reasons.forEach(reason => {
+                reason.addEventListener("click", function () {
+                    // 모든 요소에서 .selected 클래스를 제거
+                    reasons.forEach(r => r.classList.remove("selected"));
+                    // 클릭된 요소에 .selected 클래스 추가
+                    this.classList.add("selected");
+                    // 선택한 신고 사유를 hidden input에 저장
+                    const selectedValue = this.getAttribute('data-value');
+                    document.querySelector('input[name="complainKeyword"]').value = selectedValue;
+                    // 선택된 값 콘솔에 출력
+                    // console.log(selectedValue);
+                });
+            });
+            submitButton.addEventListener("click", function () {
+                const selectedReason = document.querySelector('input[name="complainKeyword"]').value;
+
+                if (!selectedReason) {
+                    alert("신고 사유를 선택해주세요.");
+                    return;
+                }
+
+                if (confirm("선택한 사유로 리뷰를 신고하시겠습니까?")) {
+                    form.submit();
+                } else {
+                    alert("신고가 취소되었습니다.");
+                }
+            });
+        });
+
+        function goBack() {
+            if(confirm("이전 화면으로 이동합니다.")) {
+                history.back();
+            }
+        }
+    </script>
+</main>
+</html>

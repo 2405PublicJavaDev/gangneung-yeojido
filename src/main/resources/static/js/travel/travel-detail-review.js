@@ -3,7 +3,7 @@ const reviewToDom = (review) => {
     const oneReview = document.createElement('div');
     oneReview.className = 'one-review';
     if(memberId === review.memberId) {
-        oneReview.style.backgroundColor = "#e5edf5";
+        oneReview.style.backgroundColor = "#f8f8ff";
     }
 
     // 개인 아이디 div
@@ -85,7 +85,7 @@ const reviewToDom = (review) => {
                         star.classList.remove('fa-star-half-o');
                     }
                 });
-                
+
                 // 이미지 채우기
                 const updateThumbnailsAfterLoading = async () => {
                     for (const reviewFile of response.reviewFiles) {
@@ -129,27 +129,19 @@ const reviewToDom = (review) => {
         complainBtn.className = 'select-btn';
         complainBtn.id = 'complain-btn';
         complainBtn.textContent = '신고'
+        complainBtn.style.backgroundColor = '#EE450C';
 
+        complainBtn.addEventListener('mouseenter', function() {
+            complainBtn.style.backgroundColor = '#fc6e40';
+        })
+        complainBtn.addEventListener('mouseleave', function() {
+            complainBtn.style.backgroundColor = '#EE450C';
+        })
         complainBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            const formTag = document.querySelector("#complain-form");
-            const formData = new FormData(formTag);
-            formData.append('category',  document.querySelector('#rating-value').innerHTML);
-            formData.append('reviewNo', review.reviewNo);
-            formData.append();
-            ajax({
-                url: `/review/complain/${review.reviewNo}`,
-                method: 'post',
-                payload: formData
-            },
-            (response) => {
-                console.log(response);
-                // 팝업 창 보여주기
-                document.querySelector('#complain-popup').classList.remove('dialog-noshow');
-            },
-            (error) => {
-                console.log(error);
-            });
+            if(confirm("신고 페이지로 이동합니다.")) {
+                location.href= `/review/complain/${travelNo}?reviewNo=${review.reviewNo}`;
+            }
         })
         buttonMenu.appendChild(complainBtn);
     }
@@ -168,16 +160,27 @@ const reviewToDom = (review) => {
         contentImg.appendChild(reviewImg);
     })
 
+    // 버튼창 div
+    const replyBtn = document.createElement('div');
+    replyBtn.className = 'reply-btn-section';
+    replyBtn.id = 'reply-btn';
+
+    // 댓글창 div
     const replyDiv = document.createElement('div');
     replyDiv.className = 'reply-section';
+    replyDiv.id = `review-reply-${review.reviewNo}`;
+    // replyDiv.style.display = 'none';  // 초기엔 숨김
 
     if(!review.parentReviewNo) {
         const seeReplyBtn = document.createElement('button');
-        seeReplyBtn.innerHTML = '답글창';
+        seeReplyBtn.innerHTML = '댓글창';
+        seeReplyBtn.style.marginRight = '10px';
         let isReplyOpen = false;
+        // 답글창 열기&닫기
         seeReplyBtn.addEventListener('click', (e) => {
             e.preventDefault();
             const replySection = document.querySelector(`#review-reply-${review.reviewNo}`);
+
             if(isReplyOpen) {
                 replySection.style.display = 'none';
                 isReplyOpen = false;
@@ -187,15 +190,19 @@ const reviewToDom = (review) => {
                 isReplyOpen = true;
             }
         })
-        replyDiv.appendChild(seeReplyBtn);
-
+        // 버튼들을 replyDiv 아래에 위치하게 하여 버튼이 사라지지 않도록 함
+        // const replyButtonsContainer = document.createElement('div');
+        // replyButtonsContainer.className = 'reply-buttons-container';
+        replyBtn.appendChild(seeReplyBtn);
         const addReplyBtn = document.createElement('button');
-        addReplyBtn.innerHTML = '답글달기';
+        addReplyBtn.innerHTML = '댓글 달기';
         addReplyBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            document.querySelector('#reply-popup').classList.remove('dialog-noshow');
+            parentReviewNo = review.reviewNo;
+            document.querySelector('#reply-add-popup').classList.remove('dialog-noshow');
         });
-        replyDiv.appendChild(addReplyBtn);
+        replyBtn.appendChild(addReplyBtn);
+        // replyDiv.appendChild(replyButtonsContainer);
     }
 
     // content-top, button, content-bottom, content-img 추가
@@ -207,12 +214,12 @@ const reviewToDom = (review) => {
     content.appendChild(contentImg);
 
     // reply-section을 content 아래에 추가
+    content.appendChild(replyBtn);
     content.appendChild(replyDiv);
 
     // 전체 구조를 one-review에 추가
     oneReview.appendChild(personalId);
     oneReview.appendChild(content);
-    // oneReview.appendChild(photo);
 
     return oneReview;
 }
@@ -225,14 +232,18 @@ const buildReviewsDom = (response, curPage, reviewRows, reviewNo) => {
         noReviewsMessage.className = 'no-reviews-message';
         reviewRows.appendChild(noReviewsMessage);
     } else {
+        // 내가 쓴 리뷰 먼저 추가 (중복 방지)
+        const myReview = response.data.find(review => review.memberId === memberId);
+        if (myReview) {
+            reviewRows.appendChild(reviewToDom(myReview));
+        }
+        // 전체 리뷰 추가
         response.data.forEach((review) => {
-            // reviewRows에 oneReview 추가
-            reviewRows.appendChild(reviewToDom(review));
-            const reply = document.createElement('div');
-            reply.className = 'reply';
-            reply.id = 'review-reply-' + review.reviewNo;
-            reviewRows.appendChild(reply);
-        })
+            // 중복되지 않도록 내 리뷰는 다시 추가하지 않음
+            if (review.memberId !== memberId) {
+                reviewRows.appendChild(reviewToDom(review));
+            }
+        });
     }
 
     // pagination 구성하기
@@ -299,7 +310,7 @@ const buildReviewsDom = (response, curPage, reviewRows, reviewNo) => {
     reviewRows.appendChild(paginationUl);
 }
 
-// 답글창 열기&닫기
+// 댓글 목록 가져오기
 const getReviewsReply = (travelNo, reviewNo, curPage) => {
     ajax({
         url: `/travel/review?currentPage=${curPage}&travelNo=${travelNo}&reviewNo=${reviewNo}`,
@@ -322,6 +333,7 @@ const getReviews = (travelNo, curPage) => {
     }, (response) => {
         console.log(response);
         const myReviewTag = document.querySelector('#my-review');
+        myReviewTag.innerHTML = '';
         const registerBtn = document.createElement('button');
         // 내가 쓴 리뷰가 있으면
         if(response.reviewNo) {
@@ -349,18 +361,17 @@ const getReviews = (travelNo, curPage) => {
         console.log(response);
         // review 구성하기
         const reviewRows = document.querySelector('#review-rows');
+        reviewRows.innerHTML = ''; // 기존 내용을 제거
         reviewRows.replaceChildren();
         buildReviewsDom(response, curPage, reviewRows);
     }, (error) => {
         console.log(error);
     })
 }
-
+// const parentReviewNo = document.querySelector('input[name="reviewNo"]').value;
 const travelNo = document.querySelector('input[name="travelNo"]').value;
 getReviews(travelNo, 1);
-
+// parentReviewNo를 전역변수로 선언
+let parentReviewNo = null;
 // 초기엔 리뷰작성 팝업을 보여주지 않음
 let dialogShown = false;
-// document.querySelector('#register-review-btn').addEventListener('click', () => {
-//     document.querySelector('#review-popup').classList.remove('dialog-noshow');
-// })

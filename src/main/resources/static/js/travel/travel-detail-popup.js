@@ -64,6 +64,7 @@ starsContainer.forEach((starsContainer) => {
         inputFileDataHandler['review-modify-file-upload'].inputFileData.forEach(file => {
             formData.append('reloadFile', file);
         });
+        const reviewContent = document.querySelector('#reply-add-content').value;
         formData.append('score',  document.querySelector('#rating-update-value').innerHTML);
         formData.append('travelNo', document.querySelector('input[name="travelNo"]').value);
         ajax({
@@ -88,15 +89,20 @@ starsContainer.forEach((starsContainer) => {
 })();
 
 // 댓글 등록
-document.querySelector('#reply-register').addEventListener('click', (e) => {
+document.querySelector('#reply-add-btn').addEventListener('click', (e) => {
     e.preventDefault();
-    const formTag = document.querySelector("#reply-upload-form");
+    const formTag = document.querySelector("#reply-add-form");
     const formData = new FormData(formTag);
-    formData.append('travelNo', document.querySelector('input[name="travelNo"]').value);
+    formData.append('travelNo', travelNo);
+    formData.append("parentReviewNo", parentReviewNo);
+    const formProps = Object.fromEntries(formData);
+    for (let [key, value] of formData.entries()) {
+        console.log(key, value);
+    }
     ajax({
-            url: '/reply/add',
+            url: `/reply/add`,
             method: 'post',
-            payload: formData
+            payload: formProps
         },
         (response) => {
             console.log('response', response);
@@ -104,17 +110,17 @@ document.querySelector('#reply-register').addEventListener('click', (e) => {
             location.href=`/travel/detail/${travelNo}`;
         },
         (error) => {
-            console.log('error',error)}
-    );
+            console.log('error',error)
+    });
 });
 
-
+// 리뷰 수정 팝업창 닫기
 document.querySelector('#close').addEventListener('click', (e) => {
     e.preventDefault();
     document.querySelector('#review-update-popup').classList.add('dialog-noshow');
 })
-
-document.querySelector('#reply-close').addEventListener('click', (e) => {
+// 댓글 등록 팝업창 닫기
+document.querySelector('#reply-add-close-btn').addEventListener('click', (e) => {
     e.preventDefault();
-    document.querySelector('#reply-popup').classList.add('dialog-noshow');
+    document.querySelector('#reply-add-popup').classList.add('dialog-noshow');
 })

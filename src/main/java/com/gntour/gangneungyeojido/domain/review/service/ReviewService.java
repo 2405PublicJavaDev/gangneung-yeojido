@@ -18,7 +18,7 @@ public interface ReviewService {
     int addReview(List<MultipartFile> uploadFiles, Review review);
     int modifyReview(Review review, List<MultipartFile> reloadFile);
     int removeReview(Long reviewNo);
-    void complainReview(String category);
+    int complainReview(ReviewComplain reviewComplain);
     int addReviewReply(Review review);
     void modifyReviewReply();
     void removeReviewReply();
