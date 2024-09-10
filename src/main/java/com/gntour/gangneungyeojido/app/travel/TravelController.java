@@ -9,6 +9,7 @@ import com.gntour.gangneungyeojido.common.Page;
 import com.gntour.gangneungyeojido.common.exception.BusinessException;
 import com.gntour.gangneungyeojido.common.exception.EmptyResponse;
 import com.gntour.gangneungyeojido.common.exception.ErrorCode;
+import com.gntour.gangneungyeojido.domain.mytravel.service.FavoritesService;
 import com.gntour.gangneungyeojido.domain.notice.service.NoticeService;
 import com.gntour.gangneungyeojido.domain.notice.vo.Notice;
 import com.gntour.gangneungyeojido.domain.review.service.ReviewService;
@@ -33,6 +34,7 @@ public class TravelController {
     private final TravelService travelService;
     private final ReviewService reviewService;
     private final NoticeService noticeService;
+    private final FavoritesService favoritesService;
 
     /**
      * 담당자 : 엄태운님
@@ -75,8 +77,9 @@ public class TravelController {
      * 관련기능 : [여행지 기능] 여행지 상세 정보 조회
      */
     @GetMapping("/travel/detail/{travelNo}")
-    public String showTravelDetailPage(@PathVariable Long travelNo, Model model) {
+    public String showTravelDetailPage(@PathVariable Long travelNo, Model model, HttpSession session) {
         model.addAttribute("detail", travelService.getDetailTravel(travelNo));
+        model.addAttribute("favoritesNo", favoritesService.getFavoritesNo(MemberUtils.getMemberIdFromSession(session), travelNo));
         model.addAttribute("score", travelService.getScoreByTravelNo(travelNo));
 
         return "travel/travel-detail";

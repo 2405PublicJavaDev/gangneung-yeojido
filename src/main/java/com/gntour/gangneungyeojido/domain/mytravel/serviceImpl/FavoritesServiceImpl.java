@@ -49,5 +49,10 @@ public class FavoritesServiceImpl implements FavoritesService {
         return result;
     }
 
+    @Override
+    public Long getFavoritesNo(String memberId, Long travelNo) {
+        return favoritesMapper.getFavoritesNo(memberId, travelNo);
+    }
+
 
 }

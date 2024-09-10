@@ -14,4 +14,6 @@ public interface FavoritesService {
     AddFavoriteResponse addFavorite(String memberId, Long travelNo);
 
     int removeFavorite(String memberId, Long favoritesNo);
+
+    Long getFavoritesNo(String memberId, Long travelNo);
 }

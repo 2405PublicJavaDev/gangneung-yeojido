@@ -18,4 +18,6 @@ public interface FavoritesMapper {
     int insertFavorites(Favorites favorites);
 
     int deleteFavorites(String memberId, Long favoritesNo);
+
+    Long getFavoritesNo(String memberId, Long travelNo);
 }
