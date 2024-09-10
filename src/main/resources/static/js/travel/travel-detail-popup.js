@@ -114,8 +114,32 @@ document.querySelector('#reply-add-btn').addEventListener('click', (e) => {
     });
 });
 
+// 댓글 수정
+document.querySelector('#reply-update-btn').addEventListener('click', (e) => {
+    e.preventDefault();
+    const formTag = document.querySelector("#reply-update-form");
+    const formData = new FormData(formTag);
+    const formProps = Object.fromEntries(formData);
+    for (let [key, value] of formData.entries()) {
+        console.log(key, value);
+    }
+    ajax({
+            url: `/reply/modify`,
+            method: 'PUT',
+            payload: formProps
+        },
+        (response) => {
+            console.log('response', response);
+            alert("댓글 수정이 완료되었습니다.");
+            location.href=`/travel/detail/${travelNo}`;
+        },
+        (error) => {
+            console.log('error',error)
+        });
+});
+
 // 리뷰 수정 팝업창 닫기
-document.querySelector('#close').addEventListener('click', (e) => {
+document.querySelector('#review-update-close-btn').addEventListener('click', (e) => {
     e.preventDefault();
     document.querySelector('#review-update-popup').classList.add('dialog-noshow');
 })
@@ -123,4 +147,9 @@ document.querySelector('#close').addEventListener('click', (e) => {
 document.querySelector('#reply-add-close-btn').addEventListener('click', (e) => {
     e.preventDefault();
     document.querySelector('#reply-add-popup').classList.add('dialog-noshow');
+})
+// 댓글 수정 팝업창 닫기
+document.querySelector('#reply-update-close-btn').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.querySelector('#reply-update-popup').classList.add('dialog-noshow');
 })

@@ -17,6 +17,7 @@
     <link href="/css/travel/travel-detail.css" rel="stylesheet">
     <link href="/css/travel/travel-detail-review.css" rel="stylesheet">
     <link href="/css/travel/travel-detail-popup.css" rel="stylesheet">
+    <link href="/css/travel/travel-reply.css" rel="stylesheet">
     <link href="/css/file-upload.css" rel="stylesheet">
 </th:block>
 <div layout:fragment="dialogs">
@@ -34,8 +35,9 @@
     <!--댓글 수정 팝업-->
     <div class="dialog-bg dialog-noshow" id="reply-update-popup">
         <form id="reply-update-form">
+            <input type="hidden" name="reviewNo" id="reply-update-no">
             <div class="white-bg">
-                <h3>답글 수정</h3><br>
+                <h3>댓글 수정</h3><br>
                 <textarea name="reviewContent" class="common-input content-input" id="reply-update-content" cols="30" rows="10" style="resize:none;" placeholder="내용을 입력해주세요"></textarea>
                 <button class="btn btn-add" id="reply-update-btn">등록</button>
                 <button class="btn btn-cancel" id="reply-update-close-btn">취소</button>

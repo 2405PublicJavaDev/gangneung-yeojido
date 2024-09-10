@@ -1,6 +1,7 @@
 package com.gntour.gangneungyeojido.app.travel;
 
 import com.gntour.gangneungyeojido.app.travel.dto.ReplyAddRequest;
+import com.gntour.gangneungyeojido.app.travel.dto.ReplyModifyRequest;
 import com.gntour.gangneungyeojido.app.travel.dto.ReviewResponse;
 import com.gntour.gangneungyeojido.app.travel.dto.TravelListResponse;
 import com.gntour.gangneungyeojido.app.travel.dto.TravelListSearchCondition;
@@ -145,7 +146,7 @@ public class TravelController {
      */
     @GetMapping("/review/modify/{travelNo}")
     @ResponseBody
-    public ReviewResponse modifyReview(@PathVariable Long travelNo, HttpSession session) {
+    public ReviewResponse showModifyReviewPopup(@PathVariable Long travelNo, HttpSession session) {
         String memberId = MemberUtils.getMemberIdFromSession(session);
         log.info(memberId);
         if(memberId == null) {
@@ -242,19 +243,50 @@ public class TravelController {
 
     /**
      * 담당자 : 엄태운님
+     * 관련기능 : [여행지 기능] 댓글 수정 팝업창
+     */
+    @GetMapping("/reply/modify/{reviewNo}")
+    @ResponseBody
+    public ReviewResponse showModifyReplyPopup(@PathVariable Long reviewNo
+            , HttpSession session) {
+        String memberId = MemberUtils.getMemberIdFromSession(session);
+        if(memberId == null) {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
+        ReviewResponse reviewResponse = reviewService.getMyReply(reviewNo, memberId);
+        if(reviewResponse != null) {
+            return reviewResponse;
+        }
+        return new ReviewResponse();
+    }
+    /**
+     * 담당자 : 엄태운님
      * 관련기능 : [여행지 기능] 여행지 댓글 수정
      */
-    public void updateReviewReply() {
-
+    @PutMapping("/reply/modify")
+    @ResponseBody
+    public EmptyResponse updateReviewReply(HttpSession session
+            , @RequestBody ReplyModifyRequest replyModifyRequest) {
+        String memberId = MemberUtils.getMemberIdFromSession(session);
+        log.info(replyModifyRequest.toString());
+        if(memberId == null) {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
+        int result = reviewService.modifyReviewReply(replyModifyRequest);
+        if(result == 0) {
+            throw new BusinessException(ErrorCode.NO_UPDATE);
+        }
+        return new EmptyResponse();
     }
 
     /**
      * 담당자 : 엄태운님
      * 관련기능 : [여행지 기능] 여행지 댓글 삭제
+     * - 리뷰 삭제 로직과 동일하게 사용하므로 작성하지 않음 -
      */
-    public void removeReviewReply() {
-
-    }
+//    public void removeReviewReply() {
+//
+//    }
 
     /**
      * 담당자 : 김윤경님

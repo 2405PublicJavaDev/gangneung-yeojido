@@ -63,15 +63,16 @@ document.querySelector("#stars").style.display = 'none';
 // 별점 렌더링
 for (let i = 1; i <= 5; i++) {
     const star = document.createElement('span');
+    let starClass = 'fa fa-star';  // 기본 빈 별
 
     // 별을 다 채우거나 반 채운 상태를 설정
     if (i <= Math.floor(score)) {
-        star.className = 'fa fa-star checked';  // 가득 찬 별
-    } else if (i === Math.ceil(score) && score % 1 !== 0) {
-        star.className = 'fa fa-star-half-o checked';  // 반쯤 찬 별
-    } else {
-        star.className = 'fa fa-star';  // 빈 별
+        starClass = 'fa fa-star checked';  // 가득 찬 별
+    } else if (i === Math.ceil(score) && (score % 1 >= 0.5)) {
+        starClass = 'fa fa-star-half-o checked';  // 반쯤 찬 별
     }
+
+    star.className = starClass;
 
     // 빈 별의 색깔을 테두리만 칠하기 위해 추가 스타일 지정
     if (i > Math.ceil(score)) {
@@ -82,9 +83,10 @@ for (let i = 1; i <= 5; i++) {
     // starContainer에 별 추가
     starContainer.appendChild(star);
 }
+
 // 숫자는 별점 뒤에 그대로 표시
 const scoreText = document.createElement('span');
-scoreText.innerText = (score % 1 === 0) ? `${score.toFixed(1)}` : `${score.toFixed(1)}`;
+scoreText.innerText = score.toFixed(1); // 소수점 1자리까지 표시
 starContainer.appendChild(scoreText);
 scoreText.style.marginLeft = '8px';
 
