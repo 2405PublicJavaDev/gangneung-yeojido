@@ -9,7 +9,8 @@
         const numbers = travelInfos.map((info)=>info.travelNo);
         const randomIndex = Math.floor(Math.random() * numbers.length);
         const randomNumber = numbers[randomIndex];
-        console.log(randomNumber);
+        let memberId = /*[[${session.memberId}]]*/
+        let memberStatus = /*[[${session.memberStatus}]]*/
     </script>
     <script src="https://kit.fontawesome.com/c04d10f9dd.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@latest/swiper-bundle.min.js"></script>

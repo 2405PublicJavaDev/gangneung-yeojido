@@ -153,5 +153,14 @@ const swiper = new Swiper('.swiper', {
 });
 
 const requestAddMark = () => {
-    location.href = "/mark-request";
+    if(memberId) {
+        if (memberStatus === 'BLACK') {
+            alert('블랙된 상태입니다. 따라서 마커 추가 요청을 할 수 없습니다.');
+        } else {
+            location.href = "/mark-request";
+        }
+    } else {
+        alert('로그인을 먼저 해주세요');
+        location.href = "/login";
+    }
 }

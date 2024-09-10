@@ -52,6 +52,9 @@ public class MainController {
         if(MemberUtils.getMemberIdFromSession(session) == null) {
             throw new BusinessException(ErrorCode.LOGIN_FAIL);
         }
+        if(MemberUtils.getMemberStatusFromSession(session) == MemberStatus.BLACK) {
+            throw new BusinessException(ErrorCode.BLACK_LIST);
+        }
         return "main/mark-request";
     }
 
