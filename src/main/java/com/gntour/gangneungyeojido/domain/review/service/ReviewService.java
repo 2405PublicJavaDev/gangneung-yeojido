@@ -1,5 +1,7 @@
 package com.gntour.gangneungyeojido.domain.review.service;
 
+import com.gntour.gangneungyeojido.app.travel.dto.ReplyAddRequest;
+import com.gntour.gangneungyeojido.app.travel.dto.ReplyModifyRequest;
 import com.gntour.gangneungyeojido.app.my.dto.MyReviewResponse;
 import com.gntour.gangneungyeojido.app.travel.dto.ReviewResponse;
 import com.gntour.gangneungyeojido.app.travel.dto.TravelSearchCondition;
@@ -20,8 +22,9 @@ public interface ReviewService {
     int removeReview(Long reviewNo);
     int complainReview(ReviewComplain reviewComplain);
     int addReviewReply(Review review);
-    void modifyReviewReply();
+    int modifyReviewReply(ReplyModifyRequest replyModifyRequest);
     void removeReviewReply();
 
     ReviewResponse getMyReview(Long travelNo, String memberId);
+    ReviewResponse getMyReply(Long reviewNo, String memberId);
 }

@@ -1,5 +1,7 @@
 package com.gntour.gangneungyeojido.domain.review.service.impl;
 
+import com.gntour.gangneungyeojido.app.travel.dto.ReplyAddRequest;
+import com.gntour.gangneungyeojido.app.travel.dto.ReplyModifyRequest;
 import com.gntour.gangneungyeojido.app.my.dto.MyReviewResponse;
 import com.gntour.gangneungyeojido.app.travel.dto.ReviewResponse;
 import com.gntour.gangneungyeojido.app.travel.dto.TravelSearchCondition;
@@ -85,8 +87,8 @@ public class ReviewServiceImpl implements ReviewService {
     public int addReviewReply(Review review) { return rMapper.insertReview(review); }
 
     @Override
-    public void modifyReviewReply() {
-
+    public int modifyReviewReply(ReplyModifyRequest replyModifyRequest) {
+        return rMapper.updateReply(replyModifyRequest);
     }
 
     @Override
@@ -97,5 +99,10 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public ReviewResponse getMyReview(Long travelNo, String memberId) {
         return rMapper.selectMyReview(travelNo, memberId);
+    }
+
+    @Override
+    public ReviewResponse getMyReply(Long reviewNo, String memberId) {
+        return rMapper.selectMyReply(reviewNo, memberId);
     }
 }

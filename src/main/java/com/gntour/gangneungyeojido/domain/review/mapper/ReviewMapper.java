@@ -1,6 +1,8 @@
 package com.gntour.gangneungyeojido.domain.review.mapper;
 
 import com.gntour.gangneungyeojido.app.my.dto.MyReviewResponse;
+import com.gntour.gangneungyeojido.app.travel.dto.ReplyAddRequest;
+import com.gntour.gangneungyeojido.app.travel.dto.ReplyModifyRequest;
 import com.gntour.gangneungyeojido.app.travel.dto.ReviewResponse;
 import com.gntour.gangneungyeojido.app.travel.dto.TravelSearchCondition;
 import com.gntour.gangneungyeojido.domain.review.vo.Review;
@@ -26,6 +28,8 @@ public interface ReviewMapper {
     int updateReview(Review review);
     int deleteReview(Long reviewNo);
     int deleteReviewFile(Long reviewNo);
+    int updateReply(ReplyModifyRequest replyModifyRequest);
 
     ReviewResponse selectMyReview(Long travelNo, String memberId);
+    ReviewResponse selectMyReply(Long reviewNo, String memberId);
 }

@@ -1,313 +1,224 @@
-// 한개의 리뷰 생성
-const reviewToDom = (review) => {
-    const oneReview = document.createElement('div');
-    oneReview.className = 'one-review';
-    if(memberId === review.memberId) {
-        oneReview.style.backgroundColor = "#f8f8ff";
-    }
+// 리뷰 수정
+const modify = (reviewNo) => {
+    ajax({
+        url: `/review/modify/${travelNo}`,
+        method: 'GET'
+    }, (response) => {
+        console.log(response);
+        document.querySelector('#review-update-no').value = response.reviewNo;
+        document.querySelector('#review-update-popup').classList.remove('dialog-noshow');
 
-    // 개인 아이디 div
-    const personalId = document.createElement('div');
-    personalId.className = 'personal-id';
-    personalId.textContent = review.memberId; // 사용자 아이디 넣기
+        document.querySelector('#review-content').value = response.reviewContent;
+        document.querySelector('#rating-update-value').textContent = response.score.toFixed(1);
 
-    // content div
-    const content = document.createElement('div');
-    content.className = 'review-content';
+        const stars = document.querySelectorAll('#review-update-popup .fa-star');
+        const score = response.score;
 
-    // content-top div
-    const contentTop = document.createElement('div');
-    contentTop.className = 'content-top';
+        stars.forEach((star, index) => {
+            star.classList.remove('star-checked');
+            const starValue = index + 1;
 
-    // 별점 (fa-star)
-    const starContainer = document.createElement('p');
-    starContainer.className = 'main-detail-content-photo-star';
-
-    for (let i = 1; i <= 5; i++) {
-        const star = document.createElement('span');
-        star.className = i <= Math.floor(review.score) ? 'fa fa-star checked' : (i === Math.ceil(review.score) ? 'fa fa-star-half-o checked' : 'fa fa-star');
-        starContainer.appendChild(star);
-    }
-    const scoreSpan = document.createElement('span');
-    scoreSpan.textContent = review.score != null ? review.score.toFixed(1) : '0.0';
-    scoreSpan.style.marginLeft = '8px';
-    starContainer.appendChild(scoreSpan);
-
-    const regDate = document.createElement('span');
-    regDate.className = 'regDate';
-    const date = new Date(review.regDate);  // timestamp를 Date 객체로 변환
-    const formattedDate = date.toISOString().split('T')[0];  // 'yyyy-mm-dd' 형식으로 변환
-    regDate.textContent = formattedDate;
-
-    // 버튼 메뉴
-    const buttonMenu = document.createElement('div');
-    buttonMenu.className = 'button-menu';
-
-    // 내가 쓴 리뷰는 수정, 삭제 버튼 / 아니면 신고 버튼
-    if(review.memberId === memberId) {
-        personalId.innerHTML = "나의 리뷰";
-        personalId.style.fontWeight = 'bold';
-        const modifyBtn = document.createElement('button');
-        modifyBtn.className = 'select-btn';
-        modifyBtn.id = 'modify-btn';
-        modifyBtn.textContent = '수정';
-
-        modifyBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            ajax({
-                url: `/review/modify/${travelNo}`,
-                method: 'GET'
-            }, (response) => {
-                console.log(response);
-                document.querySelector('#review-update-no').value = response.reviewNo;
-                // 팝업 창 보여주기
-                document.querySelector('#review-update-popup').classList.remove('dialog-noshow');
-
-                // 가져온 데이터로 팝업 필드 채우기
-                document.querySelector('#review-content').value = response.reviewContent; // 리뷰 내용
-                document.querySelector('#rating-update-value').textContent = response.score.toFixed(1); // 리뷰 점수
-
-                // 별점 채우기
-                const stars = document.querySelectorAll('#review-update-popup .fa-star');
-                const score = response.score;
-
-                stars.forEach((star, index) => {
-                    star.classList.remove('star-checked');  // 기존 색칠된 별 초기화
-                    const starValue = index + 1;
-
-                    // 현재 별이 점수보다 작거나 같으면 채우기
-                    if (starValue <= Math.floor(score)) {
-                        star.classList.add('star-checked');
-                    } else if (starValue === Math.ceil(score) && score % 1 !== 0) {
-                        // 반 개 별 처리 (소수점 존재 시 반 개 별 색칠)
-                        star.classList.add('fa-star-half-o');
-                    } else {
-                        star.classList.remove('fa-star-half-o');
-                    }
-                });
-
-                // 이미지 채우기
-                const updateThumbnailsAfterLoading = async () => {
-                    for (const reviewFile of response.reviewFiles) {
-                        await inputFileDataHandler['review-modify-file-upload'].loadImageFromURL(reviewFile.webPath);
-                    }
-                }
-                updateThumbnailsAfterLoading().then(() => {
-                    inputFileDataHandler['review-modify-file-upload'].thumbnailUpdate();
-                });
-                //
-            }, (error) => {
-                console.log(error);
-            });
-        })
-
-        const removeBtn = document.createElement('button');
-        removeBtn.className = 'select-btn';
-        removeBtn.id = 'remove-btn';
-        removeBtn.textContent = '삭제';
-
-        removeBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            if(confirm("리뷰를 삭제하시겠습니까?")) {
-                ajax({
-                    url: `/review/remove/${review.reviewNo}`,
-                    method: 'delete'
-                }, (response) => {
-                    console.log(response);
-                    alert("리뷰 삭제가 완료되었습니다.");
-                    location.href=`/travel/detail/${travelNo}`;
-                }, (error) => {
-                    console.log(error);
-                });
+            if (starValue <= Math.floor(score)) {
+                star.classList.add('star-checked');
+            } else if (starValue === Math.ceil(score) && score % 1 !== 0) {
+                star.classList.add('fa-star-half-o');
+            } else {
+                star.classList.remove('fa-star-half-o');
             }
-        })
-
-        buttonMenu.appendChild(modifyBtn);
-        buttonMenu.appendChild(removeBtn);
-    } else {
-        const complainBtn = document.createElement('button');
-        complainBtn.className = 'select-btn';
-        complainBtn.id = 'complain-btn';
-        complainBtn.textContent = '신고'
-        complainBtn.style.backgroundColor = '#EE450C';
-
-        complainBtn.addEventListener('mouseenter', function() {
-            complainBtn.style.backgroundColor = '#fc6e40';
-        })
-        complainBtn.addEventListener('mouseleave', function() {
-            complainBtn.style.backgroundColor = '#EE450C';
-        })
-        complainBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            if(confirm("신고 페이지로 이동합니다.")) {
-                location.href= `/review/complain/${travelNo}?reviewNo=${review.reviewNo}`;
-            }
-        })
-        buttonMenu.appendChild(complainBtn);
-    }
-
-    // content-bottom (내용 추가)
-    const contentBottom = document.createElement('div');
-    contentBottom.className = 'content-bottom';
-    contentBottom.textContent = review.reviewContent; // 리뷰 내용 넣기
-
-    // content-img (이미지 추가)
-    const contentImg = document.createElement('div');
-    contentImg.className = 'content-img';
-    review.reviewFiles.forEach((reviewFile) => {
-        const reviewImg = document.createElement('img');
-        reviewImg.src = reviewFile.webPath;
-        contentImg.appendChild(reviewImg);
-    })
-
-    // 버튼창 div
-    const replyBtn = document.createElement('div');
-    replyBtn.className = 'reply-btn-section';
-    replyBtn.id = 'reply-btn';
-
-    // 댓글창 div
-    const replyDiv = document.createElement('div');
-    replyDiv.className = 'reply-section';
-    replyDiv.id = `review-reply-${review.reviewNo}`;
-    // replyDiv.style.display = 'none';  // 초기엔 숨김
-
-    if(!review.parentReviewNo) {
-        const seeReplyBtn = document.createElement('button');
-        seeReplyBtn.innerHTML = '댓글창';
-        seeReplyBtn.style.marginRight = '10px';
-        let isReplyOpen = false;
-        // 답글창 열기&닫기
-        seeReplyBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            const replySection = document.querySelector(`#review-reply-${review.reviewNo}`);
-
-            if(isReplyOpen) {
-                replySection.style.display = 'none';
-                isReplyOpen = false;
-            }else {
-                replySection.style.display = 'block';
-                getReviewsReply(travelNo, review.reviewNo, 1);
-                isReplyOpen = true;
-            }
-        })
-        // 버튼들을 replyDiv 아래에 위치하게 하여 버튼이 사라지지 않도록 함
-        // const replyButtonsContainer = document.createElement('div');
-        // replyButtonsContainer.className = 'reply-buttons-container';
-        replyBtn.appendChild(seeReplyBtn);
-        const addReplyBtn = document.createElement('button');
-        addReplyBtn.innerHTML = '댓글 달기';
-        addReplyBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            parentReviewNo = review.reviewNo;
-            document.querySelector('#reply-add-popup').classList.remove('dialog-noshow');
         });
-        replyBtn.appendChild(addReplyBtn);
-        // replyDiv.appendChild(replyButtonsContainer);
+
+        const updateThumbnailsAfterLoading = async () => {
+            for (const reviewFile of response.reviewFiles) {
+                await inputFileDataHandler['review-modify-file-upload'].loadImageFromURL(reviewFile.webPath);
+            }
+        }
+        updateThumbnailsAfterLoading().then(() => {
+            inputFileDataHandler['review-modify-file-upload'].thumbnailUpdate();
+        });
+    }, (error) => {
+        console.log(error);
+    });
+}
+// 리뷰&댓글 삭제
+const remove = (reviewNo) => {
+    if (confirm("삭제하시겠습니까?")) {
+        ajax({
+            url: `/review/remove/${reviewNo}`,
+            method: 'delete'
+        }, (response) => {
+            console.log(response);
+            alert("삭제가 완료되었습니다.");
+            location.href = `/travel/detail/${travelNo}`;
+        }, (error) => {
+            console.log(error);
+        });
     }
-
-    // content-top, button, content-bottom, content-img 추가
-    contentTop.appendChild(starContainer);
-    contentTop.appendChild(regDate);
-    contentTop.appendChild(buttonMenu);
-    content.appendChild(contentTop);
-    content.appendChild(contentBottom);
-    content.appendChild(contentImg);
-
-    // reply-section을 content 아래에 추가
-    content.appendChild(replyBtn);
-    content.appendChild(replyDiv);
-
-    // 전체 구조를 one-review에 추가
-    oneReview.appendChild(personalId);
-    oneReview.appendChild(content);
-
-    return oneReview;
+}
+// 리뷰 신고
+const complain = (reviewNo) => {
+    if (confirm("신고 페이지로 이동합니다.")) {
+        location.href = `/review/complain/${travelNo}?reviewNo=${reviewNo}`;
+    }
+}
+// 댓글 보기
+const seeReply = (reviewNo) => {
+    const replySection = document.querySelector(`#review-reply-${reviewNo}`);
+    if(replySection.style.display === 'block') {
+        replySection.style.display = 'none';
+    }else {
+        replySection.style.display = 'block';
+        getReviewsReply(travelNo, reviewNo, 1);
+    }
+}
+// 댓글 추가
+const addReply = (reviewNo) => {
+    parentReviewNo = reviewNo;
+    document.querySelector('#reply-add-popup').classList.remove('dialog-noshow');
+}
+// 댓글 수정
+const modifyReply = (reviewNo) => {
+    ajax({
+        url: `/reply/modify/${reviewNo}`,
+        method: 'GET'
+    }, (response) => {
+        console.log(response);
+        document.querySelector('#reply-update-popup').classList.remove('dialog-noshow');
+        document.querySelector('#reply-update-no').value = response.reviewNo;
+        document.querySelector('#reply-update-content').value = response.reviewContent;
+    }, (error) => {
+        console.log(error);
+    });
+}
+// 페이지네이션 동작
+const handlePagination = (page, reviewNo) => {
+    if (reviewNo) {
+        // 답글인 경우(PARENT_REVIEW_NO 가 NULL 이 아닐때)
+        getReviewsReply(travelNo, reviewNo, page);
+        scrollToPosition(700);  // 원하는 높이로 조정
+    } else {
+        // 리뷰인 경우(PARENT_REVIEW_NO 가 NULL 일때)
+        getReviews(travelNo, page);
+        scrollToPosition(600);  // 원하는 높이로 조정
+    }
+}
+// 페이지 버튼 클릭 시 상단으로 이동
+const scrollToPosition = (position) => {
+    window.scrollTo({ top: position, behavior: 'smooth' });
+};
+// 한개의 답글 돔 구성
+const replyToDom = (review) => {
+    const isMyReview = memberId === review.memberId;
+    return `
+        <div class="one-reply">
+            <div class="personal-id" style="${isMyReview ? 'font-weight: bold;' : ''}">
+                ${isMyReview ? '나의 댓글' : review.memberId}</div>
+            <div class="reply-content">
+                <div class="content-top">
+                    <span class="regDate">${new Date(review.regDate).toLocaleString('ko-KR', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true })
+                        .replace(/(\d{2})\/(\d{2})\/(\d{2})/, '$2.$3')
+                        .replace('AM', '오전')
+                        .replace('PM', '오후')
+                        .replace(',', '')}</span>
+                    <div class="button-menu">
+                        ${isMyReview ? `
+                            <button type="button" class="reply-select-btn reply-modify-btn" onclick="modifyReply(${review.reviewNo});">수정</button>
+                            <button type="button" class="reply-select-btn reply-delete-btn" onclick="remove(${review.reviewNo});">삭제</button>
+                        ` : `
+                            <button type="button" class="reply-select-btn reply-complain-btn" onclick="complain(${review.reviewNo});">신고</button>
+                        `}
+                    </div>
+                </div>
+                <div class="content-bottom">${review.reviewContent}</div>
+                <div class="reply-btn-section" id="reply-btn-${review.reviewNo}">
+                    ${!review.parentReviewNo ? `
+                        <button type="button" onclick="seeReply(${review.reviewNo})" style="margin-right: 10px;">댓글창</button>
+                        <button onclick="addReply(${review.reviewNo})">댓글 달기</button>
+                    ` : ''}
+                </div>
+                <div class="reply-section" id="review-reply-${review.reviewNo}"></div>
+            </div>
+        </div>
+    `;
+}
+// 한개의 리뷰 돔 구성
+const reviewToDom = (review) => {
+    const isMyReview = memberId === review.memberId;
+    return `
+        <div class="one-review">
+            <div class="personal-id" style="${isMyReview ? 'font-weight: bold;' : ''}">
+                ${isMyReview ? '나의 리뷰' : review.memberId}</div>
+            <div class="review-content">
+                <div class="content-top">
+                    <p class="main-detail-content-photo-star">
+                        ${Array.from({ length: 5 }, (_, i) => {
+                            let starClass = 'fa fa-star'; // 빈 별
+                            if (i < Math.floor(review.score)) {
+                                starClass = 'fa fa-star checked'; // 별 한개
+                            } else if (i === Math.floor(review.score) && (review.score % 1 >= 0.5)) {
+                                starClass = 'fa fa-star-half-o checked'; // 별 반개
+                            }
+                            return `<span class="${starClass}"></span>`;
+                        }).join('')}
+                        <span style="margin-left: 8px;">${review.score != null ? review.score.toFixed(1) : '0.0'}</span>
+                    </p>
+                    <span class="regDate">${new Date(review.regDate).toISOString().split('T')[0]}</span>
+                    <div class="button-menu">
+                        ${isMyReview ? `
+                            <button type="button" class="select-btn review-modify-btn" onclick="modify(${review.reviewNo});">수정</button>
+                            <button type="button" class="select-btn review-delete-btn" onclick="remove(${review.reviewNo});">삭제</button>
+                        ` : `
+                            <button type="button" class="select-btn review-complain-btn" onclick="complain(${review.reviewNo});">신고</button>
+                        `}
+                    </div>
+                </div>
+                <div class="content-bottom">${review.reviewContent}</div>
+                <div class="content-img">
+                    ${review.reviewFiles.map(file => `
+                        <img src="${file.webPath}" />
+                    `).join('')}
+                </div>
+                <div class="reply-btn-section" id="reply-btn-${review.reviewNo}">
+                    ${!review.parentReviewNo ? `
+                        <button type="button" onclick="seeReply(${review.reviewNo})" style="margin-right: 10px;">댓글창</button>
+                        <button onclick="addReply(${review.reviewNo})">댓글 달기</button>
+                    ` : ''}
+                </div>
+                <div class="reply-section" id="review-reply-${review.reviewNo}"></div>
+            </div>
+        </div>
+    `;
 }
 
-// 리뷰 돔 생성
-const buildReviewsDom = (response, curPage, reviewRows, reviewNo) => {
-    if (response.data.length === 0) {
-        const noReviewsMessage = document.createElement('h2');
-        noReviewsMessage.textContent = '등록된 내용이 없습니다';
-        noReviewsMessage.className = 'no-reviews-message';
-        reviewRows.appendChild(noReviewsMessage);
-    } else {
-        // 내가 쓴 리뷰 먼저 추가 (중복 방지)
-        const myReview = response.data.find(review => review.memberId === memberId);
-        if (myReview) {
-            reviewRows.appendChild(reviewToDom(myReview));
-        }
-        // 전체 리뷰 추가
-        response.data.forEach((review) => {
-            // 중복되지 않도록 내 리뷰는 다시 추가하지 않음
-            if (review.memberId !== memberId) {
-                reviewRows.appendChild(reviewToDom(review));
-            }
-        });
+// 페이지네이션 돔 구성
+const buildPagination = (response, curPage, reviewNo) => {
+    let paginationHtml = '<ul class="common-pagination">';
+
+    if (response.hasPrev) {
+        paginationHtml += `
+            <li class="common-pagination-li-end">
+                <a href="javascript:void(0);" onclick="handlePagination(${curPage - 1}, ${reviewNo})">이전</a>
+            </li>
+        `;
     }
 
-    // pagination 구성하기
-    const paginationUl = document.createElement('ul');
-    paginationUl.className = 'common-pagination';
-    // 페이지 버튼 클릭 시 상단으로 이동
-    const scrollToPosition = (position) => {
-        window.scrollTo({ top: position, behavior: 'smooth' });
-    };
-    if(response.hasPrev) {
-        const li = document.createElement("li");
-        li.className = 'common-pagination-li-end';
-        const prev = document.createElement('a');
-        prev.innerHTML = '이전';
-        prev.onclick = () => {
-            if(reviewNo) {
-                getReviewsReply(travelNo, reviewNo, curPage - 1);
-                scrollToPosition(600);  // 원하는 높이로 조정
-            } else {
-                getReviews(travelNo, curPage - 1);
-                scrollToPosition(600);  // 원하는 높이로 조정
-            }
-        };
-        prev.innerHTML = '이전'
-        li.appendChild(prev);
-        paginationUl.appendChild(li);
-    }
     for (let i = response.startNavi; i <= response.endNavi; i++) {
-        const li = document.createElement('li');
-        li.className = (i === curPage) ? 'common-pagination-li common-pagination-li-active' : 'common-pagination-li';
-        const a = document.createElement('a');
-        a.href = `javascript:void(0)`;
-        a.textContent = i;
-        a.onclick = () => {
-            if(reviewNo) {
-                getReviewsReply(travelNo, reviewNo, i);
-                scrollToPosition(600);  // 원하는 높이로 조정
-            } else {
-                getReviews(travelNo, i);
-                scrollToPosition(600);  // 원하는 높이로 조정
-            }
-        };
-        li.appendChild(a);
-        paginationUl.appendChild(li);
+        paginationHtml += `
+            <li class="${i === curPage ? 'common-pagination-li common-pagination-li-active' : 'common-pagination-li'}">
+                <a href="javascript:void(0);" onclick="handlePagination(${i}, ${reviewNo})">${i}</a>
+            </li>
+        `;
     }
-    if(response.hasNext) {
-        const li = document.createElement("li");
-        li.className = 'common-pagination-li-end';
-        const next = document.createElement('a');
-        next.href = `javascript:void(0)`;
-        next.innerHTML = '다음';
-        next.onclick = () => {
-            if(reviewNo) {
-                getReviewsReply(travelNo, reviewNo, curPage + 1);
-                scrollToPosition(600);  // 원하는 높이로 조정
-            } else {
-                getReviews(travelNo, curPage + 1);
-                scrollToPosition(600);  // 원하는 높이로 조정
-            }
-        };
-        li.appendChild(next);
-        paginationUl.appendChild(li);
+
+    if (response.hasNext) {
+        paginationHtml += `
+            <li class="common-pagination-li-end">
+                <a href="javascript:void(0);" onclick="handlePagination(${curPage + 1}, ${reviewNo})">다음</a>
+            </li>
+        `;
     }
-    reviewRows.appendChild(paginationUl);
+
+    paginationHtml += '</ul>';
+    return paginationHtml;
 }
 
 // 댓글 목록 가져오기
@@ -318,7 +229,17 @@ const getReviewsReply = (travelNo, reviewNo, curPage) => {
     }, (response) => {
         const reply = document.querySelector('#review-reply-' + reviewNo);
         reply.replaceChildren();
-        buildReviewsDom(response, curPage, reply, reviewNo);
+        if (response.data.length === 0) {
+            const noReviewsMessage = document.createElement('h2');
+            noReviewsMessage.textContent = '등록된 내용이 없습니다';
+            noReviewsMessage.className = 'no-reviews-message';
+            reply.appendChild(noReviewsMessage);
+        } else {
+            response.data.forEach((review) => {
+                reply.innerHTML += replyToDom(review);
+            });
+            reply.innerHTML += buildPagination(response, curPage, reviewNo);
+        }
     }, (error) => {
         console.log(error);
     });
@@ -339,7 +260,7 @@ const getReviews = (travelNo, curPage) => {
         if(response.reviewNo) {
             myReviewTag.replaceChildren();
             console.log(response);
-            myReviewTag.appendChild(reviewToDom(response));
+            myReviewTag.innerHTML += reviewToDom(response);
         // 내가 쓴 리뷰가 없으면
         } else {
             const registerBtn = document.createElement('button');
@@ -363,12 +284,21 @@ const getReviews = (travelNo, curPage) => {
         const reviewRows = document.querySelector('#review-rows');
         reviewRows.innerHTML = ''; // 기존 내용을 제거
         reviewRows.replaceChildren();
-        buildReviewsDom(response, curPage, reviewRows);
+        if (response.data.length === 0) {
+            const noReviewsMessage = document.createElement('h2');
+            noReviewsMessage.textContent = '등록된 내용이 없습니다';
+            noReviewsMessage.className = 'no-reviews-message';
+            reviewRows.appendChild(noReviewsMessage);
+        } else {
+            response.data.forEach((review) => {
+                reviewRows.innerHTML += reviewToDom(review);
+            });
+            reviewRows.innerHTML += buildPagination(response, curPage, null);
+        }
     }, (error) => {
         console.log(error);
     })
 }
-// const parentReviewNo = document.querySelector('input[name="reviewNo"]').value;
 const travelNo = document.querySelector('input[name="travelNo"]').value;
 getReviews(travelNo, 1);
 // parentReviewNo를 전역변수로 선언

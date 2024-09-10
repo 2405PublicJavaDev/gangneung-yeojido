@@ -31,6 +31,10 @@ header {
     font-weight: bold;
     font-family: "Poor Story", system-ui;
     letter-spacing: -2px;
+    transition: transform 0.3s ease-in-out;
+}
+#header-tour:hover {
+    transform: scale(1.1);
 }
 
 .header-login-area {
@@ -40,6 +44,7 @@ header {
 #header-my {
     width: 48px;
     height: 48px;
+    cursor: pointer;
 }
 
 .header-my-expand {
@@ -57,4 +62,5 @@ header {
     border-bottom: 1px solid black;
     padding: 10px;
     text-align: center;
+    cursor: pointer;
 }

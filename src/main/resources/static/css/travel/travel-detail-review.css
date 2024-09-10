@@ -31,7 +31,6 @@
     }
     .one-review {
         width: 100%;
-        /*height: 140px;*/
         margin-bottom: 5px;
         padding: 10px 0;
         display: flex;
@@ -71,6 +70,9 @@
              width: 780px;
              height: 30px;
          }
+         .content-top .regDate {
+             font-size: 14px;
+         }
             .fa-star.checked {
                 color: #FFA500;
             }
@@ -99,14 +101,20 @@
              font-size: 12px;
              font-family: "Noto Sans KR", sans-serif;
          }
-         #remove-btn {
+         .review-delete-btn {
              background-color: #606060;
          }
-         #modify-btn:hover {
+         .review-modify-btn:hover {
              background-color: #3399FF;
          }
-         #remove-btn:hover {
+         .review-delete-btn:hover {
              background-color: #808080;
+         }
+         .review-complain-btn {
+             background-color: #EE450C;
+         }
+         .review-complain-btn:hover {
+             background-color: #f86a3b;
          }
          #content-bottom {
              width: 840px;

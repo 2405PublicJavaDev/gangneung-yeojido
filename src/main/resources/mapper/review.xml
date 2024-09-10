@@ -127,6 +127,16 @@
         AND PARENT_REVIEW_NO IS NULL
         ORDER BY rf.FILE_ORDER ASC
     </select>
+    <select id="selectMyReply">
+        SELECT *
+        FROM REVIEW
+        WHERE REVIEW_NO = #{reviewNo}
+        AND MEMBER_ID = #{memberId}
+    </select>
+    <select id="selectAllReviewsFileByReviewNo" resultType="ReviewFile">
+        SELECT * FROM REVIEW_FILE
+        WHERE REVIEW_NO = #{reviewNo}
+    </select>
     <insert id="insertReview">
         <selectKey resultType="long" keyProperty="reviewNo" order="BEFORE">
             SELECT SEQ_REVIEW_NO.NEXTVAL FROM DUAL
@@ -142,10 +152,19 @@
         INSERT INTO REVIEW_COMPLAIN(COMPLAIN_NO, CATEGORY, REVIEW_NO, MEMBER_ID)
         VALUES (SEQ_REVIEW_COMPLAIN_NO.NEXTVAL, #{category}, #{reviewNo}, #{memberId})
     </insert>
-    <select id="selectAllReviewsFileByReviewNo" resultType="ReviewFile">
-        SELECT * FROM REVIEW_FILE
-        WHERE REVIEW_NO = #{reviewNo}
-    </select>
+    <update id="updateReview">
+        UPDATE REVIEW
+        SET SCORE=#{score},
+            REVIEW_CONTENT=#{reviewContent},
+            UPDATE_DATE=SYSTIMESTAMP
+        WHERE REVIEW_NO=#{reviewNo}
+          AND MEMBER_ID=#{memberId}
+    </update>
+    <update id="updateReply">
+        UPDATE REVIEW
+        SET REVIEW_CONTENT=#{reviewContent}
+        WHERE REVIEW_NO=#{reviewNo}
+    </update>
     <delete id="deleteReview">
         DELETE FROM REVIEW
         WHERE REVIEW_NO = #{reviewNo}
@@ -153,12 +172,4 @@
     <delete id="deleteReviewFile">
         delete from REVIEW_FILE WHERE REVIEW_NO = #{reviewNo}
     </delete>
-    <update id="updateReview">
-        UPDATE REVIEW
-        SET SCORE=#{score},
-            REVIEW_CONTENT=#{reviewContent},
-            UPDATE_DATE=SYSTIMESTAMP
-        WHERE REVIEW_NO=#{reviewNo}
-        AND MEMBER_ID=#{memberId}
-    </update>
 </mapper>
