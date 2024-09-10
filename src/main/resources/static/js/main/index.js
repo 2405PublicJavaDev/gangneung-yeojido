@@ -32,7 +32,7 @@ buttons.forEach(button => {
 const getOutline = (travelNo) => {
     const notLoadTag = document.querySelector("#main-detail-content-not-load");
     const contentTag = document.querySelector("#main-detail-content");
-    notLoadTag.style.display = 'block';
+    notLoadTag.style.display = 'flex';
     contentTag.style.display = 'none';
     Promise.all([new Promise((resolve, reject) => {
         ajax({url: `/travel/${travelNo}`, method: 'get'},
@@ -71,6 +71,28 @@ const getOutline = (travelNo) => {
         } else {
             textTag.innerHTML = response.introduce;
         }
+        const starContainer = document.querySelector('#main-detail-content-photo-star');
+        starContainer.replaceChildren();
+        const score = response.score;
+        // 별점 렌더링
+        for (let i = 1; i <= 5; i++) {
+            const star = document.createElement('span');
+
+            // 별을 다 채우거나 반 채운 상태를 설정
+            if (i <= Math.floor(score)) {
+                star.className = 'fa fa-star checked';  // 가득 찬 별
+            } else if (i === Math.ceil(score) && score % 1 !== 0) {
+                star.className = 'fa fa-star-half-o checked';  // 반쯤 찬 별
+            } else {
+                star.className = 'fa fa-star unchecked';  // 빈 별
+            }
+
+            // starContainer에 별 추가
+            starContainer.appendChild(star);
+        }
+        const starDisplay = document.createElement('span');
+        starDisplay.innerHTML = score;
+        starContainer.appendChild(starDisplay)
         notLoadTag.style.display = 'none';
     }).catch((error) => {
         console.log('error', error);

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gntour.gangneungyeojido.app.admin.dto.ReqMarkAddRequest;
 import com.gntour.gangneungyeojido.app.main.dto.ReqMarkAddInMainRequest;
+import com.gntour.gangneungyeojido.app.main.dto.TravelOutlineResponse;
 import com.gntour.gangneungyeojido.common.MemberStatus;
 import com.gntour.gangneungyeojido.common.MemberUtils;
 import com.gntour.gangneungyeojido.common.exception.BusinessException;
@@ -60,8 +61,29 @@ public class MainController {
      */
     @GetMapping("/travel/{travelNo}")
     @ResponseBody
-    public TravelInfo getMarkerOutline(@PathVariable Long travelNo) {
-        return travelService.getDetailTravel(travelNo);
+    public TravelOutlineResponse getMarkerOutline(@PathVariable Long travelNo) {
+        TravelInfo info = travelService.getDetailTravel(travelNo);
+        TravelOutlineResponse res = new TravelOutlineResponse();
+        res.setTravelNo(info.getTravelNo());
+        res.setTravelName(info.getTravelName());
+        res.setLatitude(info.getLatitude());
+        res.setLongitude(info.getLongitude());
+        res.setAddress(info.getAddress());
+        res.setPhone(info.getPhone());
+        res.setUseTime(info.getUseTime());
+        res.setParkFee(info.getParkFee());
+        res.setEntryFee(info.getEntryFee());
+        res.setUseFee(info.getUseFee());
+        res.setIntroduce(info.getIntroduce());
+        res.setRegion(info.getRegion());
+        res.setCategory(info.getCategory());
+        res.setZoomLevel(info.getZoomLevel());
+        res.setSiteUrl(info.getSiteUrl());
+        res.setImageUrl(info.getImageUrl());
+        res.setRegDate(info.getRegDate());
+        res.setUpdateDate(info.getUpdateDate());
+        res.setScore(travelService.getScoreByTravelNo(travelNo));
+        return res;
     }
 
     /**
