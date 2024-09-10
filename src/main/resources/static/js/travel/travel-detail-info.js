@@ -15,7 +15,38 @@ document.addEventListener('DOMContentLoaded', function() {
     icons.forEach(function(icon) {
         icon.addEventListener('click', function() {
             // 클릭한 아이콘에 active 클래스를 토글
-            this.classList.toggle('active');
+            if(memberId) {
+                if (!icon.dataset.value || icon.dataset.value === 'null') {
+                    // 즐겨찾기를 추가한다.
+                    ajax({
+                        url: '/favorites',
+                        method: 'post',
+                        payload: {
+                            'travelNo': travelNo
+                        }
+                    }, (response) => {
+                        alert('즐겨찾기를 추가하였습니다.');
+                        icon.dataset.value = response.favoritesNo;
+                        this.classList.toggle('active');
+                    }, (error) => {
+                        alert('즐겨찾기 추가 과정 중에 오류가 발생하였습니다.');
+                    });
+                } else {
+                    // 즐겨찾기를 제거한다
+                    ajax({
+                        url: '/favorite/' + icon.dataset.value,
+                        method: 'delete'
+                    }, (response) => {
+                        alert('즐겨찾기를 해제하였습니다.');
+                        icon.dataset.value = null;
+                        this.classList.toggle('active');
+                    }, (error) => {
+                        alert('즐겨찾기 해제 과정 중에 오류가 발생하였습니다.');
+                    });
+                }
+            } else {
+                alert('로그인을 먼저 해주세요.')
+            }
         });
     });
 });

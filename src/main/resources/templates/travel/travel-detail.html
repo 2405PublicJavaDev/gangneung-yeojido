@@ -113,7 +113,7 @@
             </p>
         </div>
         <div id="items">
-            <i class="fa-regular fa-bookmark"></i>
+            <i th:class="${favoritesNo != null ? 'fa-regular fa-bookmark active' : 'fa-regular fa-bookmark'}" th:data-value="${favoritesNo}"></i>
             <button id="go-diary" type="button">일기 등록</button>
         </div>
     </div>
