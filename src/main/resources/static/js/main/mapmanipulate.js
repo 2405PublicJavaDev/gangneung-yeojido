@@ -23,9 +23,9 @@ data.features.forEach(function (feature) {
     });
 });
 
-bounds.minLon -= 0.05;
+bounds.minLon -= 0.25;
 bounds.minLat -= 0.05;
-bounds.maxLon += 0.05;
+bounds.maxLon += 0.25;
 bounds.maxLat += 0.05;
 
 let drawnPolygons = [];

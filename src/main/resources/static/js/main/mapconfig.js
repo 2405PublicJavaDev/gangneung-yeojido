@@ -35,4 +35,4 @@ const staticImages = [
         lat: 37.659234104113516
     }
 ];
-const MARKER_SIZE = 30;
+const MARKER_SIZE = 25;
