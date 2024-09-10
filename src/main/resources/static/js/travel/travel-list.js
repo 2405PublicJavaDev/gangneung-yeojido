@@ -172,6 +172,7 @@ getPage(currentPage, travelName, region, category);
 
 document.querySelector('#search-btn').addEventListener('click', (e) => {
     e.preventDefault();
+    clearFilter();
     getPage(1, document.querySelector('#search-text').value, null, null);
 });
 
@@ -242,4 +243,14 @@ const applyFilter = () => {
         })
     }
     getPage(1, null, regionString,categoryString);
+}
+
+const clearFilter = () => {
+    selectedRegion = [];
+    selectedCategory = [];
+    buttons.forEach(button => {
+        button.style.backgroundColor = '#FFFFFF';
+        button.style.color = '#000000';
+    });
+    drawGangneung();
 }
