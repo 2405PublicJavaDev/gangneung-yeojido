@@ -72,14 +72,13 @@
     </insert>
     <update id="updateDiary">
         UPDATE TRAVEL_DIARY
-        SET TRAVEL_NO = #{travelNo},
-            DIARY_TITLE = #{diaryTitle},
+        SET DIARY_TITLE = #{diaryTitle},
             DIARY_CONTENT = #{diaryContent},
             UPDATE_DATE = SYSDATE
         WHERE DIARY_NO = #{diaryNo}
     </update>
     <delete id="deleteDiary">
-        DELETE FROM TRAVEL_DIARY WHERE MEMBER_ID = #{memberId}
+        DELETE FROM TRAVEL_DIARY WHERE MEMBER_ID = #{memberId} AND DIARY_NO = ${diaryNo}
     </delete>
     <delete id="deleteDiaryFile">
         delete from TRAVEL_DIARY_FILE WHERE DIARY_NO = #{diaryNo}

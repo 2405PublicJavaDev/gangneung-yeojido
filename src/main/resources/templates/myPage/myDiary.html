@@ -24,19 +24,17 @@
                         <img src="/img/no-image.png" width="100%" height="100%">
                     </a>
                 </div>
-                <!-- 여행지 이름 -->
                 <div class="diary-info">
                     <table>
                         <thead>
-                        <tr>
+                        <tr> <!-- 여행지 이름 -->
                             <a th:href="@{/diary-detail/{travelNo}(travelNo=${diary.diaryNo})}"><!-- 여행지 정보 링크 -->
                                 <td th:text="${diary.diaryTitle}"></td>
                             </a>
                         </tr>
                         </thead>
-                        <!-- 여행지 정보 -->
                         <tbody>
-                        <tr>
+                        <tr> <!-- 여행지 정보 -->
                             <td th:text="${diary.diaryContent}"></td>
                         </tr>
                         </tbody>

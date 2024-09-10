@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -26,7 +27,7 @@ public class TravelDiaryServiceImpl implements TravelDiaryService {
     }
 
     @Override
-    public MyDiaryResponse getDetailDiaryByMember(int diaryNo, String memberId) {
+    public MyDiaryResponse getDetailDiaryByMember(Long diaryNo, String memberId) {
         return travelDiaryMapper.selectOneDiaryByMember(diaryNo, memberId);
     }
 
@@ -47,14 +48,11 @@ public class TravelDiaryServiceImpl implements TravelDiaryService {
     public int modifyDiary(TravelDiary updatedDiary, List<MultipartFile> uploadFiles) {
         int updateResult = travelDiaryMapper.updateDiary(updatedDiary);
         if (uploadFiles != null && !uploadFiles.isEmpty()) {
-            // 기존 파일 삭제
-            travelDiaryMapper.deleteDiaryFile(updatedDiary.getDiaryNo());
-            // 새로운 파일 삽입
-            for (MultipartFile file : uploadFiles) {
-                TravelDiaryFile diaryFile = new TravelDiaryFile();
-                // 파일 데이터 세팅
-                diaryFile.setDiaryNo(updatedDiary.getDiaryNo());
-                travelDiaryMapper.insertDiaryFile(diaryFile);
+            try {
+                fileUtil.deleteFiles(UploadCategory.DIARY, updatedDiary.getDiaryNo());
+                fileUtil.uploadFiles(UploadCategory.DIARY, uploadFiles, updatedDiary.getDiaryNo());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
         return updateResult;
@@ -62,12 +60,14 @@ public class TravelDiaryServiceImpl implements TravelDiaryService {
 
 
     @Override
-    public int removeDiary(int diaryNo, String memberId) {
-        return travelDiaryMapper.deleteDiary(memberId);
-    }
-
-    @Override
-    public int removeDiaryFiles(int diaryNo) {
-        return travelDiaryMapper.deleteDiaryFile((long) diaryNo);
+    public int removeDiary(Long diaryNo, String memberId) {
+        int result = 0;
+        try {
+            result += fileUtil.deleteFiles(UploadCategory.DIARY, diaryNo);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        result = travelDiaryMapper.deleteDiary(diaryNo, memberId);
+        return result;
     }
 }

@@ -46,15 +46,15 @@ main {
 .diary-info th {
     padding: 10px;
     text-align: center;
+    font-weight: bold;
 }
 
 .diary-info td {
     padding: 10px;
     text-align: center;
 }
-
-.diary-info th {
-    font-weight: bold;
+.diary-info {
+    width: 100%;
 }
 
 .diary-info tbody tr:last-child td {

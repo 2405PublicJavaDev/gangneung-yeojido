@@ -48,3 +48,12 @@ button:hover {
 .register-btn {
     text-align: center;
 }
+.img-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.img-container img {
+    width: 150px;
+    height: 150px;
+}

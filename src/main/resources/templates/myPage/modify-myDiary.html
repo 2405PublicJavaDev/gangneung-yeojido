@@ -4,18 +4,37 @@
       layout:decorate="~{layouts/default}"
       layout:decorator="layout">
 <th:block layout:fragment="script">
+    <script th:inline="javascript">
+        let diaryNo = /*[[${diaryNo}]]*/
+    </script>
     <script type="text/javascript" src="/js/file-upload.js"></script>
     <script type="text/javascript">
+        ajax({
+            url: '/modify-diary/list/' + diaryNo,
+            method: 'get'
+        }, (response) => {
+            console.log(response);
+            document.querySelector('#diary-subject').value = response.diaryTitle;
+            document.querySelector('#diary-content').value = response.diaryContent;
+            const updateThumbnailsAfterLoading = async () => {
+                for (const file of response.diaryFiles) {
+                    await inputFileDataHandler['modify-file-upload'].loadImageFromURL(file.webPath);
+                }
+            }
+            updateThumbnailsAfterLoading().then(() => {inputFileDataHandler['modify-file-upload'].thumbnailUpdate()});
+        }, (error) => {
+            console.log(error);
+        })
         document.querySelector('#submit-btn').addEventListener('click', (e) => {
             e.preventDefault();
             const formTag = document.querySelector("#uploadForm");
             const formData = new FormData(formTag);
             // 파일을 FormData에 추가
-            inputFileData.forEach(file => {
-                formData.append('uploadFile', file);
+            inputFileDataHandler['modify-file-upload'].inputFileData.forEach(file => {
+                formData.append('uploadFiles', file);
             });
             ajax({
-                    url: '/register-diary',
+                    url: '/modify-diary',
                     method: 'post',
                     payload: formData,
                     isMultipart: true
@@ -40,23 +59,21 @@
 <main layout:fragment="content">
     <!--    <img src="/gntour/DIARY/0efffa16-de3c-4509-8bef-ee67eb88465b.png">-->
     <div>
-        <form id="uploadForm" th:action="@{/modify-diary}" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="travelNo" th:value="${travelDiary.travelNo}">
+        <form id="uploadForm">
+            <input type="hidden" name="diaryNo" th:value="${diaryNo}">
             <div class="my-subject"><h1>나의 여행일기 수정</h1></div>
             <div class="main-content">
                 <div class="input-content">
                     <div class="input-sub">
                         <b>제목</b>
-                        <input type="text" name="diaryTitle" required class="common-input subject-input"
-                               th:value="${travelDiary.diaryTitle}" id="diary-subject">
+                        <input type="text" name="diaryTitle" required class="common-input subject-input" id="diary-subject">
                     </div>
                     <b>내용</b>
 
                     <textarea name="diaryContent" required class="common-input content-input"
-                              id="diary-content"
-                              th:text="${travelDiary.diaryContent}">
+                              id="diary-content">
                     </textarea>
-                    <div class="file-upload">
+                    <div class="file-upload" id="modify-file-upload">
                         <input type="file" accept="image/*" multiple>
                         <button type="button" id="uploadBtn">이미지 추가</button>
                         <div id="file-thumbnail-root">
