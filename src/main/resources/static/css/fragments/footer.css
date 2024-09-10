@@ -23,11 +23,13 @@ footer {
 #footer-important-notice-title{
     display: flex;
     width: 460px;
+    align-items: center;
+    padding-bottom: 8px;
 }
 #footer-important-notice-title-text {
     width: 200px;
     /*border-bottom: 1px solid white;*/
-    padding-bottom: 8px;
+    /*padding-bottom: 8px;*/
 }
 #footer-important-notice-title-text>span {
     color: white;
