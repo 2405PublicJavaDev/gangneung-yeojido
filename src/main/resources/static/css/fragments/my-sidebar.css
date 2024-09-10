@@ -27,3 +27,8 @@
 .my-sideList ul li a:hover {
     text-decoration: underline;
 }
+.withdrawal {
+    display: flex;
+    justify-content: center;
+    color: red;
+}

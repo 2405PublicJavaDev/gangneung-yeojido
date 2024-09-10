@@ -33,6 +33,7 @@
 </th:block>
 <th:block layout:fragment="css">
     <link rel="stylesheet" href="/css/file-upload.css">
+    <link rel="stylesheet" href="/css/myPage/detail-myDiary.css">
     <link rel="stylesheet" href="/css/myPage/register-myDiary.css">
 </th:block>
 <main layout:fragment="content">
@@ -44,17 +45,17 @@
             <div class="my-subject"><h1>나의 여행일기</h1></div>
             <div class="main-content">
                 <div class="input-content">
-                    <div class="input-sub"> <b>제목</b>
+                    <div class="input-sub">
                         <h2 th:text="${travelDiary.diaryTitle}"></h2>
                     </div>
-                    <b>내용</b>
+                    <!-- 내용 -->
                     <input type="text" name="diaryContent" class="common-input content-input" id="diary-content" readonly th:value="${travelDiary.diaryContent}">
                     <b th:if="${travelDiary.diaryFiles != null && travelDiary.diaryFiles.size() > 0}">이미지</b>
                     <div class="img-container" th:if="${travelDiary.diaryFiles != null && travelDiary.diaryFiles.size() > 0}">
                         <img th:each="diaryFile : ${travelDiary.diaryFiles}" th:src="${diaryFile.webPath}">
                     </div>
                 </div>
-                <div class="register-btn">
+                <div class="update-btn">
                     <button class="register submit-button">
                         <a th:href="@{/modify-diary/{diaryNo}(diaryNo=${travelDiary.diaryNo})}">수정</a>
                     </button>

@@ -10,7 +10,7 @@
 </th:block>
 <main layout:fragment="content">
     <div class="main-center">
-        <div class="my-subject"><h1>나의 여행 일기</h1></div>
+        <div class="my-subject"><h1>나의 여행 일기</h1><hr></div>
         <div class="main-content">
             <div th:each="diary : ${page.data}" class="diary" th:if="${page.totalCount > 0}">
                 <!-- 여행지 이미지 -->
@@ -27,16 +27,18 @@
                 <div class="diary-info">
                     <table>
                         <thead>
-                        <tr> <!-- 여행지 이름 -->
-                            <a th:href="@{/diary-detail/{travelNo}(travelNo=${diary.diaryNo})}"><!-- 여행지 정보 링크 -->
-                                <td th:text="${diary.diaryTitle}"></td>
-                            </a>
-                        </tr>
+                            <tr> <!-- 일기 이름 -->
+                                <td>
+                                    <b><a th:href="@{/diary-detail/{diaryNo}(diaryNo=${diary.diaryNo})}" th:text="${diary.diaryTitle}"></a></b>
+                                </td>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr> <!-- 여행지 정보 -->
-                            <td th:text="${diary.diaryContent}"></td>
-                        </tr>
+                            <tr> <!-- 일기 정보 -->
+                                <a th:href="@{/diary-detail/{diaryNo}(diaryNo=${diary.diaryNo})}">
+                                    <td th:text="${diary.diaryContent}"></td>
+                                </a>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
