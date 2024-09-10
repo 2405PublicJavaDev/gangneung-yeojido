@@ -109,7 +109,7 @@ const getPage = (currentPage, travelName, region, category) => {
                         <div class="travel-detail">
                             <div class="travel-title">
                                 <a href="/travel/detail/${travel.travelNo}?currentPage=${currentPage}${additionalQueryString}">${travel.travelName}</a>
-                                <i class="fa-regular fa-bookmark"></i>
+                                <i class="fa-regular fa-bookmark ${travel.favoritesNo ? 'active' : ''}"></i>
                             </div>
                             <div class="travel-address">
                                 <div class="address-left">
