@@ -92,7 +92,20 @@ const getOutline = (travelNo) => {
         }
         const starDisplay = document.createElement('span');
         starDisplay.innerHTML = score;
-        starContainer.appendChild(starDisplay)
+        starContainer.appendChild(starDisplay);
+        const moreBtn = document.createElement('button');
+        moreBtn.id = 'main-detail-more';
+        moreBtn.innerHTML = '자세히 보기'
+        moreBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            location.href = '/travel/detail/'+ response.travelNo;
+        })
+        const mainDetailContent = document.querySelector('#main-detail-content');
+        const oldMoreBtn = document.querySelector('#main-detail-more');
+        if(oldMoreBtn) {
+            oldMoreBtn.outerHTML = "";
+        }
+        mainDetailContent.appendChild(moreBtn);
         notLoadTag.style.display = 'none';
     }).catch((error) => {
         console.log('error', error);
