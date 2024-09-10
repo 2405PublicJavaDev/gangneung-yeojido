@@ -15,12 +15,19 @@
     <link href="/css/member/login.css" rel="stylesheet">
 </th:block>
 <main layout:fragment="content">
-    <div class="login-container">
+    <div class="login-container" id="login-container">
         <h1>로그인</h1>
         <hr>
         <form action="/login" method="post" class="login-form" id="login-form">
-            <input type="text" name="memberId" placeholder="아이디" class="common-input">
-            <input type="password" name="password" placeholder="비밀번호" class="common-input">
+            <div class="input-group">
+                <input type="text" id="memberId" placeholder="아이디" class="common-input " name="memberId">
+            </div>
+            <div class="input-group" >
+                <input type="password" id="password" placeholder="비밀번호" class="common-input " name="password">
+            </div>
+
+            <div class="failure-message hide message" id="id-failure-message"></div>
+
             <button type="button" class="common-primary-btn login-btn" onclick="loginBtnClick()">로그인</button>
         </form>
         <button class="common-secondary-btn signup-btn" onclick="goToJoin()">회원가입</button>

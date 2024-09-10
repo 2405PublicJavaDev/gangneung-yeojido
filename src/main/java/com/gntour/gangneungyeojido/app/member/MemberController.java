@@ -89,8 +89,11 @@ public class MemberController {
      */
     @GetMapping("/modify-member")
     public String showModifyMemberInfoPage(HttpSession session, Model model){
-        String memberId = (String) session.getAttribute(MemberUtils.MEMBER_ID);
-        Member member = mService.getProfileMember(memberId);
+        String loginMemberId = MemberUtils.getMemberIdFromSession(session);
+        if(loginMemberId == null){
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
+        Member member = mService.getProfileMember(loginMemberId);
         String memberBirthDate = convertTimestampToString(member.getBirthDate());
         model.addAttribute("member", member);
         model.addAttribute("memberBirthDate", memberBirthDate);
@@ -103,8 +106,11 @@ public class MemberController {
      */
     @GetMapping("/remove-member")
     public String showRemoveMemberPage(HttpSession session, Model model){
-        String memberId = (String) session.getAttribute(MemberUtils.MEMBER_ID);
-        Member member = mService.getProfileMember(memberId);
+        String loginMemberId = MemberUtils.getMemberIdFromSession(session);
+        if(loginMemberId == null){
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
+        Member member = mService.getProfileMember(loginMemberId);
         model.addAttribute("member", member);
         return "member/remove-member";
     }
@@ -165,17 +171,24 @@ public class MemberController {
         return new EmptyResponse();
     }
 
+    /**
+     * 담당자 : 이경학님
+     * 관련기능 : String 을 Timestamp로 변환 (birthDate)
+     */
     private Timestamp convertStringToTimestamp(String str) {
         // "yyyyMMdd" 형식의 DateTimeFormatter 생성
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-
         // LocalDate로 변환
         LocalDate localDate = LocalDate.parse(str, formatter);
-
         // LocalDate를 Timestamp로 변환
         return Timestamp.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
+    /**
+     *
+     * 담당자 : 이경학님
+     * 관련기능 : Timestamp 를 String으로 변환 (birthDate)
+     */
     private String convertTimestampToString(Timestamp timestamp) {
         LocalDate localDate = timestamp.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         return localDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
@@ -198,9 +211,53 @@ public class MemberController {
 
     /**
      *  담당자 : 이경학님
-     *  관련기능 : [회원관리 기능] 비밀번호 찾기
+     *  관련기능 : [회원관리 기능] 비밀번호 찾기, 임시비밀번호 보내기
      */
-    public void findPassword(){}
+    @PostMapping("/find-pw")
+    @ResponseBody
+    public EmptyResponse findPassword(@RequestBody @Valid FindPwRequest findPwRequest){
+        // 회원 조회및 유효한 회원인지 체크
+        Member member = mService.getProfileMember(findPwRequest.getMemberId());
+        if(member == null) {
+            throw new BusinessException(ErrorCode.ID_FIND_FAIL);
+        }
+        if(!member.getMemberId().equals(findPwRequest.getMemberId()) || !member.getEmail().equals(findPwRequest.getEmail())) {
+            throw new BusinessException(ErrorCode.INVALID_INPUT_VALUE);
+        } else {
+            // 임시 비밀번호 생성
+            String resetPassword = ResetPasswordGenerator.generateVerificationCode();
+            // 임시 비밀번호를 DB 설정
+            member.setPassword(resetPassword);
+            mService.modifyMemberInfo(member);
+
+            // 임시 비밀번호를 이메일 보내기
+            SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+            ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+            templateResolver.setPrefix("templates/");
+            templateResolver.setCacheable(false);
+            templateResolver.setSuffix(".html");
+            templateResolver.setTemplateMode("HTML");
+
+            // https://github.com/thymeleaf/thymeleaf/issues/606
+            templateResolver.setForceTemplateMode(true);
+
+            templateEngine.setTemplateResolver(templateResolver);
+
+            Context ctx = new Context();
+
+            ctx.setVariable("sendResetPassword", resetPassword);
+
+            final String result = templateEngine.process("member/reset-password-mail", ctx);
+
+            emailService.sendMail(new EmailMessage(
+                    findPwRequest.getEmail(),
+                    "[강릉여지도] 강릉여지도 계정 임시 비밀번호",
+                    result
+            ));
+            emailValidService.addOrUpdateValidCode(findPwRequest.getEmail(), resetPassword);
+            return new EmptyResponse();
+        }
+    }
 
     /**
      *  담당자 : 이경학님
@@ -212,7 +269,10 @@ public class MemberController {
         if(!modifyMemberRequest.getPassword().equals(modifyMemberRequest.getConfirmPassword())) {
             throw new BusinessException(ErrorCode.PW_PW_CHECK_NOT_MATCH);
         }
-        String loginMemberId = (String) session.getAttribute(MemberUtils.MEMBER_ID);
+        String loginMemberId = MemberUtils.getMemberIdFromSession(session);
+        if(loginMemberId == null) {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
         Member member = mService.getProfileMember(loginMemberId);
         member.setPassword(modifyMemberRequest.getPassword());
         member.setEmail(modifyMemberRequest.getEmail());
@@ -230,11 +290,11 @@ public class MemberController {
     @PostMapping("/remove-member")
     @ResponseBody
     public EmptyResponse removeMember(@RequestBody @Valid RemoveMemberRequest removeMemberRequest, HttpSession session){
-        String loginMemberId = (String) session.getAttribute(MemberUtils.MEMBER_ID);
-        Member member = mService.getProfileMember(loginMemberId);
-        if(member == null) {
+        String loginMemberId = MemberUtils.getMemberIdFromSession(session);
+        if(loginMemberId == null) {
             throw new BusinessException(ErrorCode.LOGIN_FAIL);
         }
+        Member member = mService.getProfileMember(loginMemberId);
         log.info(member.toString());
         log.info(removeMemberRequest.toString());
         if(member.getMemberId().equals(removeMemberRequest.getMemberId()) && member.getPassword().equals(removeMemberRequest.getPassword())) {
@@ -293,59 +353,6 @@ public class MemberController {
             throw  new BusinessException(ErrorCode.EMAIL_VALID_FAIL);
         }
         return new EmptyResponse();
-    }
-
-    /**
-     * 담당자 : 이경학님
-     * 관련기능 : [회원관리 기능] 임시비밀번호 보내기
-     */
-    @PostMapping("/find-pw")
-    @ResponseBody
-    public EmptyResponse resetPassword(@RequestBody @Valid FindPwRequest findPwRequest) {
-        // 임시 비밀번호 생성
-        String resetpassword = ResetPasswordGenerator.generateVerificationCode();
-        // 회원 조회및 유효한 회원인지 체크
-        Member member = mService.getProfileMember(findPwRequest.getMemberId());
-        if(member == null) {
-            throw new BusinessException(ErrorCode.ID_FIND_FAIL);
-        }
-        log.info(findPwRequest.toString());
-        log.info(member.toString());
-        if(!member.getMemberId().equals(findPwRequest.getMemberId()) || !member.getEmail().equals(findPwRequest.getEmail())) {
-            throw new BusinessException(ErrorCode.INVALID_INPUT_VALUE);
-        } else {
-
-        // 임시 비밀번호를 DB 설정
-        member.setPassword(resetpassword);
-        mService.modifyMemberInfo(member);
-
-        // 임시 비밀번호를 이메일 보내기
-        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
-        templateResolver.setPrefix("templates/");
-        templateResolver.setCacheable(false);
-        templateResolver.setSuffix(".html");
-        templateResolver.setTemplateMode("HTML");
-
-        // https://github.com/thymeleaf/thymeleaf/issues/606
-        templateResolver.setForceTemplateMode(true);
-
-        templateEngine.setTemplateResolver(templateResolver);
-
-        Context ctx = new Context();
-
-        ctx.setVariable("sendResetPassword", resetpassword);
-
-        final String result = templateEngine.process("member/reset-password-mail", ctx);
-
-        emailService.sendMail(new EmailMessage(
-                findPwRequest.getEmail(),
-                "[강릉여지도] 강릉여지도 계정 임시 비밀번호",
-                result
-        ));
-        emailValidService.addOrUpdateValidCode(findPwRequest.getEmail(), resetpassword);
-        return new EmptyResponse();
-        }
     }
 
     /**
