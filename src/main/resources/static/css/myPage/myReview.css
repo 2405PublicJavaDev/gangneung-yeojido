@@ -10,12 +10,21 @@ main {
     width: 100%;
     margin-top: 20px;
 }
+
 #main-bottom {
     width: 100%;
 }
-.my-subject h1 {
-    display: flex;
-    justify-content: center;
+
+.my-subject {
+    text-align: center;
+    font-family: 'BMDOHYEON';
+}
+
+.my-subject hr {
+    width: 35%;
+    margin: 10px auto;
+    border: 0;
+    border-top: 3px solid black;
 }
 
 .travels {

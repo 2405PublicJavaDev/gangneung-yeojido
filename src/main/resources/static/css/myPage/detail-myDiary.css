@@ -1,151 +1,70 @@
 main {
     padding: 20px;
-    display: flex;
-    flex-direction: row;
 }
 
-.my-subject {
-    font-family: 'BMDOHYEON'
+#uploadForm {
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+/* 화면 타이틀 */
+h2 {
+    font-family: 'BMDOHYEON', sans-serif;
+    padding-bottom: 50px;
+    padding-top : 20px;
+    text-align: center;
+}
+form div {
+    margin-bottom: 20px;
 }
 
-main a {
+.content-input {
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+    height: 25px;
+    display: block;
+}
+
+.submit-button {
+    font-size: 1em;
+    width: 100px;
+    height: 30px;
+    background-color: #007FFF;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    margin: 0 5px;
+}
+button:hover {
+    background: #3399FF;
+}
+/* 취소버튼 색상 변경*/
+.cancel {
+    background-color: #c7c7c7;
+}
+/*버튼 가운데 정렬*/
+.update-btn {
+    text-align: center;
+}
+
+.update-btn a {
     text-decoration: none;
     color: white;
 }
 
-.main-content {
-    flex-grow: 1;
-    width: 1500px;
-    height: 800px;
-    border: 1px solid black;
+.img-container {
     display: flex;
-    flex-direction: column;
-    margin-left: 30px;
-    box-sizing: border-box;
-    flex-wrap: nowrap;
-    justify-content: center;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center;     /* 수직 중앙 정렬 (필요 시) */
+    width: 100%;             /* 컨테이너의 너비를 100%로 설정 */
 }
 
-.my-subject {
-    display: flex;
-    justify-content: center;
-}
-
-.input-content {
-    width: 100%;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.input-sub {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-
-.main-content div {
-    padding-bottom: 20px;
-}
-
-.main-content input {
-    width: 80%;
-    height: 25px;
-}
-
-.main-content textarea {
-    width: 80%;
-    height: 600px;
-}
-
-.file-div {
-    width: 80%;
-    display: flex;
-    justify-content: end;
-}
-.file-div button {
-    background-color: #007FFF;
-    width: 20%;
-    padding: 10px;
-    color: white;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    font-family: "Noto Sans KR";
-}
-
-.register-btn {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.register-btn button {
-    background-color: #007FFF;
-    width: 20%;
-    padding: 10px;
-    color: white;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    font-family: "Noto Sans KR";
-    margin-left: 10px;
-}
-
-.my-info {
-    width: 100%;
-    height: 400px;
-    display: flex;
-    flex-direction: row;
-    margin-top: 20px;
-}
-
-.my-inquiry {
-    width: 50%;
-    height: 100%;
-    padding: 50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    font-family: 'BMDOHYEON'
-}
-
-.inquiry-list {
-    width: 100%;
-    height: 100%;
-    margin-top: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: flex-start;
-    align-content: space-around;
-}
-
-.my-activity {
-    width: 50%;
-    height: 100%;
-    padding: 50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    font-family: 'BMDOHYEON'
-}
-
-.activity-list {
-    width: 100%;
-    height: 100%;
-    margin-top: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: flex-start;
-    align-content: space-around;
-}
-img {
-    width: 250px;
-    height: 250px;
+.img-container img {
+    display: block;          /* 인라인 요소를 블록으로 변경 */
+    max-width: 100%;         /* 이미지가 컨테이너 크기를 넘지 않도록 조정 */
+    height: auto;            /* 이미지의 비율을 유지하면서 크기를 조정 */
+    margin: 0 auto;          /* 이미지의 중앙 정렬 */
 }

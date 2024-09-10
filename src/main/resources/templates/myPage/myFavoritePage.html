@@ -18,6 +18,12 @@
             if(!isNew) {
                 isNew = 'Y';
             }
+            const sortImage = document.getElementById('sortImage');
+            // if(isNew && isNew === 'Y') {
+            //     sortImage.src = '/img/Chevron_up.png'; // 오래된순 이미지로 변경
+            // } else {
+            //     sortImage.src = '/img/Chevron_down.png'; // 최신순 이미지로 변경
+            // }
             if(isNew && isNew === 'Y') {
                isNew = 'N';
             } else {
@@ -46,14 +52,17 @@
 </th:block>
 <main layout:fragment="content">
     <div class="main-center">
-        <div class="my-subject"><h1>즐겨찾기</h1></div>
+        <div class="my-subject">
+            <h1>즐겨찾기</h1>
+            <hr>
+        </div>
         <div class="main-content">
             <!--정렬-->
             <div class="sort-section">
                 <div>
                     <a onclick="sortFavorites();">
                         <span th:text="${isNew != null and isNew == 'Y' ? '최신순' : '오래된순'}"></span>
-                        <img src="/img/mysort.png" width="20px" height="20px">
+                        <img id="sortImage" src="/img/mysort.png" width="20px" height="20px">
                     </a>
                 </div>
                 </a>
@@ -76,9 +85,7 @@
                     <table>
                         <thead>
                             <tr>
-                                <a href="#"><!-- 여행지 정보 링크 -->
-                                    <td th:text="${favorite.travelName}"></td>
-                                </a>
+                                <a th:href="@{/travel/detail/{travelNo}(travelNo=${favorite.travelNo})}" th:text="${favorite.travelName}"></a>
                             </tr>
                         </thead>
                         <!-- 여행지 정보 -->
