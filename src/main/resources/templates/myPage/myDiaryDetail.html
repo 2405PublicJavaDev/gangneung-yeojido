@@ -6,30 +6,28 @@
 <th:block layout:fragment="script">
     <script type="text/javascript" src="/js/file-upload.js"></script>
     <script type="text/javascript">
-        document.querySelector('#submit-btn').addEventListener('click', (e) => {
-            e.preventDefault();
-            const formTag = document.querySelector("#uploadForm");
-            const formData = new FormData(formTag);
-            // 파일을 FormData에 추가
-            inputFileData.forEach(file => {
-                formData.append('uploadFile', file);
-            });
-            ajax({
-                    url: '/register-diary',
-                    method: 'post',
-                    payload: formData,
-                    isMultipart: true
-                },
-                (response) => {
-                    console.log('response', response);
-                    location.href="/diary";
-                },
-                (error) => {
-                    console.log('error',error)}
-            );
-        })
-        function goback() {
-            history.go(-1);
+        function goBack(){
+            if(confirm("뒤로 가시겠습니까?")){
+                history.go(-1);
+            }
+        }
+        function removeDiary(){
+            if(confirm("정말 삭제하시겠습니까?")) {
+                const diaryNo = document.querySelector('#diaryNo').value;
+                ajax({
+                    url:'/remove/' + diaryNo,
+                    method: 'delete'
+                }, (response) => {
+                    console.log(response);
+                    alert('다이어리 삭제를 하였습니다.');
+                    location.href = '/diary';
+                }, (error) => {
+                    console.log(error);
+                    alert('다이어리 삭제하는 과정 중에서 오류가 발생했습니다.');
+                })
+            } else {
+                alert("취소하셨습니다.");
+            }
         }
     </script>
 </th:block>
@@ -41,7 +39,7 @@
     <!--    <img src="/gntour/DIARY/0efffa16-de3c-4509-8bef-ee67eb88465b.png">-->
     <div>
         <form id="uploadForm">
-            <input type="hidden" value="352" name="travelNo">
+            <input type="hidden" th:value="${travelDiary.diaryNo}" id="diaryNo">
             <button type="button" class="remove submit-button" onclick="goBack();">뒤로가기</button>
             <div class="my-subject"><h1>나의 여행일기</h1></div>
             <div class="main-content">
@@ -65,20 +63,5 @@
             </div>
         </form>
     </div>
-    <script type="text/javascript">
-        function goBack(){
-            if(confirm("뒤로 가시겠습니까?")){
-                history.go(-1);
-            }
-        }
-        function removeDiary(){
-            if(confirm("정말 삭제하시겠습니까?")){
-                let deleteUrl = /*[[@{/remove/{diaryNo}(diaryNo=${travelDiary.diaryNo})}]]*/ '';
-                location.href = deleteUrl;
-            }else {
-                alert("취소하셨습니다.");
-            }
-        }
-    </script>
 </main>
 </html>

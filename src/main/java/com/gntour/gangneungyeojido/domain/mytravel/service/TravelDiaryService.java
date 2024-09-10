@@ -11,14 +11,12 @@ public interface TravelDiaryService {
 
     Page<MyDiaryResponse, String> getAllDiariesByMember(Integer currentPage, String memberId);
 
-    MyDiaryResponse getDetailDiaryByMember(int diaryNo, String memberId);
+    MyDiaryResponse getDetailDiaryByMember(Long diaryNo, String memberId);
 
     int addDiary(TravelDiary travelDiary, List<MultipartFile> multipartFiles);
 
     int modifyDiary(TravelDiary updatedDiary, List<MultipartFile> uploadFiles);
 
-    int removeDiary(int diaryNo, String memberId);
-
-    int removeDiaryFiles(int diaryNo);
+    int removeDiary(Long diaryNo, String memberId);
 
 }

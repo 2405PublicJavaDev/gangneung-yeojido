@@ -18,7 +18,7 @@ public interface TravelDiaryMapper {
 
     List<TravelDiaryFile> selectAllDiariesFileByDiaryNo(Long diaryNo);
 
-    MyDiaryResponse selectOneDiaryByMember(int diaryNo, String memberId);
+    MyDiaryResponse selectOneDiaryByMember(Long diaryNo, String memberId);
 
     int insertDiary(TravelDiary travelDiary);
 
@@ -26,7 +26,7 @@ public interface TravelDiaryMapper {
 
     int updateDiary(TravelDiary updatedDiary);
 
-    int deleteDiary(String memberId);
+    int deleteDiary(Long diaryNo, String memberId);
 
     int deleteDiaryFile(Long diaryNo);
 }

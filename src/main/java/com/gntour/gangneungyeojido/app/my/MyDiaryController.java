@@ -53,7 +53,7 @@ public class MyDiaryController {
      * 관련 가눙 : [마이페이지 기능] 나의 여행 기록 상세 조회
      */
     @GetMapping("/diary-detail/{diaryNo}")
-    public String showMyDetailDiaryPage(@PathVariable int diaryNo, HttpSession session, Model model){
+    public String showMyDetailDiaryPage(@PathVariable Long diaryNo, HttpSession session, Model model){
         MyDiaryResponse travelDiary = travelDiaryService.getDetailDiaryByMember(diaryNo,MemberUtils.getMemberIdFromSession(session));
         model.addAttribute("travelDiary", travelDiary);
         return "myPage/myDiaryDetail";
@@ -97,14 +97,29 @@ public class MyDiaryController {
      */
     @GetMapping("/modify-diary/{diaryNo}")
     public String showUpdateMyDiaryPage(
-            @PathVariable int diaryNo,
-            HttpSession session,
+            @PathVariable Long diaryNo,
             Model model
     ){
-        MyDiaryResponse travelDiary = travelDiaryService.getDetailDiaryByMember(diaryNo,MemberUtils.getMemberIdFromSession(session));
-        model.addAttribute("travelDiary", travelDiary);
+        model.addAttribute("diaryNo", diaryNo);
         return "/myPage/modify-myDiary";
-    };
+    }
+
+    @GetMapping("/modify-diary/list/{diaryNo}")
+    @ResponseBody
+    public MyDiaryResponse getDiary(
+            @PathVariable Long diaryNo,
+            HttpSession session
+    ) {
+        String memberId = MemberUtils.getMemberIdFromSession(session);
+        if(memberId == null) {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
+        MyDiaryResponse travelDiary = travelDiaryService.getDetailDiaryByMember(diaryNo, memberId);
+        if(travelDiary == null) {
+            return new MyDiaryResponse();
+        }
+        return travelDiary;
+    }
 
 
     /**
@@ -112,38 +127,45 @@ public class MyDiaryController {
      * 관련 기능 : [마이페이지 기능] 나의 여행 기록 수정
      */
     @PostMapping("/modify-diary")
-    public String modifyDiary(
+    @ResponseBody
+    public EmptyResponse modifyDiary(
             @ModelAttribute @Valid DiaryModifyRequest diaryModifyRequest,
             @RequestParam("uploadFiles") List<MultipartFile> uploadFiles,
-            HttpSession session,
-            RedirectAttributes redirectAttributes
+            HttpSession session
     ) {
+        String memberId = MemberUtils.getMemberIdFromSession(session);
+        if(memberId == null) {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
         TravelDiary travelDiary = new TravelDiary();
-        travelDiary.setTravelNo(diaryModifyRequest.getTravelNo());
+        travelDiary.setDiaryNo(diaryModifyRequest.getDiaryNo());
         travelDiary.setDiaryTitle(diaryModifyRequest.getDiaryTitle());
         travelDiary.setDiaryContent(diaryModifyRequest.getDiaryContent());
-        travelDiary.setMemberId(MemberUtils.getMemberIdFromSession(session));
+        travelDiary.setMemberId(memberId);
 
         int result = travelDiaryService.modifyDiary(travelDiary, uploadFiles);
         if (result == 0) {
-            redirectAttributes.addFlashAttribute("message", "수정 실패");
-            return "redirect:/modify-diary";
+            throw new BusinessException(ErrorCode.NO_UPDATE);
         }
-        redirectAttributes.addFlashAttribute("message", "수정 성공");
-        return "redirect:/diary";
+        return new EmptyResponse();
     }
     /**
      * 담당자 : 백인호님
      * 관련 기능 : [마이페이지 기능] 나의 여행 기록 삭제
      */
-    @GetMapping("/remove/{diaryNo}")
-    public String removeDiary(HttpSession session, @PathVariable int diaryNo){
-        int result = travelDiaryService.removeDiary(diaryNo,MemberUtils.getMemberIdFromSession(session));
+    @DeleteMapping("/remove/{diaryNo}")
+    @ResponseBody
+    public EmptyResponse removeDiary(HttpSession session, @PathVariable Long diaryNo){
+        String memberId = MemberUtils.getMemberIdFromSession(session);
+        if(memberId == null) {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
+        int result = travelDiaryService.removeDiary(diaryNo, memberId);
         if(result == 0) {
             throw new BusinessException(ErrorCode.NO_UPDATE);
         }
-        return "redirect:/diary";
-    };
+        return new EmptyResponse();
+    }
 
 
 }
