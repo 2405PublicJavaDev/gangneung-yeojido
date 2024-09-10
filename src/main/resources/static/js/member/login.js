@@ -14,7 +14,14 @@ const loginBtnClick = () => {
         (error) => {
             // alert('로그인 에러 발생함');
             console.log('error',error);
-            idPwCheck()
+            if(error.code === 'M001') {
+                idFailureMessage.innerHTML = '아이디 또는 비밀번호가 잘못 되었습니다. 아이디와 비밀번호를 정확히 입력해 주세요.';
+                idFailureMessage.classList.remove('hide');
+                elInputMemberId.classList.add('border-red');
+                elInputPassword.classList.add('border-red');
+            } else {
+                idPwCheck();
+            }
             loginContainer.scrollIntoView({behavior: 'smooth', block: 'start'});
 
     }
