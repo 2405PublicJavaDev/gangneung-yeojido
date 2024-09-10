@@ -9,6 +9,8 @@ main {
 .main-center {
     width: 100%;
     margin-top: 20px;
+    padding-left: 10%;
+    padding-right: 10%;
 }
 
 .main-content {
@@ -56,18 +58,18 @@ main {
 .favorite {
     display: flex;
     margin-bottom: 20px;
-    padding: 10px;
+    padding: 10px 25px;
     border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2); /* 그림자 강화 */;
 }
 
 .star {
     display: flex;
-    margin-right: 15px;
     font-size: 24px;
     color: #ffc107;
     text-align: center;
     align-items: center;
+    margin-right: 25px;
 }
 
 .star button {
@@ -97,6 +99,7 @@ main {
     padding: 10px;
     text-align: center;
     font-weight: bold;
+    font-size: 18px;
 }
 
 .favorite-info td {
@@ -124,3 +127,10 @@ main {
     padding: 10px;
 }
 
+.fa-bookmark.active {
+    cursor: pointer;
+    background-color: white;
+    color: #FFD43B;
+    font-size: 30px;
+    font-weight: bolder;
+}

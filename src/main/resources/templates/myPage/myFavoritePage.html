@@ -4,6 +4,7 @@
       layout:decorate="~{layouts/my-page}"
       layout:decorator="layout">
 <th:block layout:fragment="script">
+    <script src="https://kit.fontawesome.com/c04d10f9dd.js" crossorigin="anonymous"></script>
     <script type="text/javascript">
         function sortFavorites() {
             // 현재 URL에서 쿼리 문자열을 추출
@@ -71,7 +72,7 @@
                 <div class="star">
                     <!--즐겨찾기-->
                     <button th:onclick="removeFavorite([[${favorite.favoritesNo}]])">
-                        <img src="/img/myPage-star.png" width="30px" height="30px">
+                        <i class="fa-regular fa-bookmark active"></i>
                     </button>
                 </div>
                 <!-- 여행지 이미지 -->

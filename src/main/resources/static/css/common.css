@@ -5,6 +5,18 @@
     font-style: normal;
 }
 
+h1 {
+    font-weight: 500;
+}
+
+h2 {
+    font-weight: 500;
+}
+
+h3 {
+    font-weight: 500;
+}
+
 main {
     position: relative;
 }
@@ -127,6 +139,11 @@ main {
     color: #78797B;
     width: 100%;
     text-align: center;
+}
+
+.common-pagination-li-end a {
+    text-decoration: none;
+    color: black;
 }
 
 .common-pagination-li-active {
