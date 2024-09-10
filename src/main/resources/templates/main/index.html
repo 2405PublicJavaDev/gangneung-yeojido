@@ -11,12 +11,12 @@
         const randomNumber = numbers[randomIndex];
         console.log(randomNumber);
     </script>
+    <script src="https://kit.fontawesome.com/c04d10f9dd.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@latest/swiper-bundle.min.js"></script>
     <script type="text/javascript" src="/js/main/mapdata.js"></script>
     <script type="text/javascript" src="/js/main/mapconfig.js"></script>
     <script type="text/javascript" src="/js/main/mapmanipulate.js"></script>
     <script type="text/javascript" src="/js/main/index.js"></script>
-    <script src="https://kit.fontawesome.com/c04d10f9dd.js" crossorigin="anonymous"></script>
 </th:block>
 <th:block layout:fragment="css">
     <!-- Swiper CSS -->
@@ -55,7 +55,7 @@
                 <button type="button" class="main-detail-category-btn" id="categoryLEISURE">레저·체험</button>
             </div>
             <div id="main-detail-content-not-load">
-                <p>로딩중입니다 잠시만 기다려주세요</p>
+                <div class="circular-progress"></div>
             </div>
             <div id="main-detail-content">
                 <div id="main-detail-content-title">

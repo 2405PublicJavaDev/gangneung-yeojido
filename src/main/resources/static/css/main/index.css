@@ -115,6 +115,10 @@ main {
             margin-top: 40px;
             width: 468px;
             height: 341px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
         }
         #main-detail-content {
             background-color: white;
@@ -162,11 +166,32 @@ main {
                     overflow: hidden;
                     white-space: nowrap;
                 }
+                /* 별점 */
                 #main-detail-content-photo-star {
                     margin-left: 15px;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    gap: 5px;
+                    margin-top: 10px;
+                    align-items: center;
                 }
-                #main-detail-content-photo-star > span:last-of-type {
-                    font-size: 16px;
+                #main-detail-content-photo-star span {
+                    font-size: 18px;
+                }
+                .fa {
+                    -webkit-text-stroke: 1px #FFA500;
+                }
+                .unchecked {
+                    color: transparent;
+                }
+                .checked {
+                    color: orange;
+                }
+                h1, #category-box, #score-box {
+                    opacity: 0;
+                    transform: translateY(20px);
+                    transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
                 }
                 .star-checked {
                     color: orange;
@@ -250,4 +275,22 @@ main {
 
 .swiper-slide-active .travel-title i {
     color: #3399FF;
+}
+
+.circular-progress {
+    width: 50px;  /* 원형의 크기를 설정 */
+    height: 50px;
+    border: 5px solid rgba(0, 0, 0, 0.1);  /* 회색 배경 원형 */
+    border-top: 5px solid #007FFF;  /* 파란색 진행 원형 */
+    border-radius: 50%;  /* 원형으로 만들기 */
+    animation: spin 1s linear infinite;  /* 회전 애니메이션 */
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);  /* 시작점 */
+    }
+    100% {
+        transform: rotate(360deg);  /* 끝점 */
+    }
 }
