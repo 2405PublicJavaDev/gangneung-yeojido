@@ -192,7 +192,9 @@ public class TravelController {
      * 관련기능 : [여행지 기능] 여행지 리뷰 신고 페이지
      */
     @GetMapping("/review/complain/{travelNo}")
-    public String showComplainPage(@PathVariable Long travelNo) {
+    public String showComplainPage(@PathVariable Long travelNo, Model model, @RequestParam Long reviewNo) {
+        model.addAttribute("travelNo", travelNo);
+        model.addAttribute("reviewNo", reviewNo);
         return "travel/travel-complain";
     }
 
