@@ -1,5 +1,6 @@
 package com.gntour.gangneungyeojido.app.travel;
 
+import com.gntour.gangneungyeojido.app.travel.dto.ReplyAddRequest;
 import com.gntour.gangneungyeojido.app.travel.dto.ReviewResponse;
 import com.gntour.gangneungyeojido.app.travel.dto.TravelListResponse;
 import com.gntour.gangneungyeojido.app.travel.dto.TravelListSearchCondition;
@@ -14,6 +15,7 @@ import com.gntour.gangneungyeojido.domain.notice.service.NoticeService;
 import com.gntour.gangneungyeojido.domain.notice.vo.Notice;
 import com.gntour.gangneungyeojido.domain.review.service.ReviewService;
 import com.gntour.gangneungyeojido.domain.review.vo.Review;
+import com.gntour.gangneungyeojido.domain.review.vo.ReviewComplain;
 import com.gntour.gangneungyeojido.domain.travel.service.TravelService;
 import com.gntour.gangneungyeojido.domain.travel.vo.TravelInfo;
 import jakarta.servlet.http.HttpSession;
@@ -126,7 +128,6 @@ public class TravelController {
     @PostMapping("/review/add")
     @ResponseBody
     public EmptyResponse addReview(HttpSession session
-           , Model model
            , @ModelAttribute @Valid Review review
            , @RequestParam(value = "uploadFile", required = false) List<MultipartFile> uploadFiles) {
         String reviewWriter = MemberUtils.getMemberIdFromSession(session);
@@ -140,7 +141,7 @@ public class TravelController {
 
     /**
      * 담당자 : 엄태운님
-     * 관련기능 : [여행지 기능] 여행지 리뷰 수정
+     * 관련기능 : [여행지 기능] 여행지 리뷰 수정 팝업창
      */
     @GetMapping("/review/modify/{travelNo}")
     @ResponseBody
@@ -187,12 +188,29 @@ public class TravelController {
 
     /**
      * 담당자 : 엄태운님
+     * 관련기능 : [여행지 기능] 여행지 리뷰 신고 페이지
+     */
+    @GetMapping("/review/complain/{travelNo}")
+    public String showComplainPage(@PathVariable Long travelNo) {
+        return "travel/travel-complain";
+    }
+
+    /**
+     * 담당자 : 엄태운님
      * 관련기능 : [여행지 기능] 여행지 리뷰 신고
      */
-    @PostMapping("/review/complain/{category}")
-    @ResponseBody
-    public void complainReview(@PathVariable("category") String category, HttpSession session) {
-
+    @PostMapping("/review/complain/{travelNo}")
+    public String complainReview(HttpSession session,
+           @RequestParam String complainKeyword,
+           @RequestParam Long reviewNo,
+           @PathVariable Long travelNo) {
+        ReviewComplain complain = new ReviewComplain();
+        complain.setCategory(complainKeyword);
+        complain.setReviewNo(reviewNo);
+        String memberId = MemberUtils.getMemberIdFromSession(session);
+        complain.setMemberId(memberId);
+        int result = reviewService.complainReview(complain);
+        return "redirect:/travel/detail/{travelNo}";
     }
 
     /**
@@ -202,10 +220,19 @@ public class TravelController {
     @PostMapping("/reply/add")
     @ResponseBody
     public EmptyResponse addReviewReply(HttpSession session,
-            Model model,
-            @ModelAttribute @Valid Review review) {
+            @RequestBody ReplyAddRequest replyAddRequest) {
         String replyWriter = MemberUtils.getMemberIdFromSession(session);
+        if(replyWriter == null) {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
+        log.info(replyAddRequest.toString());
+        Review review = new Review();
+        review.setScore(5.0);
         review.setMemberId(replyWriter);
+        review.setReviewContent(replyAddRequest.getReviewContent());
+        review.setParentReviewNo(replyAddRequest.getParentReviewNo());
+        review.setTravelNo(replyAddRequest.getTravelNo());
+        log.info(review.toString());
         int result = reviewService.addReviewReply(review);
         if(result == 0) {
             throw new BusinessException(ErrorCode.NO_UPDATE);

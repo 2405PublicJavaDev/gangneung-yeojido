@@ -138,6 +138,10 @@
         insert into REVIEW_FILE(REVIEW_FILE_NO, FILE_PATH, FILE_NAME, FILE_RENAME, REVIEW_NO, WEB_PATH, FILE_ORDER)
         values (SEQ_REVIEW_FILE_NO.NEXTVAL, #{filePath}, #{fileName}, #{fileRename}, #{reviewNo}, #{webPath}, #{fileOrder})
     </insert>
+    <insert id="insertReviewComplain">
+        INSERT INTO REVIEW_COMPLAIN(COMPLAIN_NO, CATEGORY, REVIEW_NO, MEMBER_ID)
+        VALUES (SEQ_REVIEW_COMPLAIN_NO.NEXTVAL, #{category}, #{reviewNo}, #{memberId})
+    </insert>
     <select id="selectAllReviewsFileByReviewNo" resultType="ReviewFile">
         SELECT * FROM REVIEW_FILE
         WHERE REVIEW_NO = #{reviewNo}
