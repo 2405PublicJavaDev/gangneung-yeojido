@@ -10,11 +10,11 @@
         <img id="header-my" src="/img/default_profile.png" alt="profile">
     </div>
     <div class="header-login-area" th:if="${session.memberId ==null || session.memberId == ''}">
-        <button id="header-login" class="header-text-button" onclick="moveToLogin();">로그인</button>
+        <img id="header-login" src="/img/login-btn.png" alt="login" onclick="moveToLogin();">
     </div>
     <div class="header-my-expand" th:if="${session.memberId != null && session.memberId != ''}">
         <p th:text="${session.memberId}"></p>
-        <p>마이페이지</p>
+        <p onclick="goToMy();">마이페이지</p>
         <p onclick="logoutBtnClick();">로그아웃</p>
     </div>
 </header>

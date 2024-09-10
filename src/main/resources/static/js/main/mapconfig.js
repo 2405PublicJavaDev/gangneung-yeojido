@@ -1,12 +1,12 @@
-let zoomLevel = 7;
+let zoomLevel = 8;
 const MIN_ZOOM_LEVEL = 1;
 const MAX_ZOOM_LEVEL = 14;
 const colorMap = new Map();
-colorMap.set("주문진권", "#FFFBD4");
-colorMap.set("대관령권", "#D6F8FF");
-colorMap.set("시내권", "#FFE3F3");
-colorMap.set("정동진옥계권", "#FFF2E7");
-colorMap.set("경포권", "#DBFFEA");
+colorMap.set("주문진권", "#FFFCDE");
+colorMap.set("대관령권", "#E5FCFB");
+colorMap.set("시내권", "#FAF2FD");
+colorMap.set("정동진옥계권", "#FDF2E9");
+colorMap.set("경포권", "#E9FAD9");
 const markerImages = [{
     imgSrc:'/img/DISPLAY_marker.png',
     category: 'DISPLAY'

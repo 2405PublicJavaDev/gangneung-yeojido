@@ -1,5 +1,5 @@
 let selectedCategory = [];
-let scale = 1; // 기본 스케일
+let scale = 1.2; // 기본 스케일
 let offsetX = 0; // X축 오프셋
 let offsetY = 0; // Y축 오프셋
 let isDragging = false; // 드래그 여부
@@ -227,10 +227,13 @@ function drawGangneungStroke() {
                         }
                     });
                     if (line.style === "OUTER") {
-                        ctx.strokeStyle = "black";
+                        // 그림자 설정
+                        ctx.strokeStyle = "#b6e2ec";
+                        ctx.lineWidth = 4;
                     } else {
-                        ctx.strokeStyle = "red";
-                        ctx.setLineDash([5,3]);/*dashes are 5px and spaces are 3px*/
+                        ctx.strokeStyle = "#DADADA";
+                        ctx.lineWidth = 2;
+                        ctx.setLineDash([3,3]);/*dashes are [first]px and spaces are [second]px*/
                     }
                     ctx.stroke();
                     ctx.closePath();
@@ -436,7 +439,15 @@ canvas.addEventListener("click", function(e) {
         foundMarks.slice(0, 5).forEach((foundMark) => {
             const liElement = document.createElement("li");
             const pElement = document.createElement("p");
-            pElement.textContent = foundMark.travelName;
+            const imgElement = document.createElement("img");
+            imgElement.src = markerImages
+                .find(markerImg => markerImg.category === foundMark.category).imgSrc;
+            imgElement.width = MARKER_SIZE;
+            imgElement.height = MARKER_SIZE;
+            const spanElement = document.createElement("span");
+            spanElement.textContent = foundMark.travelName;
+            pElement.appendChild(imgElement);
+            pElement.appendChild(spanElement);
             liElement.appendChild(pElement);
             liElement.addEventListener("click", (e) => {
                 e.preventDefault();

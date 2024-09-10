@@ -83,17 +83,23 @@ document.querySelectorAll('input').forEach(input => {
     }, true);
 })
 
+const goToMy = () => {
+    location.href = '/favorites'
+}
+
 const logoutBtnClick = (e) => {
-    ajax({
-        url: '/logout',
-        method: 'post',
-    }, (response) => {
-        alert('로그아웃 되었습니다.');
-        location.href = '/';
-    }, (error) => {
-        alert('로그아웃 중에 오류가 발생했습니다.');
-        console.log(error);
-    })
+    if(confirm('정말로 로그아웃 하시겠습니까?')) {
+        ajax({
+            url: '/logout',
+            method: 'post',
+        }, (response) => {
+            alert('로그아웃 되었습니다.');
+            location.href = '/';
+        }, (error) => {
+            alert('로그아웃 중에 오류가 발생했습니다.');
+            console.log(error);
+        })
+    }
 }
 
 const openDialog = () => {
