@@ -23,41 +23,32 @@ public class QnAServiceImpl implements QnAService {
     private final QnAMapper qnaMapper;
     private final FileUtil fileUtil;
 
+
     @Override
     public Page<QnAResponse, Void> getAllQnA(Integer currentPage) {
         return Page.of(currentPage,qnaMapper.selectAllQnACount(), qnaMapper::selectAllQnA);
     }
 
     @Override
-    public QnA getAllQnAByMember(Long qnaNo) {
-        return qnaMapper.selectQnAById(qnaNo);
-    }
-
-    @Override
-    public QnA getAllQnAByMember() {
-        return null;
-    }
-
-    @Override
     public List<MyQnAResponse> getAllQnAAnswerByMember(String memberId) {
-        return qnaMapper.selectMyQnAListByMember(memberId);  // 새로운 쿼리로 수정
+        return qnaMapper.selectMyQnAListByMember(memberId);
     }
 
     @Override
     public List<MyQnAResponse> getOneQnADetailByQnANo(Long qnaNo) {
-        return qnaMapper.selectOneQnADetailByQnANo(qnaNo);  // 매퍼 쿼리 호출
+        return qnaMapper.selectOneQnADetailByQnANo(qnaNo);
 
     }
 
     @Override
-    public QnA getQnAById(Long qnaNo) {
-        return qnaMapper.selectQnAById(qnaNo);  // 매퍼에서 데이터 조회
+    public QnA getQnAByQnANo(Long qnaNo) {
+        return qnaMapper.selectQnAById(qnaNo);
     }
 
     @Override
     public int addQnA(QnA qna, List<MultipartFile> files) {
         int result = qnaMapper.insertQnA(qna);
-        // 2. 첨부파일이 있을 경우에만 파일을 업로드
+        // 첨부파일이 있을 경우에만 파일을 업로드
         if (files != null && !files.isEmpty()) {
             try {
                 // 파일 업로드는 파일이 있을 때만 처리
@@ -93,12 +84,12 @@ public class QnAServiceImpl implements QnAService {
 
     @Override
     public void removeQnAAnswer(Long answerNo) {
-        qnaMapper.deleteQnAAnswer(answerNo);  // 매퍼를 통해 답변 삭제 쿼리 실행
+        qnaMapper.deleteQnAAnswer(answerNo);
     }
 
     @Override
     public QnAAnswer getQnAAnswerByQnANo(Long qnaNo) {
-        return qnaMapper.selectQnAAnswerByQnANo(qnaNo);  // QnA 번호로 답변 조회
+        return qnaMapper.selectQnAAnswerByQnANo(qnaNo);
     }
     @Override
     public List<QnAFile> getQnAFilesByQnANo(Long qnaNo) {

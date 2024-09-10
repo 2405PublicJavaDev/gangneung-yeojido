@@ -9,6 +9,7 @@ import java.util.List;
 public interface NoticeService {
     /**
      * 공지사항 리스트 Service
+     * (페이지네이션, 검색기능 포함)
      **/
     Page<Notice, NoticeSearchCondition> getAllNotices(Integer currentPage, NoticeSearchCondition condition);
 
