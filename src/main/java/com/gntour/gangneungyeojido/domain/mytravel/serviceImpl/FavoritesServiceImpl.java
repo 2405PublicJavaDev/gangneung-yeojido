@@ -1,10 +1,14 @@
 package com.gntour.gangneungyeojido.domain.mytravel.serviceImpl;
 
+import com.gntour.gangneungyeojido.app.my.dto.AddFavoriteResponse;
 import com.gntour.gangneungyeojido.app.my.dto.FavoritesResponse;
 import com.gntour.gangneungyeojido.app.my.dto.FavoritesSearchCondition;
 import com.gntour.gangneungyeojido.common.Page;
+import com.gntour.gangneungyeojido.common.exception.BusinessException;
+import com.gntour.gangneungyeojido.common.exception.ErrorCode;
 import com.gntour.gangneungyeojido.domain.mytravel.mapper.FavoritesMapper;
 import com.gntour.gangneungyeojido.domain.mytravel.service.FavoritesService;
+import com.gntour.gangneungyeojido.domain.mytravel.vo.Favorites;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,9 +29,17 @@ public class FavoritesServiceImpl implements FavoritesService {
     }
 
     @Override
-    public int addFavorite(String memberId, Long travelNo) {
-        int result = favoritesMapper.insertFavorites(memberId, travelNo);
-        return result;
+    public AddFavoriteResponse addFavorite(String memberId, Long travelNo) {
+        Favorites favorites = new Favorites();
+        favorites.setMemberId(memberId);
+        favorites.setTravelNo(travelNo);
+        int result = favoritesMapper.insertFavorites(favorites);
+        if(result == 0) {
+            throw new BusinessException(ErrorCode.NO_UPDATE);
+        }
+        AddFavoriteResponse res = new AddFavoriteResponse();
+        res.setFavoritesNo(favorites.getFavoritesNo());
+        return res;
     }
 
     @Override

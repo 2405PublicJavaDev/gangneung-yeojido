@@ -19,8 +19,11 @@
         WHERE MEMBER_ID=#{memberId}
     </select>
     <insert id="insertFavorites">
+        <selectKey resultType="long" keyProperty="favoritesNo" order="BEFORE">
+            SELECT SEQ_FAVORITES_NO.NEXTVAL FROM DUAL
+        </selectKey>
         INSERT INTO FAVORITES (FAVORITES_NO, MEMBER_ID,TRAVEL_NO)
-        VALUES (SEQ_FAVORITES_NO.NEXTVAL, #{memberId}, #{travelNo})
+        VALUES (#{favoritesNo}, #{memberId}, #{travelNo})
     </insert>
     <delete id="deleteFavorites">
         DELETE FROM FAVORITES WHERE FAVORITES_NO = #{favoritesNo} AND MEMBER_ID = #{memberId}

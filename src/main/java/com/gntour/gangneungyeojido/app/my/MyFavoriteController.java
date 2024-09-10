@@ -1,6 +1,7 @@
 package com.gntour.gangneungyeojido.app.my;
 
 import com.gntour.gangneungyeojido.app.my.dto.AddFavoriteRequest;
+import com.gntour.gangneungyeojido.app.my.dto.AddFavoriteResponse;
 import com.gntour.gangneungyeojido.app.my.dto.FavoritesResponse;
 import com.gntour.gangneungyeojido.app.my.dto.FavoritesSearchCondition;
 import com.gntour.gangneungyeojido.common.MemberUtils;
@@ -54,16 +55,12 @@ public class MyFavoriteController {
      */
     @PostMapping("/favorites")
     @ResponseBody
-    public EmptyResponse addFavorite(@RequestBody AddFavoriteRequest req, HttpSession session) {
+    public AddFavoriteResponse addFavorite(@RequestBody AddFavoriteRequest req, HttpSession session) {
         String memberId = MemberUtils.getMemberIdFromSession(session);
         if(memberId == null) {
             throw new BusinessException(ErrorCode.LOGIN_FAIL);
         }
-        int result =  favoritesService.addFavorite(memberId, req.getTravelNo());
-        if(result == 0) {
-            throw new BusinessException(ErrorCode.NO_UPDATE);
-        }
-        return new EmptyResponse();
+        return favoritesService.addFavorite(memberId, req.getTravelNo());
     };
 
     @DeleteMapping("/favorite/{favoriteNo}")
@@ -79,6 +76,5 @@ public class MyFavoriteController {
         }
         return new EmptyResponse();
     }
-
 
 }

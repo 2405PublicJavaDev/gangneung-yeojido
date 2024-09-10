@@ -77,8 +77,39 @@ const getPage = (currentPage, travelName, region, category) => {
 
                     icons.forEach(function (icon) {
                         icon.addEventListener('click', function () {
-                            console.log('icon click');
-                            this.classList.toggle('active');
+                            if(memberId) {
+                                const travelNo = icon.id.substring('favorite-'.length);
+                                if (!icon.dataset.value || icon.dataset.value === 'null') {
+                                    // 즐겨찾기를 추가한다.
+                                    ajax({
+                                        url: '/favorites',
+                                        method: 'post',
+                                        payload: {
+                                            'travelNo': travelNo
+                                        }
+                                    }, (response) => {
+                                        alert('즐겨찾기를 추가하였습니다.');
+                                        icon.dataset.value = response.favoritesNo;
+                                        this.classList.toggle('active');
+                                    }, (error) => {
+                                        alert('즐겨찾기 추가 과정 중에 오류가 발생하였습니다.');
+                                    });
+                                } else {
+                                    // 즐겨찾기를 제거한다
+                                    ajax({
+                                        url: '/favorite/' + icon.dataset.value,
+                                        method: 'delete'
+                                    }, (response) => {
+                                        alert('즐겨찾기를 해제하였습니다.');
+                                        icon.dataset.value = null;
+                                        this.classList.toggle('active');
+                                    }, (error) => {
+                                        alert('즐겨찾기 해제 과정 중에 오류가 발생하였습니다.');
+                                    });
+                                }
+                            } else {
+                                alert('로그인을 먼저 해주세요.')
+                            }
                         });
                     });
                 }
@@ -109,7 +140,7 @@ const getPage = (currentPage, travelName, region, category) => {
                         <div class="travel-detail">
                             <div class="travel-title">
                                 <a href="/travel/detail/${travel.travelNo}?currentPage=${currentPage}${additionalQueryString}">${travel.travelName}</a>
-                                <i class="fa-regular fa-bookmark ${travel.favoritesNo ? 'active' : ''}"></i>
+                                <i class="fa-regular fa-bookmark ${travel.favoritesNo ? 'active' : ''}" data-value="${travel.favoritesNo}" id="favorite-${travel.travelNo}"></i>
                             </div>
                             <div class="travel-address">
                                 <div class="address-left">

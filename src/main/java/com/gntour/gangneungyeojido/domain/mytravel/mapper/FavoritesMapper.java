@@ -2,6 +2,7 @@ package com.gntour.gangneungyeojido.domain.mytravel.mapper;
 
 import com.gntour.gangneungyeojido.app.my.dto.FavoritesResponse;
 import com.gntour.gangneungyeojido.app.my.dto.FavoritesSearchCondition;
+import com.gntour.gangneungyeojido.domain.mytravel.vo.Favorites;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
@@ -14,7 +15,7 @@ public interface FavoritesMapper {
 
     int selectAllFavoritesCountByMember(FavoritesSearchCondition condition);
 
-    int insertFavorites(String memberId, Long travelNo);
+    int insertFavorites(Favorites favorites);
 
     int deleteFavorites(String memberId, Long favoritesNo);
 }
