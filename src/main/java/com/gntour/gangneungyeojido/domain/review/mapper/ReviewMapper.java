@@ -26,7 +26,7 @@ public interface ReviewMapper {
     int insertReviewFile(ReviewFile reviewFile);
     int insertReviewComplain(ReviewComplain complain);
     int updateReview(Review review);
-    int deleteReview(Long reviewNo);
+    int deleteReview(Long reviewNo, String memberId);
     int deleteReviewFile(Long reviewNo);
     int updateReply(ReplyModifyRequest replyModifyRequest);
 

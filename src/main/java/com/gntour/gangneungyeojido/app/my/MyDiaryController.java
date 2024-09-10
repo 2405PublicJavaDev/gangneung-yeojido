@@ -11,6 +11,8 @@ import com.gntour.gangneungyeojido.common.exception.ErrorCode;
 import com.gntour.gangneungyeojido.domain.mytravel.service.TravelDiaryService;
 import com.gntour.gangneungyeojido.domain.mytravel.vo.Favorites;
 import com.gntour.gangneungyeojido.domain.mytravel.vo.TravelDiary;
+import com.gntour.gangneungyeojido.domain.notice.service.NoticeService;
+import com.gntour.gangneungyeojido.domain.notice.vo.Notice;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +33,7 @@ import java.util.List;
 @Slf4j
 public class MyDiaryController {
     private final TravelDiaryService travelDiaryService;
+    private final NoticeService noticeService;
 
     /**
      * 담당자 : 백인호님
@@ -54,7 +57,11 @@ public class MyDiaryController {
      */
     @GetMapping("/diary-detail/{diaryNo}")
     public String showMyDetailDiaryPage(@PathVariable Long diaryNo, HttpSession session, Model model){
-        MyDiaryResponse travelDiary = travelDiaryService.getDetailDiaryByMember(diaryNo,MemberUtils.getMemberIdFromSession(session));
+        String memberId = MemberUtils.getMemberIdFromSession(session);
+        if(memberId == null) {
+            throw  new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
+        MyDiaryResponse travelDiary = travelDiaryService.getDetailDiaryByMember(diaryNo,memberId);
         model.addAttribute("travelDiary", travelDiary);
         return "myPage/myDiaryDetail";
     }
@@ -64,7 +71,11 @@ public class MyDiaryController {
      * 관련 기능 : [마이페이지 기능(페이지 폼)] 나의 여행 기록 등록
      */
     @GetMapping("/register-diary")
-    public String showAddMyDiaryPage(){
+    public String showAddMyDiaryPage(HttpSession session){
+        String memberId = MemberUtils.getMemberIdFromSession(session);
+        if(memberId == null) {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
         return "/myPage/register-myDiary";
     };
 
@@ -76,15 +87,18 @@ public class MyDiaryController {
     @ResponseBody
     public EmptyResponse addDiary(
             HttpSession session,
-            Model model,
             @ModelAttribute @Valid DiaryAddRequest diaryAddRequest,
             @RequestParam(value = "uploadFile", required = false) List<MultipartFile> uploadFiles
     ){
+        String memberId = MemberUtils.getMemberIdFromSession(session);
+        if(memberId == null) {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
         TravelDiary travelDiary = new TravelDiary();
         travelDiary.setTravelNo(diaryAddRequest.getTravelNo());
         travelDiary.setDiaryTitle(diaryAddRequest.getDiaryTitle());
         travelDiary.setDiaryContent(diaryAddRequest.getDiaryContent());
-        travelDiary.setMemberId(MemberUtils.getMemberIdFromSession(session));
+        travelDiary.setMemberId(memberId);
         int result = travelDiaryService.addDiary(travelDiary, uploadFiles);
         if(result == 0) {
             throw new BusinessException(ErrorCode.NO_UPDATE);
@@ -98,8 +112,13 @@ public class MyDiaryController {
     @GetMapping("/modify-diary/{diaryNo}")
     public String showUpdateMyDiaryPage(
             @PathVariable Long diaryNo,
-            Model model
+            Model model,
+            HttpSession session
     ){
+        String memberId = MemberUtils.getMemberIdFromSession(session);
+        if(memberId == null) {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
         model.addAttribute("diaryNo", diaryNo);
         return "/myPage/modify-myDiary";
     }
@@ -165,6 +184,17 @@ public class MyDiaryController {
             throw new BusinessException(ErrorCode.NO_UPDATE);
         }
         return new EmptyResponse();
+    }
+
+    /**
+     * 담당자 : 김윤경님
+     * 관련 기능 : [푸터 기능] 주요 공지사항 리스트 조회
+     */
+    @ModelAttribute
+    public String getImportantNoticeList(Model model){
+        List<Notice> importantNotices = noticeService.getImportantNotices();
+        model.addAttribute("footerImportantNotices", importantNotices);
+        return "fragments/footer";
     }
 
 

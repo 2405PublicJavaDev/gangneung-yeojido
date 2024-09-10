@@ -1,6 +1,5 @@
 package com.gntour.gangneungyeojido.domain.review.service.impl;
 
-import com.gntour.gangneungyeojido.app.travel.dto.ReplyAddRequest;
 import com.gntour.gangneungyeojido.app.travel.dto.ReplyModifyRequest;
 import com.gntour.gangneungyeojido.app.my.dto.MyReviewResponse;
 import com.gntour.gangneungyeojido.app.travel.dto.ReviewResponse;
@@ -74,8 +73,8 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public int removeReview(Long reviewNo) {
-        return rMapper.deleteReview(reviewNo);
+    public int removeReview(Long reviewNo, String memberId) {
+        return rMapper.deleteReview(reviewNo, memberId);
     }
 
     @Override

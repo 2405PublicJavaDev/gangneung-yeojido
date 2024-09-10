@@ -11,6 +11,8 @@ import com.gntour.gangneungyeojido.common.exception.EmptyResponse;
 import com.gntour.gangneungyeojido.common.exception.ErrorCode;
 import com.gntour.gangneungyeojido.domain.mytravel.service.FavoritesService;
 import com.gntour.gangneungyeojido.domain.mytravel.vo.Favorites;
+import com.gntour.gangneungyeojido.domain.notice.service.NoticeService;
+import com.gntour.gangneungyeojido.domain.notice.vo.Notice;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +30,7 @@ import java.util.List;
 public class MyFavoriteController {
 
     private final FavoritesService favoritesService;
+    private final NoticeService noticeService;
 
 
     /**
@@ -75,6 +78,17 @@ public class MyFavoriteController {
             throw new BusinessException(ErrorCode.NO_UPDATE);
         }
         return new EmptyResponse();
+    }
+
+    /**
+     * 담당자 : 김윤경님
+     * 관련 기능 : [푸터 기능] 주요 공지사항 리스트 조회
+     */
+    @ModelAttribute
+    public String getImportantNoticeList(Model model){
+        List<Notice> importantNotices = noticeService.getImportantNotices();
+        model.addAttribute("footerImportantNotices", importantNotices);
+        return "fragments/footer";
     }
 
 }

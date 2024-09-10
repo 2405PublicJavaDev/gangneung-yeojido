@@ -164,10 +164,12 @@
         UPDATE REVIEW
         SET REVIEW_CONTENT=#{reviewContent}
         WHERE REVIEW_NO=#{reviewNo}
+        AND MEMBER_ID=#{memberId}
     </update>
     <delete id="deleteReview">
         DELETE FROM REVIEW
         WHERE REVIEW_NO = #{reviewNo}
+        AND MEMBER_ID = #{memberId}
     </delete>
     <delete id="deleteReviewFile">
         delete from REVIEW_FILE WHERE REVIEW_NO = #{reviewNo}

@@ -6,6 +6,7 @@ import com.gntour.gangneungyeojido.app.travel.dto.ReviewResponse;
 import com.gntour.gangneungyeojido.app.travel.dto.TravelListResponse;
 import com.gntour.gangneungyeojido.app.travel.dto.TravelListSearchCondition;
 import com.gntour.gangneungyeojido.app.travel.dto.TravelSearchCondition;
+import com.gntour.gangneungyeojido.common.MemberStatus;
 import com.gntour.gangneungyeojido.common.MemberUtils;
 import com.gntour.gangneungyeojido.common.Page;
 import com.gntour.gangneungyeojido.common.exception.BusinessException;
@@ -97,11 +98,12 @@ public class TravelController {
     @ResponseBody
     public ReviewResponse getMyReview(@PathVariable Long travelNo, HttpSession session) {
         String memberId = MemberUtils.getMemberIdFromSession(session);
-        if(memberId != null) {
-            ReviewResponse reviewResponse = reviewService.getMyReview(travelNo, memberId);
-            if(reviewResponse != null) {
-                return reviewResponse;
-            }
+        if(memberId == null) {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
+        ReviewResponse reviewResponse = reviewService.getMyReview(travelNo, memberId);
+        if(reviewResponse != null) {
+            return reviewResponse;
         }
         return new ReviewResponse();
     }
@@ -132,6 +134,12 @@ public class TravelController {
            , @ModelAttribute @Valid Review review
            , @RequestParam(value = "uploadFile", required = false) List<MultipartFile> uploadFiles) {
         String reviewWriter = MemberUtils.getMemberIdFromSession(session);
+        if(reviewWriter == null) {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
+        if(MemberUtils.getMemberStatusFromSession(session) == MemberStatus.BLACK) {
+            throw new BusinessException(ErrorCode.BLACK_LIST);
+        }
         review.setMemberId(reviewWriter);
         int result = reviewService.addReview(uploadFiles, review);
         if(result == 0) {
@@ -152,6 +160,9 @@ public class TravelController {
         if(memberId == null) {
             throw new BusinessException(ErrorCode.LOGIN_FAIL);
         }
+        if(MemberUtils.getMemberStatusFromSession(session) == MemberStatus.BLACK) {
+            throw new BusinessException(ErrorCode.BLACK_LIST);
+        }
         ReviewResponse reviewResponse = reviewService.getMyReview(travelNo, memberId);
         if(reviewResponse != null) {
             return reviewResponse;
@@ -171,6 +182,9 @@ public class TravelController {
         if(memberId == null) {
             throw new BusinessException(ErrorCode.LOGIN_FAIL);
         }
+        if(MemberUtils.getMemberStatusFromSession(session) == MemberStatus.BLACK) {
+            throw new BusinessException(ErrorCode.BLACK_LIST);
+        }
         review.setMemberId(memberId);
         int result = reviewService.modifyReview(review, reloadFile);
         return new EmptyResponse();
@@ -182,8 +196,15 @@ public class TravelController {
      */
     @DeleteMapping("/review/remove/{reviewNo}")
     @ResponseBody
-    public EmptyResponse removeReview(@PathVariable Long reviewNo) {
-        int result = reviewService.removeReview(reviewNo);
+    public EmptyResponse removeReview(HttpSession session, @PathVariable Long reviewNo) {
+        String memberId = MemberUtils.getMemberIdFromSession(session);
+        if(memberId == null) {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
+        if(MemberUtils.getMemberStatusFromSession(session) == MemberStatus.BLACK) {
+            throw new BusinessException(ErrorCode.BLACK_LIST);
+        }
+        int result = reviewService.removeReview(reviewNo, memberId);
         return new EmptyResponse();
     }
 
@@ -192,9 +213,16 @@ public class TravelController {
      * 관련기능 : [여행지 기능] 여행지 리뷰 신고 페이지
      */
     @GetMapping("/review/complain/{travelNo}")
-    public String showComplainPage(@PathVariable Long travelNo, Model model, @RequestParam Long reviewNo) {
+    public String showComplainPage(@PathVariable Long travelNo, Model model, @RequestParam Long reviewNo, HttpSession session) {
         model.addAttribute("travelNo", travelNo);
         model.addAttribute("reviewNo", reviewNo);
+        String memberId = MemberUtils.getMemberIdFromSession(session);
+        if(memberId == null) {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
+        if(MemberUtils.getMemberStatusFromSession(session) == MemberStatus.BLACK) {
+            throw new BusinessException(ErrorCode.BLACK_LIST);
+        }
         return "travel/travel-complain";
     }
 
@@ -207,10 +235,16 @@ public class TravelController {
            @RequestParam String complainKeyword,
            @RequestParam Long reviewNo,
            @PathVariable Long travelNo) {
+        String memberId = MemberUtils.getMemberIdFromSession(session);
+        if(memberId == null) {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
+        if(MemberUtils.getMemberStatusFromSession(session) == MemberStatus.BLACK) {
+            throw new BusinessException(ErrorCode.BLACK_LIST);
+        }
         ReviewComplain complain = new ReviewComplain();
         complain.setCategory(complainKeyword);
         complain.setReviewNo(reviewNo);
-        String memberId = MemberUtils.getMemberIdFromSession(session);
         complain.setMemberId(memberId);
         int result = reviewService.complainReview(complain);
         return "redirect:/travel/detail/{travelNo}";
@@ -227,6 +261,9 @@ public class TravelController {
         String replyWriter = MemberUtils.getMemberIdFromSession(session);
         if(replyWriter == null) {
             throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
+        if(MemberUtils.getMemberStatusFromSession(session) == MemberStatus.BLACK) {
+            throw new BusinessException(ErrorCode.BLACK_LIST);
         }
         log.info(replyAddRequest.toString());
         Review review = new Review();
@@ -255,6 +292,9 @@ public class TravelController {
         if(memberId == null) {
             throw new BusinessException(ErrorCode.LOGIN_FAIL);
         }
+        if(MemberUtils.getMemberStatusFromSession(session) == MemberStatus.BLACK) {
+            throw new BusinessException(ErrorCode.BLACK_LIST);
+        }
         ReviewResponse reviewResponse = reviewService.getMyReply(reviewNo, memberId);
         if(reviewResponse != null) {
             return reviewResponse;
@@ -274,21 +314,15 @@ public class TravelController {
         if(memberId == null) {
             throw new BusinessException(ErrorCode.LOGIN_FAIL);
         }
+        if(MemberUtils.getMemberStatusFromSession(session) == MemberStatus.BLACK) {
+            throw new BusinessException(ErrorCode.BLACK_LIST);
+        }
         int result = reviewService.modifyReviewReply(replyModifyRequest);
         if(result == 0) {
             throw new BusinessException(ErrorCode.NO_UPDATE);
         }
         return new EmptyResponse();
     }
-
-    /**
-     * 담당자 : 엄태운님
-     * 관련기능 : [여행지 기능] 여행지 댓글 삭제
-     * - 리뷰 삭제 로직과 동일하게 사용하므로 작성하지 않음 -
-     */
-//    public void removeReviewReply() {
-//
-//    }
 
     /**
      * 담당자 : 김윤경님

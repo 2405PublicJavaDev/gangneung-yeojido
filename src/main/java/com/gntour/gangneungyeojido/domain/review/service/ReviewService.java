@@ -1,6 +1,5 @@
 package com.gntour.gangneungyeojido.domain.review.service;
 
-import com.gntour.gangneungyeojido.app.travel.dto.ReplyAddRequest;
 import com.gntour.gangneungyeojido.app.travel.dto.ReplyModifyRequest;
 import com.gntour.gangneungyeojido.app.my.dto.MyReviewResponse;
 import com.gntour.gangneungyeojido.app.travel.dto.ReviewResponse;
@@ -19,7 +18,7 @@ public interface ReviewService {
     Page<MyReviewResponse, String> getAllReviewsByMember(Integer currentPage, String memberId);
     int addReview(List<MultipartFile> uploadFiles, Review review);
     int modifyReview(Review review, List<MultipartFile> reloadFile);
-    int removeReview(Long reviewNo);
+    int removeReview(Long reviewNo, String memberId);
     int complainReview(ReviewComplain reviewComplain);
     int addReviewReply(Review review);
     int modifyReviewReply(ReplyModifyRequest replyModifyRequest);

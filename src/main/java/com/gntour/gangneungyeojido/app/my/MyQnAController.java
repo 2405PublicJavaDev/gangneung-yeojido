@@ -83,7 +83,11 @@ public class MyQnAController {
     @ResponseBody
     public AddQnAResponse addQnA(@ModelAttribute QnA qna, HttpSession session,
                                  @RequestParam(value = "uploadFile", required = false) List<MultipartFile> uploadFiles) {
-        qna.setMemberId(MemberUtils.getMemberIdFromSession(session));
+        String memberId = MemberUtils.getMemberIdFromSession(session);
+        if(memberId == null) {
+            throw new BusinessException(ErrorCode.LOGIN_FAIL);
+        }
+        qna.setMemberId(memberId);
         int result = qnaService.addQnA(qna, uploadFiles);
         AddQnAResponse res = new AddQnAResponse();
         if (result > 0) {
