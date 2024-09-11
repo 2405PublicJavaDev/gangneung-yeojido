@@ -184,7 +184,6 @@ function drawGangneungStroke() {
                     if(line.isLast) {
                         toIdx = path.length - 1;
                     }
-                    console.log(fromIdx, toIdx);
                     ctx.save();
                     ctx.beginPath();
                     let isFirstPoint = true;

@@ -1,4 +1,7 @@
 const loginBtnClick = () => {
+    if(!idPwCheck()) {
+        return;
+    }
     const formTag = document.querySelector("#login-form");
     const formData = new FormData(formTag);
     const formProps = Object.fromEntries(formData);

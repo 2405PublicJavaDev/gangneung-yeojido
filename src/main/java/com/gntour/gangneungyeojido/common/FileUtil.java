@@ -3,15 +3,11 @@ package com.gntour.gangneungyeojido.common;
 import com.gntour.gangneungyeojido.domain.mytravel.mapper.TravelDiaryMapper;
 import com.gntour.gangneungyeojido.domain.mytravel.vo.TravelDiaryFile;
 import com.gntour.gangneungyeojido.domain.qna.mapper.QnAMapper;
-import com.gntour.gangneungyeojido.domain.qna.vo.QnA;
 import com.gntour.gangneungyeojido.domain.qna.vo.QnAFile;
 import com.gntour.gangneungyeojido.domain.review.mapper.ReviewMapper;
 import com.gntour.gangneungyeojido.domain.review.vo.ReviewFile;
-import com.gntour.gangneungyeojido.sample.domain.SampleFile;
-import com.gntour.gangneungyeojido.sample.repository.SampleMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,7 +24,6 @@ import static com.gntour.gangneungyeojido.common.FileConfig.FOLDER_PATH;
 @Slf4j
 @RequiredArgsConstructor
 public class FileUtil {
-    private final SampleMapper sampleMapper;
     private final QnAMapper qnaMapper;
     private final TravelDiaryMapper diaryMapper;
     private final ReviewMapper reviewMapper;
@@ -78,14 +73,6 @@ public class FileUtil {
     private int insertFileData(UploadCategory uploadCategory, Long fkNo, String fileName, String fileRename, String filePath, Long order) {
         int result = 0;
         switch(uploadCategory) {
-            case SAMPLE -> {
-                SampleFile sampleFile = new SampleFile();
-                sampleFile.setFileName(fileName);
-                sampleFile.setFileRename(fileRename);
-                sampleFile.setFilePath(filePath);
-                sampleFile.setSampleNo(fkNo);
-                result += sampleMapper.insertSampleFile(sampleFile);
-            }
             case QNA -> {
                 QnAFile qnaFile = new QnAFile();
                 qnaFile.setFileName(fileName);
@@ -122,9 +109,6 @@ public class FileUtil {
 
     private List<?> selectFileData(UploadCategory uploadCategory, Long fkNo) {
         switch (uploadCategory) {
-            case SAMPLE -> {
-                return sampleMapper.selectAllSampleFiles(fkNo);
-            }
             case QNA -> {
                 return qnaMapper.selectAllQnAFileByQnANo(fkNo);
             }
@@ -140,14 +124,6 @@ public class FileUtil {
 
     private boolean deleteFilesReal(UploadCategory uploadCategory, List<?> files) {
         switch (uploadCategory) {
-            case SAMPLE -> {
-                boolean success = true;
-                for(Object file : files) {
-                    SampleFile sampleFile = (SampleFile)file;
-                    success &= new File(sampleFile.getFilePath()).delete();
-                }
-                return success;
-            }
             case QNA -> {
                 boolean success = true;
                 for(Object file : files) {
@@ -179,9 +155,6 @@ public class FileUtil {
     private int deleteFilesData(UploadCategory uploadCategory, Long fkNo) {
         int result = 0;
         switch (uploadCategory) {
-            case SAMPLE ->  {
-                result += sampleMapper.deleteSampleFile(fkNo);
-            }
             case QNA -> {
                 result += qnaMapper.deleteQnAFile(fkNo);
             }
