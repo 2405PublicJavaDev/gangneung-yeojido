@@ -29,7 +29,7 @@
                         <thead>
                             <tr> <!-- 일기 이름 -->
                                 <td>
-                                    <b><a th:href="@{/diary-detail/{diaryNo}(diaryNo=${diary.diaryNo})}" th:text="${diary.diaryTitle}"></a></b>
+                                    <b><a th:href="@{/diary-detail/{diaryNo}(diaryNo=${diary.diaryNo})}" th:text="${diary.diaryTitle}" class="diary-title"></a></b>
                                 </td>
                             </tr>
                         </thead>

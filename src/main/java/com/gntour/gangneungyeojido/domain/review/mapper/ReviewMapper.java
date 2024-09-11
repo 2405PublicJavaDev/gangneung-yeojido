@@ -1,5 +1,6 @@
 package com.gntour.gangneungyeojido.domain.review.mapper;
 
+import com.gntour.gangneungyeojido.app.admin.dto.AdminComplainResponse;
 import com.gntour.gangneungyeojido.app.my.dto.MyReviewResponse;
 import com.gntour.gangneungyeojido.app.travel.dto.ReplyAddRequest;
 import com.gntour.gangneungyeojido.app.travel.dto.ReplyModifyRequest;
@@ -19,7 +20,7 @@ public interface ReviewMapper {
     int selectAllReviewsCount(TravelSearchCondition condition);
     int selectAllReviewsCountByMember(String memberId);
     List<ReviewFile> selectAllReviewsFileByReviewNo(Long reviewNo);
-    List<ReviewComplain> selectAllComplainReviews(Integer currentPage, RowBounds rowBounds);
+    List<AdminComplainResponse> selectAllComplainReviews(Integer currentPage, RowBounds rowBounds);
     int selectAllComplainReviewsCount();
     List<MyReviewResponse> selectAllReviewsByMember(Integer currentPage, String memberId, RowBounds rowBounds);
     int insertReview(Review review);

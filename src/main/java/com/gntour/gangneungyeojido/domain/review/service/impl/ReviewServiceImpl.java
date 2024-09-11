@@ -1,5 +1,6 @@
 package com.gntour.gangneungyeojido.domain.review.service.impl;
 
+import com.gntour.gangneungyeojido.app.admin.dto.AdminComplainResponse;
 import com.gntour.gangneungyeojido.app.travel.dto.ReplyModifyRequest;
 import com.gntour.gangneungyeojido.app.my.dto.MyReviewResponse;
 import com.gntour.gangneungyeojido.app.travel.dto.ReviewResponse;
@@ -39,7 +40,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Page<ReviewComplain, Void> getAllComplainReviews(int currentPage) {
+    public Page<AdminComplainResponse, Void> getAllComplainReviews(int currentPage) {
         return Page.of(currentPage, rMapper.selectAllComplainReviewsCount(), rMapper::selectAllComplainReviews);
 
     }

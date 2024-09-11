@@ -81,8 +81,19 @@
             </choose>
         </where>
     </select>
-   <select id="selectAllComplainReviews" resultType="ReviewComplain">
-       SELECT * FROM REVIEW_COMPLAIN
+   <select id="selectAllComplainReviews" resultType="AdminComplainResponse">
+       SELECT
+           C.COMPLAIN_NO "COMPLAIN_NO",
+           C.CATEGORY "CATEGORY",
+           C.REVIEW_NO "REVIEW_NO",
+           C.MEMBER_ID "MEMBER_ID",
+           C.REG_DATE "REG_DATE",
+           C.UPDATE_DATE "UPDATE_DATE",
+           T.TRAVEL_NO "TRAVEL_NO"
+        FROM REVIEW_COMPLAIN C
+        JOIN REVIEW R ON R.REVIEW_NO = C.REVIEW_NO
+        JOIN TRAVEL_INFO T ON T.TRAVEL_NO = R.TRAVEL_NO
+        ORDER BY COMPLAIN_NO DESC
    </select>
     <select id="selectAllComplainReviewsCount" resultType="_int">
         SELECT COUNT(*)

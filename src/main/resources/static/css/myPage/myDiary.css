@@ -8,17 +8,14 @@ main {
 
 .main-center {
     width: 100%;
-    margin-top: 20px;
+    margin-top: 30px;
+    padding-left: 10%;
+    padding-right: 10%;
 }
 
 .main-content {
     flex-grow: 1;
     padding: 20px;
-}
-
-.main-content a {
-    text-decoration: none;
-    color: black;
 }
 
 .my-subject {
@@ -38,7 +35,7 @@ main {
     margin-bottom: 20px;
     padding: 10px;
     border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2); /* 그림자 강화 */;
 }
 
 .diary-img img{
@@ -78,4 +75,10 @@ main {
     width: 100%;
     text-align: center;
     padding: 10px;
+}
+
+.diary-title {
+    font-size: 18px;
+    text-decoration: none;
+    color: black;
 }

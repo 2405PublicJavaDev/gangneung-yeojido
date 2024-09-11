@@ -37,9 +37,9 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="report : ${page.data}" >
+                <tr th:each="report : ${page.data}"  >
                     <td th:text="${report.complainNo}"></td>
-                    <td th:text="${report.memberId}"></td>
+                    <td><a th:href="@{/travel/detail/{travelNo}(travelNo=${report.travelNo})}" th:text="${report.memberId}"></a></td>
                     <td th:text="${report.category}"></td>
                     <td th:text="${report.regDate}"></td>
                 </tr>

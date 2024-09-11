@@ -13,9 +13,12 @@
     <div class="main-center">
         <div class="my-subject"><h1>리뷰 목록</h1><hr></div>
         <div id="main-bottom">
+            <div th:if="${page.totalCount == 0}" class="review">
+                <p class="no-review">등록된 리뷰가 없습니다.</p>
+            </div>
             <!--리스트 출력-->
-            <ul class="travels">
-                <li th:each="travel : ${page.data}">
+            <ul class="travels" th:if="${page.totalCount > 0}">
+                <li th:each="travel : ${page.data}" >
                     <div class="travel-image">
                         <a th:href="@{/travel/detail/{no}(no = ${travel.travelNo}, currentPage=${page.currentPage})}">
                             <img class="thumbnail" alt="thumbnail"
@@ -44,7 +47,7 @@
                 </li>
             </ul>
             <!--페이지네이션-->
-            <ul class="common-pagination">
+            <ul class="common-pagination" th:if="${page.totalCount > 0}">
                 <li class="common-pagination-li-end">
                     <a th:href="@{/review(currentPage=${page.prevPage})}" th:if="${page.hasPrev}">이전</a>
                 </li>

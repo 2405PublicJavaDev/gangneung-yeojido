@@ -13,6 +13,8 @@ main {
 
 #main-bottom {
     width: 100%;
+    padding: 20px;
+    margin: 15px auto;
 }
 
 .my-subject {
@@ -129,4 +131,20 @@ main {
 
 .common-pagination a {
     text-decoration: none;
+}
+
+.review {
+    display: flex;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2); /* 그림자 강화 */;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.no-review {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
 }
