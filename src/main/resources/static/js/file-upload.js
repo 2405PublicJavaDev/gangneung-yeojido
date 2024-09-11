@@ -1,5 +1,7 @@
-let maxWidth = 1024;  // 최대 너비
-let maxHeight = 768; // 최대 높이
+let maxWidth = 5000;  // 최대 너비
+let maxHeight = 5000; // 최대 높이
+let resizeWidth = 1500; // 리사이징 기준 너비
+let resizeHeight = 700; // 리사이징 기준 높이
 let maxFileCount = 5;
 let inputFileDataHandler = {};
 document.querySelectorAll('.file-upload').forEach(el => {
@@ -22,7 +24,7 @@ document.querySelectorAll('.file-upload').forEach(el => {
                             Array.from(files).forEach(file => {
                                 console.log(el, file.type);
                                 if (file && file.type.startsWith('image/')) {
-                                    // 이미지를 로드해 크기 제한 검사
+                                    // 이미지를 로드해 크기 제한 검사 및 리사이즈
                                     const img = new Image();
                                     const reader = new FileReader();
 
@@ -30,14 +32,29 @@ document.querySelectorAll('.file-upload').forEach(el => {
                                         img.src = readerEvent.target.result;
 
                                         img.onload = function () {
+                                            let finalWidth = img.width;
+                                            let finalHeight = img.height;
+
+                                            // 가로가 더 크고 1500px 초과 시 비율 유지하여 크기 조정
+                                            if (finalWidth > finalHeight && finalWidth > resizeWidth) {
+                                                finalHeight *= resizeWidth / finalWidth;
+                                                finalWidth = resizeWidth;
+                                            }
+                                            // 세로가 더 크고 800px 초과 시 비율 유지하여 크기 조정
+                                            else if (finalHeight > finalWidth && finalHeight > resizeHeight) {
+                                                finalWidth *= resizeHeight / finalHeight;
+                                                finalHeight = resizeHeight;
+                                            }
+
                                             // 이미지 크기 검사
                                             if (img.width > maxWidth || img.height > maxHeight) {
                                                 imageSizeAlert();
                                             } else {
                                                 // 제한에 맞는 경우에만 inputFileData에 추가
-                                                file.result = readerEvent.target.result;
-                                                inputFileData.push(file);
-                                                thumbnailUpdate();
+                                                resizeImage(img, finalWidth, finalHeight, file).then(resizedFile => {
+                                                    inputFileData.push(resizedFile);
+                                                    thumbnailUpdate();
+                                                });
                                             }
                                         };
                                     };
@@ -51,6 +68,25 @@ document.querySelectorAll('.file-upload').forEach(el => {
                         }
                     }
                 });
+
+                const resizeImage = (img, width, height, originalFile) => {
+                    return new Promise((resolve) => {
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        // 새로운 파일 생성
+                        canvas.toBlob((blob) => {
+                            const resizedFile = new File([blob], originalFile.name, {
+                                type: originalFile.type,
+                                lastModified: Date.now()
+                            });
+                            resolve(resizedFile);
+                        }, originalFile.type);
+                    });
+                };
 
                 const thumbnailUpdate = () => {
                     const thumbnailRoot = el.querySelector('div');
@@ -123,6 +159,7 @@ document.querySelectorAll('.file-upload').forEach(el => {
             })()
     };
 })
+
 // 크기 제한 경고 함수
 const imageSizeAlert = () => {
     alert(`이미지 크기는 최대 ${maxWidth}x${maxHeight} 이어야 합니다.`);
@@ -133,13 +170,3 @@ const onlyImageAlert = () => {
 const maxFileAlert = () => {
     alert(`파일은 최대 ${maxFileCount}개까지 추가 가능합니다.`);
 }
-
-// 예시: 이미지 주소에서 로드
-// const updateThumbnailsAfterLoading = async () => {
-//     const webPath = ['/gntour/DIARY/4f1b2be8-043b-48a1-8e4e-81ab153ed84c.png', '/gntour/DIARY/4f1b2be8-043b-48a1-8e4e-81ab153ed84c.png', '/gntour/DIARY/4f1b2be8-043b-48a1-8e4e-81ab153ed84c.png'];
-//     for (const w of webPath) {
-//         await loadImageFromURL(w);
-//     }
-//     thumbnailUpdate();  // 이미지 로드가 완료된 후 실행됩니다.
-// };
-// updateThumbnailsAfterLoading();
