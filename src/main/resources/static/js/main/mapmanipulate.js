@@ -440,8 +440,13 @@ canvas.addEventListener("click", function(e) {
             const liElement = document.createElement("li");
             const pElement = document.createElement("p");
             const imgElement = document.createElement("img");
-            imgElement.src = markerImages
-                .find(markerImg => markerImg.category === foundMark.category).imgSrc;
+            let targetImg = markerImages
+                .find(markerImg => markerImg.category === foundMark.category);
+            if(targetImg == null) {
+                targetImg = markerImages
+                    .find(markerImg => markerImg.category === 'DISPLAY');
+            }
+            imgElement.src = targetImg.imgSrc;
             imgElement.width = MARKER_SIZE;
             imgElement.height = MARKER_SIZE;
             const spanElement = document.createElement("span");
