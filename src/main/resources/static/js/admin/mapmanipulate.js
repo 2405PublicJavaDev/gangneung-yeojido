@@ -286,16 +286,7 @@ function drawMarkAndImages() {
 function drawMarkAndImagesInternal() {
     // All images are loaded; now draw them
     travelInfos.filter((marker) => {
-        if(marker.zoomLevel > zoomLevel) {
-            return false;
-        }
-        if(selectedCategory.length === 0) {
-            return true;
-        }
-        if(!marker.category) {
-            return true;
-        }
-        return selectedCategory.includes(marker.category);
+        return true;
     }).forEach((marker) => {
         ctx.save();
         preSetupCtx();

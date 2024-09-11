@@ -46,6 +46,7 @@ public class AdminTravelController {
     @PostMapping("/admin/travel")
     @ResponseBody
     public EmptyResponse updateTravelInfo(@RequestBody @Valid TravelInfo travelInfo) {
+        log.info("modify travel info {}", travelInfo);
         int result = travelService.modifyTravel(travelInfo);
         if(result == 0) {
             throw new BusinessException(ErrorCode.NO_UPDATE);

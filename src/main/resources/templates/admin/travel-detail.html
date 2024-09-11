@@ -44,7 +44,7 @@
                 <input type="text" name="imageUrl" placeholder="이미지 URL" th:value="${detail.imageUrl}">
                 <input type="text" name="zoomLevel" placeholder="줌레벨(1~14)" th:value="${detail.zoomLevel}">
                 <div id="category-info">
-                    <select name="" id="region">
+                    <select name="region" id="region">
                         <option value="" disabled th:if="${detail.region == null}" selected>권역</option>
                         <option value="JUMUNJIN" th:selected="${detail.region == 'JUMUNJIN'}">주문진권</option>
                         <option value="CITY" th:selected="${detail.region == 'CITY'}">시내권</option>
@@ -52,7 +52,7 @@
                         <option value="DAEGWALLYEONG" th:selected="${detail.region == 'DAEGWALLYEONG'}">대관령권</option>
                         <option value="JEONGDONGJIN" th:selected="${detail.region == 'JEONGDONGJIN'}">정동진 옥계권</option>
                     </select>
-                    <select name="" id="category">
+                    <select name="category" id="category">
                         <option value="" disabled th:if="${detail.category == null}" selected>카테고리</option>
                         <option value="MOUNTAIN" th:selected="${detail.category == 'MOUNTAIN'}">산·트래킹</option>
                         <option value="SEA" th:selected="${detail.category == 'SEA'}">바다·해안</option>

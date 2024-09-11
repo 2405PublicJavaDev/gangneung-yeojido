@@ -173,6 +173,12 @@
     <update id="updateTravel" parameterType="TravelInfo">
         UPDATE TRAVEL_INFO
         <set>
+            <if test="latitude != null" >
+                LATITUDE = #{latitude},
+            </if>
+            <if test="longitude != null" >
+                LONGITUDE = #{longitude},
+            </if>
             <if test="travelName != null" >
                 TRAVEL_NAME = #{travelName},
             </if>
@@ -202,6 +208,15 @@
             </if>
             <if test="imageUrl != null" >
                 IMAGE_URL = #{imageUrl},
+            </if>
+            <if test="zoomLevel != null" >
+                ZOOM_LEVEL = #{zoomLevel},
+            </if>
+            <if test="region != null" >
+                REGION = #{region},
+            </if>
+            <if test="category != null" >
+                CATEGORY = #{category},
             </if>
             UPDATE_DATE = SYSTIMESTAMP
         </set>
