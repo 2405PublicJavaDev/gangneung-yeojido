@@ -270,3 +270,12 @@ const clearFilter = () => {
     });
     drawGangneung();
 }
+
+document.querySelector('#travel-list-form').addEventListener('keypress', (e) => {
+    console.log(e);
+    if(e.key === 'Enter') {
+        e.preventDefault();
+        clearFilter();
+        getPage(1, document.querySelector('#search-text').value, null, null);
+    }
+});

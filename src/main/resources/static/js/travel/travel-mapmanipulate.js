@@ -283,3 +283,12 @@ canvas.addEventListener("mousedown", function(e) {
     }
 });
 
+canvas.addEventListener('click', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const point = {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+    };
+    console.log(xToLon(point.x), yToLat(point.y));
+});
+

@@ -85,3 +85,10 @@ function idPwCheck() {
 //     elInputPassword.classList.remove('border-red');
 //     return true;
 // }
+
+document.querySelector('#login-form').addEventListener('keypress', (e) => {
+    console.log(e);
+    if(e.key === 'Enter') {
+        loginBtnClick();
+    }
+});
