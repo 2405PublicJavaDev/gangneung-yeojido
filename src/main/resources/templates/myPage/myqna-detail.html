@@ -10,11 +10,10 @@
 </th:block>
 <main layout:fragment="content">
   <div class="main-container">
-    <h1>나의 문의내역 상세</h1>
+    <h1>나의 문의내역</h1>
 
     <!-- 문의내역 반복 출력 -->
     <div class="question-container" th:each="qna : ${qnaDetail}">
-      <h3><strong th:text="${qna.memberId}"></strong>님께서 문의하신 내용입니다.</h3><br>
       <strong>제목</strong>
       <p th:text="${qna.qnaSubject}"></p><br>
       <strong>내용</strong>

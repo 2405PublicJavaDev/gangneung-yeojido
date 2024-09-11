@@ -1,11 +1,15 @@
 let selectedCategory = [];
-let selectedRegion = [];
+let scale = 1.2; // 기본 스케일
+let offsetX = 0; // X축 오프셋
+let offsetY = 0; // Y축 오프셋
+let isDragging = false; // 드래그 여부
+let startX, startY; // 드래그 시작 위치
 let canvas = document.getElementById("myCanvas"),
     ctx = canvas.getContext("2d"),
     canvasWidth = canvas.width,
     canvasHeight = canvas.height,
     bounds = { maxLon: 1, minLon: 200, maxLat: 1, minLat: 200 };
-
+let travelInfos = [travelInfo];
 // 각 좌표들을 순회하며 최소 및 최대 경도와 위도를 계산합니다.
 data.features.forEach(function (feature) {
     feature.geometry.coordinates.forEach(function (coordsSet) {
@@ -18,6 +22,11 @@ data.features.forEach(function (feature) {
         });
     });
 });
+
+bounds.minLon -= 0.25;
+bounds.minLat -= 0.05;
+bounds.maxLon += 0.25;
+bounds.maxLat += 0.05;
 
 let drawnPolygons = [];
 
@@ -121,18 +130,40 @@ drawnPolygons.forEach(function (polygon) {
     sortedPolygons.push(sortedPolygon);
 });
 
+// 마우스 움직임에 따라 폴리곤 이름을 출력합니다.
+canvas.addEventListener("mousemove", function (event) {
+    const rect = canvas.getBoundingClientRect();
+    const point = {
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top,
+    };
+    // 스케일과 오프셋을 고려한 마우스 좌표 변환
+    const transformedPoint = {
+        x: (point.x - offsetX - canvas.width / 2) / scale + canvas.width / 2,
+        y: (point.y - offsetY - canvas.height / 2) / scale + canvas.height / 2,
+    };
+    let polygon = getPolygon(transformedPoint);
+    if (polygon) console.log(polygon.name);
+});
+function preSetupCtx() {
+    ctx.translate(offsetX, offsetY);
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.scale(scale, scale); // 줌 기능
+    ctx.translate(-canvas.width / 2, -canvas.height / 2);
+}
 // 그려진 폴리곤들 + 마커를 캔버스에 그립니다.
 function drawGangneung() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawGangneungFill();
     drawGangneungStroke();
-    drawImages();
+    drawMarkAndImages();
 }
 
 function drawGangneungFill() {
     drawnPolygons.forEach(function (polygon) {
         polygon.paths.forEach(function (path) {
             ctx.save();
+            preSetupCtx();
             ctx.beginPath();
             let isFirstPoint = true;
             path.forEach(function (point) {
@@ -145,11 +176,7 @@ function drawGangneungFill() {
             });
             ctx.strokeStyle = "black";
             // ctx.stroke();
-            if(selectedRegion.includes(polygon.name)) {
-                ctx.fillStyle = selectedColorMap.get(polygon.name);
-            } else {
-                ctx.fillStyle = colorMap.get(polygon.name);
-            }
+            ctx.fillStyle = colorMap.get(polygon.name);
             ctx.fill();
             ctx.closePath();
             ctx.restore();
@@ -186,6 +213,7 @@ function drawGangneungStroke() {
                     }
                     console.log(fromIdx, toIdx);
                     ctx.save();
+                    preSetupCtx();
                     ctx.beginPath();
                     let isFirstPoint = true;
                     path.forEach((point, idx) => {
@@ -200,10 +228,10 @@ function drawGangneungStroke() {
                     });
                     if (line.style === "OUTER") {
                         // 그림자 설정
-                        ctx.strokeStyle = "#9f9f9f";
-                        ctx.lineWidth = 2;
+                        ctx.strokeStyle = "#b6e2ec";
+                        ctx.lineWidth = 4;
                     } else {
-                        ctx.strokeStyle = "#9f9f9f";
+                        ctx.strokeStyle = "#DADADA";
                         ctx.lineWidth = 2;
                         ctx.setLineDash([3,3]);/*dashes are [first]px and spaces are [second]px*/
                     }
@@ -216,10 +244,22 @@ function drawGangneungStroke() {
     });
 }
 let imageLoaded = false;
-function drawImages() {
+function drawMarkAndImages() {
     // Create a promise for each marker image loading
     if(!imageLoaded) {
         const promises = [
+            ...markerImages.map((marker) => {
+                return new Promise((resolve, reject) => {
+                    marker.image = new Image();
+                    marker.image.src = marker.imgSrc;
+                    marker.image.onload = () => {
+                        resolve(true);
+                    };
+                    marker.image.onerror = (err) => {
+                        reject(err);
+                    };
+                });
+            }),
             ...staticImages.map((staticImage) => {
                 return new Promise((resolve, reject) => {
                     staticImage.image = new Image();
@@ -235,18 +275,46 @@ function drawImages() {
         ];
         Promise.all(promises).then(() => {
             imageLoaded = true;
-            drawImagesInternal();
+            drawMarkAndImagesInternal();
         }).catch((err) => {
             console.error('Error loading one or more images:', err);
         });
     } else {
-        drawImagesInternal();
+        drawMarkAndImagesInternal();
     }
 }
-function drawImagesInternal() {
+function drawMarkAndImagesInternal() {
     // All images are loaded; now draw them
+    travelInfos.filter((marker) => {
+        if(marker.zoomLevel > zoomLevel) {
+            return false;
+        }
+        if(selectedCategory.length === 0) {
+            return true;
+        }
+        if(!marker.category) {
+            return true;
+        }
+        return selectedCategory.includes(marker.category);
+    }).forEach((marker) => {
+        ctx.save();
+        preSetupCtx();
+        let markerImage = markerImages
+            .find(markerImg => markerImg.category === marker.category);
+        if(markerImage == null) {
+            markerImage = markerImages
+                .find(markerImg => markerImg.category === 'DISPLAY');
+            // 분류되지 않은 경우 기본으로 전시를 보여준다.
+        }
+        console.log(markerImage);
+        marker.x = lonToX(marker.longitude);
+        marker.y = latToY(marker.latitude);
+        ctx.drawImage(markerImage.image, marker.x, marker.y, MARKER_SIZE / scale, MARKER_SIZE / scale);
+        ctx.restore();
+    });
     staticImages.forEach((staticImage) => {
         ctx.save();
+        preSetupCtx();
         const x = lonToX(staticImage.lon);
         const y = latToY(staticImage.lat);
         ctx.drawImage(staticImage.image, x, y, staticImage.width, staticImage.height);
@@ -254,8 +322,100 @@ function drawImagesInternal() {
     });
 }
 drawGangneung();
-let curPolygon
-canvas.addEventListener("mousemove", function(e) {
+let isZooming = false; // 줌 애니메이션이 실행 중인지 확인하는 플래그
+
+function zoomIn() {
+    if (zoomLevel < MAX_ZOOM_LEVEL && !isZooming) {
+        zoomLevel++;
+        animateZoom(1.2); // 스케일을 20% 확대 애니메이션
+    }
+}
+
+function zoomOut() {
+    if (zoomLevel > MIN_ZOOM_LEVEL && !isZooming) {
+        zoomLevel--;
+        animateZoom(1 / 1.2); // 스케일을 20% 축소 애니메이션
+    }
+}
+
+function animateZoom(targetScale) {
+    isZooming = true; // 줌 애니메이션이 시작되면 플래그를 true로 설정
+    const duration = 300; // 애니메이션 지속 시간 (밀리초)
+    const startTime = performance.now();
+    const initialScale = scale;
+    const scaleDifference = targetScale - 1;
+
+    function animate(time) {
+        const elapsedTime = time - startTime;
+        const progress = Math.min(elapsedTime / duration, 1); // 진행률 (0에서 1 사이)
+
+        // Easing function (ease-out)
+        const easedProgress = Math.max(1 - Math.pow(1 - progress, 3),0);
+        // 스케일 값 업데이트
+        scale = initialScale * (1 + scaleDifference * easedProgress);
+
+        drawGangneung(); // 매 프레임마다 캔버스 다시 그리기
+
+        if (progress < 1) {
+            requestAnimationFrame(animate); // 애니메이션 계속
+        } else {
+            isZooming = false; // 줌 애니메이션이 완료되면 플래그를 false로 설정
+        }
+    }
+
+    requestAnimationFrame(animate); // 애니메이션 시작
+}
+
+// 드래그 시작
+canvas.addEventListener("mousedown", function (e) {
+    isDragging = true;
+    startX = e.clientX - offsetX;
+    startY = e.clientY - offsetY;
+});
+
+// 드래그 중
+canvas.addEventListener("mousemove", function (e) {
+    if (isDragging) {
+        offsetX = e.clientX - startX;
+        offsetY = e.clientY - startY;
+        drawGangneung(); // 캔버스 내용 다시 그리기
+    }
+});
+
+// 드래그 종료
+canvas.addEventListener("mouseup", function () {
+    isDragging = false;
+});
+
+// 드래그가 캔버스 밖에서 종료되었을 때 처리
+canvas.addEventListener("mouseleave", function () {
+    isDragging = false;
+});
+
+// 휠 이벤트로 줌 인/아웃 제어
+canvas.addEventListener("wheel", function (e) {
+    e.preventDefault(); // 기본 휠 동작(스크롤) 방지
+
+    // e.deltaY > 0이면 휠이 아래로, e.deltaY < 0이면 휠이 위로 움직임
+    if (e.deltaY < 0 && !isZooming) {
+        zoomIn(); // 줌 인
+    } else if (e.deltaY > 0 && !isZooming) {
+        zoomOut(); // 줌 아웃
+    }
+});
+
+function getMark(transformedPoint) {
+    const foundMarks = [];
+    travelInfos.forEach((mark) => {
+        if(transformedPoint.x >= mark.x && transformedPoint.x <= mark.x + MARKER_SIZE / scale &&
+            transformedPoint.y >= mark.y && transformedPoint.y <= mark.y + MARKER_SIZE / scale) {
+            foundMarks.push(mark);
+        }
+    });
+    return foundMarks;
+}
+
+canvas.addEventListener("click", function(e) {
     e.preventDefault();
     const rect = canvas.getBoundingClientRect();
     const point = {
@@ -263,23 +423,41 @@ canvas.addEventListener("mousemove", function(e) {
         y: e.clientY - rect.top,
     };
     // 스케일과 오프셋을 고려한 마우스 좌표 변환
-    let polygon = getPolygon(point);
-    if (polygon) {
-        curPolygon = polygon;
+    const transformedPoint = {
+        x: (point.x - offsetX - canvas.width / 2) / scale + canvas.width / 2,
+        y: (point.y - offsetY - canvas.height / 2) / scale + canvas.height / 2,
+    };
+    console.log("lon", xToLon(transformedPoint.x));
+    console.log("lat", yToLat(transformedPoint.y));
+    const foundMarks = getMark(transformedPoint);
+    const mainMarkerTooltip = document.querySelector("#main-marker-tooltip");
+    mainMarkerTooltip.replaceChildren();
+    if(foundMarks.length == 1) {
+        // main 상세 정보에 보여주기
+        getOutline(foundMarks[0].travelNo);
+    } else if(foundMarks.length > 1) {
+        foundMarks.slice(0, 5).forEach((foundMark) => {
+            const liElement = document.createElement("li");
+            const pElement = document.createElement("p");
+            const imgElement = document.createElement("img");
+            imgElement.src = markerImages
+                .find(markerImg => markerImg.category === foundMark.category).imgSrc;
+            imgElement.width = MARKER_SIZE;
+            imgElement.height = MARKER_SIZE;
+            const spanElement = document.createElement("span");
+            spanElement.textContent = foundMark.travelName;
+            pElement.appendChild(imgElement);
+            pElement.appendChild(spanElement);
+            liElement.appendChild(pElement);
+            liElement.addEventListener("click", (e) => {
+                e.preventDefault();
+                getOutline(foundMark.travelNo);
+                mainMarkerTooltip.replaceChildren();
+            })
+            mainMarkerTooltip.appendChild(liElement);
+        });
+        mainMarkerTooltip.style.top = point.y + 'px';
+        mainMarkerTooltip.style.left = point.x + 'px';
     }
-});
-
-canvas.addEventListener("mousedown", function(e) {
-    e.preventDefault();
-    if(curPolygon) {
-        const index = selectedRegion.indexOf(curPolygon.name);
-        if (index !== -1) {
-            selectedRegion.splice(index, 1);
-        } else {
-            selectedRegion.push(curPolygon.name);
-        }
-        drawGangneung();
-        applyFilter();
-    }
-});
-
+    console.log(foundMarks.length, foundMarks);
+})

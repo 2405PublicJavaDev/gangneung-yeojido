@@ -115,6 +115,55 @@ main {
                 font-size: 17px;
                 font-weight: bold;
                 box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.05);
+                transition: background-color 0.3s ease, color 0.3s ease;
+            }
+            #categoryMOUNTAIN:hover {
+                background-color: #00A155;
+                color: white;
+            }
+            .MOUNTAIN-active {
+                background-color: #00A155;
+                color: white;
+            }
+            #categorySEA:hover {
+                background-color: #007FFF;
+                color: white;
+            }
+            .SEA-active {
+                background-color: #007FFF;
+                color: white;
+            }
+            #categoryPARK:hover {
+                background-color: #FF7E04;
+                color: white;
+            }
+            .PARK-active {
+                background-color: #FF7E04;
+                color: white;
+            }
+            #categoryHISTORY:hover {
+                background-color: #A064FF;
+                color: white;
+            }
+            .HISTORY-active {
+                background-color: #A064FF;
+                color: white;
+            }
+            #categoryDISPLAY:hover {
+                background-color: #FF4274;
+                color: white;
+            }
+            .DISPLAY-active {
+                background-color: #FF4274;
+                color: white;
+            }
+            #categoryLEISURE:hover {
+                background-color: #18BDAA;
+                color: white;
+            }
+            .LEISURE-active {
+                background-color: #18BDAA;
+                color: white;
             }
         #main-detail-content-not-load {
             background-color: white;

@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface ReviewService {
-    Page<ReviewResponse, TravelSearchCondition> getAllReviewsByTravel(Integer currentPage, Long travelNo, Long reviewNo);
+    Page<ReviewResponse, TravelSearchCondition> getAllReviewsByTravel(Integer currentPage, Long travelNo, Long reviewNo, String order);
     Page<AdminComplainResponse, Void> getAllComplainReviews(int currentPage);
     Page<MyReviewResponse, String> getAllReviewsByMember(Integer currentPage, String memberId);
     int addReview(List<MultipartFile> uploadFiles, Review review);

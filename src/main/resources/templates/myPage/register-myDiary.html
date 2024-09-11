@@ -57,7 +57,7 @@
                         <input type="text" name="diaryTitle" required class="common-input subject-input" id="diary-subject" placeholder="제목을 입력해주세요">
                     </div>
                     <b>내용</b>
-                    <textarea name="diaryContent" required class="common-input content-input" id="diary-content" placeholder="내용을 입력해주세요"></textarea>
+                    <textarea name="diaryContent" required class="common-input content-input" id="diary-content" placeholder="내용을 입력해주세요" style="resize: none;"></textarea>
                     <div class="file-upload" id="register-diary-file-upload">
                         <input type="file" accept="image/*" multiple>
                         <button type="button" id="uploadBtn">이미지 추가</button>
@@ -69,8 +69,8 @@
                     </div>
                 </div>
                 <div class="register-btn">
-                    <button type="button" class="register submit-button" id="submit-btn">등록</button>
-                    <button type="button" class="cancel submit-button" onclick="goback();">취소</button>
+                    <button type="button" class="common-primary-btn btn-group" id="submit-btn">등록</button>
+                    <button type="button" class="common-secondary-btn btn-group" onclick="goback();">취소</button>
                 </div>
             </div>
         </form>

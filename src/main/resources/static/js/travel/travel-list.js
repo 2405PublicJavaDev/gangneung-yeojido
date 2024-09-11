@@ -108,7 +108,8 @@ const getPage = (currentPage, travelName, region, category) => {
                                     });
                                 }
                             } else {
-                                alert('로그인을 먼저 해주세요.')
+                                alert('로그인을 먼저 해주세요.');
+                                location.href = '/login';
                             }
                         });
                     });
@@ -129,6 +130,12 @@ const getPage = (currentPage, travelName, region, category) => {
                     }
                 }
 
+                const timer = setTimeout(function() {
+                    if (!img.complete) {
+                        img.src = '/img/no-image.png';
+                    }
+                }, 5000);
+
                 // 리스트에 항목 추가
                 listUlInnerHTML += `
                     <li>
@@ -147,14 +154,23 @@ const getPage = (currentPage, travelName, region, category) => {
                                     <i class="fa-solid fa-location-dot"></i>
                                 </div>
                                 <div class="address-right">
-                                    <span class="address-text">${travel.address}</span>
+                                    <span class="address-text">${travel.address.length > 20 ? travel.address.substring(0, 20) + '...' : travel.address}</span>
                                 </div>
                             </div>
                         </div>
                     </li>
                 `;
             });
-
+            if(totalImages % 4 !== 0) {
+                for(let i=0; i<4 - (totalImages % 4); i++) {
+                    listUlInnerHTML += `
+                            <li>
+                                <div class="travel-image">
+                                </div>
+                            </li>
+                        `;
+                }
+            }
             listUl.innerHTML = listUlInnerHTML;
         } else {
             root.innerHTML = `<span class="travel-list-no-content">조회된 결과가 없습니다.</span>`;

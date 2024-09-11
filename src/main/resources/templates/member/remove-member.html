@@ -12,7 +12,6 @@
 <main layout:fragment="content">
   <div class="remove-member-container">
     <h1>회원 탈퇴</h1>
-    <hr>
     <form action="/remove-member" method="post" id="remove-member-form" class="remove-member-form">
       <div class="input-group">
         <input type="text" id="memberId" placeholder="아이디" class="common-input" name="memberId" th:value="${member.memberId}" readonly>

@@ -6,6 +6,7 @@
 <th:block layout:fragment="script">
     <script th:inline="javascript">
         const memberId = /*[[${session.memberId}]]*/
+        const memberStatus = /*[[${session.memberStatus}]]*/
     </script>
     <script type="text/javascript" src="/js/travel/travel-detail.js"></script>
     <script type="text/javascript" src="/js/travel/travel-detail-review.js"></script>
@@ -27,8 +28,8 @@
             <div class="white-bg">
                 <h3>댓글 등록</h3><br>
                 <textarea name="reviewContent" class="common-input content-input" id="reply-add-content" cols="30" rows="10" style="resize:none;" placeholder="내용을 입력해주세요"></textarea>
-                <button class="btn btn-add" id="reply-add-btn">등록</button>
-                <button class="btn btn-cancel" id="reply-add-close-btn">취소</button>
+                <button class="common-primary-btn btn-group" id="reply-add-btn">등록</button>
+                <button class="common-secondary-btn btn-group" id="reply-add-close-btn">취소</button>
             </div>
         </form>
     </div>
@@ -39,8 +40,8 @@
             <div class="white-bg">
                 <h3>댓글 수정</h3><br>
                 <textarea name="reviewContent" class="common-input content-input" id="reply-update-content" cols="30" rows="10" style="resize:none;" placeholder="내용을 입력해주세요"></textarea>
-                <button class="btn btn-add" id="reply-update-btn">등록</button>
-                <button class="btn btn-cancel" id="reply-update-close-btn">취소</button>
+                <button class="common-primary-btn btn-group" id="reply-update-btn">수정</button>
+                <button class="common-secondary-btn btn-group" id="reply-update-close-btn">취소</button>
             </div>
         </form>
     </div>
@@ -67,8 +68,8 @@
                         <img>
                     </dialog>
                 </div>
-                <button class="btn btn-add" id="review-add-btn">등록</button>
-                <button class="btn btn-cancel" id="review-add-close-btn">취소</button>
+                <button class="common-primary-btn btn-group" id="review-add-btn">등록</button>
+                <button class="common-secondary-btn btn-group" id="review-add-close-btn">취소</button>
             </div>
         </form>
     </div>
@@ -96,10 +97,14 @@
                         <img>
                     </dialog>
                 </div>
-                <button class="btn btn-add" id="review-update-btn">수정</button>
-                <button class="btn btn-cancel" id="review-update-close-btn">취소</button>
+                <button class="common-primary-btn btn-group" id="review-update-btn">수정</button>
+                <button class="common-secondary-btn btn-group" id="review-update-close-btn">취소</button>
             </div>
         </form>
+    </div>
+    <!-- image popup -->
+    <div class="dialog-bg dialog-noshow" id="image-popup">
+        <img id="image-popup-img">
     </div>
 </div>
 <main layout:fragment="content">
@@ -107,7 +112,16 @@
         <input type="hidden" name="travelNo" th:value="${detail.travelNo}">
         <h1 th:text="${detail.travelName}"></h1>
         <div id="category-box">
-            <span id="category-txt" th:text="${detail.category}"></span>
+            <span id="category-txt"
+                  th:switch="${detail.category}">
+                <span th:case="'MOUNTAIN'">산·트래킹</span>
+                <span th:case="'SEA'">바다·해안</span>
+                <span th:case="'PARK'">호수·공원</span>
+                <span th:case="'HISTORY'">역사·유적</span>
+                <span th:case="'DISPLAY'">전시</span>
+                <span th:case="'LEISURE'">레저·체험</span>
+                <span th:case="*">기타</span> <!-- 예외 처리용 -->
+            </span>
         </div>
         <div id="score-box">
             <p class="main-detail-content-photo-star" id="star-container">

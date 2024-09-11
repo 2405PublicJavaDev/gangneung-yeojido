@@ -21,4 +21,5 @@ public class ReviewResponse {
     private Timestamp regDate;
     private Timestamp updateDate;
     private List<ReviewFile> reviewFiles; // List of related files
+    private Long replyCnt;
 }

@@ -10,4 +10,5 @@ import lombok.*;
 public class ReplyModifyRequest {
     private String reviewContent;
     private Long reviewNo;
+    private String memberId;
 }

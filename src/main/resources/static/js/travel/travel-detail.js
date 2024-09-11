@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // 페이지 로드 시 "정보" 버튼 클릭 상태로 설정
-    selectReview();
+    selectInfo();
 
     // 페이지 로드 시 타이틀 천천히 로드
     document.querySelector("h1").style.opacity = '1';
@@ -45,7 +45,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
                 }
             } else {
-                alert('로그인을 먼저 해주세요.')
+                alert('로그인을 먼저 해주세요.');
+                location.href = '/login';
             }
         });
     });
@@ -118,5 +119,10 @@ function selectReview() {
 
 document.querySelector("#go-diary").addEventListener('click', (e) => {
     e.preventDefault();
-    location.href = `/register-diary?travelNo=${travelNo}`;
+    if(memberId) {
+        location.href = `/register-diary?travelNo=${travelNo}`;
+    } else {
+        alert('로그인을 먼저 해주세요.');
+        location.href = '/login';
+    }
 })

@@ -44,12 +44,13 @@
     display: flex;
     flex-direction: row;
     gap: 10px;
+    margin-bottom: 30px;
 }
 .file-thumbnail-wrapper {
     height: 150px;
     width: 150px;
-    border: 1px solid black;
     position: relative;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2), -4px -4px 10px rgba(255, 255, 255, 0.5);
 }
 .file-thumbnail-wrapper .thumbnail {
     width: 100%;

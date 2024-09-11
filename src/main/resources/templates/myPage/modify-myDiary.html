@@ -41,9 +41,11 @@
                 },
                 (response) => {
                     console.log('response', response);
+                    alert('수정하였습니다.');
                     location.href="/diary";
                 },
                 (error) => {
+                    alert('수정하는 과정 중에 오류가 발생했습니다.');
                     console.log('error',error)}
             );
         })
@@ -54,7 +56,7 @@
 </th:block>
 <th:block layout:fragment="css">
     <link rel="stylesheet" href="/css/file-upload.css">
-    <link rel="stylesheet" href="/css/myPage/register-myDiary.css">
+    <link rel="stylesheet" href="/css/myPage/modify-myDiaryTemp.css">
 </th:block>
 <main layout:fragment="content">
     <!--    <img src="/gntour/DIARY/0efffa16-de3c-4509-8bef-ee67eb88465b.png">-->
@@ -71,6 +73,7 @@
                     <b>내용</b>
 
                     <textarea name="diaryContent" required class="common-input content-input"
+                              style="resize: none;"
                               id="diary-content">
                     </textarea>
                     <div class="file-upload" id="modify-file-upload">
@@ -85,8 +88,8 @@
                 </div>
                 <div class="register-btn">
                     <input type="file" name="uploadFile" hidden>
-                    <button type="button" class="register submit-button" id="submit-btn" name="">수정</button>
-                    <button type="button" class="cancel submit-button" onclick="goback();">취소</button>
+                    <button type="button" class="common-primary-btn btn-group" id="submit-btn" name="">수정</button>
+                    <button type="button" class="common-secondary-btn btn-group" onclick="goback();">취소</button>
                 </div>
             </div>
         </form>

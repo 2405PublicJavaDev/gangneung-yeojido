@@ -12,6 +12,7 @@
         <result property="memberId" column="MEMBER_ID" />
         <result property="regDate" column="REG_DATE" />
         <result property="updateDate" column="UPDATE_DATE" />
+        <result property="replyCnt" column="REPLY_CNT" />
 
         <!-- Mapping the collection of ReviewFiles -->
         <collection property="reviewFiles" ofType="ReviewFile">
@@ -42,7 +43,8 @@
             rf.WEB_PATH,
             rf.FILE_ORDER,
             rf.REG_DATE as FILE_REG_DATE,
-            rf.UPDATE_DATE as FILE_UPDATE_DATE
+            rf.UPDATE_DATE as FILE_UPDATE_DATE,
+            (SELECT COUNT(*) FROM REVIEW WHERE PARENT_REVIEW_NO = r.REVIEW_NO) "REPLY_CNT"
         FROM
             REVIEW r
         LEFT JOIN
@@ -62,7 +64,12 @@
                 </otherwise>
             </choose>
         </where>
-        ORDER BY REVIEW_NO DESC, rf.FILE_ORDER ASC
+        ORDER BY
+        <choose>
+            <when test='condition.order.equals("desc")'> REVIEW_NO DESC </when>
+            <otherwise> REVIEW_NO ASC </otherwise>
+        </choose>
+            , rf.FILE_ORDER ASC
     </select>
     <select id="selectAllReviewsCount" resultType="_int">
         SELECT COUNT(*)
@@ -126,7 +133,8 @@
             rf.WEB_PATH,
             rf.FILE_ORDER,
             rf.REG_DATE as FILE_REG_DATE,
-            rf.UPDATE_DATE as FILE_UPDATE_DATE
+            rf.UPDATE_DATE as FILE_UPDATE_DATE,
+            (SELECT COUNT(*) FROM REVIEW WHERE PARENT_REVIEW_NO = r.REVIEW_NO) "REPLY_CNT"
         FROM
             REVIEW r
                 LEFT JOIN

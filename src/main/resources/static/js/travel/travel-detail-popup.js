@@ -45,6 +45,7 @@ starsContainer.forEach((starsContainer) => {
                 location.href=`/travel/detail/${travelNo}`;
             },
             (error) => {
+                alert("리뷰 등록 중에 오류가 발생했습니다.");
                 console.log('error',error)}
         );
     });
@@ -110,6 +111,7 @@ document.querySelector('#reply-add-btn').addEventListener('click', (e) => {
             location.href=`/travel/detail/${travelNo}`;
         },
         (error) => {
+            alert("댓글 등록 중에 오류가 발생했습니다.")
             console.log('error',error)
     });
 });

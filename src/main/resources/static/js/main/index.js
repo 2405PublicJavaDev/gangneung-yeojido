@@ -1,12 +1,5 @@
 // 모든 버튼을 선택합니다.
 const buttons = document.querySelectorAll('button[id^="category"]');
-const buttonBackground = new Map();
-buttonBackground.set("MOUNTAIN", "#00A155");
-buttonBackground.set("SEA", "#007FFF");
-buttonBackground.set("PARK", "#FF7E04");
-buttonBackground.set("HISTORY", "#A064FF");
-buttonBackground.set("DISPLAY", "#FF4274");
-buttonBackground.set("LEISURE", "#18BDAA");
 // 각 버튼에 대해 이벤트를 추가합니다.
 buttons.forEach(button => {
     // id에서 'category' 이후의 부분을 추출합니다.
@@ -18,13 +11,10 @@ buttons.forEach(button => {
         const index = selectedCategory.indexOf(idSuffix);
         if (index !== -1) {
             selectedCategory.splice(index, 1);
-            button.style.backgroundColor = '#FFFFFF';
-            button.style.color = '#000000';
         } else {
             selectedCategory.push(idSuffix);
-            button.style.backgroundColor = buttonBackground.get(idSuffix);
-            button.style.color = '#FFFFFF';
         }
+        button.classList.toggle(idSuffix + '-active');
         drawGangneung();
     });
 });
@@ -155,7 +145,7 @@ const swiper = new Swiper('.swiper', {
 const requestAddMark = () => {
     if(memberId) {
         if (memberStatus === 'BLACK') {
-            alert('블랙된 상태입니다. 따라서 마커 추가 요청을 할 수 없습니다.');
+            alert('접근이 제한되었습니다.');
         } else {
             location.href = "/mark-request";
         }

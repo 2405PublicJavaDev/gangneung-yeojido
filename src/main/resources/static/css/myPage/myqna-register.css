@@ -1,7 +1,3 @@
-main {
-    padding: 20px;
-}
-
 #uploadForm {
     padding: 20px;
     border-radius: 5px;
@@ -12,7 +8,7 @@ main {
 h1 {
     font-family: 'BMDOHYEON', sans-serif;
     padding-bottom: 20px;
-    padding-top : 20px;
+    padding-top : 10px;
     text-align: center;
 }
 .subtitle {
@@ -56,7 +52,9 @@ form div {
 
 /* 취소버튼 색상 변경*/
 .cancel {
-    background-color: #c7c7c7;
+    font-size: 1em;
+    width: 120px;
+    height: 40px;
 }
 /*버튼 가운데 정렬*/
 .register-btn {
@@ -84,4 +82,8 @@ th, td {
 th {
     background-color: #f2f2f2;
     font-weight: bold;
+}
+.file-upload {
+    z-index: 999;
+    overflow: visible;
 }

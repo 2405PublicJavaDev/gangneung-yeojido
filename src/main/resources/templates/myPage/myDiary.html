@@ -10,7 +10,7 @@
 </th:block>
 <main layout:fragment="content">
     <div class="main-center">
-        <div class="my-subject"><h1>나의 여행 일기</h1><hr></div>
+        <div class="my-subject"><h1>나의 여행 일기</h1></div>
         <div class="main-content">
             <div th:each="diary : ${page.data}" class="diary" th:if="${page.totalCount > 0}">
                 <!-- 여행지 이미지 -->

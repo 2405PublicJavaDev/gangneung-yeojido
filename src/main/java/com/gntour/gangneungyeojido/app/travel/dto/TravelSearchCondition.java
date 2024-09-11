@@ -12,4 +12,5 @@ import lombok.Setter;
 public class TravelSearchCondition {
     private Long travelNo;
     private Long reviewNo;
+    private String order;
 }

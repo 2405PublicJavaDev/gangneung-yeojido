@@ -22,7 +22,6 @@
 <!--    메인 컨텐츠 출력 영역(나의 문의 리스트)-->
         <div class="register-list">
             <div class="register-top-section">
-                <h3 th:text="${memberName} + '님께서 남기신 1:1 문의내역 입니다.'"></h3><br>
                 <table class="common-table">
                     <tr>
                         <th>등록일</th>
@@ -48,7 +47,7 @@
         </div>
 
         <div class="register-btn">
-            <button><a th:href="@{/myqna/register}">문의 등록</a></button>
+            <button type="button" class="common-primary-btn" onclick="location.href='/myqna/register';">문의 등록</button>
         </div>
     </div>
 </main>

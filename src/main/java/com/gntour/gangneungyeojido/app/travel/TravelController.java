@@ -118,8 +118,9 @@ public class TravelController {
     public Page<ReviewResponse, TravelSearchCondition> showTravelReviewPage(
             @RequestParam("travelNo") Long travelNo,
             @RequestParam(value = "reviewNo", required = false) Long reviewNo,
+            @RequestParam(value = "order", defaultValue = "desc") String order,
             @RequestParam(value="currentPage", defaultValue = "1") Integer currentPage) {
-        Page<ReviewResponse, TravelSearchCondition> page = reviewService.getAllReviewsByTravel(currentPage, travelNo, reviewNo);
+        Page<ReviewResponse, TravelSearchCondition> page = reviewService.getAllReviewsByTravel(currentPage, travelNo, reviewNo, order);
         log.info(page.getData().toString());
         return page;
     }
@@ -317,6 +318,7 @@ public class TravelController {
         if(MemberUtils.getMemberStatusFromSession(session) == MemberStatus.BLACK) {
             throw new BusinessException(ErrorCode.BLACK_LIST);
         }
+        replyModifyRequest.setMemberId(memberId);
         int result = reviewService.modifyReviewReply(replyModifyRequest);
         if(result == 0) {
             throw new BusinessException(ErrorCode.NO_UPDATE);

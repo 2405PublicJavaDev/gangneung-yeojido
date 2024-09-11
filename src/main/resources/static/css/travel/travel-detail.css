@@ -243,6 +243,7 @@ main {
                 margin-left: 10px;
                 font-size: 26px;
                 color: #3399FF;
+                font-weight: 600;
             }
             #info-text {
                 border-top: 3px solid #3399FF;

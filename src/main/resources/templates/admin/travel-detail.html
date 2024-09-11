@@ -4,6 +4,12 @@
       layout:decorate="~{layouts/admin}"
       layout:decorator="layout">
 <th:block layout:fragment="script">
+    <script th:inline="javascript">
+        let travelInfo = /*[[${detail}]]*/
+    </script>
+    <script type="text/javascript" src="/js/main/mapdata.js"></script>
+    <script type="text/javascript" src="/js/admin/mapconfig.js"></script>
+    <script type="text/javascript" src="/js/admin/mapmanipulate.js"></script>
     <script type="text/javascript" src="/js/admin/travel-detail.js"></script>
 </th:block>
 <th:block layout:fragment="css">
@@ -16,14 +22,16 @@
     <br>
     <div id="detail-area">
         <div id="detail-left">
-            <div id="map"></div>
+            <div id="map">
+                <canvas id="myCanvas" width="400" height="400"></canvas>
+            </div>
         </div>
         <div id="detail-right">
             <form id="detail-form">
                 <input type="hidden" name="travelNo" th:value="${detail.travelNo}">
                 <div id="position-info">
-                    <input id="latitude-box" type="text" name="latitude" placeholder="위도" class="common-input">
-                    <input id="longitude-box" type="text" name="longitude" placeholder="경도" class="common-input">
+                    <input id="latitude-box" type="text" name="latitude" placeholder="위도" class="common-input" th:value="${detail.latitude}">
+                    <input id="longitude-box" type="text" name="longitude" placeholder="경도" class="common-input" th:value="${detail.longitude}">
                 </div>
                 <input type="text" name="travelName" placeholder="여행지명" th:value="${detail.travelName}">
                 <input type="text" name="address" placeholder="주소" th:value="${detail.address}">
@@ -34,24 +42,24 @@
                 <input type="text" name="useFee" placeholder="시설 이용료" th:value="${detail.useFee}">
                 <input type="text" name="siteUrl" placeholder="사이트 URL" th:value="${detail.siteUrl}">
                 <input type="text" name="imageUrl" placeholder="이미지 URL" th:value="${detail.imageUrl}">
-                <input type="text" name="zoomLevel" placeholder="줌레벨(1~14)">
+                <input type="text" name="zoomLevel" placeholder="줌레벨(1~14)" th:value="${detail.zoomLevel}">
                 <div id="category-info">
                     <select name="" id="region">
-                        <option value="" disabled selected>권역</option>
-                        <option value="JUMUNJIN">주문진권</option>
-                        <option value="CITY">시내권</option>
-                        <option value="GYEONGPO">경포권</option>
-                        <option value="DAEGWALLYEONG">대관령권</option>
-                        <option value="JEONGDONGJIN">정동진 옥계권</option>
+                        <option value="" disabled th:if="${detail.region == null}" selected>권역</option>
+                        <option value="JUMUNJIN" th:selected="${detail.region == 'JUMUNJIN'}">주문진권</option>
+                        <option value="CITY" th:selected="${detail.region == 'CITY'}">시내권</option>
+                        <option value="GYEONGPO" th:selected="${detail.region == 'GYEONGPO'}">경포권</option>
+                        <option value="DAEGWALLYEONG" th:selected="${detail.region == 'DAEGWALLYEONG'}">대관령권</option>
+                        <option value="JEONGDONGJIN" th:selected="${detail.region == 'JEONGDONGJIN'}">정동진 옥계권</option>
                     </select>
                     <select name="" id="category">
-                        <option value="" disabled selected>카테고리</option>
-                        <option value="MOUNTAIN">산·트래킹</option>
-                        <option value="SEA">바다·해안</option>
-                        <option value="HISTORY">역사·유적</option>
-                        <option value="PARK">호수·공원</option>
-                        <option value="DISPLAY">전시</option>
-                        <option value="LEISURE">레저·체험</option>
+                        <option value="" disabled th:if="${detail.category == null}" selected>카테고리</option>
+                        <option value="MOUNTAIN" th:selected="${detail.category == 'MOUNTAIN'}">산·트래킹</option>
+                        <option value="SEA" th:selected="${detail.category == 'SEA'}">바다·해안</option>
+                        <option value="HISTORY" th:selected="${detail.category == 'HISTORY'}">역사·유적</option>
+                        <option value="PARK" th:selected="${detail.category == 'PARK'}">호수·공원</option>
+                        <option value="DISPLAY" th:selected="${detail.category == 'DISPLAY'}">전시</option>
+                        <option value="LEISURE" th:selected="${detail.category == 'LEISURE'}">레저·체험</option>
                     </select>
                 </div>
                 <textarea cols="30" rows="10" style="resize:none;" name="introduce" placeholder="공간소개"

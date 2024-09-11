@@ -4,8 +4,14 @@
       layout:decorate="~{layouts/default}"
       layout:decorator="layout">
 <th:block layout:fragment="script">
+    <script th:inline="javascript">
+        let diaryNo = /*[[${diaryNo}]]*/
+    </script>
     <script type="text/javascript" src="/js/file-upload.js"></script>
     <script type="text/javascript">
+        function goToDiary() {
+            location.href = '/modify-diary/' + diaryNo;
+        }
         function goBack(){
             if(confirm("뒤로 가시겠습니까?")){
                 history.go(-1);
@@ -29,6 +35,17 @@
                 alert("취소하셨습니다.");
             }
         }
+        document.querySelectorAll('.img-container img').forEach((el) => {
+            el.addEventListener('click', (e) => {
+                const dialog = document.querySelector('dialog');
+                const dialogImg = document.querySelector('dialog>img')
+                dialogImg.src = el.src;
+                dialog.showModal();
+                dialog.addEventListener('click', (dialogClickEvent) => {
+                    dialog.close();
+                });
+            });
+        });
     </script>
 </th:block>
 <th:block layout:fragment="css">
@@ -39,27 +56,26 @@
 <main layout:fragment="content">
     <!--    <img src="/gntour/DIARY/0efffa16-de3c-4509-8bef-ee67eb88465b.png">-->
     <div>
+        <dialog class="imgDialog">
+            <img>
+        </dialog>
         <form id="uploadForm">
             <input type="hidden" th:value="${travelDiary.diaryNo}" id="diaryNo">
-            <button type="button" class="remove submit-button" onclick="goBack();">뒤로가기</button>
-            <div class="my-subject"><h1>나의 여행일기</h1></div>
             <div class="main-content">
                 <div class="input-content">
                     <div class="input-sub">
                         <h2 th:text="${travelDiary.diaryTitle}"></h2>
                     </div>
                     <!-- 내용 -->
-                    <input type="text" name="diaryContent" class="common-input content-input" id="diary-content" readonly th:value="${travelDiary.diaryContent}">
-                    <b th:if="${travelDiary.diaryFiles != null && travelDiary.diaryFiles.size() > 0}">이미지</b>
+                    <p id="diary-content" th:text="${travelDiary.diaryContent}"></p>
                     <div class="img-container" th:if="${travelDiary.diaryFiles != null && travelDiary.diaryFiles.size() > 0}">
                         <img th:each="diaryFile : ${travelDiary.diaryFiles}" th:src="${diaryFile.webPath}">
                     </div>
                 </div>
                 <div class="update-btn">
-                    <button class="register submit-button">
-                        <a th:href="@{/modify-diary/{diaryNo}(diaryNo=${travelDiary.diaryNo})}">수정</a>
-                    </button>
-                    <button type="button" onclick="removeDiary();" class="cancel submit-button">삭제</button>
+                    <button class="common-primary-btn btn-group" type="button" onclick="goToDiary()">수정</button>
+                    <button type="button" onclick="removeDiary();" class="common-secondary-btn btn-group">삭제</button>
+                    <button type="button" class="common-secondary-btn btn-group" onclick="goBack();">목록으로</button>
                 </div>
             </div>
         </form>

@@ -30,8 +30,8 @@ public class ReviewServiceImpl implements ReviewService {
     private final FileUtil fileUtil;
 
     @Override
-    public Page<ReviewResponse, TravelSearchCondition> getAllReviewsByTravel(Integer currentPage, Long travelNo, Long reviewNo) {
-        return Page.of(currentPage,rMapper.selectAllReviewsCount(new TravelSearchCondition(travelNo, reviewNo)), new TravelSearchCondition(travelNo, reviewNo), rMapper::selectAllReviews);
+    public Page<ReviewResponse, TravelSearchCondition> getAllReviewsByTravel(Integer currentPage, Long travelNo, Long reviewNo, String order) {
+        return Page.of(currentPage,rMapper.selectAllReviewsCount(new TravelSearchCondition(travelNo, reviewNo, order)), new TravelSearchCondition(travelNo, reviewNo, order), rMapper::selectAllReviews);
     }
 
     @Override
