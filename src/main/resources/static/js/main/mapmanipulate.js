@@ -144,6 +144,13 @@ canvas.addEventListener("mousemove", function (event) {
     };
     let polygon = getPolygon(transformedPoint);
     if (polygon) console.log(polygon.name);
+
+    const foundMark = getMark(transformedPoint);
+    if(foundMark && foundMark.length > 0) {
+        canvas.style.cursor = 'pointer';
+    } else {
+        canvas.style.cursor = 'default';
+    }
 });
 function preSetupCtx() {
     ctx.translate(offsetX, offsetY);

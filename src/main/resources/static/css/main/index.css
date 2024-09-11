@@ -46,6 +46,7 @@ main {
             align-items: center;
             gap: 10px;
             font-weight: bold;
+            cursor: pointer;
         }
 
         #main-marker-tooltip li:last-of-type p:last-of-type {
