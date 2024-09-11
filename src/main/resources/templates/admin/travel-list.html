@@ -10,6 +10,14 @@
 </th:block>
 <main layout:fragment="content">
     <h3>전체 여행지 목록</h3>
+    <div class="search-register-container">
+        <div class="search-section">
+            <form th:action="@{/admin/travel}" method="GET">
+                <input type="text" name="travelName" class="common-input" placeholder="여행지를 입력해주세요.">
+                <button type="submit">검색</button>
+            </form>
+        </div>
+    </div>
     <div id="travel-list-area">
         <table class="common-table">
             <colgroup>

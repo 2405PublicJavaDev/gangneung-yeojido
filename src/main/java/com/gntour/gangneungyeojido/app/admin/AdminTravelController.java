@@ -24,8 +24,12 @@ public class AdminTravelController {
      * 관련기능 : [관리자 기능] 등록된 여행지 리스트 확인
      */
     @GetMapping("/admin/travel")
-    public String showAllTravelPage(Model model, @RequestParam(value="currentPage", defaultValue = "1") Integer currentPage) {
-        model.addAttribute("page", travelService.getAllTravelsPage(currentPage, 10, new TravelListSearchCondition()));
+    public String showAllTravelPage(
+            Model model,
+            @RequestParam(value="currentPage", defaultValue = "1") Integer currentPage,
+            @RequestParam(value="travelName", required = false) String travelName
+    ) {
+        model.addAttribute("page", travelService.getAllTravelsPage(currentPage, 10, new TravelListSearchCondition(travelName, null, null, null)));
         return "admin/travel-list";
     }
 

@@ -20,3 +20,43 @@ h3 {
     height: 500px;
     margin: 0 auto;
 }
+
+.search-register-container {
+    display: flex;
+    justify-content: center;
+}
+
+.search-section {
+    display: flex;
+}
+
+.register-section {
+    display: inline-flex;
+    margin-left: 25px;
+    font-size : 0.9em;
+}
+
+.search-section select,
+.search-section input[type="text"],
+.search-section button {
+    padding: 8px;
+    margin-left: 5px;
+}
+
+.search-section select {
+    width: 120px;
+}
+
+.search-section input[type="text"] {
+    width: 350px;
+}
+
+.search-section button {
+    background-color: #007FFF;
+    border-radius: 5px;
+    height: 38px;
+    width: 60px;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
