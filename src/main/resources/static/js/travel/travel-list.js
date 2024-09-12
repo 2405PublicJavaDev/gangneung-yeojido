@@ -122,7 +122,8 @@ const getPage = (currentPage, travelName, region, category) => {
                         onDone();
                     }
                 };
-                img.onerror = () => {
+                img.onerror = (e) => {
+                    console.log('img load error', e);
                     imagesLoaded++;
                     // 모든 이미지가 로드되었을 때 appendChild 실행
                     if (imagesLoaded === totalImages) {
