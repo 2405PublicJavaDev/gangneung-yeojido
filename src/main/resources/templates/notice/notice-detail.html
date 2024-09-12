@@ -21,7 +21,7 @@
     <div class="notice-content">
       <h2 th:text="${notice.noticeSubject}">공지사항 제목</h2>
       <p class="date" th:text="${#dates.format(notice.regDate, 'yyyy-MM-dd')}">작성날짜</p>
-      <div class="content" th:utext="${notice.noticeContent}">공지사항 내용</div>
+      <div class="content"><pre th:utext="${notice.noticeContent}">공지사항 내용</pre></div>
     </div>
 
     <div class="button-section">

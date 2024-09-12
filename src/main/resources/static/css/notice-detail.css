@@ -35,6 +35,10 @@ h1 {
     margin-bottom: 20px;
 }
 
+.notice-content pre {
+    font-family: Inherit;
+}
+
 h2 {
     font-size: 1.2em;
     margin-bottom: 10px;
