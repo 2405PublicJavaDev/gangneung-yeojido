@@ -52,6 +52,7 @@ document.querySelectorAll('.file-upload').forEach(el => {
                                             } else {
                                                 // 제한에 맞는 경우에만 inputFileData에 추가
                                                 resizeImage(img, finalWidth, finalHeight, file).then(resizedFile => {
+                                                    console.log(resizedFile);
                                                     inputFileData.push(resizedFile);
                                                     thumbnailUpdate();
                                                 });
@@ -89,8 +90,6 @@ document.querySelectorAll('.file-upload').forEach(el => {
                 };
 
                 const thumbnailUpdate = () => {
-                    const thumbnailRoot = el.querySelector('div');
-                    thumbnailRoot.replaceChildren();
                     Promise.all(inputFileData.filter((file) => !(file.result)).map((file) => {
                         return new Promise((resolve, reject) => {
                             const reader = new FileReader();
@@ -106,6 +105,8 @@ document.querySelectorAll('.file-upload').forEach(el => {
                             reader.readAsDataURL(file);
                         });
                     })).then(() => {
+                        const thumbnailRoot = el.querySelector('div');
+                        thumbnailRoot.replaceChildren();
                         inputFile.value = '';
                         inputFileData.forEach((file, index) => {
                             const imgWrapper = document.createElement('div');
