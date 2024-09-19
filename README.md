@@ -222,6 +222,14 @@ EMAIL_APP_PW: [GMAIL APP PASSWORD]
 ![](./docimg/화면_관리자여행지리스트.png)
 ![](./docimg/화면_관리자여행상세.png)
 
+## 프로젝트 아키텍처
+### 사용자 흐름도
+![](./docimg/강릉여지도사용자흐름도.png)
+### 서버 흐름도
+![](./docimg/강릉여지도서버흐름도.png)
+
+화살표 방향은 의존 관계를 의미합니다. 컨트롤러는 서비스에 의존하지만 서비스는 컨트롤러에 의존하지 않습니다. 서비스는 Mapper 에 의존하지만 Mapper 는 서비스에 의존하지 않습니다. 컨트롤러, 서비스, Mapper 는 모두 ExceptionHandler 에 의존하며 ExceptionHandler 는 컨트롤러, 서비스, Mapper 에서 발생하는 Exception 들을 처리합니다.
+
 ## 프로젝트 산출 문서
 
 - [기획보고서](https://drive.google.com/file/d/1xKrU_t2bgH5kuLAPBtYMu1aJZBpiE3gd/view?usp=drive_link)
